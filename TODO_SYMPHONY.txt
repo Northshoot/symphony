@@ -1,0 +1,7 @@
+integrate test build and run with waf
+currently manul copy of headers, WTF?
+
+
+#HOWTO
+create ns3.conf in /etc/ld.so.conf.d/
+add directory to where ns3 is compiled ...build/debug/

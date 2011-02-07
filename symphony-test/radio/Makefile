@@ -26,7 +26,7 @@ GCC=gcc
 NCC=ncc
 LIB=ar rcs
 PY=python
-POST=/home/dev/symphony/tos_ns/src/helpers/postprocess.py
+POST=/home/dev/symphony/tos_ns/src/symphony/helpers/postprocess.py
 
 
 TOS_APP_C=app.c
@@ -53,7 +53,7 @@ APP=time
 TOS_IMG=post_app
 #main file
 MAIN=main
-OUT=time_t
+OUT=radio_t
 
 SIM_LIB=libtos
 
@@ -82,7 +82,7 @@ clean:
 	
 run:
 	make
-	-exec " ./"$(OUT)
+	-exec "./"$(OUT)
 	
 
 

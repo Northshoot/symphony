@@ -3,7 +3,8 @@
 def build(bld):
   print "build symphony"
   symphony = bld.create_ns3_module('symphony')
-  symphony.source = [ ]
+  symphony.source = [
+        'symphony.cc']
 
 
   headers = bld.new_task_gen('ns3header')
@@ -15,5 +16,6 @@ def build(bld):
         'tos-bridge/TinyBridge.h',
         'tos-node/SimuClock.h',
         'tos-node/TosNode.h',
+        'symphony.h'
         ]
   #print dir(headers)
