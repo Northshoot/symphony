@@ -68,6 +68,7 @@ all_modules = (
     'contrib/energy',
     'tools/visualizer',
     'symphony',
+    'symphony/tos-radio',
     'symphony/tos-node',
     'symphony/tos-bridge',
     )
