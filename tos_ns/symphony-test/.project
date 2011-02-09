@@ -93,6 +93,11 @@
 			<location>/home/dev/symphony/tos_ns/src</location>
 		</link>
 		<link>
+			<name>scratch</name>
+			<type>2</type>
+			<location>/home/dev/symphony/tos_ns/scratch</location>
+		</link>
+		<link>
 			<name>tos</name>
 			<type>2</type>
 			<location>/home/dev/symphony/tinyos-2.1.1</location>

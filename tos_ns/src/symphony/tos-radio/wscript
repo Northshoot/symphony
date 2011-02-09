@@ -2,8 +2,12 @@
 
 def build(bld):
     tos_node = bld.create_ns3_module('tos-radio',['tos-bridge'])
-    tos_node.source = [        ]
+    tos_node.source = [  
+        'tos-ns-radio.cc',
+        ]
 
     headers = bld.new_task_gen('ns3header')
     headers.module = 'tos-radio'
-    headers.source = [    ]
+    headers.source = [ 
+          'tos-ns-radio.h',
+        ]
