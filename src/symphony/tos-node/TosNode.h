@@ -21,9 +21,11 @@
 
 namespace ns3 {
 
-class TosNode : public Object{
+class TosNode : public Node{
 public:
 	static TypeId GetTypeId (void);
+
+	TosNode();
 	/**
 	 * Creates TosNode with
 	 * bootTime 0 and shutdown inf
