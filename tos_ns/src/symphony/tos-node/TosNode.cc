@@ -11,7 +11,7 @@
 #include "ns3/simulator.h"
 #include "ns3/event-id.h"
 #include "ns3/callback.h"
-
+#include "ns3/node.h"
 #include "SimuClock.h"
 #include "TosNode.h"
 
@@ -28,9 +28,16 @@ TypeId
 TosNode::GetTypeId(void)
 {
 	static  TypeId tid = TypeId("ns3::TosNode")
-				.SetParent<Object> ();
+				.SetParent<Node> ()
+				.AddConstructor<TosNode> ();
 
 	return tid;
+}
+
+TosNode::TosNode()
+{
+	TosNode(0);
+
 }
 
 TosNode::TosNode(uint32_t node_id)
@@ -41,6 +48,7 @@ TosNode::TosNode(uint32_t node_id)
 TosNode::TosNode(uint32_t node_id ,Time bootTime) :
 				node_id(node_id), m_bootTime(bootTime)
 {
+
 	cout<< "Node created " << node_id << " "<< Simulator::Now().GetMilliSeconds() << " ms"<<endl;
 	//cout<< "setting boot time " <<endl;
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
@@ -48,6 +56,7 @@ TosNode::TosNode(uint32_t node_id ,Time bootTime) :
 	callBackFromClock = MakeCallback (&TosNode::wrapFire, this);
 //
 	simuclock = new SimuClock(NANOSECOND,NONE, callBackFromClock);
+
 
 
 }

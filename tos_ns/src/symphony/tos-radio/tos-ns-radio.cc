@@ -30,9 +30,10 @@
 
 #include "tos-ns-radio.h"
 #include "ns3/wifi-phy.h"
-#include "ns3/wifi-mac-trailer.h"
+//#include "ns3/wifi-mac-trailer.h"
 #include "ns3/qos-utils.h"
 #include "ns3/edca-txop-n.h"
+#include "ns3/mac-low.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosNsRadio");
 
@@ -42,7 +43,8 @@ NS_LOG_COMPONENT_DEFINE ("TosNsRadio");
 
 namespace ns3 {
 
-class SnrTag : public Tag
+
+class TosSnrTag : public Tag
 {
 public:
 
@@ -60,52 +62,52 @@ private:
   double m_snr;
 };
 
-TypeId 
-SnrTag::GetTypeId (void)
+TypeId
+TosSnrTag::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3::SnrTag")
+  static TypeId tid = TypeId ("ns3::TosSnrTag")
     .SetParent<Tag> ()
-    .AddConstructor<SnrTag> ()
+    .AddConstructor<TosSnrTag> ()
     .AddAttribute ("Snr", "The snr of the last packet received",
                    DoubleValue (0.0),
-                   MakeDoubleAccessor (&SnrTag::Get),
+                   MakeDoubleAccessor (&TosSnrTag::Get),
                    MakeDoubleChecker<double> ())
   ;
   return tid;
 }
-TypeId 
-SnrTag::GetInstanceTypeId (void) const
+TypeId
+TosSnrTag::GetInstanceTypeId (void) const
 {
   return GetTypeId ();
 }
 
-uint32_t 
-SnrTag::GetSerializedSize (void) const
+uint32_t
+TosSnrTag::GetSerializedSize (void) const
 {
   return sizeof (double);
 }
-void 
-SnrTag::Serialize (TagBuffer i) const
+void
+TosSnrTag::Serialize (TagBuffer i) const
 {
   i.WriteDouble (m_snr);
 }
-void 
-SnrTag::Deserialize (TagBuffer i)
+void
+TosSnrTag::Deserialize (TagBuffer i)
 {
   m_snr = i.ReadDouble ();
 }
-void 
-SnrTag::Print (std::ostream &os) const
+void
+TosSnrTag::Print (std::ostream &os) const
 {
   os << "Snr=" << m_snr;
 }
-void 
-SnrTag::Set (double snr)
+void
+TosSnrTag::Set (double snr)
 {
   m_snr = snr;
 }
-double 
-SnrTag::Get (void) const
+double
+TosSnrTag::Get (void) const
 {
   return m_snr;
 }
@@ -687,7 +689,7 @@ TosNsRadio::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPr
            m_currentPacket != 0) 
     {
       NS_LOG_DEBUG ("receive cts from="<<m_currentHdr.GetAddr1 ());
-      SnrTag tag;
+      TosSnrTag tag;
       packet->RemovePacketTag (tag);
       m_stationManager->ReportRxOk (m_currentHdr.GetAddr1 (), &m_currentHdr,
                                     rxSnr, txMode);
@@ -712,7 +714,7 @@ TosNsRadio::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPr
            m_txParams.MustWaitAck ()) 
     {
       NS_LOG_DEBUG ("receive ack from="<<m_currentHdr.GetAddr1 ());
-      SnrTag tag;
+      TosSnrTag tag;
       packet->RemovePacketTag (tag);
       m_stationManager->ReportRxOk (m_currentHdr.GetAddr1 (), &m_currentHdr,
                                     rxSnr, txMode);
@@ -883,9 +885,9 @@ TosNsRadio::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPr
     }
   return;
 rxPacket:
-  WifiMacTrailer fcs;
-  packet->RemoveTrailer (fcs);
-  m_rxCallback (packet, &hdr);
+//  WifiMacTrailer fcs;
+//  packet->RemoveTrailer (fcs);
+//  m_rxCallback (packet, &hdr);
   return;
 }
 
@@ -959,8 +961,8 @@ TosNsRadio::GetCtsSize (void) const
 uint32_t 
 TosNsRadio::GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const
 {
-  WifiMacTrailer fcs;
-  return packet->GetSize () + hdr->GetSize () + fcs.GetSerializedSize ();
+  //WifiMacTrailer fcs;
+  return packet->GetSize () + hdr->GetSize ();// + fcs.GetSerializedSize ();
 }
 
 WifiMode
@@ -973,8 +975,8 @@ WifiMode
 TosNsRadio::GetDataTxMode (Ptr<const Packet> packet, const WifiMacHeader *hdr) const
 {
   Mac48Address to = hdr->GetAddr1 ();
-  WifiMacTrailer fcs;
-  uint32_t size =  packet->GetSize () + hdr->GetSize () + fcs.GetSerializedSize ();
+  //WifiMacTrailer fcs;
+  uint32_t size =  packet->GetSize () + hdr->GetSize ();// + fcs.GetSerializedSize ();
   return m_stationManager->GetDataMode (to, hdr, packet, size);
 }
 
@@ -1268,8 +1270,8 @@ TosNsRadio::SendRtsForPacket (void)
 
   Ptr<Packet> packet = Create<Packet> ();
   packet->AddHeader (rts);
-  WifiMacTrailer fcs;
-  packet->AddTrailer (fcs);
+//  WifiMacTrailer fcs;
+//  packet->AddTrailer (fcs);
 
   ForwardDown (packet, &rts, rtsTxMode);
 }
@@ -1371,8 +1373,8 @@ TosNsRadio::SendDataPacket (void)
   m_currentHdr.SetDuration (duration);
 
   m_currentPacket->AddHeader (m_currentHdr);
-  WifiMacTrailer fcs;
-  m_currentPacket->AddTrailer (fcs);
+//  WifiMacTrailer fcs;
+//  m_currentPacket->AddTrailer (fcs);
 
   ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
   m_currentPacket = 0;
@@ -1413,10 +1415,10 @@ TosNsRadio::SendCtsAfterRts (Mac48Address source, Time duration, WifiMode rtsTxM
 
   Ptr<Packet> packet = Create<Packet> ();
   packet->AddHeader (cts);
-  WifiMacTrailer fcs;
-  packet->AddTrailer (fcs);
+//  WifiMacTrailer fcs;
+//  packet->AddTrailer (fcs);
 
-  SnrTag tag;
+  TosSnrTag tag;
   tag.Set (rtsSnr);
   packet->AddPacketTag (tag);
 
@@ -1447,8 +1449,8 @@ TosNsRadio::SendDataAfterCts (Mac48Address source, Time duration, WifiMode txMod
   m_currentHdr.SetDuration (duration);
 
   m_currentPacket->AddHeader (m_currentHdr);
-  WifiMacTrailer fcs;
-  m_currentPacket->AddTrailer (fcs);
+//  WifiMacTrailer fcs;
+//  m_currentPacket->AddTrailer (fcs);
 
   ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
   m_currentPacket = 0;
@@ -1492,10 +1494,10 @@ TosNsRadio::SendAckAfterData (Mac48Address source, Time duration, WifiMode dataT
 
   Ptr<Packet> packet = Create<Packet> ();
   packet->AddHeader (ack);
-  WifiMacTrailer fcs;
-  packet->AddTrailer (fcs);
+//  WifiMacTrailer fcs;
+//  packet->AddTrailer (fcs);
 
-  SnrTag tag;
+  TosSnrTag tag;
   tag.Set (dataSnr);
   packet->AddPacketTag (tag);
 
@@ -1508,8 +1510,8 @@ TosNsRadio::StoreMpduIfNeeded (Ptr<Packet> packet, WifiMacHeader hdr)
   AgreementsI it = m_bAckAgreements.find (std::make_pair (hdr.GetAddr2 (), hdr.GetQosTid ()));
   if (it != m_bAckAgreements.end ())
     {
-      WifiMacTrailer fcs;
-      packet->RemoveTrailer (fcs);
+//      WifiMacTrailer fcs;
+//      packet->RemoveTrailer (fcs);
       BufferedPacket bufferedPacket (packet, hdr);
 
       uint16_t endSequence = ((*it).second.first.GetStartingSequence () + 2047) % 4096;
@@ -1534,42 +1536,42 @@ void
 TosNsRadio::CreateBlockAckAgreement (const MgtAddBaResponseHeader *respHdr, Mac48Address originator,
                                  uint16_t startingSeq)
 {
-  uint8_t tid = respHdr->GetTid ();
-  BlockAckAgreement agreement (originator, tid);
-  if (respHdr->IsImmediateBlockAck ())
-    {
-      agreement.SetImmediateBlockAck ();
-    }
-  else
-    {
-      agreement.SetDelayedBlockAck ();
-    }
-  agreement.SetAmsduSupport (respHdr->IsAmsduSupported ());
-  agreement.SetBufferSize (respHdr->GetBufferSize () + 1);
-  agreement.SetTimeout (respHdr->GetTimeout ());
-  agreement.SetStartingSequence (startingSeq);
-
-  std::list<BufferedPacket> buffer (0);
-  AgreementKey key (originator, respHdr->GetTid ());
-  AgreementValue value (agreement, buffer);
-  m_bAckAgreements.insert (std::make_pair (key, value));
-
-  BlockAckCache cache;
-  cache.Init (startingSeq, respHdr->GetBufferSize () + 1);
-  m_bAckCaches.insert (std::make_pair (key, cache));
-
-  if (respHdr->GetTimeout () != 0)
-    {
-      AgreementsI it = m_bAckAgreements.find (std::make_pair (originator, respHdr->GetTid ()));
-      Time timeout = MicroSeconds (1024 * agreement.GetTimeout ());
-
-      AcIndex ac = QosUtilsMapTidToAc (agreement.GetTid ());
-
-      it->second.first.m_inactivityEvent = Simulator::Schedule (timeout,
-                                                                &TosNsRadioBlockAckEventListener::BlockAckInactivityTimeout,
-                                                                m_edcaListeners[ac],
-                                                                originator, tid);
-    }
+//  uint8_t tid = respHdr->GetTid ();
+//  BlockAckAgreement agreement (originator, tid);
+//  if (respHdr->IsImmediateBlockAck ())
+//    {
+//      agreement.SetImmediateBlockAck ();
+//    }
+//  else
+//    {
+//      agreement.SetDelayedBlockAck ();
+//    }
+//  agreement.SetAmsduSupport (respHdr->IsAmsduSupported ());
+//  agreement.SetBufferSize (respHdr->GetBufferSize () + 1);
+//  agreement.SetTimeout (respHdr->GetTimeout ());
+//  agreement.SetStartingSequence (startingSeq);
+//
+//  std::list<BufferedPacket> buffer (0);
+//  AgreementKey key (originator, respHdr->GetTid ());
+//  AgreementValue value (agreement, buffer);
+//  m_bAckAgreements.insert (std::make_pair (key, value));
+//
+//  BlockAckCache cache;
+//  cache.Init (startingSeq, respHdr->GetBufferSize () + 1);
+//  m_bAckCaches.insert (std::make_pair (key, cache));
+//
+//  if (respHdr->GetTimeout () != 0)
+//    {
+//      AgreementsI it = m_bAckAgreements.find (std::make_pair (originator, respHdr->GetTid ()));
+//      Time timeout = MicroSeconds (1024 * agreement.GetTimeout ());
+//
+//      AcIndex ac = QosUtilsMapTidToAc (agreement.GetTid ());
+//
+//      it->second.first.m_inactivityEvent = Simulator::Schedule (timeout,
+//                                                                &TosNsRadioBlockAckEventListener::BlockAckInactivityTimeout,
+//                                                                m_edcaListeners[ac],
+//                                                                originator, tid);
+//    }
 }
 
 void
@@ -1730,8 +1732,8 @@ TosNsRadio::SendBlockAckResponse (const CtrlBAckResponseHeader* blockAck, Mac48A
   //here should be present a control about immediate or delayed block ack
   //for now we assume immediate
   packet->AddHeader (hdr);
-  WifiMacTrailer fcs;
-  packet->AddTrailer (fcs);
+//  WifiMacTrailer fcs;
+//  packet->AddTrailer (fcs);
   ForwardDown (packet, &hdr, blockAckReqTxMode);
   m_currentPacket = 0;
 }
@@ -1781,28 +1783,28 @@ TosNsRadio::SendBlockAckAfterBlockAckRequest (const CtrlBAckRequestHeader reqHdr
       NS_FATAL_ERROR ("Multi-tid block ack is not supported.");
     }
 
-  SendBlockAckResponse (&blockAck, originator, immediate, duration, blockAckReqTxMode);
+  //SendBlockAckResponse (&blockAck, originator, immediate, duration, blockAckReqTxMode);
 }
 
 void
 TosNsRadio::ResetBlockAckInactivityTimerIfNeeded (BlockAckAgreement &agreement)
 {
-  if (agreement.GetTimeout () != 0)
-    {
-      NS_ASSERT (agreement.m_inactivityEvent.IsRunning ());
-      agreement.m_inactivityEvent.Cancel ();
-      Time timeout = MicroSeconds (1024 * agreement.GetTimeout ());
-
-      AcIndex ac = QosUtilsMapTidToAc (agreement.GetTid ());
-      //std::map<AcIndex, TosNsRadioTransmissionListener*>::iterator it = m_edcaListeners.find (ac);
-      //NS_ASSERT (it != m_edcaListeners.end ());
-
-      agreement.m_inactivityEvent = Simulator::Schedule (timeout, 
-                                                         &TosNsRadioBlockAckEventListener::BlockAckInactivityTimeout,
-                                                         m_edcaListeners[ac],
-                                                         agreement.GetPeer (),
-                                                         agreement.GetTid ());
-    }
+//  if (agreement.GetTimeout () != 0)
+//    {
+//      NS_ASSERT (agreement.m_inactivityEvent.IsRunning ());
+//      agreement.m_inactivityEvent.Cancel ();
+//      Time timeout = MicroSeconds (1024 * agreement.GetTimeout ());
+//
+//      AcIndex ac = QosUtilsMapTidToAc (agreement.GetTid ());
+//      //std::map<AcIndex, TosNsRadioTransmissionListener*>::iterator it = m_edcaListeners.find (ac);
+//      //NS_ASSERT (it != m_edcaListeners.end ());
+//
+//      agreement.m_inactivityEvent = Simulator::Schedule (timeout,
+//                                                         &TosNsRadioBlockAckEventListener::BlockAckInactivityTimeout,
+//                                                         m_edcaListeners[ac],
+//                                                         agreement.GetPeer (),
+//                                                         agreement.GetTid ());
+//    }
 }
 
 void
