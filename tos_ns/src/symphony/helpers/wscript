@@ -5,6 +5,8 @@ def build(bld):
     tos_node.source = [
         'tos-node-list.cc',
         'tos-node-container.cc',
+        'tos-radio-helper.cc',
+        'tos-net-device-container.cc',
         
         ]
 
@@ -13,4 +15,6 @@ def build(bld):
     headers.source = [
         'tos-node-container.h',
         'tos-node-list.h',
+        'tos-radio-helper.h',
+        'tos-net-device-container.h',
         ]
