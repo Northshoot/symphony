@@ -41,6 +41,7 @@
 #include "ns3/nstime.h"
 #include "ns3/qos-utils.h"
 #include "ns3/block-ack-cache.h"
+#include "tos-net-device.h"
 
 namespace ns3 {
 

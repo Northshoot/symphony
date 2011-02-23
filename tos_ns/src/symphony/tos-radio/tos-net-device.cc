@@ -17,8 +17,8 @@
  *
  * Author: Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  */
-#include "tos-net-device.h"
 
+#include "tos-net-device.h"
 #include "ns3/wifi-mac.h"
 #include "ns3/wifi-phy.h"
 #include "ns3/wifi-remote-station-manager.h"
@@ -27,7 +27,6 @@
 #include "ns3/packet.h"
 #include "ns3/uinteger.h"
 #include "ns3/pointer.h"
-#include "ns3/TosNode.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/log.h"
 
@@ -44,30 +43,30 @@ TosNetDevice::GetTypeId (void)
   static TypeId tid = TypeId ("ns3::TosNetDevice")
     .SetParent<WifiNetDevice> ()
     .AddConstructor<TosNetDevice> ()
-    .AddAttribute ("Mtu", "The MAC-level Maximum Transmission Unit",
-                   UintegerValue (MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH),
-                   MakeUintegerAccessor (&TosNetDevice::SetMtu,
-                                         &TosNetDevice::GetMtu),
-                   MakeUintegerChecker<uint16_t> (1,MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH))
-    .AddAttribute ("Channel", "The channel attached to this device",
-                   PointerValue (),
-                   MakePointerAccessor (&TosNetDevice::DoGetChannel),
-                   MakePointerChecker<WifiChannel> ())
-    .AddAttribute ("Phy", "The PHY layer attached to this device.",
-                   PointerValue (),
-                   MakePointerAccessor (&TosNetDevice::GetPhy,
-                                        &TosNetDevice::SetPhy),
-                   MakePointerChecker<WifiPhy> ())
-    .AddAttribute ("Mac", "The MAC layer attached to this device.",
-                   PointerValue (),
-                   MakePointerAccessor (&TosNetDevice::GetMac,
-                                        &TosNetDevice::SetMac),
-                   MakePointerChecker<WifiMac> ())
-    .AddAttribute ("RemoteStationManager", "The station manager attached to this device.",
-                   PointerValue (),
-                   MakePointerAccessor (&TosNetDevice::SetRemoteStationManager,
-                                        &TosNetDevice::GetRemoteStationManager),
-                   MakePointerChecker<WifiRemoteStationManager> ())
+//    .AddAttribute ("Mtu", "The MAC-level Maximum Transmission Unit",
+//                   UintegerValue (MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH),
+//                   MakeUintegerAccessor (&TosNetDevice::SetMtu,
+//                                         &TosNetDevice::GetMtu),
+//                   MakeUintegerChecker<uint16_t> (1,MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH))
+//    .AddAttribute ("Channel", "The channel attached to this device",
+//                   PointerValue (),
+//                   MakePointerAccessor (&TosNetDevice::DoGetChannel),
+//                   MakePointerChecker<WifiChannel> ())
+//    .AddAttribute ("Phy", "The PHY layer attached to this device.",
+//                   PointerValue (),
+//                   MakePointerAccessor (&TosNetDevice::GetPhy,
+//                                        &TosNetDevice::SetPhy),
+//                   MakePointerChecker<WifiPhy> ())
+//    .AddAttribute ("Mac", "The MAC layer attached to this device.",
+//                   PointerValue (),
+//                   MakePointerAccessor (&TosNetDevice::GetMac,
+//                                        &TosNetDevice::SetMac),
+//                   MakePointerChecker<WifiMac> ())
+//    .AddAttribute ("RemoteStationManager", "The station manager attached to this device.",
+//                   PointerValue (),
+//                   MakePointerAccessor (&TosNetDevice::SetRemoteStationManager,
+//                                        &TosNetDevice::GetRemoteStationManager),
+//                   MakePointerChecker<WifiRemoteStationManager> ())
     ;
   return tid;
 }
@@ -265,8 +264,13 @@ TosNetDevice::Send (Ptr<Packet> packet, const Address& dest, uint16_t protocolNu
   m_mac->Enqueue (packet, realTo);
   return true;
 }
-Ptr<TosNode>
+Ptr<Node>
 TosNetDevice::GetNode (void) const
+{
+  return MM_node;
+}
+Ptr<TosNode>
+TosNetDevice::GetTosNode (void) const
 {
   return m_node;
 }
@@ -282,7 +286,7 @@ TosNetDevice::NeedsArp (void) const
   return true;
 }
 void 
-TosNetDevice::SetReceiveCallback (NetDevice::ReceiveCallback cb)
+TosNetDevice::SetReceiveCallback (TosNetDevice::ReceiveCallback cb)
 {
   m_forwardUp = cb;
 }

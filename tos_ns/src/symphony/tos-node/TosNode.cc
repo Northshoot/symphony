@@ -86,7 +86,7 @@ TosNode::BootBooted(void)
 	//tickTime(100);
 	//cout<<"booted node id " << node_id <<" at " <<Simulator::Now().GetMilliSeconds() <<endl;
 	tostolib->start_mote(node_id);
-
+	Node::DoStart();
 
 	Simulator::RunOneEvent();
 	Simulator::Remove ( m_boot_event );
@@ -135,7 +135,7 @@ TosNode::DoDispose(void)
 	}
 
 	//finally despose object
-	Object::DoDispose();
+	Node::DoDispose();
 }
 
 TosNode::~TosNode() {
