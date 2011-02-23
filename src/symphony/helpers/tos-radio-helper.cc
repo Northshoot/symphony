@@ -19,9 +19,9 @@
  * Author: Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  * Author: Mirko Banchi <mk.banchi@gmail.com>
  */
-#include "tos-radio-helper.h"
-#include "ns3/wifi-net-device.h"
+
 #include "ns3/tos-net-device.h"
+#include "ns3/tos-net-device-container.h"
 #include "ns3/wifi-mac.h"
 #include "ns3/wifi-phy.h"
 #include "ns3/wifi-remote-station-manager.h"
@@ -34,66 +34,66 @@
 #include "ns3/config.h"
 #include "ns3/simulator.h"
 #include "ns3/names.h"
+#include "tos-radio-helper.h"
+#include "tos-wifi-mac-helper.h"
+#include "tos-yans-wifi-helper.h"
 
-NS_LOG_COMPONENT_DEFINE ("WifiHelper");
+NS_LOG_COMPONENT_DEFINE ("TosWifiHelper");
 
 namespace ns3 {
 
-WifiPhyHelper::~WifiPhyHelper ()
-{
-}
 
-WifiMacHelper::~WifiMacHelper ()
-{
-}
+//WifiMacHelper::~WifiMacHelper ()
+//{
+//}
 
-WifiHelper::WifiHelper ()
+TosWifiHelper::TosWifiHelper ()
   : m_standard (WIFI_PHY_STANDARD_80211a)
 {
 }
 
-WifiHelper
-WifiHelper::Default (void)
+TosWifiHelper
+TosWifiHelper::Default (void)
 {
-  WifiHelper helper;
+  TosWifiHelper helper;
   helper.SetRemoteStationManager ("ns3::ArfWifiManager");
   return helper;
 }
 
-void 
-WifiHelper::SetRemoteStationManager (std::string type,
-                                     std::string n0, const AttributeValue &v0,
-                                     std::string n1, const AttributeValue &v1,
-                                     std::string n2, const AttributeValue &v2,
-                                     std::string n3, const AttributeValue &v3,
-                                     std::string n4, const AttributeValue &v4,
-                                     std::string n5, const AttributeValue &v5,
-                                     std::string n6, const AttributeValue &v6,
-                                     std::string n7, const AttributeValue &v7)
-{
-  m_stationManager = ObjectFactory ();
-  m_stationManager.SetTypeId (type);
-  m_stationManager.Set (n0, v0);
-  m_stationManager.Set (n1, v1);
-  m_stationManager.Set (n2, v2);
-  m_stationManager.Set (n3, v3);
-  m_stationManager.Set (n4, v4);
-  m_stationManager.Set (n5, v5);
-  m_stationManager.Set (n6, v6);
-  m_stationManager.Set (n7, v7);
-}
+//void
+//TosWifiHelper::SetRemoteStationManager (std::string type,
+//                                     std::string n0, const AttributeValue &v0,
+//                                     std::string n1, const AttributeValue &v1,
+//                                     std::string n2, const AttributeValue &v2,
+//                                     std::string n3, const AttributeValue &v3,
+//                                     std::string n4, const AttributeValue &v4,
+//                                     std::string n5, const AttributeValue &v5,
+//                                     std::string n6, const AttributeValue &v6,
+//                                     std::string n7, const AttributeValue &v7)
+//{
+//  m_stationManager = ObjectFactory ();
+//  m_stationManager.SetTypeId (type);
+//  m_stationManager.Set (n0, v0);
+//  m_stationManager.Set (n1, v1);
+//  m_stationManager.Set (n2, v2);
+//  m_stationManager.Set (n3, v3);
+//  m_stationManager.Set (n4, v4);
+//  m_stationManager.Set (n5, v5);
+//  m_stationManager.Set (n6, v6);
+//  m_stationManager.Set (n7, v7);
+//}
 
-void 
-WifiHelper::SetStandard (enum WifiPhyStandard standard)
-{
-  m_standard = standard;
-}
+//void
+//TosWifiHelper::SetStandard (enum WifiPhyStandard standard)
+//{
+//  m_standard = standard;
+//}
 
-NetDeviceContainer 
-WifiHelper::Install (const WifiPhyHelper &phyHelper,
-                     const WifiMacHelper &macHelper, TosNodeContainer c) const
+TosNetDeviceContainer
+TosWifiHelper::Install (const TosYansWifiPhyHelper &phyHelper,
+                     const TosWifiMacHelper &macHelper, TosNodeContainer c) const
 {
-  DeviceContainer devices;
+TosNetDeviceContainer devices;
   for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
     {
       Ptr<TosNode> node = *i;
@@ -114,54 +114,54 @@ WifiHelper::Install (const WifiPhyHelper &phyHelper,
   return devices;
 }
 
-NetDeviceContainer 
-WifiHelper::Install (const WifiPhyHelper &phy,
-                     const WifiMacHelper &mac, Ptr<Node> node) const
+TosNetDeviceContainer
+TosWifiHelper::Install (const TosWifiPhyHelper &phy,
+                     const TosWifiMacHelper &mac, Ptr<TosNode> node) const
 {
-  return Install (phy, mac, NodeContainer (node));
+  return Install (phy, mac, TosNodeContainer (node));
 }
 
-NetDeviceContainer 
-WifiHelper::Install (const WifiPhyHelper &phy,
-                     const WifiMacHelper &mac, std::string nodeName) const
+TosNetDeviceContainer
+TosWifiHelper::Install (const TosWifiPhyHelper &phy,
+                     const TosWifiMacHelper &mac, std::string nodeName) const
 {
-  Ptr<Node> node = Names::Find<Node> (nodeName);
-  return Install (phy, mac, NodeContainer (node));
+  Ptr<TosNode> node = Names::Find<TosNode> (nodeName);
+  return Install (phy, mac, TosNodeContainer (node));
 }
 
-void
-WifiHelper::EnableLogComponents (void)
-{
-  LogComponentEnable ("Aarfcd", LOG_LEVEL_ALL);
-  LogComponentEnable ("AdhocWifiMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("AmrrWifiRemoteStation", LOG_LEVEL_ALL);
-  LogComponentEnable ("ApWifiMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("ns3::ArfWifiManager", LOG_LEVEL_ALL);
-  LogComponentEnable ("Cara", LOG_LEVEL_ALL);
-  LogComponentEnable ("DcaTxop", LOG_LEVEL_ALL);
-  LogComponentEnable ("DcfManager", LOG_LEVEL_ALL);
-  LogComponentEnable ("DsssErrorRateModel", LOG_LEVEL_ALL);
-  LogComponentEnable ("EdcaTxopN", LOG_LEVEL_ALL);
-  LogComponentEnable ("InterferenceHelper", LOG_LEVEL_ALL);
-  LogComponentEnable ("Jakes", LOG_LEVEL_ALL);
-  LogComponentEnable ("MacLow", LOG_LEVEL_ALL);
-  LogComponentEnable ("MacRxMiddle", LOG_LEVEL_ALL);
-  LogComponentEnable ("MsduAggregator", LOG_LEVEL_ALL);
-  LogComponentEnable ("MsduStandardAggregator", LOG_LEVEL_ALL);
-  LogComponentEnable ("NistErrorRateModel", LOG_LEVEL_ALL);
-  LogComponentEnable ("OnoeWifiRemoteStation", LOG_LEVEL_ALL);
-  LogComponentEnable ("PropagationLossModel", LOG_LEVEL_ALL);
-  LogComponentEnable ("RegularWifiMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("RraaWifiManager", LOG_LEVEL_ALL);
-  LogComponentEnable ("StaWifiMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("SupportedRates", LOG_LEVEL_ALL);
-  LogComponentEnable ("WifiChannel", LOG_LEVEL_ALL);
-  LogComponentEnable ("WifiPhyStateHelper", LOG_LEVEL_ALL);
-  LogComponentEnable ("WifiPhy", LOG_LEVEL_ALL);
-  LogComponentEnable ("WifiRemoteStationManager", LOG_LEVEL_ALL);
-  LogComponentEnable ("YansErrorRateModel", LOG_LEVEL_ALL);
-  LogComponentEnable ("YansWifiChannel", LOG_LEVEL_ALL);
-  LogComponentEnable ("YansWifiPhy", LOG_LEVEL_ALL);
-}
+//void
+//TosWifiHelper::EnableLogComponents (void)
+//{
+//  LogComponentEnable ("Aarfcd", LOG_LEVEL_ALL);
+//  LogComponentEnable ("AdhocWifiMac", LOG_LEVEL_ALL);
+//  LogComponentEnable ("AmrrWifiRemoteStation", LOG_LEVEL_ALL);
+//  LogComponentEnable ("ApWifiMac", LOG_LEVEL_ALL);
+//  LogComponentEnable ("ns3::ArfWifiManager", LOG_LEVEL_ALL);
+//  LogComponentEnable ("Cara", LOG_LEVEL_ALL);
+//  LogComponentEnable ("DcaTxop", LOG_LEVEL_ALL);
+//  LogComponentEnable ("DcfManager", LOG_LEVEL_ALL);
+//  LogComponentEnable ("DsssErrorRateModel", LOG_LEVEL_ALL);
+//  LogComponentEnable ("EdcaTxopN", LOG_LEVEL_ALL);
+//  LogComponentEnable ("InterferenceHelper", LOG_LEVEL_ALL);
+//  LogComponentEnable ("Jakes", LOG_LEVEL_ALL);
+//  LogComponentEnable ("MacLow", LOG_LEVEL_ALL);
+//  LogComponentEnable ("MacRxMiddle", LOG_LEVEL_ALL);
+//  LogComponentEnable ("MsduAggregator", LOG_LEVEL_ALL);
+//  LogComponentEnable ("MsduStandardAggregator", LOG_LEVEL_ALL);
+//  LogComponentEnable ("NistErrorRateModel", LOG_LEVEL_ALL);
+//  LogComponentEnable ("OnoeWifiRemoteStation", LOG_LEVEL_ALL);
+//  LogComponentEnable ("PropagationLossModel", LOG_LEVEL_ALL);
+//  LogComponentEnable ("RegularWifiMac", LOG_LEVEL_ALL);
+//  LogComponentEnable ("RraaWifiManager", LOG_LEVEL_ALL);
+//  LogComponentEnable ("StaWifiMac", LOG_LEVEL_ALL);
+//  LogComponentEnable ("SupportedRates", LOG_LEVEL_ALL);
+//  LogComponentEnable ("WifiChannel", LOG_LEVEL_ALL);
+//  LogComponentEnable ("WifiPhyStateHelper", LOG_LEVEL_ALL);
+//  LogComponentEnable ("WifiPhy", LOG_LEVEL_ALL);
+//  LogComponentEnable ("WifiRemoteStationManager", LOG_LEVEL_ALL);
+//  LogComponentEnable ("YansErrorRateModel", LOG_LEVEL_ALL);
+//  LogComponentEnable ("YansWifiChannel", LOG_LEVEL_ALL);
+//  LogComponentEnable ("YansWifiPhy", LOG_LEVEL_ALL);
+//}
 
 } // namespace ns3

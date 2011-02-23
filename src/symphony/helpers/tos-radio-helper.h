@@ -23,20 +23,29 @@
 #define TOS_RADIO_HELPER_H
 
 #include <string>
+
+#include "tos-wifi-mac-helper.h"
+#include "tos-radio-helper.h"
+#include "tos-node-container.h"
+#include "tos-net-device-container.h"
+#include "ns3/tos-net-device.h"
+#include "ns3/TosNode.h"
+
 #include "ns3/attribute.h"
 #include "ns3/object-factory.h"
-#include "ns3/node-container.h"
-#include "ns3/net-device-container.h"
 #include "ns3/wifi-phy-standard.h"
 #include "ns3/trace-helper.h"
+#include "ns3/wifi-helper.h"
+#include "tos-yans-wifi-helper.h"
+
 
 namespace ns3 {
 
-class WifiPhy;
-class WifiMac;
-class WifiNetDevice;
+//class WifiPhy;
+//class WifiMac;
+class TosNetDevice;
 class TosNode;
-class Node;
+
 
 /**
  * \brief create PHY objects
@@ -44,10 +53,10 @@ class Node;
  * This base class must be implemented by new PHY implementation which wish to integrate
  * with the \ref ns3::WifiHelper class.
  */
-class TosWifiPhyHelper: public WifiPhyHelper
+class TosWifiPhyHelper :public YansWifiPhyHelper
 {
 public:
-  virtual ~TosWifiPhyHelper ();
+   ~TosWifiPhyHelper ();
 
   /**
    * \param node the node on which the PHY object will reside
@@ -66,34 +75,34 @@ public:
  * This base class must be implemented by new MAC implementation which wish to integrate
  * with the \ref ns3::WifiHelper class.
  */
-class WifiMacHelper
-{
-public:
-  virtual ~WifiMacHelper ();
-  /**
-   * \returns a new MAC object.
-   *
-   * Subclasses must implement this method to allow the ns3::WifiHelper class
-   * to create MAC objects from ns3::WifiHelper::Install.
-   */
-  virtual Ptr<WifiMac> Create (void) const = 0;
-};
+//class WifiMacHelper
+//{
+//public:
+//  virtual ~WifiMacHelper ();
+//  /**
+//   * \returns a new MAC object.
+//   *
+//   * Subclasses must implement this method to allow the ns3::WifiHelper class
+//   * to create MAC objects from ns3::WifiHelper::Install.
+//   */
+//  virtual Ptr<WifiMac> Create (void) const = 0;
+//};
 
 /**
- * \brief helps to create WifiNetDevice objects
+ * \brief helps to create TosNetDevice objects
  *
  * This class can help to create a large set of similar
- * WifiNetDevice objects and to configure a large set of
+ * TosNetDevice objects and to configure a large set of
  * their attributes during creation.
  */
-class TosRadioHelper : public WifiHelper
+class TosWifiHelper : public WifiHelper
 {
 public:
   /**
    * Create a Wifi helper in an empty state: all its parameters
    * must be set before calling ns3::WifiHelper::Install
    */
-	TosRadioHelper ();
+	TosWifiHelper ();
 
   /**
    * \returns a new WifiHelper in a default state
@@ -102,7 +111,7 @@ public:
    * and both objects using their default attribute values. By default, configure MAC and PHY 
    * for 802.11a.
    */
-  static TosRadioHelper Default (void);
+  static TosWifiHelper Default (void);
 
   /**
    * \param type the type of ns3::WifiRemoteStationManager to create.
@@ -126,15 +135,15 @@ public:
    * All the attributes specified in this method should exist
    * in the requested station manager.
    */
-  void SetRemoteStationManager (std::string type,
-                                std::string n0 = "", const AttributeValue &v0 = EmptyAttributeValue (),
-                                std::string n1 = "", const AttributeValue &v1 = EmptyAttributeValue (),
-                                std::string n2 = "", const AttributeValue &v2 = EmptyAttributeValue (),
-                                std::string n3 = "", const AttributeValue &v3 = EmptyAttributeValue (),
-                                std::string n4 = "", const AttributeValue &v4 = EmptyAttributeValue (),
-                                std::string n5 = "", const AttributeValue &v5 = EmptyAttributeValue (),
-                                std::string n6 = "", const AttributeValue &v6 = EmptyAttributeValue (),
-                                std::string n7 = "", const AttributeValue &v7 = EmptyAttributeValue ());
+//  void SetRemoteStationManager (std::string type,
+//                                std::string n0 = "", const AttributeValue &v0 = EmptyAttributeValue (),
+//                                std::string n1 = "", const AttributeValue &v1 = EmptyAttributeValue (),
+//                                std::string n2 = "", const AttributeValue &v2 = EmptyAttributeValue (),
+//                                std::string n3 = "", const AttributeValue &v3 = EmptyAttributeValue (),
+//                                std::string n4 = "", const AttributeValue &v4 = EmptyAttributeValue (),
+//                                std::string n5 = "", const AttributeValue &v5 = EmptyAttributeValue (),
+//                                std::string n6 = "", const AttributeValue &v6 = EmptyAttributeValue (),
+//                                std::string n7 = "", const AttributeValue &v7 = EmptyAttributeValue ());
   /**
    * \param phy the PHY helper to create PHY objects
    * \param mac the MAC helper to create MAC objects
@@ -142,7 +151,7 @@ public:
    * \returns a device container which contains all the devices created by this method.
    */
   TosNetDeviceContainer Install (const TosWifiPhyHelper &phy,
-                              const WifiMacHelper &mac, TosNodeContainer c) const;
+                              const TosWifiMacHelper &mac, TosNodeContainer c) const;
   /**
    * \param phy the PHY helper to create PHY objects
    * \param mac the MAC helper to create MAC objects
@@ -150,7 +159,7 @@ public:
    * \returns a device container which contains all the devices created by this method.
    */
   TosNetDeviceContainer Install (const TosWifiPhyHelper &phy,
-                              const WifiMacHelper &mac, Ptr<TosNode> node) const;
+                              const TosWifiMacHelper &mac, Ptr<TosNode> node) const;
   /**
    * \param phy the PHY helper to create PHY objects
    * \param mac the MAC helper to create MAC objects
@@ -158,19 +167,19 @@ public:
    * \returns a device container which contains all the devices created by this method.
    */
   TosNetDeviceContainer Install (const TosWifiPhyHelper &phy,
-                              const WifiMacHelper &mac, std::string nodeName) const;
+                              const TosWifiMacHelper &mac, std::string nodeName) const;
 
   /**
    * \param standard the phy standard to configure during installation
    *
    * By default, all objects are configured for 802.11a
    */
-  void SetStandard (enum WifiPhyStandard standard);
+  //void SetStandard (enum WifiPhyStandard standard);
 
   /**
-   * Helper to enable all WifiNetDevice log components with one statement 
+   * Helper to enable all TosNetDevice log components with one statement
    */
-  static void EnableLogComponents (void);
+  //static void EnableLogComponents (void);
 
 private:
   ObjectFactory m_stationManager;

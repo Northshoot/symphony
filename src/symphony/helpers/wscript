@@ -7,6 +7,8 @@ def build(bld):
         'tos-node-container.cc',
         'tos-radio-helper.cc',
         'tos-net-device-container.cc',
+        'tos-wifi-mac-helper.cc',
+        'tos-yans-wifi-helper.cc',
         
         ]
 
@@ -17,4 +19,6 @@ def build(bld):
         'tos-node-list.h',
         'tos-radio-helper.h',
         'tos-net-device-container.h',
+        'tos-wifi-mac-helper.h',
+        'tos-yans-wifi-helper.h',
         ]

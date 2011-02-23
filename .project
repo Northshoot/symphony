@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>symphony-test</name>
+	<name>symphony</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -28,6 +28,10 @@
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.buildCommand</key>
 					<value>make</value>
+				</dictionary>
+				<dictionary>
+					<key>org.eclipse.cdt.make.core.buildLocation</key>
+					<value>${workspace_loc:/symphony/Debug}</value>
 				</dictionary>
 				<dictionary>
 					<key>org.eclipse.cdt.make.core.cleanBuildTarget</key>
@@ -65,7 +69,6 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.cdt.managedbuilder.core.ScannerConfigBuilder</name>
-			<triggers>full,incremental,</triggers>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -76,31 +79,4 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>ns3</name>
-			<type>2</type>
-			<location>/home/dev/symphony/tos_ns/build/debug/ns3</location>
-		</link>
-		<link>
-			<name>ns3_examples</name>
-			<type>2</type>
-			<location>/home/dev/symphony/tos_ns/examples</location>
-		</link>
-		<link>
-			<name>ns3_src</name>
-			<type>2</type>
-			<location>/home/dev/symphony/tos_ns/src</location>
-		</link>
-		<link>
-			<name>scratch</name>
-			<type>2</type>
-			<location>/home/dev/symphony/tos_ns/scratch</location>
-		</link>
-		<link>
-			<name>tos</name>
-			<type>2</type>
-			<location>/home/dev/symphony/tinyos-2.1.1</location>
-		</link>
-	</linkedResources>
 </projectDescription>

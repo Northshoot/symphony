@@ -34,6 +34,7 @@
 #include "ns3/qos-utils.h"
 #include "ns3/edca-txop-n.h"
 #include "ns3/mac-low.h"
+#include "tos-net-device.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosNsRadio");
 
