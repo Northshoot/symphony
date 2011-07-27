@@ -14,6 +14,8 @@
 #include "ns3/node.h"
 #include "SimuClock.h"
 #include "TosNode.h"
+#include "ns3/tos-node-list.h"
+#include "ns3/tos-net-device.h"
 
 using namespace std;
 
@@ -69,6 +71,12 @@ SimuClock *
 TosNode::getClock()
 {
 	return simuclock;
+}
+
+void
+TosNode::Construct(void)
+{
+	m_id=TosNodeList::Add(this);
 }
 
 void

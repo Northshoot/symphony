@@ -26,6 +26,7 @@
 #include "ns3/packet.h"
 #include "ns3/traced-callback.h"
 #include "ns3/mac48-address.h"
+#include "ns3/node.h"
 #include "ns3/TosNode.h"
 #include "ns3/wifi-net-device.h"
 #include <string>
@@ -94,7 +95,7 @@ public:
    bool IsPointToPoint (void) const;
    bool IsBridge (void) const;
    bool Send(Ptr<Packet> packet, const Address& dest, uint16_t protocolNumber);
-   Ptr<Node> GetNode (void) const;
+   //Ptr<Node> GetNode (void) const;
    Ptr<TosNode> GetTosNode (void) const;
    void SetNode (Ptr<TosNode> TosNode);
    bool NeedsArp (void) const;

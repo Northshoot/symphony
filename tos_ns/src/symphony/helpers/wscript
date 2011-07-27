@@ -5,10 +5,10 @@ def build(bld):
     tos_node.source = [
         'tos-node-list.cc',
         'tos-node-container.cc',
-        'tos-radio-helper.cc',
-        'tos-net-device-container.cc',
-        'tos-wifi-mac-helper.cc',
-        'tos-yans-wifi-helper.cc',
+        #'tos-radio-helper.cc',
+        #'tos-net-device-container.cc',
+        #'tos-wifi-mac-helper.cc',
+        #'tos-yans-wifi-helper.cc',
         
         ]
 

@@ -19,6 +19,7 @@
  */
 
 #include "tos-net-device.h"
+#include "ns3/TosNode.h"
 #include "ns3/wifi-mac.h"
 #include "ns3/wifi-phy.h"
 #include "ns3/wifi-remote-station-manager.h"
