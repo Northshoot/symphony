@@ -18,6 +18,7 @@
 
 #include "SimuClock.h"
 #include "ns3/TosToLibProxy.h"
+#include "ns3/tos-net-device.h"
 
 namespace ns3 {
 
@@ -85,6 +86,9 @@ protected:
 
 
 	private:
+  	  	void Construct (void);
+  	  uint32_t    m_id;         // Node id for this node
+  	std::vector<Ptr<TosNetDevice> > m_devices;
   	  	SimuClock *	simuclock;
 		uint32_t    node_id;         	// Node id for this node
 		uint32_t    m_sid;        	// System id for this node
