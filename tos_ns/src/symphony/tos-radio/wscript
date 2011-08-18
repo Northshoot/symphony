@@ -1,0 +1,19 @@
+## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def build(bld):
+    tos_node = bld.create_ns3_module('tos-radio',['tos-bridge'])
+    tos_node.source = [  
+        'tos-ns-radio.cc',
+        'tos-net-device.cc',
+        #'tos-yans-wifi-channel.cc',
+        #'tos-yans-wifi-phy.cc',
+        ]
+
+    headers = bld.new_task_gen('ns3header')
+    headers.module = 'tos-radio'
+    headers.source = [ 
+          'tos-ns-radio.h',
+          'tos-net-device.h',
+          'tos-yans-wifi-channel.h',
+          'tos-yans-wifi-phy.h'
+        ]
