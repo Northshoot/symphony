@@ -1,0 +1,15 @@
+def build(bld):
+    obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
+    obj.source = [
+
+        ]
+
+
+    headers = bld.new_task_gen('ns3header')
+    headers.module = 'tos'
+    headers.source = [
+
+        ]
+
+
+
