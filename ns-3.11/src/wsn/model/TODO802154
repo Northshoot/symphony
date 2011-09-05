@@ -1,0 +1,16 @@
+In order to make run 802_15_4:
+All classes needs to be converted to match NS3 Mac
+See wsn-wifi-mac.cc as an example 
+The classes must implement how the configuration is done.
+See what is set in beacon_enabled_star.tcl
+
+The selection of this MAC should be done via wnswifihelper
+wifi.SetStandard (WIFI_PHY_STANDARD_802154);
+
+which creates necessary classes and connects the proper 802154 mac as it is done in wsn-regular-mac.cc
+
+the work would be either to use these files as inspiration or port them directly
+
+TESTS:
+Make same topology in ns3 and ns2 and run, compare output.
+see beacon_enabled_star.tcl for ns2
