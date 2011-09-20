@@ -16,8 +16,8 @@
 #include "ns3/event-id.h"
 #include "ns3/callback.h"
 
-#include "SimuClock.h"
-#include "ns3/TosToLibProxy.h"
+#include "simu-clock.h"
+#include "tos-to-lib-proxy.h"
 
 namespace ns3 {
 
@@ -95,6 +95,7 @@ protected:
 		EventId		m_boot_event;	//boot event
 		EventId		m_shutdown_event;//shut down event
 		TosToLibProxy *	tostolib;
+		 bool m_started;
     
 };
 

@@ -11,11 +11,11 @@
 #ifndef TINYBRIDGE_H_
 #define TINYBRIDGE_H_
 
-#include "LibToTosProxy.h"
-#include "TosToLibProxy.h"
-#include "LibToTosProxy.h"
-#include "ns3/TosNode.h"
-#include "ns3/SimuClock.h"
+
+#include "tos-to-lib-proxy.h"
+#include "lib-to-tos-proxy.h"
+#include "tos-node.h"
+#include "simu-clock.h"
 
 
 /**

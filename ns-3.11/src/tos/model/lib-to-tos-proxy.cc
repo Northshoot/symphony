@@ -6,9 +6,9 @@
  */
 #include <iostream>
 #include "ns3/assert.h"
-#include "ns3/TosNode.h"
+#include "tos-node.h"
 
-#include "LibToTosProxy.h"
+#include "lib-to-tos-proxy.h"
 #include "gateway.h"
 
 

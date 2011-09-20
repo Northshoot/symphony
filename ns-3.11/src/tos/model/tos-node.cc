@@ -12,8 +12,8 @@
 #include "ns3/event-id.h"
 #include "ns3/callback.h"
 #include "ns3/node.h"
-#include "SimuClock.h"
-#include "TosNode.h"
+#include "simu-clock.h"
+#include "tos-node.h"
 
 using namespace std;
 
@@ -28,7 +28,7 @@ TypeId
 TosNode::GetTypeId(void)
 {
 	static  TypeId tid = TypeId("ns3::TosNode")
-				.SetParent<Node> ()
+				.SetParent<Object> ()
 				.AddConstructor<TosNode> ();
 
 	return tid;
@@ -48,7 +48,7 @@ TosNode::TosNode(uint32_t node_id)
 TosNode::TosNode(uint32_t node_id ,Time bootTime) :
 				node_id(node_id), m_bootTime(bootTime)
 {
-
+	Object::Start ();
 	cout<< "Node created " << node_id << " "<< Simulator::Now().GetMilliSeconds() << " ms"<<endl;
 	//cout<< "setting boot time " <<endl;
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
@@ -80,13 +80,14 @@ TosNode::ShutDownNode(Time ttl)
 void
 TosNode::BootBooted(void)
 {
+
 	simuclock->Start();
 	cout<< "BootBooted " << endl;
 			cout << simuclock->getTimeNow() << " ms"<<endl;
 	//tickTime(100);
 	//cout<<"booted node id " << node_id <<" at " <<Simulator::Now().GetMilliSeconds() <<endl;
 	tostolib->start_mote(node_id);
-	Node::DoStart();
+
 
 	Simulator::RunOneEvent();
 	Simulator::Remove ( m_boot_event );

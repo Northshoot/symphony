@@ -7,7 +7,7 @@
 
 #ifndef GATEWAY_H_
 #define GATEWAY_H_
-#include "ns3/LibToTosProxy.h"
+#include "lib-to-tos-proxy.h"
 
 /**
  * This function is used by all objects.

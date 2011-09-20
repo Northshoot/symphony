@@ -1,13 +1,23 @@
 def build(bld):
     obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
-    obj.source = [
+    obj.source = ['model/lib-to-tos-proxy.cc',
+    			  'model/tos-node.cc',
+    			  'model/simu-clock.cc',
+    			  'model/tiny-bridge.cc',
+    			  'model/tos-to-lib-proxy.cc',
+    			  
 
         ]
 
 
     headers = bld.new_task_gen('ns3header')
     headers.module = 'tos'
-    headers.source = [
+    headers.source = ['model/lib-to-tos-proxy.h',
+    			  'model/tos-node.h',
+    			  'model/simu-clock.h',
+    			  'model/tiny-bridge.h',
+    			  'model/tos-to-lib-proxy.h',
+    			  'model/gateway.h',
 
         ]
 

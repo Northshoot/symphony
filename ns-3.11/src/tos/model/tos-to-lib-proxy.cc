@@ -5,7 +5,7 @@
  *      Author: laurynas
  */
 #include <iostream>
-#include "TosToLibProxy.h"
+#include "tos-to-lib-proxy.h"
 
 TosToLibProxy::TosToLibProxy() {
 

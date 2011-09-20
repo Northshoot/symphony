@@ -16,7 +16,7 @@
 #include <link.h>
 
 
-#include "TinyBridge.h"
+#include "tiny-bridge.h"
 
 TinyBridge::TinyBridge(ns3::TosNode *tos, const char * lib) {
 	tosnode		= tos;

@@ -8,12 +8,12 @@
 
 #include <stdio.h>
 #include "ns3/core-module.h"
-#include "ns3/common-module.h"
+
 //#include "tosns-simulator-impl.h"
 #include "ns3/event-id.h"
 #include "ns3/nstime.h"
-#include "ns3/TosNode.h"
-#include "ns3/TinyBridge.h"
+#include "ns3/tos-node.h"
+#include "ns3/tiny-bridge.h"
 
 
 

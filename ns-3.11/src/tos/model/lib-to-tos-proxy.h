@@ -20,8 +20,8 @@
  * otherwise linking with C will fail
  * Which results in segfault
  */
-#include "ns3/TosNode.h"
-#include "ns3/SimuClock.h"
+#include "tos-node.h"
+#include "simu-clock.h"
 
 
 class LibToTosProxy {

@@ -13,7 +13,7 @@
 #include "ns3/callback.h"
 #include "ns3/ptr.h"
 
-#include "SimuClock.h"
+#include "simu-clock.h"
 
 using namespace std;
 namespace ns3 {
