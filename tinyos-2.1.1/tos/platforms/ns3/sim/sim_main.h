@@ -1,7 +1,7 @@
 #ifndef SIM_MAIN_H
 #define SIM_MAIN_H
 
-#include "ns3/LibToTosProxy.h"
+#include "ns3/lib-to-tos-proxy.h"
 
 int a;
 int id_this_lib;
