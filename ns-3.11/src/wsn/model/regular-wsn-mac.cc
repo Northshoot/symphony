@@ -51,14 +51,14 @@ RegularWsnMac::RegularWsnMac ()
   m_low = CreateObject<MacLow> ();
   m_low->SetRxCallback (MakeCallback (&MacRxMiddle::Receive, m_rxMiddle));
 
-//  m_dcfManager = new DcfManager ();
-//  m_dcfManager->SetupLowListener (m_low);
+  m_dcfManager = new DcfManager ();
+  m_dcfManager->SetupLowListener (m_low);
 //
-//  m_dca = CreateObject<DcaTxop> ();
-//  //m_dca->SetLow (m_low);
-//  m_dca->SetManager (m_dcfManager);
-//  m_dca->SetTxOkCallback (MakeCallback (&RegularWsnMac::TxOk, this));
-//  m_dca->SetTxFailedCallback (MakeCallback (&RegularWsnMac::TxFailed, this));
+  m_dca = CreateObject<DcaTxop> ();
+  m_dca->SetLow (m_low);
+  m_dca->SetManager (m_dcfManager);
+  m_dca->SetTxOkCallback (MakeCallback (&RegularWsnMac::TxOk, this));
+  m_dca->SetTxFailedCallback (MakeCallback (&RegularWsnMac::TxFailed, this));
 
   // Construct the EDCAFs. The ordering is important - highest
   // priority (see Table 9-1 in IEEE 802.11-2007) must be created
