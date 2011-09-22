@@ -4,19 +4,20 @@ configuration TimerAppC
 }
 implementation
 {
-  components MainC, Ns3TimerUser;
-  //components NsTimerP as NsTimer;
-  components new TimerMilliC() as Timer0;
-  components new TimerMilliC() as Timer1;  
-  Ns3TimerUser -> MainC.Boot;
-
-  Ns3TimerUser.Timer0->Timer0;
-  Ns3TimerUser.Timer1->Timer1;
-//  Ns3TimerUser.Timer1 -> NsTimer;
- 
+  components MainC, Ns3RadioUser as App;
+  components MainC, RadioCountToLedsC as App, LedsC;
+  components new AMSenderC(AM_RADIO_COUNT_MSG);
+  components new AMReceiverC(AM_RADIO_COUNT_MSG);
+  components new TimerMilliC();
+  components ActiveMessageC;
   
-//  Ns3TimerUser.Timer2 -> NsTimer;
-//  Ns3TimerUser.Timer3 -> NsTimer;
+  App.Boot -> MainC.Boot;  
+  App.Receive -> AMReceiverC;
+  App.AMSend -> AMSenderC;
+  App.AMControl -> ActiveMessageC;
+  App.Leds -> LedsC;
+  App.MilliTimer -> TimerMilliC;
+  App.Packet -> AMSenderC;
 
 }
 

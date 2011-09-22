@@ -42,33 +42,28 @@ configuration ActiveMessageC
 
 		interface AMSend[uint8_t id];
 		interface Receive[uint8_t id];
-		interface Receive as Snoop[uint8_t id];
-		interface SendNotifier[am_id_t id];
+//		interface Receive as Snoop[uint8_t id];
+//		interface SendNotifier[am_id_t id];
 
 		interface Packet;
 		interface AMPacket;
 
-		interface PacketAcknowledgements;
-		interface LowPowerListening;
+//		interface PacketAcknowledgements;
+//		interface LowPowerListening;
 #ifdef PACKET_LINK
-		interface PacketLink;
+//		interface PacketLink;
 #endif
 
-		interface PacketTimeStamp<TMicro, uint32_t> as PacketTimeStampMicro;
-		interface PacketTimeStamp<TMilli, uint32_t> as PacketTimeStampMilli;
+//		interface PacketTimeStamp<TMicro, uint32_t> as PacketTimeStampMicro;
+//		interface PacketTimeStamp<TMilli, uint32_t> as PacketTimeStampMilli;
 	}
 }
 
 implementation
 {
-	components RF230ActiveMessageC as MessageC,
-		RF230SplitControlP,
-		new SystemClockControlC();
+	components Ns3ActiveMessageC as MessageC;
 
-	RF230SplitControlP.SplitControlOrig -> MessageC;
-	RF230SplitControlP.SystemClockControl -> SystemClockControlC;
-
-	SplitControl = RF230SplitControlP.SplitControl;
+	SplitControl = MessageC.SplitControl;
 
 	AMSend = MessageC;
 	Receive = MessageC.Receive;
@@ -78,12 +73,12 @@ implementation
 	Packet = MessageC;
 	AMPacket = MessageC;
 
-	PacketAcknowledgements = MessageC;
-	LowPowerListening = MessageC;
+//	PacketAcknowledgements = MessageC;
+//	LowPowerListening = MessageC;
 #ifdef PACKET_LINK
-	PacketLink = MessageC;
+//	PacketLink = MessageC;
 #endif
 
-	PacketTimeStampMilli = MessageC;
-	PacketTimeStampMicro = MessageC;
+//	PacketTimeStampMilli = MessageC;
+//	PacketTimeStampMicro = MessageC;
 }
