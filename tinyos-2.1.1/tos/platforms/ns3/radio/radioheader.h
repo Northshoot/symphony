@@ -21,9 +21,9 @@ typedef nx_struct ns3packet_header_t
 	nxle_uint8_t dsn;
 	nx_am_id_t type;
 	nxle_uint16_t fdest;
-	am_group_t destpan;
-	am_addr_t dest;
-	am_addr_t src;
+	nx_am_group_t destpan;
+	nx_am_addr_t dest;
+	nx_am_addr_t src;
 	nxle_uint8_t padd;
 
 } ns3packet_header_t;

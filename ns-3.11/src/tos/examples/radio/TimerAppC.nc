@@ -5,7 +5,6 @@ configuration TimerAppC
 implementation
 {
   components MainC, Ns3RadioUser as App;
-  components MainC, RadioCountToLedsC as App, LedsC;
   components new AMSenderC(AM_RADIO_COUNT_MSG);
   components new AMReceiverC(AM_RADIO_COUNT_MSG);
   components new TimerMilliC();
@@ -15,7 +14,6 @@ implementation
   App.Receive -> AMReceiverC;
   App.AMSend -> AMSenderC;
   App.AMControl -> ActiveMessageC;
-  App.Leds -> LedsC;
   App.MilliTimer -> TimerMilliC;
   App.Packet -> AMSenderC;
 

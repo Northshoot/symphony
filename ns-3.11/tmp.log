@@ -1,0 +1,17 @@
+
+Modules built:
+aodv                      applications              bridge                   
+click                     config-store              core                     
+csma                      csma-layout               dsdv                     
+emu                       energy                    flow-monitor             
+internet                  lte                       mesh                     
+mobility                  mpi                       netanim                  
+network                   nix-vector-routing        ns3tcp                   
+ns3wifi                   olsr                      openflow                 
+point-to-point            point-to-point-layout     propagation              
+spectrum                  stats                     tap-bridge               
+template                  test                      tools                    
+topology-read             tos                       uan                      
+virtual-net-device        visualizer                wifi                     
+wimax                     wsn                      
+

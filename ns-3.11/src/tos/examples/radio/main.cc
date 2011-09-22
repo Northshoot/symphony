@@ -35,17 +35,16 @@
 #include "ns3/network-module.h"
 #include "ns3/mobility-module.h"
 #include "ns3/config-store-module.h"
-#include "ns3/wifi-module.h"
-#include "ns3/wsn-module.h"
 #include "ns3/internet-module.h"
-
+#include "ns3/wsn-module.h"
+#include "ns3/wifi-module.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 
 
-NS_LOG_COMPONENT_DEFINE ("WifiWsn");
+NS_LOG_COMPONENT_DEFINE ("SendTos");
 
 using namespace ns3;
 

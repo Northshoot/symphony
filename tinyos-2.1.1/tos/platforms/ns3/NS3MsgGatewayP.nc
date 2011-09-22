@@ -1,5 +1,5 @@
 #include "sim/sim_main.h"
-#include <Tasklet.h>
+#include "defines.h"
 
 module NS3MsgGatewayP{
 	provides 
@@ -67,7 +67,7 @@ implementation{
 	 * SUCCESS otherwise.
 	 */
 	tasklet_async command error_t State.setChannel(uint8_t channel){
-		
+		return 0;
 	}
 
 

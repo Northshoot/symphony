@@ -89,4 +89,11 @@
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>tinyos</name>
+			<type>2</type>
+			<location>/home/lauril/dev/symphony/tinyos-2.1.1</location>
+		</link>
+	</linkedResources>
 </projectDescription>

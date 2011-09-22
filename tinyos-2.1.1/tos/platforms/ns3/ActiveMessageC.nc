@@ -10,12 +10,12 @@ configuration ActiveMessageC
 		interface AMSend[uint8_t id];
 		interface Receive[uint8_t id];
 		//interface Receive as Snoop[uint8_t id];
-		//interface SendNotifier[am_id_t id];
+		interface SendNotifier[am_id_t id];
 
 		interface Packet;
 		interface AMPacket;
 
-//		interface PacketAcknowledgements;
+		interface PacketAcknowledgements;
 //		interface LowPowerListening;
 #ifdef PACKET_LINK
 #error packet link is not supporter
@@ -33,7 +33,7 @@ implementation
 	components NS3MsgGatewayP as Gate;
 	components ActiveMessageAddressC;
 	
-	Gate.ActiveMessageAddress -> ActiveMessageAddressC;
+	MessageC.ActiveMessageAddress -> ActiveMessageAddressC;
 
 	MessageC.SubSend -> Gate.Send;
 	MessageC.SubReceive -> Gate.Receive;
@@ -43,13 +43,13 @@ implementation
 
 	AMSend = MessageC;
 	Receive = MessageC.Receive;
-	Snoop = MessageC.Snoop;
+//	Snoop = MessageC.Snoop;
 	SendNotifier = MessageC;
 
 	Packet = MessageC;
 	AMPacket = MessageC;
 
-//	PacketAcknowledgements = MessageC;
+	PacketAcknowledgements = MessageC;
 //	LowPowerListening = MessageC;
 #ifdef PACKET_LINK
 //	PacketLink = MessageC;

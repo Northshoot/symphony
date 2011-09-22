@@ -3,8 +3,9 @@
  */
  
 #include "radioheader.h"
-#include <Tasklet.h>
-#include <RadioAssert.h>
+#include "defines.h"
+
+
 
 module Ns3ActiveMessageC
 {
@@ -20,7 +21,7 @@ module Ns3ActiveMessageC
 		interface Packet;
 		interface AMPacket;
 
-//		interface PacketAcknowledgements;
+		interface PacketAcknowledgements;
 //		interface LowPowerListening;
 #ifdef PACKET_LINK
 //		interface PacketLink;
@@ -142,6 +143,9 @@ implementation
 	{
 	}
 
+	tasklet_async event void SubState.done(){
+		
+	}
 /*----------------- Receive -----------------*/
 
 	event message_t* SubReceive.receive(message_t* msg)
@@ -235,7 +239,8 @@ implementation
 
 	command void Packet.clear(message_t* msg)
 	{
-		getMeta(msg)->flags = 0;		
+		//TODO:clear flags
+		getMeta(msg)->flags ;		
 	}
 
 	command uint8_t Packet.payloadLength(message_t* msg)
@@ -261,4 +266,16 @@ implementation
 		return (void*)msg->data;
 	}
 
+
+	async command error_t PacketAcknowledgements.requestAck(message_t *msg){
+		return 0;
+	}
+
+	async command error_t PacketAcknowledgements.noAck(message_t *msg){
+		return 0;
+	}
+
+	async command bool PacketAcknowledgements.wasAcked(message_t *msg){
+		return 0;
+	}
 }
