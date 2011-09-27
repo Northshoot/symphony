@@ -31,6 +31,8 @@
 // tcpdump -r wifi-simple-adhoc-0-0.pcap -nn -tt
 //
 
+#include "ns3/tos-module.h"
+
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
 #include "ns3/mobility-module.h"
@@ -104,7 +106,7 @@ int main (int argc, char *argv[])
   Config::SetDefault ("ns3::WifiRemoteStationManager::NonUnicastMode", 
                       StringValue (phyMode));
 
-  NodeContainer c;
+  TosNodeContainer c;
   c.Create (2);
 
   // The below set of helpers will help us to put together the wifi NICs we want
@@ -173,7 +175,7 @@ int main (int argc, char *argv[])
   source->Connect (remote);
 
   // Tracing
-  wifiPhy.EnablePcap ("wsn-wifi", s);
+  //wifiPhy.EnablePcap ("wsn-wifi", s);
 
   // Output what we are doing
   NS_LOG_UNCOND ("Testing " << numPackets  << " packets sent with receiver rss " << rss );
