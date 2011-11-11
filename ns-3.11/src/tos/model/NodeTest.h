@@ -36,10 +36,14 @@ public:
    *
    * Must be invoked by subclasses only.
    */
-  NodeTest(uint32_t systemId);
+  NodeTest(uint32_t systemId_t);
+  void Construct(void);
+
   virtual ~NodeTest();
 
-
+private:
+  uint32_t    m_id;         // Node id for this node
+  uint32_t    m_sid;        // System id for this node
 
 
 };

@@ -41,23 +41,21 @@ NodeTest::GetTypeId (void)
   return tid;
 }
 
-NodeTest::NodeTest()
+NodeTest::NodeTest(uint32_t sid)
+  : m_id (0),
+    m_sid (sid)
 {
-  Node ();
+  Construct ();
 }
 
-NodeTest::NodeTest(uint32_t nodesid)
+
+
+void
+NodeTest::Construct (void)
 {
-  Node(nodesid);
 
+  m_id = TosNodeList::Add (this);
 }
-
-//void
-//NodeTest::Construct (void)
-//{
-//
-//  m_id = TosNodeList::Add (this);
-//}
 
 NodeTest::~NodeTest ()
 {
