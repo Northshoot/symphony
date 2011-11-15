@@ -4,7 +4,7 @@
  *  Created on: Apr 27, 2010
  *      Author: Laurynas Riliskis
  */
-
+#include <stdint.h>
 #ifndef LIBTOTOSPROXY_H_
 #define LIBTOTOSPROXY_H_
 

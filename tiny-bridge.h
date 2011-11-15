@@ -11,7 +11,7 @@
 #ifndef TINYBRIDGE_H_
 #define TINYBRIDGE_H_
 
-
+#include <stdint.h>
 #include "tos-to-lib-proxy.h"
 #include "lib-to-tos-proxy.h"
 //#include "tos-node.h"

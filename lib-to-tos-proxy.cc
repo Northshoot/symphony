@@ -14,7 +14,7 @@
 
 
 LibToTosProxy::LibToTosProxy() {
-	std::cout<<"confirm add "<<(void *)(&LibToTosProxy::confirmSet)<<'\n';
+	//std::cout<<"confirm add "<<(void *)(&LibToTosProxy::confirmSet)<<'\n';
 //	tosnode=tos;
 //	simu_clock=tosnode->getClock();
 
@@ -36,7 +36,7 @@ LibToTosProxy::getNow(int b){
 	//uint32_t a = simu_clock->getTimeNow();
 	std::cout<<"LibToTosProxy::getNow(void) " <<b<<std::endl;
 
-	return a;
+	return b;
 }
 
 

@@ -47,7 +47,7 @@ TinyBridge::bridgeObjects(){
         std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
         exit(1);
     } else {
-		tosnode->setProxy(tostolib); // set link from tos to ns3
+		//tosnode->setProxy(tostolib); // set link from tos to ns3
 		((tosfunc)getFunc("setUniqueID"))(1); //set nodes id in lib
 		setObj=(tosfunc)getFunc("setProxy");
 		setObj((long)libtotos); //set link from ns3 to tos
