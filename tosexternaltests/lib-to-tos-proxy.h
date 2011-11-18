@@ -4,7 +4,7 @@
  *  Created on: Apr 27, 2010
  *      Author: Laurynas Riliskis
  */
-#include <stdint.h>
+
 #ifndef LIBTOTOSPROXY_H_
 #define LIBTOTOSPROXY_H_
 
@@ -34,6 +34,8 @@ class LibToTosProxy {
 	   int confirmSet(int);
 
 	   uint32_t getNow(int);
+	   int sendMessage(void * msg);
+
 
 
     /**
@@ -52,6 +54,7 @@ extern "C" {
 #endif
 
 int gateway(void *obj,int func,int arg);
+int gatewayRadio(void *obj,int func,void *msg);
 int setProxy(void * obj);
 
 
