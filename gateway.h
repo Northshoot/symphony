@@ -7,7 +7,9 @@
 
 #ifndef GATEWAY_H_
 #define GATEWAY_H_
+
 #include "lib-to-tos-proxy.h"
+
 
 /**
  * This function is used by all objects.
@@ -19,7 +21,7 @@
 //TODO: make this auto generated
 
 extern int gateway(void *tthis,int call, int arg){
- std::cout << "gateway call "<< call <<" arg " << arg << std::endl;
+ //std::cout << "gateway call "<< call <<" arg " << arg << std::endl;
   // here should be a switch case on "call"
   // or possibly an array of function pointers
 	switch (call) {
@@ -31,14 +33,14 @@ extern int gateway(void *tthis,int call, int arg){
 			return ((LibToTosProxy *)tthis)->getNow(arg);
 			break;
 		case 2:
-			std::cout << "((LibToTosProxy *)tthis)->getNow() "<< ((LibToTosProxy *)tthis)->getNow(arg) << std::endl;
+			//std::cout << "((LibToTosProxy *)tthis)->getNow() "<< ((LibToTosProxy *)tthis)->getNow(arg) << std::endl;
 			return 0;
 			break;
 
 		default:
 			//OPS! never ever go here!
 			//if you have -> core dump :D
-			std::cerr <<" bad index no where to go "<< call<< std::endl;
+			//std::cerr <<" bad index no where to go "<< call<< std::endl;
 			return -1;
 			break;
 	}

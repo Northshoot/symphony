@@ -5,10 +5,11 @@
  *      Author: Laurynas Riliskis
  */
 #include <iostream>
+#include <inttypes.h>
 //#include "tos-node.h"
 
 #include "lib-to-tos-proxy.h"
-#include "gateway.h"
+
 
 
 
@@ -39,6 +40,11 @@ LibToTosProxy::getNow(int b){
 	return b;
 }
 
+int
+LibToTosProxy::sendMessage(void * msg){
+	std::cout<<"sendMessage(void * msg)" << sizeof(msg)<<std::endl;
+	return 0;
+}
 
 //functions for radio
 
@@ -46,12 +52,44 @@ LibToTosProxy::~LibToTosProxy() {
 	// TODO Auto-generated destructor stub
 }
 
-//int gateway(void *tthis,int call,int arg){
-////  std::cout << "gateway " << arg << std::endl;
-//  // here should be a switch case on "call"
-//  // or possibly an array of function pointers
-//  if(call == 1)
-//	  return ((LibToTosProxy *)tthis)->confirmSet(arg);
-//  else
-//	  return ((LibToTosProxy *)tthis)->tickTime(arg);
-//}
+int gateway(void *tthis,int call, int arg){
+ //std::cout << "gateway call "<< call <<" arg " << arg << std::endl;
+  // here should be a switch case on "call"
+  // or possibly an array of function pointers
+	switch (call) {
+		case 0:
+			return ((LibToTosProxy *)tthis)->confirmSet(arg);
+			break;
+
+		case 1:
+			return ((LibToTosProxy *)tthis)->getNow(arg);
+			break;
+		case 2:
+			//std::cout << "((LibToTosProxy *)tthis)->getNow() "<< ((LibToTosProxy *)tthis)->getNow(arg) << std::endl;
+			return 0;
+			break;
+
+		default:
+			//OPS! never ever go here!
+			//if you have -> core dump :D
+			//std::cerr <<" bad index no where to go "<< call<< std::endl;
+			return -1;
+			break;
+	}
+}
+
+int gatewayRadio(void *tthis,int call, void *msg){
+	switch (call) {
+		case 0:
+			return ((LibToTosProxy *)tthis)->sendMessage(msg);
+			break;
+
+		default:
+			//OPS! never ever go here!
+			//if you have -> core dump :D
+			//std::cerr <<" bad index no where to go "<< call<< std::endl;
+			return -1;
+			break;
+	}
+}
+
