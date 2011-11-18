@@ -26,7 +26,8 @@ implementation{
 	}
 	
 	command error_t Send.send(message_t* msg){
-		msg_out=msg;
+		memcpy(msg_out, msg, sizeof(message_t));
+		gatewayRadio(proxy, 1, msg_out);
 		post sendDone();
 			return 0;
 	}

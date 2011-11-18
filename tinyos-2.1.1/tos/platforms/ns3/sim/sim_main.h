@@ -1,7 +1,7 @@
 #ifndef SIM_MAIN_H
 #define SIM_MAIN_H
 
-#include "ns3/lib-to-tos-proxy.h"
+#include "lib-to-tos-proxy.h"
 
 int a;
 int id_this_lib;
@@ -23,7 +23,7 @@ int sim_main_start_mote(int id) ;
 
 int setProxy(void * con) @C() @spontaneous() {
          proxy=con;
-
+         printf("set proxy");
          if(proxy != NULL ){
             a=gateway(proxy,0,id_this_lib);
            printf("gateway(proxy,0,id_this_lib): %i\n", a);
