@@ -85,8 +85,8 @@ implementation {
 		dbg("RadioCountToLedsC", "Received packet of length %hhu.\n", len);
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
 		else {
-			radio_count_msg_t* rcm = (radio_count_msg_t*)payload;
-
+			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;
+			dbg("RadioCountToLedsC", "Received counter %u.\n", ((radio_count_msg_t*)payload)->counter);
 			return bufPtr;
 		}
 	}
