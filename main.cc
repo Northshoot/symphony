@@ -21,12 +21,13 @@ int main(void)
 	std::vector<TinyBridge *> bridge;
     srand((unsigned)time(0));
 
-    for(int i=0; i<2;i++){
-    	std::cout<<"Round ./libtos.so "<<i<<std::endl;
+//    for(int i=0; i<2;i++){
+//    	std::cout<<"Round ./libtos.so "<<i<<std::endl;
+//
+//
+//    }
 
-    	bridge.push_back(new TinyBridge("./libtos.so"));
-    }
-
+    bridge.push_back(new TinyBridge("./libtos.so"));
 
 
 	return 0;

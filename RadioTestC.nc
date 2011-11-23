@@ -28,6 +28,7 @@ implementation {
 	uint16_t counter = 0;
  
 	event void Boot.booted() {
+		printf("booted\n");
 		call AMControl.start();
 	}
 

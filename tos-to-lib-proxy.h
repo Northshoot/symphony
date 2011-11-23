@@ -8,6 +8,7 @@
 #ifndef TOSTOLIBPROXY_H_
 #define TOSTOLIBPROXY_H_
 #include <stdint.h>
+#include <boost/thread/thread.hpp>
 
 typedef int (*tosfunc)(int);
 
@@ -30,6 +31,9 @@ private:
 	tosfunc pass__timerFired;
 	tosfunc pass__sim_main_start_mote;
 	tosfunc pass__runNext;
+	void tickTimer();
+	int a;
+	boost::thread    m_Thread;
 };
 
 #endif /* TOSTOLIBPROXY_H_ */
