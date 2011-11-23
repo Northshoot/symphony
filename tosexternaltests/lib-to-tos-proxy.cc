@@ -81,7 +81,8 @@ int gateway(void *tthis,int call, int arg){
 int gatewayRadio(void *tthis,int call, void *msg){
 	switch (call) {
 		case 0:
-			return ((LibToTosProxy *)tthis)->sendMessage(msg);
+			std::cout << "radio gateway msg size" << sizeof(msg) << std::endl;
+			return 0;
 			break;
 
 		default:

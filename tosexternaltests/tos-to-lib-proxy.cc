@@ -5,16 +5,27 @@
  *      Author: laurynas
  */
 #include <iostream>
+#include <boost/thread/thread.hpp>
 #include "tos-to-lib-proxy.h"
 
-TosToLibProxy::TosToLibProxy() {
+void
+TosToLibProxy::tickTimer(){
+	pass__timerFired(a);
+	a++;
+	boost::this_thread::sleep(boost::posix_time::milliseconds(1));
+}
 
+TosToLibProxy::TosToLibProxy() {
+	a=1;
+	m_Thread = boost::thread(&TosToLibProxy::tickTimer, this);
 
 }
+
 void
 TosToLibProxy::setStartMote(void * tos){
 	//std::cout<<"TosToLibProxy boot node " << (int)tos <<std::endl;
 	pass__sim_main_start_mote=(tosfunc)tos;
+	m_Thread.join();
 }
 void
 TosToLibProxy::setTimerFired(void *  tos){

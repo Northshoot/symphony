@@ -43,7 +43,7 @@ all:
 		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o  lib-to-tos-proxy.o -ldl 
 		@echo ""
 		@echo "Linking all together              "
-		$(GPP) main.cc $(FILES) lib-to-tos-proxy.o -o $(OUT) -ldl
+		$(GPP) main.cc $(FILES) lib-to-tos-proxy.o -o $(OUT) -lboost_thread  -ldl
 
 
 		

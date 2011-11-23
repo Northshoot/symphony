@@ -7,8 +7,6 @@
 
 #define __USE_GNU 1
 
-
-
 #include <iostream>
 #include <cstdlib>
 #include <ctime>

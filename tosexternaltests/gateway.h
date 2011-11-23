@@ -48,4 +48,21 @@ extern int gateway(void *tthis,int call, int arg){
 
 }
 
+extern int gatewayRadio(void *obj,int func,void *msg){
+	switch (call) {
+		case 0:
+
+			return 0;
+			break;
+
+
+		default:
+			//OPS! never ever go here!
+			//if you have -> core dump :D
+			//std::cerr <<" bad index no where to go "<< call<< std::endl;
+			return -1;
+			break;
+	}
+	return -1;
+}
 #endif /* GATEWAY_H_ */
