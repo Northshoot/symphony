@@ -45,20 +45,21 @@ TinyBridge::bridgeObjects(){
         std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
         exit(1);
     } else {
-    	std::cout << " lib is open " << '\n';
+    	std::cout << "TinyBridge::bridgeObjects() " << "lib is open " << '\n';
 		//tosnode->setProxy(tostolib); // set link from tos to ns3
 		((tosfunc)getFunc("setUniqueID"))(1); //set nodes id in lib
-		std::cout << "setUniqueID " << '\n';
+		std::cout << "TinyBridge::bridgeObjects() " << "setUniqueID " << '\n';
 		setObj=(tosfunc)getFunc("setProxy");
-		std::cout << " setProxy " << '\n';
+		std::cout << "TinyBridge::bridgeObjects() " << "setProxy " << '\n';
 		setObj((long)libtotos); //set link from ns3 to tos
-		std::cout << "set link from ns3 to tos " << '\n';
+		std::cout << "TinyBridge::bridgeObjects() " << "set link from ns3 to tos " << '\n';
 		tostolib->setStartMote(getFunc("sim_main_start_mote")); //boot node
-		std::cout << " sim_main_start_mote"  << '\n';
+		std::cout << "TinyBridge::bridgeObjects() " << "sim_main_start_mote"  << '\n';
 		tostolib->setTimerFired(getFunc("tickFired")); // connect clock tick
-		std::cout << " tickFired " << '\n';
+		std::cout << "TinyBridge::bridgeObjects() " << "tickFired " << '\n';
 		run_next = (tosfunc)getFunc("runNextEventExternal");
-		std::cout << " runNextEventExternal " << '\n';
+		std::cout << "TinyBridge::bridgeObjects() " << "runNextEventExternal " << '\n';
+		tostolib->startNode();
     }
 }
 

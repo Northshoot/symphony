@@ -28,11 +28,12 @@ implementation {
 	uint16_t counter = 0;
  
 	event void Boot.booted() {
-		printf("booted\n");
+		printf("App: booted\n");
 		call AMControl.start();
 	}
 
 	event void AMControl.startDone(error_t err) {
+		printf("App: AMControl.startDone(error_t err) \n");
 		if (err == SUCCESS) {
 			counter++;
 			dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
