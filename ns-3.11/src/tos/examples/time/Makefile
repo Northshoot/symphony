@@ -41,7 +41,7 @@ OPTFLAGS_GCC = -g -O0 -Wall -Wshadow
 NCC_OPT= -fPIC -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(NS3_DIR)
 #include dirs
 
-#for headers always use "ns3/heade.h" to allow moving to waf in future
+#for headers always use "ns3/header.h" to allow moving to waf in future
 NS3_INCL = -I$(NS3_DIR) 
 TOS_INCL = -I$(TOS_NS3)
 NS3_OBJ = $(NS3_DIR)/libns3.so

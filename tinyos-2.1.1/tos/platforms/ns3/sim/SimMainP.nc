@@ -12,7 +12,7 @@ implementation {
 
   int sim_main_start_mote(int id) @C() @spontaneous() {
     //char timeBuf[128];
-    printf("sim_main_start_mote\n");
+    printf("FROM toslib: sim_main_start_mote\n");
 
     atomic {
       /* First, initialize the Scheduler so components can post

@@ -46,35 +46,45 @@
 import sys
 import os
 
-if sys.version < '2.6':
-    print "Too old python version."
-    print "Please install python 2.6"
-    raise SystemExit
 
-pre = open('app.c', 'r')
-post = open('post_app.c','w')
+class PostProcess:
+	def __init__(self, args):
+		self.args = args
+		self.cwd = os.getcwd() + '/'
+		self.postprocess()
 
-post.write("#ifdef __cplusplus\n \
- extern \"C\" { \n \
- #endif \n")
+	def postprocess(self,):	
+		pre = open(self.cwd  + self.args[1], 'r')
+		post = open(self.cwd  + self.args[2],'w')
+		
+		post.write("#ifdef __cplusplus\n \
+		 extern \"C\" { \n \
+		 #endif \n")
+		
+		pre_lines=pre.readlines()
+		
+		for line in pre_lines:
+		    if "typedef uint8_t bool" in line:
+		        pass
+		    elif "FALSE = 0, TRUE = 1" in line:
+		        post.write(line);
+		    elif "TRUE" in line:        
+		        post.write(line.replace("TRUE","true"))
+		    elif "FALSE" in line:
+		        post.write(line.replace("FALSE","false"))   
+		    else:
+		        post.write(line)
+		    
+		post.write(" #ifdef __cplusplus \n \
+		 } \n \
+		 #endif \n")
+		
+		pre.close()
+		post.close()
 
-pre_lines=pre.readlines()
-
-for line in pre_lines:
-    if "typedef uint8_t bool" in line:
-        pass
-    elif "FALSE = 0, TRUE = 1" in line:
-        post.write(line);
-    elif "TRUE" in line:        
-        post.write(line.replace("TRUE","true"))
-    elif "FALSE" in line:
-        post.write(line.replace("FALSE","false"))   
-    else:
-        post.write(line)
-    
-post.write(" #ifdef __cplusplus \n \
- } \n \
- #endif \n")
-
-pre.close()
-post.close()
+if __name__ == '__main__':
+	if sys.version < '2.6':
+	    print "Too old python version."
+	    print "Please install python 2.6"
+	    raise SystemExit
+	PostProcess(sys.argv)

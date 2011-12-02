@@ -52,6 +52,7 @@ module Ns3ActiveMessageC
 implementation
 {
 	command error_t SplitControl.start(){
+		printf("command error_t SplitControl.start()");
 		return SUCCESS;
 	}
 

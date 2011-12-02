@@ -40,6 +40,7 @@
 
 #include "hardware.h"
 #include <stdio.h>
+#include "sim_main.h"
 
 module SchedulerBasicP @safe() {
   provides interface Scheduler;

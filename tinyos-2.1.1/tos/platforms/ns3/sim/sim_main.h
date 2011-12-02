@@ -23,13 +23,13 @@ int sim_main_start_mote(int id) ;
 
 int setProxy(void * con) @C() @spontaneous() {
          proxy=con;
-         printf("set proxy");
+         printf("FROM toslib: set proxy");
          if(proxy != NULL ){
             a=gateway(proxy,0,id_this_lib);
-           printf("gateway(proxy,0,id_this_lib): %i\n", a);
+           printf("FROM toslib: gateway(proxy,0,id_this_lib): %i\n", a);
 //           printf("proxy in lib: %i\n", id_this_lib);
          } else {
-             printf("ops! no proxy\n");
+             printf("FROM toslib: ops! no proxy\n");
          }
 
          return id_this_lib;

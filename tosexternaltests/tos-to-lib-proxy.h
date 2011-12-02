@@ -24,6 +24,7 @@ public:
 	void setStartMote(void *  tos);
 	void setTimerFired(void *  tos);
 	void runNextEvent(void *  tos);
+	void startNode(void);
 
 	~TosToLibProxy();
 
@@ -31,7 +32,7 @@ private:
 	tosfunc pass__timerFired;
 	tosfunc pass__sim_main_start_mote;
 	tosfunc pass__runNext;
-	void tickTimer();
+	void tickTimer(int c);
 	int a;
 	boost::thread    m_Thread;
 };
