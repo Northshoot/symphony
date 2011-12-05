@@ -1,3 +1,6 @@
+take only needed modules configure:
+./waf --disable-python --disable-examples --disable-tests --enable-module='wifi,tos,wsn' configure
+
 add waf build support for examples
 add socket communication
 create low mac for tosnode via Active message

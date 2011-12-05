@@ -1,16 +1,18 @@
 #ifdef __cplusplus
-  extern "C" { 
-  #endif 
+ 		 extern "C" { 
+ 		 #endif 
 #define nx_struct struct
 #define nx_union union
-# 149 "/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stddef.h" 3
+# 150 "/usr/lib/gcc/x86_64-linux-gnu/4.6.1/include/stddef.h" 3
 typedef long int ptrdiff_t;
-#line 211
+#line 212
 typedef long unsigned int size_t;
-#line 323
+#line 324
 typedef int wchar_t;
 # 8 "/usr/lib/ncc/deputy_nodeputy.h"
 struct __nesc_attr_nonnull {
+#line 8
+  int dummy;
 }  ;
 #line 9
 struct __nesc_attr_bnd {
@@ -34,9 +36,13 @@ struct __nesc_attr_count_nok {
 }  ;
 #line 13
 struct __nesc_attr_one {
+#line 13
+  int dummy;
 }  ;
 #line 14
 struct __nesc_attr_one_nok {
+#line 14
+  int dummy;
 }  ;
 #line 15
 struct __nesc_attr_dmemset {
@@ -50,6 +56,8 @@ struct __nesc_attr_dmemcpy {
 }  ;
 #line 17
 struct __nesc_attr_nts {
+#line 17
+  int dummy;
 }  ;
 # 37 "/usr/include/stdint.h" 3
 typedef signed char int8_t;
@@ -141,25 +149,25 @@ typedef struct __nesc_unnamed4242 {
   long int quot;
   long int rem;
 } imaxdiv_t;
-# 385 "/usr/lib/ncc/nesc_nx.h"
-typedef struct { unsigned char data[1]; } __attribute__((packed)) nx_int8_t;typedef int8_t __nesc_nxbase_nx_int8_t  ;
-typedef struct { unsigned char data[2]; } __attribute__((packed)) nx_int16_t;typedef int16_t __nesc_nxbase_nx_int16_t  ;
-typedef struct { unsigned char data[4]; } __attribute__((packed)) nx_int32_t;typedef int32_t __nesc_nxbase_nx_int32_t  ;
-typedef struct { unsigned char data[8]; } __attribute__((packed)) nx_int64_t;typedef int64_t __nesc_nxbase_nx_int64_t  ;
-typedef struct { unsigned char data[1]; } __attribute__((packed)) nx_uint8_t;typedef uint8_t __nesc_nxbase_nx_uint8_t  ;
-typedef struct { unsigned char data[2]; } __attribute__((packed)) nx_uint16_t;typedef uint16_t __nesc_nxbase_nx_uint16_t  ;
-typedef struct { unsigned char data[4]; } __attribute__((packed)) nx_uint32_t;typedef uint32_t __nesc_nxbase_nx_uint32_t  ;
-typedef struct { unsigned char data[8]; } __attribute__((packed)) nx_uint64_t;typedef uint64_t __nesc_nxbase_nx_uint64_t  ;
+# 431 "/usr/lib/ncc/nesc_nx.h"
+typedef struct { unsigned char nxdata[1]; } __attribute__((packed)) nx_int8_t;typedef int8_t __nesc_nxbase_nx_int8_t  ;
+typedef struct { unsigned char nxdata[2]; } __attribute__((packed)) nx_int16_t;typedef int16_t __nesc_nxbase_nx_int16_t  ;
+typedef struct { unsigned char nxdata[4]; } __attribute__((packed)) nx_int32_t;typedef int32_t __nesc_nxbase_nx_int32_t  ;
+typedef struct { unsigned char nxdata[8]; } __attribute__((packed)) nx_int64_t;typedef int64_t __nesc_nxbase_nx_int64_t  ;
+typedef struct { unsigned char nxdata[1]; } __attribute__((packed)) nx_uint8_t;typedef uint8_t __nesc_nxbase_nx_uint8_t  ;
+typedef struct { unsigned char nxdata[2]; } __attribute__((packed)) nx_uint16_t;typedef uint16_t __nesc_nxbase_nx_uint16_t  ;
+typedef struct { unsigned char nxdata[4]; } __attribute__((packed)) nx_uint32_t;typedef uint32_t __nesc_nxbase_nx_uint32_t  ;
+typedef struct { unsigned char nxdata[8]; } __attribute__((packed)) nx_uint64_t;typedef uint64_t __nesc_nxbase_nx_uint64_t  ;
 
 
-typedef struct { unsigned char data[1]; } __attribute__((packed)) nxle_int8_t;typedef int8_t __nesc_nxbase_nxle_int8_t  ;
-typedef struct { unsigned char data[2]; } __attribute__((packed)) nxle_int16_t;typedef int16_t __nesc_nxbase_nxle_int16_t  ;
-typedef struct { unsigned char data[4]; } __attribute__((packed)) nxle_int32_t;typedef int32_t __nesc_nxbase_nxle_int32_t  ;
-typedef struct { unsigned char data[8]; } __attribute__((packed)) nxle_int64_t;typedef int64_t __nesc_nxbase_nxle_int64_t  ;
-typedef struct { unsigned char data[1]; } __attribute__((packed)) nxle_uint8_t;typedef uint8_t __nesc_nxbase_nxle_uint8_t  ;
-typedef struct { unsigned char data[2]; } __attribute__((packed)) nxle_uint16_t;typedef uint16_t __nesc_nxbase_nxle_uint16_t  ;
-typedef struct { unsigned char data[4]; } __attribute__((packed)) nxle_uint32_t;typedef uint32_t __nesc_nxbase_nxle_uint32_t  ;
-typedef struct { unsigned char data[8]; } __attribute__((packed)) nxle_uint64_t;typedef uint64_t __nesc_nxbase_nxle_uint64_t  ;
+typedef struct { unsigned char nxdata[1]; } __attribute__((packed)) nxle_int8_t;typedef int8_t __nesc_nxbase_nxle_int8_t  ;
+typedef struct { unsigned char nxdata[2]; } __attribute__((packed)) nxle_int16_t;typedef int16_t __nesc_nxbase_nxle_int16_t  ;
+typedef struct { unsigned char nxdata[4]; } __attribute__((packed)) nxle_int32_t;typedef int32_t __nesc_nxbase_nxle_int32_t  ;
+typedef struct { unsigned char nxdata[8]; } __attribute__((packed)) nxle_int64_t;typedef int64_t __nesc_nxbase_nxle_int64_t  ;
+typedef struct { unsigned char nxdata[1]; } __attribute__((packed)) nxle_uint8_t;typedef uint8_t __nesc_nxbase_nxle_uint8_t  ;
+typedef struct { unsigned char nxdata[2]; } __attribute__((packed)) nxle_uint16_t;typedef uint16_t __nesc_nxbase_nxle_uint16_t  ;
+typedef struct { unsigned char nxdata[4]; } __attribute__((packed)) nxle_uint32_t;typedef uint32_t __nesc_nxbase_nxle_uint32_t  ;
+typedef struct { unsigned char nxdata[8]; } __attribute__((packed)) nxle_uint64_t;typedef uint64_t __nesc_nxbase_nxle_uint64_t  ;
 # 65 "/usr/include/string.h" 3
 extern void *memset(void *__s, int __c, size_t __n) __attribute((__nothrow__)) __attribute((__nonnull__(1))) ;
 # 40 "/usr/include/xlocale.h" 3
@@ -180,7 +188,7 @@ typedef struct __locale_struct {
 
 
 typedef __locale_t locale_t;
-# 67 "/usr/include/bits/waitstatus.h" 3
+# 67 "/usr/include/x86_64-linux-gnu/bits/waitstatus.h" 3
 union wait {
 
   int w_status;
@@ -280,7 +288,7 @@ __extension__
 
 
 __extension__ 
-# 31 "/usr/include/bits/types.h" 3
+# 31 "/usr/include/x86_64-linux-gnu/bits/types.h" 3
 typedef unsigned char __u_char;
 typedef unsigned short int __u_short;
 typedef unsigned int __u_int;
@@ -370,7 +378,7 @@ typedef long int __intptr_t;
 
 
 typedef unsigned int __socklen_t;
-# 34 "/usr/include/sys/types.h" 3
+# 34 "/usr/include/x86_64-linux-gnu/sys/types.h" 3
 typedef __u_char u_char;
 typedef __u_short u_short;
 typedef __u_int u_int;
@@ -449,7 +457,7 @@ typedef __time_t time_t;
 typedef __clockid_t clockid_t;
 #line 104
 typedef __timer_t timer_t;
-# 151 "/usr/include/sys/types.h" 3
+# 151 "/usr/include/x86_64-linux-gnu/sys/types.h" 3
 typedef unsigned long int ulong;
 typedef unsigned short int ushort;
 typedef unsigned int uint;
@@ -460,7 +468,7 @@ typedef unsigned int u_int32_t __attribute((__mode__(__SI__))) ;
 typedef unsigned int u_int64_t __attribute((__mode__(__DI__))) ;
 
 typedef int register_t __attribute((__mode__(__word__))) ;
-# 24 "/usr/include/bits/sigset.h" 3
+# 24 "/usr/include/x86_64-linux-gnu/bits/sigset.h" 3
 typedef int __sig_atomic_t;
 
 
@@ -474,7 +482,7 @@ typedef struct __nesc_unnamed4250 {
 
   unsigned long int __val[1024 / (8 * sizeof(unsigned long int ))];
 } __sigset_t;
-# 38 "/usr/include/sys/select.h" 3
+# 38 "/usr/include/x86_64-linux-gnu/sys/select.h" 3
 typedef __sigset_t sigset_t;
 # 120 "/usr/include/time.h" 3
 struct timespec {
@@ -482,13 +490,13 @@ struct timespec {
   __time_t tv_sec;
   long int tv_nsec;
 };
-# 75 "/usr/include/bits/time.h" 3
+# 75 "/usr/include/x86_64-linux-gnu/bits/time.h" 3
 struct timeval {
 
   __time_t tv_sec;
   __suseconds_t tv_usec;
 };
-# 49 "/usr/include/sys/select.h" 3
+# 49 "/usr/include/x86_64-linux-gnu/sys/select.h" 3
 typedef __suseconds_t suseconds_t;
 
 
@@ -517,7 +525,7 @@ fd_set;
 
 
 typedef __fd_mask fd_mask;
-# 30 "/usr/include/sys/sysmacros.h" 3
+# 30 "/usr/include/x86_64-linux-gnu/sys/sysmacros.h" 3
 __extension__ 
 
 
@@ -525,7 +533,7 @@ __extension__
 
 
 __extension__ 
-# 229 "/usr/include/sys/types.h" 3
+# 229 "/usr/include/x86_64-linux-gnu/sys/types.h" 3
 typedef __blksize_t blksize_t;
 
 
@@ -542,7 +550,7 @@ typedef __fsblkcnt_t fsblkcnt_t;
 
 
 typedef __fsfilcnt_t fsfilcnt_t;
-# 50 "/usr/include/bits/pthreadtypes.h" 3
+# 50 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h" 3
 typedef unsigned long int pthread_t;
 
 
@@ -736,12 +744,12 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b23a15256b0, const void *arg_0x2b23a1525988);
+typedef int (*__compar_fn_t)(const void *arg_0x2b8bdd4ab6b0, const void *arg_0x2b8bdd4ab988);
 #line 776
 __extension__ 
 #line 793
 __extension__ 
-# 31 "/usr/include/bits/mathdef.h" 3
+# 31 "/usr/include/x86_64-linux-gnu/bits/mathdef.h" 3
 typedef float float_t;
 typedef double double_t;
 # 202 "/usr/include/math.h" 3
@@ -793,7 +801,7 @@ enum __nesc_unnamed4265 {
   _ISpunct = 10 < 8 ? (1 << 10) << 8 : (1 << 10) >> 8, 
   _ISalnum = 11 < 8 ? (1 << 11) << 8 : (1 << 11) >> 8
 };
-# 23 "/home/dev/symphony/tinyos-2.1.1/tos/system/tos.h"
+# 23 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/tos.h"
 enum __nesc_unnamed4266 {
 #line 24
   FALSE = 0, TRUE = 1
@@ -814,7 +822,7 @@ struct __nesc_attr_atleastonce {
 #line 36
 struct __nesc_attr_exactlyonce {
 };
-# 51 "/home/dev/symphony/tinyos-2.1.1/tos/types/TinyError.h"
+# 51 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/types/TinyError.h"
 enum __nesc_unnamed4267 {
   SUCCESS = 0, 
   FAIL = 1, 
@@ -832,7 +840,7 @@ enum __nesc_unnamed4267 {
 };
 
 typedef uint8_t error_t  ;
-# 4 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
+# 4 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
 static __inline void __nesc_enable_interrupt();
 static __inline void __nesc_disable_interrupt();
 
@@ -847,7 +855,7 @@ __inline void __nesc_atomic_end(__nesc_atomic_t x)  ;
 
 
 
-typedef struct { unsigned char data[4]; } __attribute__((packed)) nx_float;typedef float __nesc_nxbase_nx_float  ;
+typedef struct { unsigned char nxdata[4]; } __attribute__((packed)) nx_float;typedef float __nesc_nxbase_nx_float  ;
 #line 34
 enum __nesc_unnamed4268 {
   TOS_SLEEP_NONE = 0
@@ -897,7 +905,7 @@ typedef int _G_int16_t __attribute((__mode__(__HI__))) ;
 typedef int _G_int32_t __attribute((__mode__(__SI__))) ;
 typedef unsigned int _G_uint16_t __attribute((__mode__(__HI__))) ;
 typedef unsigned int _G_uint32_t __attribute((__mode__(__SI__))) ;
-# 40 "/usr/lib/gcc/x86_64-linux-gnu/4.4.5/include/stdarg.h" 3
+# 40 "/usr/lib/gcc/x86_64-linux-gnu/4.6.1/include/stdarg.h" 3
 typedef __builtin_va_list __gnuc_va_list;
 # 170 "/usr/include/libio.h" 3
 struct _IO_jump_t;
@@ -1045,10 +1053,10 @@ struct _IO_FILE;
 struct _IO_FILE;
 #line 359
 extern int printf(const char *__restrict __format, ...);
-# 57 "/home/dev/ns_repos/ns-3-allinone/ns-3.9/build/debug/ns3/LibToTosProxy.h"
+# 57 "/home/lauril/dev/symphony/ns-3.11/build/debug/ns3/lib-to-tos-proxy.h"
 int gateway(void *obj, int func, int arg);
 int setProxy(void *obj);
-# 6 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
+# 6 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
 int a;
 int id_this_lib;
 void *proxy;
@@ -1068,7 +1076,7 @@ int sim_main_start_mote(int id);
 
 
 int setProxy(void *con)   ;
-# 40 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.h"
+# 40 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.h"
 typedef struct __nesc_unnamed4273 {
 #line 40
   int notUsed;
@@ -1093,76 +1101,74 @@ typedef TMilli /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_t
 typedef /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$precision_tag;
 typedef /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$precision_tag;
 typedef TMilli NsTimerP$Timer$precision_tag;
-# 62 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t PlatformC$Init$init(void );
-# 67 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(
-# 46 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b23a17c6960);
-# 75 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+uint8_t arg_0x2b8bdd74e0c8);
+# 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
-# 46 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b23a17c6960);
-# 57 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
+# 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+uint8_t arg_0x2b8bdd74e0c8);
+# 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
-
-
-
-
-
-
-
+#line 72
+static void SchedulerBasicP$Scheduler$taskLoop(void );
+#line 65
 static bool SchedulerBasicP$Scheduler$runNextTask(void );
-# 36 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMote.nc"
+# 36 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMote.nc"
 static void SimMoteP$SimMote$setEuid(long long int euid);
 
 
 
 static void SimMoteP$SimMote$turnOn(void );
-# 83 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void Ns3TimerUser$Timer0$fired(void );
-# 60 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
+# 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
 static void Ns3TimerUser$Boot$booted(void );
-# 83 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void Ns3TimerUser$Timer1$fired(void );
-# 75 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void );
-# 83 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void );
 #line 83
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(
-# 48 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b23a18657f8);
-# 64 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b8bdd7e57f8);
+# 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(
-# 48 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b23a18657f8, 
-# 64 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b8bdd7e57f8, 
+# 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 uint32_t dt);
-# 62 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t NsTimerP$Init$init(void );
-# 136 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static uint32_t NsTimerP$Timer$getNow(void );
 #line 129
 static void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt);
 #line 78
 static void NsTimerP$Timer$stop(void );
-# 19 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformC.nc"
+# 19 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformC.nc"
 static inline error_t PlatformC$Init$init(void );
-# 62 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t SimMainP$SoftwareInit$init(void );
-# 60 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
+# 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
 static void SimMainP$Boot$booted(void );
-# 62 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t SimMainP$PlatformInit$init(void );
-# 57 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
+# 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SimMainP$Scheduler$init(void );
-# 13 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+#line 72
+static void SimMainP$Scheduler$taskLoop(void );
+# 13 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
 int sim_main_start_mote(int id)   ;
-# 75 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
-# 46 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b23a17c6960);
+# 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+uint8_t arg_0x2b8bdd74e0c8);
 
 
 
@@ -1190,25 +1196,27 @@ uint8_t SchedulerBasicP$m_next[SchedulerBasicP$NUM_TASKS];
 
 
 static __inline uint8_t SchedulerBasicP$popTask(void );
-#line 92
+#line 93
 static inline bool SchedulerBasicP$isWaiting(uint8_t id);
 
 
 
 
 static inline bool SchedulerBasicP$pushTask(uint8_t id);
-#line 119
+#line 120
 static inline void SchedulerBasicP$Scheduler$init(void );
-#line 131
+#line 132
 static inline bool SchedulerBasicP$Scheduler$runNextTask(void );
-#line 170
+#line 149
+static inline void SchedulerBasicP$Scheduler$taskLoop(void );
+#line 171
 static error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id);
 
 
 
 
 static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id);
-# 8 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
+# 8 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
 long long int SimMoteP$euid;
 
 bool SimMoteP$isOn;
@@ -1285,11 +1293,11 @@ void sim_mote_turn_on(int mote)   ;
 void sim_mote_turn_off(int mote)   ;
 #line 127
 void sim_mote_enqueue_boot_event(int mote)   ;
-# 64 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void Ns3TimerUser$Timer0$startPeriodic(uint32_t dt);
 #line 64
 static void Ns3TimerUser$Timer1$startPeriodic(uint32_t dt);
-# 21 "Ns3TimerUser.nc"
+# 22 "Ns3TimerUser.nc"
 uint16_t Ns3TimerUser$ev = 0;
 
 static inline void Ns3TimerUser$Boot$booted(void );
@@ -1309,9 +1317,9 @@ static inline void Ns3TimerUser$Timer1$fired(void );
 
 
 static inline void Ns3TimerUser$Timer0$fired(void );
-# 67 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask(void );
-# 136 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(void );
 #line 129
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$startOneShotAt(uint32_t t0, uint32_t dt);
@@ -1322,8 +1330,8 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop
 
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(
-# 48 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b23a18657f8);
+# 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b8bdd7e57f8);
 #line 71
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4277 {
 #line 71
@@ -1362,7 +1370,7 @@ typedef struct /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unna
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(uint32_t now);
 #line 99
-static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void );
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void );
 #line 138
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void );
 
@@ -1382,9 +1390,9 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTimer(uin
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(uint8_t num, uint32_t dt);
 #line 204
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(uint8_t num);
-# 83 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void NsTimerP$Timer$fired(void );
-# 20 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 20 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 uint32_t NsTimerP$time_now = 0;
 
 
@@ -1425,7 +1433,7 @@ static inline void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt);
 static inline uint32_t NsTimerP$Timer$getNow(void );
 #line 133
 static inline error_t NsTimerP$Init$init(void );
-# 10 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
+# 10 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
 __inline  __nesc_atomic_t __nesc_atomic_start(void )
 #line 10
 {
@@ -1437,7 +1445,205 @@ __inline  void __nesc_atomic_end(__nesc_atomic_t x)
 {
 }
 
-# 99 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 176 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
+{
+}
+
+# 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b8bdd74e0c8){
+#line 75
+  switch (arg_0x2b8bdd74e0c8) {
+#line 75
+    case /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer:
+#line 75
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask();
+#line 75
+      break;
+#line 75
+    default:
+#line 75
+      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b8bdd74e0c8);
+#line 75
+      break;
+#line 75
+    }
+#line 75
+}
+#line 75
+# 74 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+static __inline uint8_t SchedulerBasicP$popTask(void )
+{
+  if (SchedulerBasicP$m_head != SchedulerBasicP$NO_TASK) 
+    {
+      uint8_t id = SchedulerBasicP$m_head;
+
+#line 79
+      SchedulerBasicP$m_head = SchedulerBasicP$m_next[SchedulerBasicP$m_head];
+      if (SchedulerBasicP$m_head == SchedulerBasicP$NO_TASK) 
+        {
+          SchedulerBasicP$m_tail = SchedulerBasicP$NO_TASK;
+        }
+      SchedulerBasicP$m_next[id] = SchedulerBasicP$NO_TASK;
+      return id;
+    }
+  else 
+    {
+      return SchedulerBasicP$NO_TASK;
+    }
+}
+
+#line 132
+static inline bool SchedulerBasicP$Scheduler$runNextTask(void )
+{
+
+  uint8_t nextTask;
+
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+    {
+      nextTask = SchedulerBasicP$popTask();
+      if (nextTask == SchedulerBasicP$NO_TASK) 
+        {
+          {
+            unsigned char __nesc_temp = 
+#line 142
+            true;
+
+            {
+#line 142
+              __nesc_atomic_end(__nesc_atomic); 
+#line 142
+              return __nesc_temp;
+            }
+          }
+        }
+    }
+#line 146
+    __nesc_atomic_end(__nesc_atomic); }
+#line 145
+  SchedulerBasicP$TaskBasic$runTask(nextTask);
+  return true;
+}
+
+# 69 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+static inline void NsTimerP$Timer$stop(void )
+#line 69
+{
+  printf("Timer.stop() \n");
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+#line 71
+    {
+      NsTimerP$m_timer.isoneshot = false;
+      NsTimerP$m_timer.dt = 0;
+      NsTimerP$m_timer.t0 = 0;
+      NsTimerP$m_timer.shoot = 0;
+      NsTimerP$m_timer.isrunning = false;
+    }
+#line 77
+    __nesc_atomic_end(__nesc_atomic); }
+}
+
+# 78 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop(void ){
+#line 78
+  NsTimerP$Timer$stop();
+#line 78
+}
+#line 78
+# 40 "Ns3TimerUser.nc"
+static inline void Ns3TimerUser$Timer0$fired(void )
+{
+
+
+
+
+  printf("Node %d fired timer %d event %d\n", TOS_NODE_ID, 0, Ns3TimerUser$ev);
+  Ns3TimerUser$ev++;
+}
+
+#line 34
+static inline void Ns3TimerUser$Timer1$fired(void )
+{
+  printf("Node %d fired timer %d event %d\n", TOS_NODE_ID, 1, Ns3TimerUser$ev);
+  Ns3TimerUser$ev++;
+}
+
+# 204 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(uint8_t num)
+{
+}
+
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b8bdd7e57f8){
+#line 83
+  switch (arg_0x2b8bdd7e57f8) {
+#line 83
+    case 0U:
+#line 83
+      Ns3TimerUser$Timer0$fired();
+#line 83
+      break;
+#line 83
+    case 1U:
+#line 83
+      Ns3TimerUser$Timer1$fired();
+#line 83
+      break;
+#line 83
+    default:
+#line 83
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b8bdd7e57f8);
+#line 83
+      break;
+#line 83
+    }
+#line 83
+}
+#line 83
+# 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+inline static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask(void ){
+#line 67
+  unsigned char __nesc_result;
+#line 67
+
+#line 67
+  __nesc_result = SchedulerBasicP$TaskBasic$postTask(/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer);
+#line 67
+
+#line 67
+  return __nesc_result;
+#line 67
+}
+#line 67
+# 93 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+static inline bool SchedulerBasicP$isWaiting(uint8_t id)
+{
+  return SchedulerBasicP$m_next[id] != SchedulerBasicP$NO_TASK || SchedulerBasicP$m_tail == id;
+}
+
+static inline bool SchedulerBasicP$pushTask(uint8_t id)
+{
+  if (!SchedulerBasicP$isWaiting(id)) 
+    {
+      if (SchedulerBasicP$m_head == SchedulerBasicP$NO_TASK) 
+        {
+          SchedulerBasicP$m_head = id;
+          SchedulerBasicP$m_tail = id;
+        }
+      else 
+        {
+          SchedulerBasicP$m_next[SchedulerBasicP$m_tail] = id;
+          SchedulerBasicP$m_tail = id;
+        }
+      return true;
+    }
+  else 
+    {
+      return false;
+    }
+}
+
+# 99 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 static inline void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt)
 #line 99
 {
@@ -1456,39 +1662,14 @@ static inline void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt)
   NsTimerP$updateTimer();
 }
 
-# 129 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 129 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$startOneShotAt(uint32_t t0, uint32_t dt){
 #line 129
   NsTimerP$Timer$startOneShotAt(t0, dt);
 #line 129
 }
 #line 129
-# 69 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
-static inline void NsTimerP$Timer$stop(void )
-#line 69
-{
-  printf("Timer.stop() \n");
-  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-#line 71
-    {
-      NsTimerP$m_timer.isoneshot = false;
-      NsTimerP$m_timer.dt = 0;
-      NsTimerP$m_timer.t0 = 0;
-      NsTimerP$m_timer.shoot = 0;
-      NsTimerP$m_timer.isrunning = false;
-    }
-#line 77
-    __nesc_atomic_end(__nesc_atomic); }
-}
-
-# 78 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop(void ){
-#line 78
-  NsTimerP$Timer$stop();
-#line 78
-}
-#line 78
-# 112 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 112 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 static inline uint32_t NsTimerP$Timer$getNow(void )
 #line 112
 {
@@ -1496,7 +1677,7 @@ static inline uint32_t NsTimerP$Timer$getNow(void )
   return NsTimerP$time_now;
 }
 
-# 136 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 inline static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(void ){
 #line 136
   unsigned int __nesc_result;
@@ -1511,8 +1692,226 @@ inline static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Tim
 #line 136
 }
 #line 136
-# 99 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void )
+# 138 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void )
+{
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow());
+}
+
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void NsTimerP$Timer$fired(void ){
+#line 83
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired();
+#line 83
+}
+#line 83
+# 120 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+static inline void SchedulerBasicP$Scheduler$init(void )
+{
+  printf("Scheduler.init()\n");
+  /* atomic removed: atomic calls only */
+
+  {
+    memset((void *)SchedulerBasicP$m_next, SchedulerBasicP$NO_TASK, sizeof SchedulerBasicP$m_next);
+    SchedulerBasicP$m_head = SchedulerBasicP$NO_TASK;
+    SchedulerBasicP$m_tail = SchedulerBasicP$NO_TASK;
+  }
+}
+
+# 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
+inline static void SimMainP$Scheduler$init(void ){
+#line 57
+  SchedulerBasicP$Scheduler$init();
+#line 57
+}
+#line 57
+# 19 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformC.nc"
+static inline error_t PlatformC$Init$init(void )
+#line 19
+{
+
+  return SUCCESS;
+}
+
+# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+inline static error_t SimMainP$PlatformInit$init(void ){
+#line 62
+  unsigned char __nesc_result;
+#line 62
+
+#line 62
+  __nesc_result = PlatformC$Init$init();
+#line 62
+
+#line 62
+  return __nesc_result;
+#line 62
+}
+#line 62
+# 133 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+static inline error_t NsTimerP$Init$init(void )
+#line 133
+{
+  /* atomic removed: atomic calls only */
+#line 134
+  NsTimerP$time_now = 0;
+  printf(" Init.init() \n");
+  return 0;
+}
+
+# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+inline static error_t SimMainP$SoftwareInit$init(void ){
+#line 62
+  unsigned char __nesc_result;
+#line 62
+
+#line 62
+  __nesc_result = NsTimerP$Init$init();
+#line 62
+
+#line 62
+  return __nesc_result;
+#line 62
+}
+#line 62
+# 153 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(uint8_t num, uint32_t dt)
+{
+
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTimer(num, /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(), dt, false);
+}
+
+# 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void Ns3TimerUser$Timer1$startPeriodic(uint32_t dt){
+#line 64
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(1U, dt);
+#line 64
+}
+#line 64
+inline static void Ns3TimerUser$Timer0$startPeriodic(uint32_t dt){
+#line 64
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(0U, dt);
+#line 64
+}
+#line 64
+# 24 "Ns3TimerUser.nc"
+static inline void Ns3TimerUser$Boot$booted(void )
+{
+  printf("boot.booted\n");
+  Ns3TimerUser$Timer0$startPeriodic(500);
+  Ns3TimerUser$Timer1$startPeriodic(490);
+}
+
+# 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
+inline static void SimMainP$Boot$booted(void ){
+#line 60
+  Ns3TimerUser$Boot$booted();
+#line 60
+}
+#line 60
+# 149 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+static inline void SchedulerBasicP$Scheduler$taskLoop(void )
+{
+  for (; ; ) 
+    {
+      uint8_t nextTask;
+
+      { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+        {
+          while ((nextTask = SchedulerBasicP$popTask()) == SchedulerBasicP$NO_TASK) 
+            {
+            }
+        }
+#line 160
+        __nesc_atomic_end(__nesc_atomic); }
+
+      nextTask = SchedulerBasicP$popTask();
+      SchedulerBasicP$TaskBasic$runTask(nextTask);
+    }
+}
+
+# 72 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
+inline static void SimMainP$Scheduler$taskLoop(void ){
+#line 72
+  SchedulerBasicP$Scheduler$taskLoop();
+#line 72
+}
+#line 72
+# 16 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
+static inline void SimMoteP$SimMote$setEuid(long long int e)
+#line 16
+{
+  SimMoteP$euid = e;
+}
+
+
+
+
+
+
+
+
+
+
+
+static inline void SimMoteP$SimMote$turnOn(void )
+#line 30
+{
+  SimMoteP$isOn = true;
+}
+
+# 4 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
+static __inline void __nesc_enable_interrupt()
+#line 4
+{
+}
+
+#line 5
+static __inline void __nesc_disable_interrupt()
+#line 5
+{
+}
+
+# 14 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
+  int setUniqueID(int i)
+#line 14
+{
+  printf("uniq: %i\n", i);
+  id_this_lib = i;
+  return id_this_lib;
+}
+
+
+
+
+
+  int setProxy(void *con)
+#line 24
+{
+  proxy = con;
+  printf("FROM toslib: set proxy");
+  if (proxy != (void *)0) {
+      a = gateway(proxy, 0, id_this_lib);
+      printf("FROM toslib: gateway(proxy,0,id_this_lib): %i\n", a);
+    }
+  else {
+      printf("FROM toslib: ops! no proxy\n");
+    }
+
+  return id_this_lib;
+}
+
+# 52 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+extern   int runNextEventExternal(uint32_t a)
+#line 52
+{
+
+  SchedulerBasicP$Scheduler$runNextTask();
+  return 0;
+}
+
+# 99 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void )
 {
 
 
@@ -1554,341 +1953,7 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateF
     }
 }
 
-# 175 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
-{
-}
-
-# 75 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b23a17c6960){
-#line 75
-  switch (arg_0x2b23a17c6960) {
-#line 75
-    case /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer:
-#line 75
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask();
-#line 75
-      break;
-#line 75
-    default:
-#line 75
-      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b23a17c6960);
-#line 75
-      break;
-#line 75
-    }
-#line 75
-}
-#line 75
-# 73 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-static __inline uint8_t SchedulerBasicP$popTask(void )
-{
-  if (SchedulerBasicP$m_head != SchedulerBasicP$NO_TASK) 
-    {
-      uint8_t id = SchedulerBasicP$m_head;
-
-#line 78
-      SchedulerBasicP$m_head = SchedulerBasicP$m_next[SchedulerBasicP$m_head];
-      if (SchedulerBasicP$m_head == SchedulerBasicP$NO_TASK) 
-        {
-          SchedulerBasicP$m_tail = SchedulerBasicP$NO_TASK;
-        }
-      SchedulerBasicP$m_next[id] = SchedulerBasicP$NO_TASK;
-      return id;
-    }
-  else 
-    {
-      return SchedulerBasicP$NO_TASK;
-    }
-}
-
-#line 131
-static inline bool SchedulerBasicP$Scheduler$runNextTask(void )
-{
-
-  uint8_t nextTask;
-
-  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-    {
-      nextTask = SchedulerBasicP$popTask();
-      if (nextTask == SchedulerBasicP$NO_TASK) 
-        {
-          {
-            unsigned char __nesc_temp = 
-#line 141
-            true;
-
-            {
-#line 141
-              __nesc_atomic_end(__nesc_atomic); 
-#line 141
-              return __nesc_temp;
-            }
-          }
-        }
-    }
-#line 145
-    __nesc_atomic_end(__nesc_atomic); }
-#line 144
-  SchedulerBasicP$TaskBasic$runTask(nextTask);
-  return true;
-}
-
-# 39 "Ns3TimerUser.nc"
-static inline void Ns3TimerUser$Timer0$fired(void )
-{
-
-
-
-
-  printf("Node %d fired timer %d event %d\n", TOS_NODE_ID, 0, Ns3TimerUser$ev);
-  Ns3TimerUser$ev++;
-}
-
-#line 33
-static inline void Ns3TimerUser$Timer1$fired(void )
-{
-  printf("Node %d fired timer %d event %d\n", TOS_NODE_ID, 1, Ns3TimerUser$ev);
-  Ns3TimerUser$ev++;
-}
-
-# 204 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(uint8_t num)
-{
-}
-
-# 83 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b23a18657f8){
-#line 83
-  switch (arg_0x2b23a18657f8) {
-#line 83
-    case 0U:
-#line 83
-      Ns3TimerUser$Timer0$fired();
-#line 83
-      break;
-#line 83
-    case 1U:
-#line 83
-      Ns3TimerUser$Timer1$fired();
-#line 83
-      break;
-#line 83
-    default:
-#line 83
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b23a18657f8);
-#line 83
-      break;
-#line 83
-    }
-#line 83
-}
-#line 83
-# 67 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask(void ){
-#line 67
-  unsigned char __nesc_result;
-#line 67
-
-#line 67
-  __nesc_result = SchedulerBasicP$TaskBasic$postTask(/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer);
-#line 67
-
-#line 67
-  return __nesc_result;
-#line 67
-}
-#line 67
-# 92 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-static inline bool SchedulerBasicP$isWaiting(uint8_t id)
-{
-  return SchedulerBasicP$m_next[id] != SchedulerBasicP$NO_TASK || SchedulerBasicP$m_tail == id;
-}
-
-static inline bool SchedulerBasicP$pushTask(uint8_t id)
-{
-  if (!SchedulerBasicP$isWaiting(id)) 
-    {
-      if (SchedulerBasicP$m_head == SchedulerBasicP$NO_TASK) 
-        {
-          SchedulerBasicP$m_head = id;
-          SchedulerBasicP$m_tail = id;
-        }
-      else 
-        {
-          SchedulerBasicP$m_next[SchedulerBasicP$m_tail] = id;
-          SchedulerBasicP$m_tail = id;
-        }
-      return true;
-    }
-  else 
-    {
-      return false;
-    }
-}
-
-# 138 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void )
-{
-  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow());
-}
-
-# 83 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void NsTimerP$Timer$fired(void ){
-#line 83
-  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired();
-#line 83
-}
-#line 83
-# 119 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-static inline void SchedulerBasicP$Scheduler$init(void )
-{
-  printf("Scheduler.init()\n");
-  /* atomic removed: atomic calls only */
-
-  {
-    memset((void *)SchedulerBasicP$m_next, SchedulerBasicP$NO_TASK, sizeof SchedulerBasicP$m_next);
-    SchedulerBasicP$m_head = SchedulerBasicP$NO_TASK;
-    SchedulerBasicP$m_tail = SchedulerBasicP$NO_TASK;
-  }
-}
-
-# 57 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
-inline static void SimMainP$Scheduler$init(void ){
-#line 57
-  SchedulerBasicP$Scheduler$init();
-#line 57
-}
-#line 57
-# 19 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformC.nc"
-static inline error_t PlatformC$Init$init(void )
-#line 19
-{
-
-  return SUCCESS;
-}
-
-# 62 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
-inline static error_t SimMainP$PlatformInit$init(void ){
-#line 62
-  unsigned char __nesc_result;
-#line 62
-
-#line 62
-  __nesc_result = PlatformC$Init$init();
-#line 62
-
-#line 62
-  return __nesc_result;
-#line 62
-}
-#line 62
-# 133 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
-static inline error_t NsTimerP$Init$init(void )
-#line 133
-{
-  /* atomic removed: atomic calls only */
-#line 134
-  NsTimerP$time_now = 0;
-  printf(" Init.init() \n");
-  return 0;
-}
-
-# 62 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
-inline static error_t SimMainP$SoftwareInit$init(void ){
-#line 62
-  unsigned char __nesc_result;
-#line 62
-
-#line 62
-  __nesc_result = NsTimerP$Init$init();
-#line 62
-
-#line 62
-  return __nesc_result;
-#line 62
-}
-#line 62
-# 153 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(uint8_t num, uint32_t dt)
-{
-
-  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTimer(num, /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(), dt, false);
-}
-
-# 64 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void Ns3TimerUser$Timer1$startPeriodic(uint32_t dt){
-#line 64
-  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(1U, dt);
-#line 64
-}
-#line 64
-inline static void Ns3TimerUser$Timer0$startPeriodic(uint32_t dt){
-#line 64
-  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(0U, dt);
-#line 64
-}
-#line 64
-# 23 "Ns3TimerUser.nc"
-static inline void Ns3TimerUser$Boot$booted(void )
-{
-  printf("boot.booted\n");
-  Ns3TimerUser$Timer0$startPeriodic(500);
-  Ns3TimerUser$Timer1$startPeriodic(490);
-}
-
-# 60 "/home/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
-inline static void SimMainP$Boot$booted(void ){
-#line 60
-  Ns3TimerUser$Boot$booted();
-#line 60
-}
-#line 60
-# 16 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
-static inline void SimMoteP$SimMote$setEuid(long long int e)
-#line 16
-{
-  SimMoteP$euid = e;
-}
-
-
-
-
-
-
-
-
-
-
-
-static inline void SimMoteP$SimMote$turnOn(void )
-#line 30
-{
-  SimMoteP$isOn = true;
-}
-
-# 4 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
-static __inline void __nesc_enable_interrupt()
-#line 4
-{
-}
-
-#line 5
-static __inline void __nesc_disable_interrupt()
-#line 5
-{
-}
-
-# 51 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-extern   int runNextEventExternal(uint32_t a)
-#line 51
-{
-
-  SchedulerBasicP$Scheduler$runNextTask();
-  return 0;
-}
-
-# 73 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+#line 73
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(uint32_t now)
 {
   uint8_t num;
@@ -1919,31 +1984,31 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(uin
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask();
 }
 
-# 170 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 171 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id)
 {
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-#line 172
+#line 173
     {
-#line 172
+#line 173
       {
         unsigned char __nesc_temp = 
-#line 172
+#line 173
         SchedulerBasicP$pushTask(id) ? SUCCESS : EBUSY;
 
         {
-#line 172
+#line 173
           __nesc_atomic_end(__nesc_atomic); 
-#line 172
+#line 173
           return __nesc_temp;
         }
       }
     }
-#line 175
+#line 176
     __nesc_atomic_end(__nesc_atomic); }
 }
 
-# 33 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 33 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 static void NsTimerP$updateTimer(void )
 #line 33
 {
@@ -1954,41 +2019,12 @@ static void NsTimerP$updateTimer(void )
     }
 }
 
-# 14 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
-  int setUniqueID(int i)
-#line 14
-{
-  printf("uniq: %i\n", i);
-  id_this_lib = i;
-  return id_this_lib;
-}
-
-
-
-
-
-  int setProxy(void *con)
-#line 24
-{
-  proxy = con;
-
-  if (proxy != (void *)0) {
-      a = gateway(proxy, 0, id_this_lib);
-      printf("gateway(proxy,0,id_this_lib): %i\n", a);
-    }
-  else {
-      printf("ops! no proxy\n");
-    }
-
-  return id_this_lib;
-}
-
-# 13 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+# 13 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
   int sim_main_start_mote(int id)
 #line 13
 {
 
-  printf("sim_main_start_mote\n");
+  printf("FROM toslib: sim_main_start_mote\n");
 
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
 #line 17
@@ -2027,7 +2063,7 @@ static void NsTimerP$updateTimer(void )
 
   SimMainP$Boot$booted();
 
-
+  SimMainP$Scheduler$taskLoop();
 
 
 
@@ -2036,7 +2072,7 @@ static void NsTimerP$updateTimer(void )
   return 0;
 }
 
-# 143 "/home/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+# 143 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTimer(uint8_t num, uint32_t t0, uint32_t dt, bool isoneshot)
 {
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer_t *timer = &/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$m_timers[num];
@@ -2049,7 +2085,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTimer(uin
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask();
 }
 
-# 50 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
+# 50 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
   long long int sim_mote_euid(int mote)
 #line 50
 {
@@ -2136,7 +2172,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTimer(uin
 {
 }
 
-# 42 "/home/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 42 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 extern   int tickFired(uint32_t a)
 #line 42
 {
@@ -2148,11 +2184,11 @@ extern   int tickFired(uint32_t a)
     __nesc_atomic_end(__nesc_atomic); }
   NsTimerP$updateTimer();
   runNextEventExternal(0);
-
-
+  printf("Timer.thisFired %i\n", NsTimerP$time_now);
+  NsTimerP$Timer$fired();
   return 0;
 }
 
  #ifdef __cplusplus 
-  } 
-  #endif 
+ 		 } 
+ 		 #endif 

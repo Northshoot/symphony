@@ -1,3 +1,8 @@
+def configure(conf):
+	conf.env['CCFLAGS']='-ldl'
+	conf.env['CXXFLAGS']='-ldl'
+	print conf.env['CCFLAGS']
+
 def build(bld):
     obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
     obj.source = ['model/lib-to-tos-proxy.cc',

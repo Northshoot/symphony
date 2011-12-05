@@ -10,7 +10,7 @@
 
 
 #TinyOS options
-TOS_APP=TimerAppC
+TOS_APP=RadioApp
 SIM_OBJ=sim
 TARGET=ns3
 
@@ -38,16 +38,10 @@ NCC_OPT=-fPIC -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnes
 #for headers always use "ns3/heade.h" to allow moving to waf in future
 NS3_INCL = -I$(NS3_DIR) 
 TOS_INCL = -I$(TOS_NS3)
-NS3_TOS = $(NS3_DIR)/libns3-tos.so
+NS3_OBJ = $(NS3_DIR)/libns3-tos.so
 NS3_CORE =$(NS3_DIR)/libns3-core.so
 NS3_NET =$(NS3_DIR)/libns3-network.so
-NS3_WIFI =$(NS3_DIR)/libns3-ns3wifi.so
-NS3_MOB =$(NS3_DIR)/libns3-mobility.so
-NS3_WSN =$(NS3_DIR)/libns3-wsn.so
-NS3_INET =$(NS3_DIR)/libns3-internet.so 
-NS3_CONF =$(NS3_DIR)/libns3-config-store.so
 
-NS3_incl=$(NS3_TOS) $(NS3_CORE) $(NS3_NET) $(NS3_WIFI) $(NS3_MOB) $(NS3_WSN) $(NS3_INET) $(NS3_CONF)
 
 #app to create
 APP=time
@@ -55,7 +49,7 @@ APP=time
 TOS_IMG=post_app
 #main file
 MAIN=main
-OUT=radio_t
+OUT=time_t
 
 SIM_LIB=libtos
 
@@ -69,10 +63,10 @@ all:
 		$(GPP) -fPIC -Wall -g -c $(SIM_LIB).c	$(NS3_INCL)
 		@echo ""
 		@echo "Creating library and linking with proxy objects            "
-		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_incl) -ldl 
+		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) $(NS3_CORE)  -ldl 
 		@echo ""
 		@echo "Linking all together              "
-		$(GPP) $(MAIN).cc -o $(OUT) $(NS3_INCL) $(NS3_incl) -ldl
+		$(GPP) $(MAIN).cc -o $(OUT) $(NS3_INCL) $(NS3_OBJ) -ldl
 		@echo "                           "		
 		@echo "*** tos-ns was successfully build***"
 		@echo ""

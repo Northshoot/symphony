@@ -56,7 +56,7 @@ extern "C" {
 
 int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
-
+int gatewayRadio(void *obj,int func,void *msg);
 
 
 #ifdef __cplusplus
