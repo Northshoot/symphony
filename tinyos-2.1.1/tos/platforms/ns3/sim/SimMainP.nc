@@ -47,7 +47,7 @@ implementation {
 //    dbg("SimMainP", "Mote %li signaling boot at time %s.\n", sim_node(), timeBuf);
     signal Boot.booted();
     //while (call Scheduler.runNextTask());
-    call Scheduler.taskLoop();
+    //call Scheduler.taskLoop();
     /* Normally, at this point a mote enters a while(1) loop to
      * execute tasks. In TOSSIM, this call completes: posted tasks
      * are part of the global TOSSIM event loop. Look at

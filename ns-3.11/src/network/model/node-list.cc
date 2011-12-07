@@ -29,7 +29,7 @@
 
 namespace ns3 {
 
-NS_LOG_COMPONENT_DEFINE ("NodeList");
+NS_LOG_COMPONENT_DEFINE ("NodeListPriv");
 
 /**
  * \brief private implementation detail of the NodeList API.

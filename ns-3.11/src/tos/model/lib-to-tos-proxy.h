@@ -53,10 +53,13 @@ private:
 
 extern "C" {
 #endif
-
+typedef struct{
+    int x;
+    int y;
+    } Foo;
 int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
-int gatewayRadio(void *obj,int func,void *msg);
+int gatewayRadio(void *obj,int func,Foo *f);
 
 
 #ifdef __cplusplus

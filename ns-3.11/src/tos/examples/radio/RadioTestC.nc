@@ -36,7 +36,7 @@ implementation {
 		printf("App: AMControl.startDone(error_t err) \n");
 		if (err == SUCCESS) {
 			counter++;
-			dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
+			//dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
 			if (locked) {
 				return;
 			}
@@ -47,8 +47,9 @@ implementation {
 				}
 
 				rcm->counter = counter;
+				printf("AMControl.startDone: about to send\n");
 				if (call AMSend.send(AM_BROADCAST_ADDR, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
-					dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
+					//dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
 					locked = TRUE;
 				}
 			}

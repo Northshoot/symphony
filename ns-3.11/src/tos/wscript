@@ -1,7 +1,6 @@
 def configure(conf):
-	conf.env['CCFLAGS']='-ldl'
-	conf.env['CXXFLAGS']='-ldl'
-	print conf.env['CCFLAGS']
+	print "configure"
+
 
 def build(bld):
     obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
@@ -10,9 +9,9 @@ def build(bld):
     			  'model/simu-clock.cc',
     			  'model/tiny-bridge.cc',
     			  'model/tos-to-lib-proxy.cc',
-    			  'model/NodeTest.cc',
-    			  'model/tos-node-list.cc',
-    			  'helper/tos-node-container.cc',
+    			  #'model/NodeTest.cc',
+    			  #'model/tos-node-list.cc',
+    			  #'helper/tos-node-container.cc',
     			  
     			  
 
@@ -27,9 +26,9 @@ def build(bld):
     			  'model/tiny-bridge.h',
     			  'model/tos-to-lib-proxy.h',
     			  'model/gateway.h',
-    			  'model/NodeTest.h',
-    			  'helper/tos-node-container.h',
-    			  'model/tos-node-list.h',
+    			  #'model/NodeTest.h',
+    			  #'helper/tos-node-container.h',
+    			  #'model/tos-node-list.h',
 
         ]
 

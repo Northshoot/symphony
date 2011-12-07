@@ -18,6 +18,7 @@
 
 //TODO: make this auto generated
 
+
 extern int gateway(void *tthis,int call, int arg){
  std::cout << "gateway call "<< call <<" arg " << arg << std::endl;
   // here should be a switch case on "call"
@@ -46,10 +47,10 @@ extern int gateway(void *tthis,int call, int arg){
 
 }
 
-extern int gatewayRadio(void *obj,int func,void *msg){
+extern int gatewayRadio(void *obj,int func,Foo *f){
 	switch (func) {
 		case 0:
-
+			std::cerr <<" gatewayRadio got msg "<< f->x << " " << f->y << std::endl;
 			return 0;
 			break;
 

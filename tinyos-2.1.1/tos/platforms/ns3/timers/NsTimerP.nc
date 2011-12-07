@@ -44,7 +44,7 @@ extern int tickFired(uint32_t a) @C() @spontaneous() {
   atomic time_now = a;
  updateTimer();
  runNextEventExternal(0);
-  printf("Timer.thisFired %i\n",  time_now);
+  //printf("Timer.thisFired %i\n",  time_now);
   signal Timer.fired();
   return 0;
   }
@@ -67,7 +67,7 @@ extern int tickFired(uint32_t a) @C() @spontaneous() {
 
 
   command void Timer.stop()  {
-    printf("Timer.stop() \n");
+    //printf("Timer.stop() \n");
         atomic {
     m_timer.isoneshot = FALSE;
     m_timer.dt = 0;

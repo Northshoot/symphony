@@ -51,8 +51,13 @@ module Ns3ActiveMessageC
 
 implementation
 {
+	void task SplitControlStartDone(){
+		signal SplitControl.startDone(SUCCESS);
+	}
+	
 	command error_t SplitControl.start(){
 		printf("command error_t SplitControl.start()");
+		post SplitControlStartDone();
 		return SUCCESS;
 	}
 

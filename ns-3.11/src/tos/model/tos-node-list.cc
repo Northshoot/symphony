@@ -29,17 +29,17 @@
 
 namespace ns3 {
 
-NS_LOG_COMPONENT_DEFINE ("TosNodeList");
+NS_LOG_COMPONENT_DEFINE ("TosNodeListPriv");
 
 /**
  * \brief private implementation detail of the NodeList API.
  */
-class NodeListPriv : public Object
+class TosNodeListPriv : public Object
 {
 public:
   static TypeId GetTypeId (void);
-  NodeListPriv ();
-  ~NodeListPriv ();
+  TosNodeListPriv ();
+  ~TosNodeListPriv ();
 
   uint32_t Add (Ptr<NodeTest> node);
   TosNodeList::Iterator Begin (void) const;
@@ -47,49 +47,49 @@ public:
   Ptr<NodeTest> GetNode (uint32_t n);
   uint32_t GetNNodes (void);
 
-  static Ptr<NodeListPriv> Get (void);
+  static Ptr<TosNodeListPriv> Get (void);
 
 private:
   virtual void DoDispose (void);
-  static Ptr<NodeListPriv> *DoGet (void);
+  static Ptr<TosNodeListPriv> *DoGet (void);
   static void Delete (void);
   std::vector<Ptr<NodeTest> > m_nodes;
 };
 
-NS_OBJECT_ENSURE_REGISTERED (NodeListPriv);
+NS_OBJECT_ENSURE_REGISTERED (TosNodeListPriv);
 
 TypeId 
-NodeListPriv::GetTypeId (void)
+TosNodeListPriv::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3::NodeListPriv")
+  static TypeId tid = TypeId ("ns3::TosNodeListPriv")
     .SetParent<Object> ()
     .AddAttribute ("NodeList", "The list of all nodes created during the simulation.",
                    ObjectVectorValue (),
-                   MakeObjectVectorAccessor (&NodeListPriv::m_nodes),
+                   MakeObjectVectorAccessor (&TosNodeListPriv::m_nodes),
                    MakeObjectVectorChecker<NodeTest> ())
   ;
   return tid;
 }
 
-Ptr<NodeListPriv> 
-NodeListPriv::Get (void)
+Ptr<TosNodeListPriv>
+TosNodeListPriv::Get (void)
 {
   return *DoGet ();
 }
-Ptr<NodeListPriv> *
-NodeListPriv::DoGet (void)
+Ptr<TosNodeListPriv> *
+TosNodeListPriv::DoGet (void)
 {
-  static Ptr<NodeListPriv> ptr = 0;
+  static Ptr<TosNodeListPriv> ptr = 0;
   if (ptr == 0)
     {
-      ptr = CreateObject<NodeListPriv> ();
+      ptr = CreateObject<TosNodeListPriv> ();
       Config::RegisterRootNamespaceObject (ptr);
-      Simulator::ScheduleDestroy (&NodeListPriv::Delete);
+      Simulator::ScheduleDestroy (&TosNodeListPriv::Delete);
     }
   return &ptr;
 }
 void 
-NodeListPriv::Delete (void)
+TosNodeListPriv::Delete (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
   Config::UnregisterRootNamespaceObject (Get ());
@@ -97,15 +97,15 @@ NodeListPriv::Delete (void)
 }
 
 
-NodeListPriv::NodeListPriv ()
+TosNodeListPriv::TosNodeListPriv ()
 {
   NS_LOG_FUNCTION_NOARGS ();
 }
-NodeListPriv::~NodeListPriv ()
+TosNodeListPriv::~TosNodeListPriv ()
 {
 }
 void
-NodeListPriv::DoDispose (void)
+TosNodeListPriv::DoDispose (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
   for (std::vector<Ptr<NodeTest> >::iterator i = m_nodes.begin ();
@@ -121,7 +121,7 @@ NodeListPriv::DoDispose (void)
 
 
 uint32_t
-NodeListPriv::Add (Ptr<NodeTest> node)
+TosNodeListPriv::Add (Ptr<NodeTest> node)
 {
   uint32_t index = m_nodes.size ();
   m_nodes.push_back (node);
@@ -130,23 +130,23 @@ NodeListPriv::Add (Ptr<NodeTest> node)
 
 }
 TosNodeList::Iterator
-NodeListPriv::Begin (void) const
+TosNodeListPriv::Begin (void) const
 {
   return m_nodes.begin ();
 }
 TosNodeList::Iterator
-NodeListPriv::End (void) const
+TosNodeListPriv::End (void) const
 {
   return m_nodes.end ();
 }
 uint32_t 
-NodeListPriv::GetNNodes (void)
+TosNodeListPriv::GetNNodes (void)
 {
   return m_nodes.size ();
 }
 
 Ptr<NodeTest>
-NodeListPriv::GetNode (uint32_t n)
+TosNodeListPriv::GetNode (uint32_t n)
 {
   NS_ASSERT_MSG (n < m_nodes.size (), "NodeTest index " << n <<
                  " is out of range (only have " << m_nodes.size () << " nodes).");
@@ -165,27 +165,27 @@ namespace ns3 {
 uint32_t
 TosNodeList::Add (Ptr<NodeTest> node)
 {
-  return NodeListPriv::Get ()->Add (node);
+  return TosNodeListPriv::Get ()->Add (node);
 }
 TosNodeList::Iterator
 TosNodeList::Begin (void)
 {
-  return NodeListPriv::Get ()->Begin ();
+  return TosNodeListPriv::Get ()->Begin ();
 }
 TosNodeList::Iterator
 TosNodeList::End (void)
 {
-  return NodeListPriv::Get ()->End ();
+  return TosNodeListPriv::Get ()->End ();
 }
 Ptr<NodeTest>
 TosNodeList::GetNode (uint32_t n)
 {
-  return NodeListPriv::Get ()->GetNode (n);
+  return TosNodeListPriv::Get ()->GetNode (n);
 }
 uint32_t
 TosNodeList::GetNNodes (void)
 {
-  return NodeListPriv::Get ()->GetNNodes ();
+  return TosNodeListPriv::Get ()->GetNNodes ();
 }
 
 } //namespace ns3
