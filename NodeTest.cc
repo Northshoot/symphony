@@ -54,7 +54,7 @@ void
 NodeTest::Construct (void)
 {
 
-  m_id = TosNodeList::Add (this);
+  m_id = TosNodeListPriv::Add (this);
 }
 
 NodeTest::~NodeTest ()
