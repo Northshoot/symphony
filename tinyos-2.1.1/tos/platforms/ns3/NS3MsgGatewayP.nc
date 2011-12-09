@@ -19,7 +19,7 @@ implementation{
 	
 
         
-     Foo *f;
+     Foo f;
 	task void sendDone(){
 		signal Send.sendDone(msg_out,error_out);
 	}
@@ -31,11 +31,8 @@ implementation{
 	command error_t Send.send(message_t* msg){
 		printf("NS3MsgGatewayP.Send.send: size of sent msg %lu\n", sizeof(msg));
 		//memcpy(msg_out, msg, sizeof(message_t));
-		
-		
-		f->x=10;
-		f->y=20;
-		gatewayRadio(proxy, 0,f);
+
+		gatewayRadio(proxy, 0, *msg);
 		post sendDone();
 		return 0;
 	}

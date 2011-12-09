@@ -7,6 +7,7 @@
 
 #ifndef LIBTOTOSPROXY_H_
 #define LIBTOTOSPROXY_H_
+#include "tosmessage.h"
 
 /**
  * This struct is compiled in to C
@@ -59,7 +60,7 @@ typedef struct{
     } Foo;
 int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
-int gatewayRadio(void *obj,int func,Foo *f);
+int gatewayRadio(void *obj,int func, message_t f);
 
 
 #ifdef __cplusplus

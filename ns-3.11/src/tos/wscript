@@ -26,6 +26,7 @@ def build(bld):
     			  'model/tiny-bridge.h',
     			  'model/tos-to-lib-proxy.h',
     			  'model/gateway.h',
+    			  'model/tosmessage.h',
     			  #'model/NodeTest.h',
     			  #'helper/tos-node-container.h',
     			  #'model/tos-node-list.h',

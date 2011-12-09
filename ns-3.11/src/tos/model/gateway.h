@@ -8,6 +8,7 @@
 #ifndef GATEWAY_H_
 #define GATEWAY_H_
 #include "lib-to-tos-proxy.h"
+#include "tosmessage.h"
 
 /**
  * This function is used by all objects.
@@ -47,10 +48,10 @@ extern int gateway(void *tthis,int call, int arg){
 
 }
 
-extern int gatewayRadio(void *obj,int func,Foo *f){
+extern int gatewayRadio(void *obj,int func, message_t f){
 	switch (func) {
 		case 0:
-			std::cerr <<" gatewayRadio got msg "<< f->x << " " << f->y << std::endl;
+			std::cerr <<" gatewayRadio got msg "<< sizeof(f) << std::endl;
 			return 0;
 			break;
 
