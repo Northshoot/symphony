@@ -4,6 +4,9 @@ def configure(conf):
 
 def build(bld):
     obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
+    obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
+    obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/types/') 
+    obj.env.append_value('CCFLAGS','-std=gnu++0x')
     obj.source = ['model/lib-to-tos-proxy.cc',
     			  'model/tos-node.cc',
     			  'model/simu-clock.cc',
@@ -26,7 +29,8 @@ def build(bld):
     			  'model/tiny-bridge.h',
     			  'model/tos-to-lib-proxy.h',
     			  'model/gateway.h',
-    			  'model/tosmessage.h',
+    			  #'ns3includes.h',
+    			  #'model/tosmessage.h',
     			  #'model/NodeTest.h',
     			  #'helper/tos-node-container.h',
     			  #'model/tos-node-list.h',

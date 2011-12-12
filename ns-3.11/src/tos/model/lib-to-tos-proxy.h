@@ -7,7 +7,7 @@
 
 #ifndef LIBTOTOSPROXY_H_
 #define LIBTOTOSPROXY_H_
-#include "tosmessage.h"
+#include "ns3includes.h"
 
 /**
  * This struct is compiled in to C
@@ -54,10 +54,7 @@ private:
 
 extern "C" {
 #endif
-typedef struct{
-    int x;
-    int y;
-    } Foo;
+
 int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
 int gatewayRadio(void *obj,int func, message_t f);

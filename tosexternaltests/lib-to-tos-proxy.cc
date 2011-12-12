@@ -78,10 +78,11 @@ int gateway(void *tthis,int call, int arg){
 	}
 }
 
-int gatewayRadio(void *tthis,int call, void *msg){
-	switch (call) {
+extern int gatewayRadio(void *obj,int func, Foo f){
+	switch (func) {
 		case 0:
-			std::cout << "radio gateway msg size" << sizeof(msg) << std::endl;
+			std::cerr <<"gatewayRadio got msg "<< sizeof(f) << std::endl;
+			std::cerr <<"f.x "<< f.x <<"f.y " << f.y << std::endl;
 			return 0;
 			break;
 

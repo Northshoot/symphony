@@ -66,7 +66,7 @@ all:
 		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) $(NS3_CORE)  -ldl 
 		@echo ""
 		@echo "Linking all together              "
-		$(GPP) $(MAIN).cc -o $(OUT) $(NS3_INCL) $(NS3_OBJ) -ldl
+		$(GPP) $(MAIN).cc -o $(OUT) $(TOS_INCL) $(NS3_INCL) $(NS3_OBJ) -ldl
 		@echo "                           "		
 		@echo "*** tos-ns was successfully build***"
 		@echo ""

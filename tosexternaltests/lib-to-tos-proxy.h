@@ -7,7 +7,7 @@
 
 #ifndef LIBTOTOSPROXY_H_
 #define LIBTOTOSPROXY_H_
-
+#include "ns3includes.h"
 /**
  * This struct is compiled in to C
  * Then the objects is send to C library as struct
@@ -54,7 +54,7 @@ extern "C" {
 #endif
 
 int gateway(void *obj,int func,int arg);
-int gatewayRadio(void *obj,int func,void *msg);
+int gatewayRadio(void *obj,int func, Foo f);
 int setProxy(void * obj);
 
 
