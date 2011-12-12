@@ -40,7 +40,7 @@ TinyBridge::TinyBridge(const char * lib) {
 void
 TinyBridge::bridgeObjects(){
 	//open instance of the library  LM_ID_NEWLM
-	handler = dlmopen( LM_ID_NEWLM ,libname, RTLD_LAZY );
+	handler = dlmopen( LM_ID_BASE ,libname, RTLD_NOW );
     if (!handler) {
         std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
         exit(1);
