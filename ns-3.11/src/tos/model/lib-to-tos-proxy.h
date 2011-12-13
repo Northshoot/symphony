@@ -7,13 +7,10 @@
 
 #ifndef LIBTOTOSPROXY_H_
 #define LIBTOTOSPROXY_H_
-#include "ns3includes.h"
-
 /**
  * This struct is compiled in to C
  * Then the objects is send to C library as struct
  */
-
 
 #ifdef __cplusplus
 /**
@@ -21,9 +18,9 @@
  * otherwise linking with C will fail
  * Which results in segfault
  */
+#include "ns3includes.h"
 #include "tos-node.h"
 #include "simu-clock.h"
-
 
 class LibToTosProxy {
    friend class TinyBridge;
@@ -57,7 +54,7 @@ extern "C" {
 
 int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
-int gatewayRadio(void *obj,int func, message_t f);
+int gatewayRadio(void *obj, int func , void* msg);
 
 
 #ifdef __cplusplus
