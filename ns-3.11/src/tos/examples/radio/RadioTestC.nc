@@ -25,7 +25,7 @@ implementation {
 	message_t packet;
 
 	bool locked;
-	uint16_t counter = 0;
+	uint16_t counter = 111;
  
 	event void Boot.booted() {
 		printf("App: booted\n");
@@ -48,7 +48,7 @@ implementation {
 
 				rcm->counter = counter;
 				printf("AMControl.startDone: about to send\n");
-				if (call AMSend.send(AM_BROADCAST_ADDR, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+				if (call AMSend.send(22, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 					//dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
 					locked = TRUE;
 				}
@@ -76,7 +76,7 @@ implementation {
 			}
 
 			rcm->counter = counter;
-			if (call AMSend.send(AM_BROADCAST_ADDR, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+			if (call AMSend.send(22, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 				dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
 				locked = TRUE;
 			}

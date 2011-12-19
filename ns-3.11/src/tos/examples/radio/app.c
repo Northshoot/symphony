@@ -1,6 +1,3 @@
-#ifdef __cplusplus
- 		 extern "C" { 
- 		 #endif 
 #define nx_struct struct
 #define nx_union union
 # 150 "/usr/lib/gcc/x86_64-linux-gnu/4.6.1/include/stddef.h" 3
@@ -827,6 +824,7 @@ enum __nesc_unnamed4265 {
   _ISalnum = 11 < 8 ? (1 << 11) << 8 : (1 << 11) >> 8
 };
 # 23 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/tos.h"
+typedef uint8_t bool;
 enum __nesc_unnamed4266 {
 #line 24
   FALSE = 0, TRUE = 1
@@ -2313,7 +2311,7 @@ static inline void RadioTestC$AMSend$sendDone(message_t *bufPtr, error_t error)
 #line 97
 {
   if (&RadioTestC$packet == bufPtr) {
-      RadioTestC$locked = false;
+      RadioTestC$locked = FALSE;
     }
 }
 
@@ -2515,7 +2513,7 @@ static inline void RadioTestC$AMControl$startDone(error_t err)
           printf("AMControl.startDone: about to send\n");
           if (RadioTestC$AMSend$send(22, &RadioTestC$packet, sizeof(radio_count_msg_t )) == SUCCESS) {
 
-              RadioTestC$locked = true;
+              RadioTestC$locked = TRUE;
             }
         }
     }
@@ -2814,11 +2812,11 @@ static inline void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt)
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
 #line 100
     {
-      NsTimerP$m_timer.isoneshot = true;
+      NsTimerP$m_timer.isoneshot = TRUE;
       NsTimerP$m_timer.dt = dt;
       NsTimerP$m_timer.t0 = t0;
       NsTimerP$m_timer.shoot = t0 + dt;
-      NsTimerP$m_timer.isrunning = true;
+      NsTimerP$m_timer.isrunning = TRUE;
     }
 #line 106
     __nesc_atomic_end(__nesc_atomic); }
@@ -2841,11 +2839,11 @@ static inline void NsTimerP$Timer$stop(void )
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
 #line 71
     {
-      NsTimerP$m_timer.isoneshot = false;
+      NsTimerP$m_timer.isoneshot = FALSE;
       NsTimerP$m_timer.dt = 0;
       NsTimerP$m_timer.t0 = 0;
       NsTimerP$m_timer.shoot = 0;
-      NsTimerP$m_timer.isrunning = false;
+      NsTimerP$m_timer.isrunning = FALSE;
     }
 #line 77
     __nesc_atomic_end(__nesc_atomic); }
@@ -2890,7 +2888,7 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateF
 
   uint32_t now = /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow();
   int32_t min_remaining = (1UL << 31) - 1;
-  bool min_remaining_isset = false;
+  bool min_remaining_isset = FALSE;
   uint8_t num;
 
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop();
@@ -2907,7 +2905,7 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateF
           if (remaining < min_remaining) 
             {
               min_remaining = remaining;
-              min_remaining_isset = true;
+              min_remaining_isset = TRUE;
             }
         }
     }
@@ -3016,7 +3014,7 @@ static inline bool SchedulerBasicP$Scheduler$runNextTask(void )
           {
             unsigned char __nesc_temp = 
 #line 142
-            true;
+            TRUE;
 
             {
 #line 142
@@ -3031,7 +3029,7 @@ static inline bool SchedulerBasicP$Scheduler$runNextTask(void )
     __nesc_atomic_end(__nesc_atomic); }
 #line 145
   SchedulerBasicP$TaskBasic$runTask(nextTask);
-  return true;
+  return TRUE;
 }
 
 # 66 "RadioTestC.nc"
@@ -3054,7 +3052,7 @@ static inline void RadioTestC$MilliTimer$fired(void )
       __nesc_hton_uint16(rcm->counter.nxdata, RadioTestC$counter);
       if (RadioTestC$AMSend$send(22, &RadioTestC$packet, sizeof(radio_count_msg_t )) == SUCCESS) {
           ;
-          RadioTestC$locked = true;
+          RadioTestC$locked = TRUE;
         }
     }
 }
@@ -3391,11 +3389,11 @@ static inline bool SchedulerBasicP$pushTask(uint8_t id)
           SchedulerBasicP$m_next[SchedulerBasicP$m_tail] = id;
           SchedulerBasicP$m_tail = id;
         }
-      return true;
+      return TRUE;
     }
   else 
     {
-      return false;
+      return FALSE;
     }
 }
 
@@ -3585,7 +3583,7 @@ static inline void SimMoteP$SimMote$setEuid(long long int e)
 static inline void SimMoteP$SimMote$turnOn(void )
 #line 30
 {
-  SimMoteP$isOn = true;
+  SimMoteP$isOn = TRUE;
 }
 
 # 4 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
@@ -3655,7 +3653,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(uin
           if (elapsed >= timer->dt) 
             {
               if (timer->isoneshot) {
-                timer->isrunning = false;
+                timer->isrunning = FALSE;
                 }
               else {
 #line 89
@@ -3916,6 +3914,3 @@ extern   int tickFired(uint32_t a)
   return 0;
 }
 
- #ifdef __cplusplus 
- 		 } 
- 		 #endif 

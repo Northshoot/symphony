@@ -33,11 +33,7 @@ implementation{
 //		int a=100;
 		msg_out = msg;
 		printf("NS3MsgGatewayP.Send.send: size of sent msg %lu\n", sizeof(msg));
-		//memcpy(msg_out, msg, sizeof(message_t));
-//		f.x=1;
-//		f.y=2;
-//		fo=&f;
-		printf("\t\tdata: %u\n",((ns3packet_header_t)(msg->header))->dest);
+
 		a=gatewayRadio(proxy, 0,  msg);
 		printf("gatewayRadio(proxy, 0, f) return: %d\n", a);
 		post sendDone();

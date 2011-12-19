@@ -115,7 +115,7 @@ implementation
 		call AMPacket.setGroup(msg, call AMPacket.localGroup());
 		call AMPacket.setType(msg, id);
 		call AMPacket.setDestination(msg, addr);
-		
+		printf("src: %u setting dest: %u\n", call AMPacket.address(), addr);
 		signal SendNotifier.aboutToSend[id](addr, msg);
 
 		return call SubSend.send(msg);
