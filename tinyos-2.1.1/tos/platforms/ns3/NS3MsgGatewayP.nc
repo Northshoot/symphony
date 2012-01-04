@@ -1,5 +1,6 @@
 #include "sim/sim_main.h"
 #include "defines.h"
+#include "sim_packet.h"
 
 module NS3MsgGatewayP{
 	provides 
@@ -29,15 +30,16 @@ implementation{
 	}
 	
 	command error_t Send.send(message_t* msg){
-//		Foo *fo;
+		ns3pack fo;
 //		int a=100;
+		fo = convertToNS3(msg);
 		msg_out = msg;
-		printf("NS3MsgGatewayP.Send.send: size of sent msg %lu\n", sizeof(msg));
-
-		a=gatewayRadio(proxy, 0,  msg);
+		printf("NS3MsgGatewayP.Send.send: size of sent msg %lu\n", sizeof(fo));
+		a=gatewayRadio(proxy, 0,  &fo, msg);
 		printf("gatewayRadio(proxy, 0, f) return: %d\n", a);
 		post sendDone();
 		return 0;
+	
 	}
 	
 

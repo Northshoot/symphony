@@ -46,9 +46,9 @@ implementation {
 					return;
 				}
 
-				rcm->counter = counter;
+				rcm->counter = 5555;
 				printf("AMControl.startDone: about to send\n");
-				if (call AMSend.send(22, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+				if (call AMSend.send(220, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 					//dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
 					locked = TRUE;
 				}

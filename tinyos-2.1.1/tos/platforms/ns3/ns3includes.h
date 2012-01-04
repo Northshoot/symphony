@@ -8,7 +8,21 @@
 #ifndef NS3INCLUDES_H_
 #define NS3INCLUDES_H_
 
+#include <stdint.h>
+
+
 #ifdef __cplusplus
+typedef struct ns3_header{
+	uint8_t length;
+	uint8_t dsn;
+	uint8_t type;
+	uint16_t fdest;
+	uint8_t destpan;
+	uint16_t dest;
+	uint16_t src;
+	uint8_t padd;
+} ns3_header;
+
 typedef uint8_t am_id_t;
 typedef uint8_t am_group_t;
 typedef uint16_t am_addr_t;

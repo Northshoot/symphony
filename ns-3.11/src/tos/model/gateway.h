@@ -7,9 +7,10 @@
 
 #ifndef GATEWAY_H_
 #define GATEWAY_H_
+#include <stdio.h>
 #include "lib-to-tos-proxy.h"
 #include "ns3includes.h"
-
+#include "tos-packet.h"
 /**
  * This function is used by all objects.
  * C does not care about void * tthis
@@ -18,7 +19,9 @@
  */
 
 //TODO: make this auto generated
-
+typedef struct radio {
+	uint16_t counter;
+} radio;
 
 extern int gateway(void *tthis,int call, int arg){
  std::cout << "gateway call "<< call <<" arg " << arg << std::endl;
@@ -47,31 +50,47 @@ extern int gateway(void *tthis,int call, int arg){
 
 
 }
-typedef struct radio_count_msg {
-	uint16_t counter;
-} radio_count_msg_t;
 
-extern int gatewayRadio(void *obj,int func, void* msg){
-	message_t tempmsg ;
-	uint i;
-	memcpy((void *)&tempmsg, msg, sizeof(message_t));
 
-//	message_t* p = (message_t*)msg;
-	radio_count_msg_t* rcm = (radio_count_msg_t*)&tempmsg.data;
-	ns3packet_header_t* h =(ns3packet_header_t*)&tempmsg.header;
-	am_addr_t d =h->dest;
-	am_addr_t d1 =h->src;
-
-	uint8_t *pkt = (uint8_t *)&tempmsg;
-    for(i=0; i<sizeof(msg); i++){
-    	 std::cout << pkt[i] <<" ";
-    }
-    std::cerr<< std::endl;
+extern int gatewayRadio(void *obj, int func, void* hdr, void* msg){
+	//TosPacket* tpk = new TosPacket((message_t*) msg);
+//	ns3packet_header_t* hdr = (ns3packet_header_t*)(((message_t*)msg)->data - sizeof(ns3packet_header_t));
+//	message_t tempmsg ;
+//	uint i;
+//	memcpy((void *)&tempmsg, msg, sizeof(message_t));
+//
+////	message_t* p = (message_t*)msg;
+//	radio_count_msg_t* rcm = (radio_count_msg_t*)&tempmsg.data;
+//	ns3packet_header_t* h =(ns3packet_header_t*)&tempmsg.header;
+//	am_addr_t d =h->dest;
+//	am_addr_t d1 =h->src;
+//
+//	uint8_t *pkt = (uint8_t *)&tempmsg;
+//    for(i=0; i<sizeof(msg); i++){
+//    	 std::cout << pkt[i] <<" ";
+//    }
+//    std::cerr<< std::endl;
+//	radio* pkt = (radio*)((message_t*)msg)->data;
+//	uintptr_t *raw_ptr;
+//	uint i;
+//	raw_ptr = (uintptr_t *) (((message_t*)msg)->data - sizeof(ns3packet_header_t));
 	switch (func) {
 		case 0:
-			std::cerr <<"gatewayRadio got msg: "<< sizeof(msg) <<" vs "<< sizeof(tempmsg)<< std::endl;
-			std::cerr <<"counter "<< rcm->counter << std::endl;
-			std::cerr <<"destination "<< d <<" "<< d1<< std::endl;
+//			printf("bytes of struct located at 0x%08lx\n",(uintptr_t) raw_ptr);
+//			for(i=sizeof(msg); i >0 ; i--) {
+//				printf("%u ", raw_ptr[i]);
+//				if(i%16 == 15) // Print a newline every 16 bytes.
+//					printf("\n");
+//				}
+//				printf("\n");
+
+
+			//std::cerr <<"gatewayRadio got msg: "<< sizeof(msg) << std::endl;
+
+			std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
+			std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
+//			std::cerr<<"data " << pkt->counter << std::endl;
+			//std::cerr <<"destination "<< d <<" "<< d1<< std::endl;
 			return 0;
 			break;
 

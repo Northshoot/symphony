@@ -13,6 +13,7 @@
  */
 
 #ifdef __cplusplus
+#include "ns3includes.h"
 /**
  * Important that include does only for CPP
  * otherwise linking with C will fail
@@ -54,7 +55,8 @@ extern "C" {
 
 int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
-int gatewayRadio(void *obj, int func , void* msg);
+
+int gatewayRadio(void *obj, int func, void * hdr, void* msg);
 
 
 #ifdef __cplusplus

@@ -32,7 +32,8 @@ OPTFLAGS_GPP = #-g -O0
 LINK_NS_OPT=-lstdc++
 OPTFLAGS_GCC = -g -O0 -Wall -Wshadow
 #NCC_OPT= -c -fPIC -o $(SIM_OBJ).o $(OPTFLAGS_GCC) -fnesc-gcc=$(GCC) -Wnesc-all -target=$(TARGET) -fnesc-cfile=app.c $(TOS_APP).nc
-NCC_OPT=-fPIC -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(NS3_DIR)
+NCC_OPT=-fPIC -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(NS3_DIR)
+NCC_OPT_WALL=-fPIC -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(NS3_DIR)
 #include dirs
 
 #for headers always use "ns3/heade.h" to allow moving to waf in future
@@ -60,7 +61,7 @@ all:
 		$(PY) $(POST) $(TOS_APP_C) $(SIM_LIB).c
 		@echo ""
 		@echo "Building TinyOS object             "
-		$(GPP) -fPIC -Wall -g -c $(SIM_LIB).c	$(NS3_INCL)
+		$(GPP) -fPIC -g -c $(SIM_LIB).c	$(NS3_INCL)
 		@echo ""
 		@echo "Creating library and linking with proxy objects            "
 		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) $(NS3_CORE) $(NS3_NET) -ldl 
@@ -72,6 +73,24 @@ all:
 		@echo ""
 		@echo "run it: ./"$(OUT)
 
+wall:
+		@echo "                                   "
+		@echo "Building TinyOS image              "
+		$(NCC) $(NCC_OPT_WALL)
+		$(PY) $(POST) $(TOS_APP_C) $(SIM_LIB).c
+		@echo ""
+		@echo "Building TinyOS object             "
+		$(GPP) -fPIC -Wall -g -c $(SIM_LIB).c	$(NS3_INCL)
+		@echo ""
+		@echo "Creating library and linking with proxy objects            "
+		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) $(NS3_CORE) $(NS3_NET) -ldl 
+		@echo ""
+		@echo "Linking all together              "
+		$(GPP) $(MAIN).cc -o $(OUT) $(TOS_INCL) $(NS3_INCL) $(NS3_OBJ) -ldl
+		@echo "                           "		
+		@echo "*** tos-ns was successfully build***"
+		@echo ""
+		@echo "run it: ./"$(OUT)
 		
 clean:
 	rm -rf $(OUT) *.o app.c
