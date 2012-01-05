@@ -20,6 +20,7 @@ void
 TosToLibProxy::setTimerFired(void *  tos){
 	pass__timerFired=(tosfunc)tos;
 }
+
 void
 TosToLibProxy::runNextEvent(void *  tos){
 	pass__runNext=(tosfunc)tos;

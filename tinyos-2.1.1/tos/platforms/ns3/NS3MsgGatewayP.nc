@@ -18,16 +18,24 @@ implementation{
 	message_t* msg_in;
 	error_t error_in = 0;
 	
-
-        
-//     Foo f;
 	task void sendDone(){
 		signal Send.sendDone(msg_out,error_out);
 	}
 	
 	task void receive(){
+		printf("RX node\n");
 		signal Receive.receive(msg_in);
 	}
+        
+	extern int receivePkt(void * msg)@C() @spontaneous(){
+		ns3packet_header_t* hdr = (ns3packet_header_t*)(((message_t*)msg)->header);
+		printf("msg received: dst: %u src: %u\n", hdr->dest, hdr->src);
+		msg_in = (message_t*)msg;
+		post receive();
+		return 0;
+	}
+	
+
 	
 	command error_t Send.send(message_t* msg){
 		ns3pack fo;

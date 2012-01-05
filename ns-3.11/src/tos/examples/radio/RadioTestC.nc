@@ -46,7 +46,6 @@ implementation {
 					return;
 				}
 
-				rcm->counter = 5555;
 				printf("AMControl.startDone: about to send\n");
 				if (call AMSend.send(220, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 					//dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
@@ -63,8 +62,8 @@ implementation {
 		// do nothing
 	}
  
-	event void MilliTimer.fired() {
-		counter++;
+ 	void task send(){
+ 				counter++;
 		dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
 		if (locked) {
 			return;
@@ -81,17 +80,21 @@ implementation {
 				locked = TRUE;
 			}
 		}
+ 	}
+	event void MilliTimer.fired() {
+		post send();
 	}
 
 	event message_t* Receive.receive(message_t* bufPtr, 
 			void* payload, uint8_t len) {
-		dbg("RadioCountToLedsC", "Received packet of length %hhu.\n", len);
+		printf("RadioTest event message_t* Receive.receive %u\n",((radio_count_msg_t*)payload)->counter);
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
 		else {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;
 			dbg("RadioCountToLedsC", "Received counter %u.\n", ((radio_count_msg_t*)payload)->counter);
 			return bufPtr;
 		}
+		post send();
 	}
 
 	event void AMSend.sendDone(message_t* bufPtr, error_t error) {

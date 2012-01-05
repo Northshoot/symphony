@@ -43,6 +43,15 @@ LibToTosProxy::getNow(int b){
 
 
 //functions for radio
+void
+LibToTosProxy::setDownlink(void *  tos){
+	downlink=(tosfuncvoid)tos;
+}
+
+void
+LibToTosProxy::sendDown(void *  msg){
+	downlink(msg);
+}
 
 LibToTosProxy::~LibToTosProxy() {
 	// TODO Auto-generated destructor stub

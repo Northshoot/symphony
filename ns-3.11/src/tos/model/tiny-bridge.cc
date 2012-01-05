@@ -44,6 +44,7 @@ TinyBridge::bridgeObjects(){
 		tostolib->setStartMote(getFunc("sim_main_start_mote")); //boot node
 		tostolib->setTimerFired(getFunc("tickFired")); // connect clock tick
 		run_next = (tosfunc)getFunc("runNextEventExternal");
+		libtotos->setDownlink(getFunc("receivePkt"));
 
     }
 }

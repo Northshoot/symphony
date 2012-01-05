@@ -22,6 +22,7 @@
 #include "ns3includes.h"
 #include "tos-node.h"
 #include "simu-clock.h"
+typedef int (*tosfuncvoid)(void*);
 
 class LibToTosProxy {
    friend class TinyBridge;
@@ -36,6 +37,8 @@ class LibToTosProxy {
 	   int confirmSet(int);
 
 	   uint32_t getNow(int);
+	   void setDownlink(void *  tos);
+	   void sendDown( void * msg);
 
 
     /**
@@ -45,6 +48,7 @@ class LibToTosProxy {
 private:
     ns3::TosNode * tosnode;
     ns3::SimuClock * simu_clock;
+    tosfuncvoid downlink;
 
     //LibToTosProxyToC * proxy;
 	

@@ -24,12 +24,14 @@ public:
 	void setTimerFired(void *  tos);
 	void runNextEvent(void *  tos);
 
+
 	~TosToLibProxy();
 
 private:
 	tosfunc pass__timerFired;
 	tosfunc pass__sim_main_start_mote;
 	tosfunc pass__runNext;
+
 };
 
 #endif /* TOSTOLIBPROXY_H_ */

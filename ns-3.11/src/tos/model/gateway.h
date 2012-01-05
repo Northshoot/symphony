@@ -19,9 +19,7 @@
  */
 
 //TODO: make this auto generated
-typedef struct radio {
-	uint16_t counter;
-} radio;
+
 
 extern int gateway(void *tthis,int call, int arg){
  std::cout << "gateway call "<< call <<" arg " << arg << std::endl;
@@ -89,6 +87,7 @@ extern int gatewayRadio(void *obj, int func, void* hdr, void* msg){
 
 			std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
 			std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
+			((LibToTosProxy *)obj)->sendDown(msg);
 //			std::cerr<<"data " << pkt->counter << std::endl;
 			//std::cerr <<"destination "<< d <<" "<< d1<< std::endl;
 			return 0;

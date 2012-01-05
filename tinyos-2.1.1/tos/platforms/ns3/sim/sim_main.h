@@ -19,7 +19,7 @@ int setUniqueID(int i) @C() @spontaneous(){
 
 int runNextEventExternal(uint32_t a);
 int sim_main_start_mote(int id) ;
-
+int receivePkt(void * msg);
 
 int setProxy(void * con) @C() @spontaneous() {
          proxy=con;
