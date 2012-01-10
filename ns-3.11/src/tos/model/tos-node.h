@@ -9,7 +9,7 @@
 #define TOSNODE_H_
 #include <vector>
 #include <stdint.h>
-
+#include <inttypes.h>
 #include "ns3/node.h"
 #include "ns3/nstime.h"
 #include "ns3/simulator.h"

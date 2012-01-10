@@ -33,7 +33,7 @@ Timer_t m_timer;
   void updateTimer(){
     //printf("updateTimer( %i\n",  time_now);
     if(m_timer.shoot == time_now) {
-        printf("m_timer.shoot == time_now %i\n",  time_now);
+        //printf("m_timer.shoot == time_now %i\n",  time_now);
         signal Timer.fired();
     } 
 
@@ -91,7 +91,7 @@ extern int tickFired(uint32_t a) @C() @spontaneous() {
 
   command void Timer.startPeriodicAt(uint32_t t0, uint32_t dt)  {
     
-    printf("Timer.startPeriodicAt(uint32_t %i, uint32_t %i) \n", t0, dt);
+   // printf("Timer.startPeriodicAt(uint32_t %i, uint32_t %i) \n", t0, dt);
     
     }
 
@@ -104,7 +104,7 @@ extern int tickFired(uint32_t a) @C() @spontaneous() {
 	    m_timer.shoot = t0+dt;
 	    m_timer.isrunning = TRUE;
     }
-    printf("Timer.startOneShotAt(time_now %i t0 %i, dt %i m_timer.shoot % i) \n", time_now, t0, dt,m_timer.shoot);
+    //printf("Timer.startOneShotAt(time_now %i t0 %i, dt %i m_timer.shoot % i) \n", time_now, t0, dt,m_timer.shoot);
     updateTimer();
      }
 
@@ -132,7 +132,6 @@ extern int tickFired(uint32_t a) @C() @spontaneous() {
 
   command error_t Init.init(){
     atomic time_now=0;
-    printf(" Init.init() \n");
     return 0;
   }
 }

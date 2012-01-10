@@ -7,12 +7,17 @@
 
 
 #include <stdio.h>
+#include <unistd.h>
+#include <iostream>
+#include <sys/time.h>
+
 #include "ns3/core-module.h"
 //#include "tosns-simulator-impl.h"
 #include "ns3/event-id.h"
 #include "ns3/nstime.h"
 #include "ns3/tos-node.h"
 #include "ns3/tiny-bridge.h"
+#include <boost/progress.hpp>
 
 
 
@@ -22,15 +27,19 @@ int main(void)
 //	  ns3::GlobalValue::Bind("SimulatorImplementationType", ns3::StringValue(
 //	      "ns3::TosNsRealtimeSimulatorImpl"));
 
+	clock_t start,end, total;
 
 	std::vector<ns3::TosNode * > tos;
 	std::vector<TinyBridge *> bridge;
     srand((unsigned)time(0));
 
-    for(int i=0; i<2;i++){
-    	std::cout<<"Round ./libtos.so "<<i<<std::endl;
+    for(int i=0; i<1;i++){
+    	//std::cout<<"Round ./libtos.so "<<i<<std::endl;
+
     	tos.push_back( new ns3::TosNode((rand()%1000)+1, ns3::MilliSeconds(0)));
     	bridge.push_back(new TinyBridge(tos[i], "./libtos.so"));
+
+
     }
 
 
@@ -41,5 +50,7 @@ int main(void)
     ns3::Simulator::Stop(ns3::Seconds(10.0));
     ns3::Simulator::Run();
     ns3::Simulator::Destroy ();
+
+
 	return 0;
 }

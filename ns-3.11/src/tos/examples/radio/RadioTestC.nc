@@ -38,7 +38,7 @@ implementation {
 			counter++;
 			//dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
 			if (locked) {
-				return;
+				printf("App: AMControl.startDone(error_t err) LOCKED \n");
 			}
 			else {
 				radio_count_msg_t* rcm = (radio_count_msg_t*)call Packet.getPayload(&packet, sizeof(radio_count_msg_t));
@@ -52,6 +52,8 @@ implementation {
 					locked = TRUE;
 				}
 			}
+			//call MilliTimer.startPeriodic(500); 
+			
 		}
 		else {
 			call AMControl.start();
@@ -94,7 +96,7 @@ implementation {
 			dbg("RadioCountToLedsC", "Received counter %u.\n", ((radio_count_msg_t*)payload)->counter);
 			return bufPtr;
 		}
-		post send();
+		
 	}
 
 	event void AMSend.sendDone(message_t* bufPtr, error_t error) {

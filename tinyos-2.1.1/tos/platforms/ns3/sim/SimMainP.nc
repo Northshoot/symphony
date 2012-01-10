@@ -52,7 +52,7 @@ implementation {
      * execute tasks. In TOSSIM, this call completes: posted tasks
      * are part of the global TOSSIM event loop. Look at
      * SimSchedulerBasicP for more details. */
-     printf("sim_main_start_mote: EXIT\n");
+     //printf("sim_main_start_mote: EXIT\n");
     return 0;
   }
 

@@ -50,11 +50,8 @@ TosNode::TosNode(uint32_t node_id ,Time bootTime) :
 {
 	Object::Start ();
 	cout<< "Node created " << node_id << " "<< Simulator::Now().GetMilliSeconds() << " ms"<<endl;
-	//cout<< "setting boot time " <<endl;
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
-	// build callback instance which points to MyCb::cbTwo
 	callBackFromClock = MakeCallback (&TosNode::wrapFire, this);
-//
 	simuclock = new SimuClock(NANOSECOND,NONE, callBackFromClock);
 
 

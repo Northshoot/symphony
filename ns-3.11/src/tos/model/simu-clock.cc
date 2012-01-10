@@ -52,7 +52,7 @@ SimuClock::DoStart(){
 	//std::cout<<"crystal "<<crystal<<std::endl;
 	tickTime = SimuClock::getTime(prec, crystal);
 	//std::cout<<"tickTime "<<tickTime<<std::endl;
-	tick_event = 	Simulator::Schedule(tickTime, &SimuClock::timerFired, this);
+	tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired, this);
 }
 
 void
@@ -142,29 +142,4 @@ void SimuClock::DoDispose (void){
 }
 }//ns3 namespace
 
-//
-//uint32_t
-//CbOne (uint32_t a)
-//{
-//  std::cout << "invoke cbOne a= " << a  << std::endl;
-//  return a;
-//}
 
-//int main(void)
-//{
-//	  ns3::Callback< uint32_t,uint32_t> one;
-//	  // build callback instance which points to cbOne function
-//	  one = ns3::MakeCallback (&CbOne);
-//	  // this is not a null callback
-//	  NS_ASSERT (!one.IsNull ());
-//
-//	ns3::SimuClock t(NANOSECOND,NONE,one);
-//	//t.startClock();
-//    ns3::Simulator::Stop(ns3::Seconds(1.0));
-//    t.Start();
-//    std::cout<<"getnow "<<t.getTimeNow()<<std::endl;
-//    ns3::Simulator::Run();
-//    ns3::Simulator::Destroy ();
-//
-//	return 0;
-//}

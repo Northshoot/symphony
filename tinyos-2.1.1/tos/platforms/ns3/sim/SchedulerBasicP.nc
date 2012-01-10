@@ -133,7 +133,6 @@ implementation
   {
 
     uint8_t nextTask;
-        //printf("Scheduler.runNextTask()\n");
     atomic
     {
       nextTask = popTask();

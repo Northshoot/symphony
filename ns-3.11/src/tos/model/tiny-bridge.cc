@@ -16,6 +16,7 @@
 #include <link.h>
 
 
+
 #include "tiny-bridge.h"
 
 TinyBridge::TinyBridge(ns3::TosNode *tos, const char * lib) {
@@ -32,7 +33,9 @@ TinyBridge::TinyBridge(ns3::TosNode *tos, const char * lib) {
 void
 TinyBridge::bridgeObjects(){
 	//open instance of the library  LM_ID_NEWLM
+
 	handler = dlmopen( LM_ID_NEWLM ,libname, RTLD_LAZY );
+
     if (!handler) {
         std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
         exit(1);
@@ -47,6 +50,7 @@ TinyBridge::bridgeObjects(){
 		libtotos->setDownlink(getFunc("receivePkt"));
 
     }
+
 }
 
 void *
