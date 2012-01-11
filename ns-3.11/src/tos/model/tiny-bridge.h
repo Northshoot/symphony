@@ -11,6 +11,8 @@
 #ifndef TINYBRIDGE_H_
 #define TINYBRIDGE_H_
 
+#include "ns3/object.h"
+#include "ns3/ptr.h"
 
 #include "tos-to-lib-proxy.h"
 #include "lib-to-tos-proxy.h"
@@ -23,21 +25,38 @@
  */
 typedef int(LibToTosProxy::*fucnpoint)(int);
 
+namespace ns3 {
+
 class TinyBridge {
 public:
+	static TypeId GetTypeId (void);
+
+	TinyBridge() ;
+
+	TinyBridge(ns3::TosNode *tos);
+
 	TinyBridge(ns3::TosNode * tos, const char * lib);
 	/**
 	 * Returns pointer to tos library function
 	 * For now its predefined
 	 */
 	void * getFunc(const char *);
+	void DoStart (void);
 	
 	/**
 	 * Destructor of the bridge class
 	 * 
 	 */
-    ~TinyBridge();
+	virtual ~TinyBridge();
     
+protected:
+  /**
+   * The dispose method. Subclasses must override this method
+   * and must chain up to it by calling Node::DoDispose at the
+   * end of their own DoDispose method.
+   */
+   void DoDispose (void);
+
 private:
     /**
      * Function that opens library
@@ -90,5 +109,6 @@ private:
 
     //LibToTosPointers *proxy;
 };
+}
 
 #endif /* TINYBRIDGE_H_ */

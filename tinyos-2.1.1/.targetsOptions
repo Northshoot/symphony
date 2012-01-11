@@ -3,7 +3,7 @@
     <default version="4">
         <default>true</default>
         <project/>
-        <target>ns3</target>
+        <target>btnode3</target>
         <make-extras/>
         <includes/>
         <excludes>

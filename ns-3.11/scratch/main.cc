@@ -21,7 +21,6 @@
 
 
 
-
 int main(void)
 {
 	  //set real time mode
@@ -29,8 +28,9 @@ int main(void)
 //	      "ns3::TosNsRealtimeSimulatorImpl"));
 
 
+	ns3::TosNodeContainer c;
+	c.Create(2);
 //	std::vector<ns3::TosNode * > tos;
-//
 //    srand((unsigned)time(0));
 //
 //    for(int i=0; i<1;i++){
@@ -42,8 +42,7 @@ int main(void)
 //
 //    }
 
-	ns3::TosNodeContainer c;
-	c.Create(2);
+
 //	ns3::TosNode * n2 = new ns3::TosNode((rand()%1000)+1, ns3::MilliSeconds(0));
 //	TinyBridge *tbridge2 = new TinyBridge(n2, "./libtos.so");
 

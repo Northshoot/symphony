@@ -22,25 +22,25 @@
 
 #include <stdint.h>
 #include <vector>
-#include "ns3/NodeTest.h"
+#include "ns3/tos-node.h"
 #include "ns3/node-container.h"
 
 
 namespace ns3 {
 
 /**
- * \brief keep track of a set of NodeTest pointers.
+ * \brief keep track of a set of TosNode pointers.
  *
- * Typically ns-3 helpers operate on more than one NodeTest at a time.  For example
+ * Typically ns-3 helpers operate on more than one TosNode at a time.  For example
  * a device helper may want to install devices on a large number of similar
  * NodeTests.  The helper Install methods usually take a NodeTestContainer as a
- * parameter.  NodeTestContainers hold the multiple Ptr<NodeTest> which are used
+ * parameter.  NodeTestContainers hold the multiple Ptr<TosNode> which are used
  * to refer to the NodeTests.
  */
 class TosNodeContainer : public NodeContainer
 {
 public:
-  typedef std::vector<Ptr<NodeTest> >::const_iterator Iterator;
+  typedef std::vector<Ptr<TosNode> >::const_iterator Iterator;
 
   /**
    * Create an empty TosNodeContainer.
@@ -48,41 +48,41 @@ public:
   TosNodeContainer ();
 
   /**
-   * Create a TosNodeContainer with exactly one NodeTest which has been previously
-   * instantiated.  The single NodeTest is specified by a smart pointer.
+   * Create a TosNodeContainer with exactly one TosNode which has been previously
+   * instantiated.  The single TosNode is specified by a smart pointer.
    *
-   * \param NodeTest The Ptr<NodeTest> to add to the container.
+   * \param TosNode The Ptr<TosNode> to add to the container.
    */
-  TosNodeContainer (Ptr<NodeTest> NodeTest);
+  TosNodeContainer (Ptr<TosNode> TosNode);
 
   /**
-   * Create a TosNodeContainer with exactly one NodeTest which has been previously
+   * Create a TosNodeContainer with exactly one TosNode which has been previously
    * instantiated and assigned a name using the Object Name Service.  This 
-   * NodeTest is then specified by its assigned name.
+   * TosNode is then specified by its assigned name.
    *
-   * \param NodeTestName The name of the NodeTest Object to add to the container.
+   * \param NodeTestName The name of the TosNode Object to add to the container.
    */
   TosNodeContainer (std::string NodeTestName);
 
   /**
-   * Create a NodeTest container which is a concatenation of two input
+   * Create a TosNode container which is a concatenation of two input
    * NodeTestContainers.
    *
    * \param a The first TosNodeContainer
    * \param b The second TosNodeContainer
    *
    * \note A frequently seen idiom that uses these constructors involves the
-   * implicit conversion by constructor of Ptr<NodeTest>.  When used, two
-   * Ptr<NodeTest> will be passed to this constructor instead of TosNodeContainer&.
+   * implicit conversion by constructor of Ptr<TosNode>.  When used, two
+   * Ptr<TosNode> will be passed to this constructor instead of TosNodeContainer&.
    * C++ will notice the implicit conversion path that goes through the 
-   * TosNodeContainer (Ptr<NodeTest> NodeTest) constructor above.  Using this conversion
-   * one may provide optionally provide arguments of Ptr<NodeTest> to these
+   * TosNodeContainer (Ptr<TosNode> TosNode) constructor above.  Using this conversion
+   * one may provide optionally provide arguments of Ptr<TosNode> to these
    * constructors.
    */
   TosNodeContainer (const TosNodeContainer &a, const TosNodeContainer &b);
 
   /**
-   * Create a NodeTest container which is a concatenation of three input
+   * Create a TosNode container which is a concatenation of three input
    * NodeTestContainers.
    *
    * \param a The first TosNodeContainer
@@ -90,17 +90,17 @@ public:
    * \param c The third TosNodeContainer
    *
    * \note A frequently seen idiom that uses these constructors involves the
-   * implicit conversion by constructor of Ptr<NodeTest>.  When used, two
-   * Ptr<NodeTest> will be passed to this constructor instead of TosNodeContainer&.
+   * implicit conversion by constructor of Ptr<TosNode>.  When used, two
+   * Ptr<TosNode> will be passed to this constructor instead of TosNodeContainer&.
    * C++ will notice the implicit conversion path that goes through the 
-   * TosNodeContainer (Ptr<NodeTest> NodeTest) constructor above.  Using this conversion
-   * one may provide optionally provide arguments of Ptr<NodeTest> to these
+   * TosNodeContainer (Ptr<TosNode> TosNode) constructor above.  Using this conversion
+   * one may provide optionally provide arguments of Ptr<TosNode> to these
    * constructors.
    */
   TosNodeContainer (const TosNodeContainer &a, const TosNodeContainer &b, const TosNodeContainer &c);
 
   /**
-   * Create a NodeTest container which is a concatenation of four input
+   * Create a TosNode container which is a concatenation of four input
    * NodeTestContainers.
    *
    * \param a The first TosNodeContainer
@@ -109,17 +109,17 @@ public:
    * \param d The fourth TosNodeContainer
    *
    * \note A frequently seen idiom that uses these constructors involves the
-   * implicit conversion by constructor of Ptr<NodeTest>.  When used, two
-   * Ptr<NodeTest> will be passed to this constructor instead of TosNodeContainer&.
+   * implicit conversion by constructor of Ptr<TosNode>.  When used, two
+   * Ptr<TosNode> will be passed to this constructor instead of TosNodeContainer&.
    * C++ will notice the implicit conversion path that goes through the 
-   * TosNodeContainer (Ptr<NodeTest> NodeTest) constructor above.  Using this conversion
-   * one may provide optionally provide arguments of Ptr<NodeTest> to these
+   * TosNodeContainer (Ptr<TosNode> TosNode) constructor above.  Using this conversion
+   * one may provide optionally provide arguments of Ptr<TosNode> to these
    * constructors.
    */
   TosNodeContainer (const TosNodeContainer &a, const TosNodeContainer &b, const TosNodeContainer &c, const TosNodeContainer &d);
 
   /**
-   * Create a NodeTest container which is a concatenation of five input
+   * Create a TosNode container which is a concatenation of five input
    * NodeTestContainers.
    *
    * \param a The first TosNodeContainer
@@ -129,18 +129,18 @@ public:
    * \param e The fifth TosNodeContainer
    *
    * \note A frequently seen idiom that uses these constructors involves the
-   * implicit conversion by constructor of Ptr<NodeTest>.  When used, two
-   * Ptr<NodeTest> will be passed to this constructor instead of TosNodeContainer&.
+   * implicit conversion by constructor of Ptr<TosNode>.  When used, two
+   * Ptr<TosNode> will be passed to this constructor instead of TosNodeContainer&.
    * C++ will notice the implicit conversion path that goes through the 
-   * TosNodeContainer (Ptr<NodeTest> NodeTest) constructor above.  Using this conversion
-   * one may provide optionally provide arguments of Ptr<NodeTest> to these
+   * TosNodeContainer (Ptr<TosNode> TosNode) constructor above.  Using this conversion
+   * one may provide optionally provide arguments of Ptr<TosNode> to these
    * constructors.
    */
   TosNodeContainer (const TosNodeContainer &a, const TosNodeContainer &b, const TosNodeContainer &c, const TosNodeContainer &d,
                  const TosNodeContainer &e);
 
   /**
-   * \brief Get an iterator which refers to the first NodeTest in the
+   * \brief Get an iterator which refers to the first TosNode in the
    * container.
    *
    * NodeTests can be retrieved from the container in two ways.  First,
@@ -152,16 +152,16 @@ public:
    *   TosNodeContainer::Iterator i;
    *   for (i = container.Begin (); i != container.End (); ++i)
    *     {
-   *       (*i)->method ();  // some NodeTest method
+   *       (*i)->method ();  // some TosNode method
    *     }
    * \endcode
    *
-   * \returns an iterator which refers to the first NodeTest in the container.
+   * \returns an iterator which refers to the first TosNode in the container.
    */
   Iterator Begin (void) const;
 
   /**
-   * \brief Get an iterator which indicates past-the-last NodeTest in the
+   * \brief Get an iterator which indicates past-the-last TosNode in the
    * container.
    *
    * NodeTests can be retrieved from the container in two ways.  First,
@@ -173,7 +173,7 @@ public:
    *   TosNodeContainer::Iterator i;
    *   for (i = container.Begin (); i != container.End (); ++i)
    *     {
-   *       (*i)->method ();  // some NodeTest method
+   *       (*i)->method ();  // some TosNode method
    *     }
    * \endcode
    *
@@ -182,7 +182,7 @@ public:
   Iterator End (void) const;
 
   /**
-   * \brief Get the number of Ptr<NodeTest> stored in this container.
+   * \brief Get the number of Ptr<TosNode> stored in this container.
    *
    * NodeTests can be retrieved from the container in two ways.  First,
    * directly by an index into the container, and second, using an iterator.
@@ -194,17 +194,17 @@ public:
    *   uint32_t nNodeTests = container.GetN ();
    *   for (uint32_t i = 0 i < nNodeTests; ++i)
    *     {
-   *       Ptr<NodeTest> p = container.Get (i)
-   *       i->method ();  // some NodeTest method
+   *       Ptr<TosNode> p = container.Get (i)
+   *       i->method ();  // some TosNode method
    *     }
    * \endcode
    *
-   * \returns the number of Ptr<NodeTest> stored in this container.
+   * \returns the number of Ptr<TosNode> stored in this container.
    */
   uint32_t GetN (void) const;
 
   /**
-   * \brief Get the Ptr<NodeTest> stored in this container at a given
+   * \brief Get the Ptr<TosNode> stored in this container at a given
    * index.
    *
    * NodeTests can be retrieved from the container in two ways.  First,
@@ -216,15 +216,15 @@ public:
    *   uint32_t nNodeTests = container.GetN ();
    *   for (uint32_t i = 0 i < nNodeTests; ++i)
    *     {
-   *       Ptr<NodeTest> p = container.Get (i)
-   *       i->method ();  // some NodeTest method
+   *       Ptr<TosNode> p = container.Get (i)
+   *       i->method ();  // some TosNode method
    *     }
    * \endcode
    *
-   * \param i the index of the requested NodeTest pointer.
-   * \returns the requested NodeTest pointer.
+   * \param i the index of the requested TosNode pointer.
+   * \returns the requested TosNode pointer.
    */
-  Ptr<NodeTest> Get (uint32_t i) const;
+  Ptr<TosNode> Get (uint32_t i) const;
 
   /**
    * \brief Create n NodeTests and append pointers to them to the end of this
@@ -248,7 +248,7 @@ public:
    * distributed simulations.
    *
    * \param n The number of NodeTests to create
-   * \param systemId The system id or rank associated with this NodeTest
+   * \param systemId The system id or rank associated with this TosNode
    */
   void Create (uint32_t n, uint32_t systemId);
 
@@ -261,17 +261,17 @@ public:
   void Add (TosNodeContainer other);
 
   /**
-   * \brief Append a single Ptr<NodeTest> to this container.
+   * \brief Append a single Ptr<TosNode> to this container.
    *
-   * \param NodeTest The Ptr<NodeTest> to append.
+   * \param TosNode The Ptr<TosNode> to append.
    */
-  void Add (Ptr<NodeTest> NodeTest);
+  void Add (Ptr<TosNode> TosNode);
 
   /**
-   * \brief Append to this container the single Ptr<NodeTest> referred to
+   * \brief Append to this container the single Ptr<TosNode> referred to
    * via its object name service registered name.
    *
-   * \param NodeTestName The name of the NodeTest Object to add to the container.
+   * \param NodeTestName The name of the TosNode Object to add to the container.
    */
   void Add (std::string NodeTestName);
 
@@ -280,7 +280,7 @@ public:
    * created through TosNodeContainer::Create() and stored in the
    * ns3::NodeTestList.
    *
-   * Whenever a NodeTest is created, a Ptr<NodeTest> is added to a global list of all
+   * Whenever a TosNode is created, a Ptr<TosNode> is added to a global list of all
    * NodeTests in the system.  It is sometimes useful to be able to get to all
    * NodeTests in one place.  This method creates a TosNodeContainer that is
    * initialized to contain all of the simulation NodeTests,
@@ -290,7 +290,7 @@ public:
   static TosNodeContainer GetGlobal (void);
 
 private:
-  std::vector<Ptr<NodeTest> > m_NodeTests;
+  std::vector<Ptr<TosNode> > m_TosNode;
 };
 
 } // namespace ns3

@@ -23,7 +23,6 @@ int receivePkt(void * msg);
 
 int setProxy(void * con) @C() @spontaneous() {
          proxy=con;
-         printf("FROM toslib: set proxy");
          if(proxy != NULL ){
             a=gateway(proxy,0,id_this_lib);
            printf("FROM toslib: gateway(proxy,0,id_this_lib): %i\n", a);

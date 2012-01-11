@@ -27,14 +27,14 @@ TosNodeContainer::TosNodeContainer ()
 {
 }
 
-TosNodeContainer::TosNodeContainer (Ptr<NodeTest> NodeTest)
+TosNodeContainer::TosNodeContainer (Ptr<TosNode> TosNode)
 {
-  m_NodeTests.push_back (NodeTest);
+  m_TosNode.push_back (TosNode);
 }
 TosNodeContainer::TosNodeContainer (std::string NodeTestName)
 {
-  Ptr<NodeTest> node = Names::Find<NodeTest> (NodeTestName);
-  m_NodeTests.push_back (node);
+  Ptr<TosNode> node = Names::Find<TosNode> (NodeTestName);
+  m_TosNode.push_back (node);
 }
 TosNodeContainer::TosNodeContainer (const TosNodeContainer &a, const TosNodeContainer &b)
 {
@@ -71,30 +71,30 @@ TosNodeContainer::TosNodeContainer (const TosNodeContainer &a, const TosNodeCont
 TosNodeContainer::Iterator
 TosNodeContainer::Begin (void) const
 {
-  return m_NodeTests.begin ();
+  return m_TosNode.begin ();
 }
 TosNodeContainer::Iterator
 TosNodeContainer::End (void) const
 {
-  return m_NodeTests.end ();
+  return m_TosNode.end ();
 }
 
 uint32_t 
 TosNodeContainer::GetN (void) const
 {
-  return m_NodeTests.size ();
+  return m_TosNode.size ();
 }
-Ptr<NodeTest>
+Ptr<TosNode>
 TosNodeContainer::Get (uint32_t i) const
 {
-  return m_NodeTests[i];
+  return m_TosNode[i];
 }
 void 
 TosNodeContainer::Create (uint32_t n)
 {
   for (uint32_t i = 0; i < n; i++)
     {
-      m_NodeTests.push_back (CreateObject<NodeTest> ());
+      m_TosNode.push_back (CreateObject<TosNode> ());
     }
 }
 void 
@@ -102,7 +102,7 @@ TosNodeContainer::Create (uint32_t n, uint32_t systemId)
 {
   for (uint32_t i = 0; i < n; i++)
     {
-      m_NodeTests.push_back (CreateObject<NodeTest> (systemId));
+      m_TosNode.push_back (CreateObject<TosNode> (systemId));
     }
 }
 void 
@@ -110,19 +110,19 @@ TosNodeContainer::Add (TosNodeContainer other)
 {
   for (Iterator i = other.Begin (); i != other.End (); i++)
     {
-      m_NodeTests.push_back (*i);
+      m_TosNode.push_back (*i);
     }
 }
 void 
-TosNodeContainer::Add (Ptr<NodeTest> NodeTest)
+TosNodeContainer::Add (Ptr<TosNode> TosNode)
 {
-  m_NodeTests.push_back (NodeTest);
+  m_TosNode.push_back (TosNode);
 }
 void 
 TosNodeContainer::Add (std::string NodeTestName)
 {
-  Ptr<NodeTest> node = Names::Find<NodeTest> (NodeTestName);
-  m_NodeTests.push_back (node);
+  Ptr<TosNode> node = Names::Find<TosNode> (NodeTestName);
+  m_TosNode.push_back (node);
 }
 
 TosNodeContainer

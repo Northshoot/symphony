@@ -13,7 +13,6 @@
  */
 
 #ifdef __cplusplus
-#include "ns3includes.h"
 /**
  * Important that include does only for CPP
  * otherwise linking with C will fail
@@ -24,11 +23,12 @@
 #include "simu-clock.h"
 typedef int (*tosfuncvoid)(void*);
 
+
 class LibToTosProxy {
-   friend class TinyBridge;
-   
+   friend class TosNode;
     public:
-   LibToTosProxy(ns3::TosNode * tos);
+   	   LibToTosProxy();
+   	   //LibToTosProxy( ns3::TosNode * tos);
 		/**
 		 * Here goes functions that can be
 		 * called from C-library
@@ -39,20 +39,21 @@ class LibToTosProxy {
 	   uint32_t getNow(int);
 	   void setDownlink(void *  tos);
 	   void sendDown( void * msg);
-
+	   ns3::SimuClock * simu_clock;
 
     /**
      * Destructor
      */
 	~LibToTosProxy();
 private:
-    ns3::TosNode * tosnode;
-    ns3::SimuClock * simu_clock;
+
+
     tosfuncvoid downlink;
 
     //LibToTosProxyToC * proxy;
 	
 };
+
 
 extern "C" {
 #endif

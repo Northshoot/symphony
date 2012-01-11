@@ -18,6 +18,8 @@
  * Authors: George F. Riley<riley@ece.gatech.edu>
  *          Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  */
+#include <iostream>
+
 #include "node.h"
 #include "node-list.h"
 #include "net-device.h"
@@ -32,6 +34,7 @@
 #include "ns3/boolean.h"
 #include "ns3/simulator.h"
 
+using namespace std;
 NS_LOG_COMPONENT_DEFINE ("Node");
 
 namespace ns3 {

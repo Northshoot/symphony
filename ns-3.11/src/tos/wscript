@@ -7,15 +7,15 @@ def build(bld):
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/types/') 
     obj.env.append_value('CCFLAGS','-std=gnu++0x')
+    obj.env.append_value('LINKFLAGS','-ldl')
     obj.source = ['model/lib-to-tos-proxy.cc',
     			  'model/tos-node.cc',
     			  'model/simu-clock.cc',
-    			  'model/tiny-bridge.cc',
+    			  #'model/tiny-bridge.cc',
     			  'model/tos-to-lib-proxy.cc',
     			  'model/tos-packet.cc',
-    			  #'model/NodeTest.cc',
-    			  #'model/tos-node-list.cc',
-    			  #'helper/tos-node-container.cc',
+    			  'model/tos-node-list.cc',
+    			  'helper/tos-node-container.cc',
     			  
     			  
 
@@ -27,15 +27,14 @@ def build(bld):
     headers.source = ['model/lib-to-tos-proxy.h',
     			  'model/tos-node.h',
     			  'model/simu-clock.h',
-    			  'model/tiny-bridge.h',
+    			  #'model/tiny-bridge.h',
     			  'model/tos-to-lib-proxy.h',
     			  'model/tos-packet.h',
     			  'model/gateway.h',
     			  'model/ns3includes.h',
     			  #'model/tosmessage.h',
-    			  #'model/NodeTest.h',
-    			  #'helper/tos-node-container.h',
-    			  #'model/tos-node-list.h',
+    			  'helper/tos-node-container.h',
+    			  'model/tos-node-list.h',
 
         ]
 

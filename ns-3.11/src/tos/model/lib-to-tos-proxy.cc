@@ -13,12 +13,10 @@
 
 
 
+LibToTosProxy::LibToTosProxy() {
 
-LibToTosProxy::LibToTosProxy(ns3::TosNode * tos) {
-	tosnode=tos;
-	simu_clock=tosnode->getClock();
-	NS_ASSERT_MSG(simu_clock != NULL, "Clock is null in LibToTosProxy");
 }
+
 //fucntions for TosNode
 int LibToTosProxy::confirmSet(int a){
 	std::cout<<"LibToTosProxy called: "<< a <<" time " << simu_clock->getTimeNow()<<'\n';

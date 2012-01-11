@@ -12,12 +12,44 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <stdlib.h>
 #include <dlfcn.h>
 #include <link.h>
 
+#include "ns3/object.h"
+#include "ns3/ptr.h"
 
-
+#include "tos-to-lib-proxy.h"
+#include "lib-to-tos-proxy.h"
+#include "tos-node.h"
+#include "simu-clock.h"
 #include "tiny-bridge.h"
+
+namespace ns3 {
+NS_OBJECT_ENSURE_REGISTERED(TinyBridge);
+
+TypeId
+TinyBridge::GetTypeId(void)
+{
+	static  TypeId tid = TypeId("ns3::TinyBridge");
+
+	return tid;
+}
+TinyBridge::TinyBridge() {
+ //what to do?
+}
+
+TinyBridge::TinyBridge(ns3::TosNode *tos) {
+	tosnode		= tos;
+	//default libname
+	libname		= "./libtos.so";
+
+	//create proxy's
+	libtotos	= new LibToTosProxy(tosnode); //ns3 to tos
+	tostolib	= new TosToLibProxy(); //tos to ns3
+
+	//bridgeObjects();
+}
 
 TinyBridge::TinyBridge(ns3::TosNode *tos, const char * lib) {
 	tosnode		= tos;
@@ -27,13 +59,13 @@ TinyBridge::TinyBridge(ns3::TosNode *tos, const char * lib) {
 	libtotos	= new LibToTosProxy(tosnode); //ns3 to tos
 	tostolib	= new TosToLibProxy(); //tos to ns3
 
-	bridgeObjects();
+	//bridgeObjects();
 }
 
 void
-TinyBridge::bridgeObjects(){
+TinyBridge::DoStart(){
 	//open instance of the library  LM_ID_NEWLM
-
+	std::cerr << "doStart" << '/n';
 	handler = dlmopen( LM_ID_NEWLM ,libname, RTLD_LAZY );
 
     if (!handler) {
@@ -65,10 +97,14 @@ TinyBridge::getFunc(const char* func_name){
 		return tmp;
 	}
 }
-
-TinyBridge::~TinyBridge() {
+void
+TinyBridge::DoDispose() {
+	dlclose(handler);
 	delete tostolib;
 	delete libtotos;
-	//delete proxy;
-	dlclose(handler);
+
+}
+TinyBridge::~TinyBridge() {
+
+}
 }

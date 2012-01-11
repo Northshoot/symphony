@@ -26,7 +26,7 @@
 
 namespace ns3 {
 
-class NodeTest;
+class TosNode;
 class CallbackBase;
 
 
@@ -40,7 +40,7 @@ class CallbackBase;
 class TosNodeList
 {
 public:
-  typedef std::vector< Ptr<NodeTest> >::const_iterator Iterator;
+  typedef std::vector< Ptr<TosNode> >::const_iterator Iterator;
 
   /**
    * \param node node to add
@@ -49,7 +49,7 @@ public:
    * This method is called automatically from Node::Node so
    * the user has little reason to call it himself.
    */
-  static uint32_t Add (Ptr<NodeTest> node);
+  static uint32_t Add (Ptr<TosNode> node);
   /**
    * \returns a C++ iterator located at the beginning of this
    *          list.
@@ -64,7 +64,7 @@ public:
    * \param n index of requested node.
    * \returns the Node associated to index n.
    */
-  static Ptr<NodeTest> GetNode (uint32_t n);
+  static Ptr<TosNode> GetNode (uint32_t n);
   /**
    * \returns the number of nodes currently in the list.
    */

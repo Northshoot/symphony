@@ -25,7 +25,7 @@
 #include "ns3/log.h"
 #include "ns3/assert.h"
 #include "tos-node-list.h"
-#include "NodeTest.h"
+#include "tos-node.h"
 
 namespace ns3 {
 
@@ -41,10 +41,10 @@ public:
   TosNodeListPriv ();
   ~TosNodeListPriv ();
 
-  uint32_t Add (Ptr<NodeTest> node);
+  uint32_t Add (Ptr<TosNode> node);
   TosNodeList::Iterator Begin (void) const;
   TosNodeList::Iterator End (void) const;
-  Ptr<NodeTest> GetNode (uint32_t n);
+  Ptr<TosNode> GetNode (uint32_t n);
   uint32_t GetNNodes (void);
 
   static Ptr<TosNodeListPriv> Get (void);
@@ -53,7 +53,7 @@ private:
   virtual void DoDispose (void);
   static Ptr<TosNodeListPriv> *DoGet (void);
   static void Delete (void);
-  std::vector<Ptr<NodeTest> > m_nodes;
+  std::vector<Ptr<TosNode> > m_nodes;
 };
 
 NS_OBJECT_ENSURE_REGISTERED (TosNodeListPriv);
@@ -66,7 +66,7 @@ TosNodeListPriv::GetTypeId (void)
     .AddAttribute ("NodeList", "The list of all nodes created during the simulation.",
                    ObjectVectorValue (),
                    MakeObjectVectorAccessor (&TosNodeListPriv::m_nodes),
-                   MakeObjectVectorChecker<NodeTest> ())
+                   MakeObjectVectorChecker<TosNode> ())
   ;
   return tid;
 }
@@ -108,10 +108,10 @@ void
 TosNodeListPriv::DoDispose (void)
 {
   NS_LOG_FUNCTION_NOARGS ();
-  for (std::vector<Ptr<NodeTest> >::iterator i = m_nodes.begin ();
+  for (std::vector<Ptr<TosNode> >::iterator i = m_nodes.begin ();
        i != m_nodes.end (); i++)
     {
-      Ptr<NodeTest> node = *i;
+      Ptr<TosNode> node = *i;
       node->Dispose ();
       *i = 0;
     }
@@ -121,11 +121,11 @@ TosNodeListPriv::DoDispose (void)
 
 
 uint32_t
-TosNodeListPriv::Add (Ptr<NodeTest> node)
+TosNodeListPriv::Add (Ptr<TosNode> node)
 {
   uint32_t index = m_nodes.size ();
   m_nodes.push_back (node);
-  Simulator::ScheduleWithContext (index, TimeStep (0), &NodeTest::Start, node);
+  Simulator::ScheduleWithContext (index, TimeStep (0), &TosNode::Start, node);
   return index;
 
 }
@@ -145,10 +145,10 @@ TosNodeListPriv::GetNNodes (void)
   return m_nodes.size ();
 }
 
-Ptr<NodeTest>
+Ptr<TosNode>
 TosNodeListPriv::GetNode (uint32_t n)
 {
-  NS_ASSERT_MSG (n < m_nodes.size (), "NodeTest index " << n <<
+  NS_ASSERT_MSG (n < m_nodes.size (), "TosNode index " << n <<
                  " is out of range (only have " << m_nodes.size () << " nodes).");
   return m_nodes[n];
 }
@@ -163,7 +163,7 @@ TosNodeListPriv::GetNode (uint32_t n)
 namespace ns3 {
 
 uint32_t
-TosNodeList::Add (Ptr<NodeTest> node)
+TosNodeList::Add (Ptr<TosNode> node)
 {
   return TosNodeListPriv::Get ()->Add (node);
 }
@@ -177,7 +177,7 @@ TosNodeList::End (void)
 {
   return TosNodeListPriv::Get ()->End ();
 }
-Ptr<NodeTest>
+Ptr<TosNode>
 TosNodeList::GetNode (uint32_t n)
 {
   return TosNodeListPriv::Get ()->GetNode (n);

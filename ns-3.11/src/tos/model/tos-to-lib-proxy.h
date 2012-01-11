@@ -12,7 +12,7 @@
 typedef int (*tosfunc)(int);
 
 class TosToLibProxy {
-	friend class TinyBridge;
+	friend class TosNode;
 public:
 	TosToLibProxy();
 	uint32_t timerFired(uint32_t);
