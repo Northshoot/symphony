@@ -17,6 +17,7 @@
 #include "ns3/nstime.h"
 #include "ns3/tos-node.h"
 #include "ns3/tos-node-container.h"
+#include "ns3/tos-module.h"
 
 
 
@@ -30,6 +31,7 @@ int main(void)
 
 	ns3::TosNodeContainer c;
 	c.Create(2);
+	ns3::TosMacLow mac = new ns3::TosMacLow();
 //	std::vector<ns3::TosNode * > tos;
 //    srand((unsigned)time(0));
 //

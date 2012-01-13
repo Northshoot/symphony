@@ -130,7 +130,6 @@ TosNode::getNow()
 void
 TosNode::DoDispose(void)
 {
-	cout<<"TosNode::DoDispose(void)"<<endl;
 	/**
 	 * Check and remove shutdown event
 	 */

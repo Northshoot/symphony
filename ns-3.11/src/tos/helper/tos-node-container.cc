@@ -20,6 +20,7 @@
 #include "tos-node-container.h"
 #include "ns3/tos-node-list.h"
 #include "ns3/names.h"
+#include "ns3/nstime.h"
 
 namespace ns3 {
 
@@ -94,7 +95,7 @@ TosNodeContainer::Create (uint32_t n)
 {
   for (uint32_t i = 0; i < n; i++)
     {
-      m_TosNode.push_back (CreateObject<TosNode> ());
+      m_TosNode.push_back (CreateObject<TosNode> (i+2 ,MilliSeconds(0),"./libtos.so"));
     }
 }
 void 

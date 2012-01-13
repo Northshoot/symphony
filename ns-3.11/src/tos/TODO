@@ -1,5 +1,5 @@
 take only needed modules configure:
-./waf --disable-python --disable-examples --disable-tests --enable-module='wifi,tos,wsn, config-store' configure
+./waf --disable-python --disable-examples --disable-tests --enable-module='internet,wifi,tos,wsn,config-store' configure
 
 add waf build support for examples
 add socket communication
