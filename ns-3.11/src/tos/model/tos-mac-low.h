@@ -19,18 +19,19 @@
  * Author: Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  * Author: Mirko Banchi <mk.banchi@gmail.com>
  */
-#ifndef MAC_LOW_H
-#define MAC_LOW_H
+#ifndef TOS_MAC_LOW_H
+#define TOS_MAC_LOW_H
 
 #include <vector>
 #include <stdint.h>
+#include <list>
 #include <ostream>
 #include <map>
 
 #include "ns3/wifi-mac-header.h"
 #include "ns3/wifi-mode.h"
+#
 #include "ns3/wifi-preamble.h"
-#include "ns3/wifi-remote-station-manager.h"
 #include "ns3/ctrl-headers.h"
 #include "ns3/mgt-headers.h"
 #include "ns3/block-ack-agreement.h"
@@ -40,13 +41,14 @@
 #include "ns3/packet.h"
 #include "ns3/nstime.h"
 #include "ns3/block-ack-cache.h"
+#include "ns3/mac-low.h"
 
 namespace ns3 {
 
 class WifiPhy;
 class WifiMac;
-class EdcaTxopN;
 
+class MacLowTransmissionParameters;
 /**
  * \ingroup wifi
  * \brief listen to events coming from ns3::MacLow.
@@ -141,7 +143,20 @@ public:
   virtual ~TosMacLow ();
 
   void SetPhy (Ptr<WifiPhy> phy);
-  void SetWifiRemoteStationManager (Ptr<WifiRemoteStationManager> manager);
+
+
+  Time CalculateOverallTxTime (Ptr<const Packet> packet,
+                               const WifiMacHeader* hdr,
+                               const MacLowTransmissionParameters &params) const;
+  Time
+  CalculateTransmissionTime (Ptr<const Packet> packet,
+                                     const WifiMacHeader* hdr,
+                                     const MacLowTransmissionParameters& params) const;
+
+  void StartTransmission (Ptr<const Packet> packet,
+          const WifiMacHeader* hdr,
+          MacLowTransmissionParameters params,
+          TosMacLowTransmissionListener *listener);
 
   void SetAddress (Mac48Address ad);
   void SetAckTimeout (Time ackTimeout);
@@ -183,19 +198,7 @@ public:
 //                                  const WifiMacHeader* hdr,
 //                                  const MacLowTransmissionParameters& parameters) const;
 
-  /**
-   * \param packet packet to send
-   * \param hdr 802.11 header for packet to send
-   * \param parameters the transmission parameters to use for this packet.
-   * \param listener listen to transmission events.
-   *
-   * Start the transmission of the input packet and notify the listener
-   * of transmission events.
-   */
-//  void StartTransmission (Ptr<const Packet> packet,
-//                          const WifiMacHeader* hdr,
-//                          MacLowTransmissionParameters parameters,
-//                          MacLowTransmissionListener *listener);
+
 
   /**
    * \param packet packet received
@@ -223,75 +226,21 @@ public:
    * occurs, pending MAC transmissions (RTS, CTS, DATA and ACK) are cancelled.
    */
   void NotifySwitchingStartNow (Time duration);
-  /**
-   * \param respHdr Add block ack response from originator (action
-   * frame).
-   * \param originator Address of peer station involved in block ack
-   * mechanism.
-   * \param startingSeq Sequence number of the first MPDU of all
-   * packets for which block ack was negotiated.
-   *
-   * This function is typically invoked only by ns3::RegularWifiMac
-   * when the STA (which may be non-AP in ESS, or in an IBSS) has
-   * received an ADDBA Request frame and is transmitting an ADDBA
-   * Response frame. At this point MacLow must allocate buffers to
-   * collect all correctly received packets belonging to the category
-   * for which Block Ack was negotiated.
-   */
-  void CreateBlockAckAgreement (const MgtAddBaResponseHeader *respHdr,
-                                Mac48Address originator,
-                                uint16_t startingSeq);
-  /**
-   * \param originator Address of peer participating in Block Ack mechanism.
-   * \param tid TID for which Block Ack was created.
-   *
-   * Checks if exists an established block ack agreement with <i>originator</i>
-   * for tid <i>tid</i>. If the agreement exists, tears down it. This function is typically
-   * invoked when a DELBA frame is received from <i>originator</i>.
-   */
-  void DestroyBlockAckAgreement (Mac48Address originator, uint8_t tid);
 
 private:
   void CancelAllEvents (void);
-  uint32_t GetAckSize (void) const;
-  uint32_t GetBlockAckSize (enum BlockAckType type) const;
-  uint32_t GetRtsSize (void) const;
-  uint32_t GetCtsSize (void) const;
+
   uint32_t GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const;
   Time NowUs (void) const;
   void ForwardDown (Ptr<const Packet> packet, const WifiMacHeader *hdr,
                     WifiMode txMode);
-//  Time CalculateOverallTxTime (Ptr<const Packet> packet,
-//                               const WifiMacHeader* hdr,
-//                               const MacLowTransmissionParameters &params) const;
-  WifiMode GetRtsTxMode (Ptr<const Packet> packet, const WifiMacHeader *hdr) const;
-  WifiMode GetDataTxMode (Ptr<const Packet> packet, const WifiMacHeader *hdr) const;
-  WifiMode GetCtsTxModeForRts (Mac48Address to, WifiMode rtsTxMode) const;
-  WifiMode GetAckTxModeForData (Mac48Address to, WifiMode dataTxMode) const;
 
-  Time GetCtsDuration (Mac48Address to, WifiMode rtsTxMode) const;
-  Time GetAckDuration (Mac48Address to, WifiMode dataTxMode) const;
-  Time GetBlockAckDuration (Mac48Address to, WifiMode blockAckReqTxMode, enum BlockAckType type) const;
-  void NotifyNav (const WifiMacHeader &hdr, WifiMode txMode, WifiPreamble preamble);
-  void DoNavResetNow (Time duration);
-  bool DoNavStartNow (Time duration);
-  bool IsNavZero (void) const;
-  void NotifyAckTimeoutStartNow (Time duration);
-  void NotifyAckTimeoutResetNow ();
-  void NotifyCtsTimeoutStartNow (Time duration);
-  void NotifyCtsTimeoutResetNow ();
+  WifiMode GetDataTxMode (Ptr<const Packet> packet, const WifiMacHeader *hdr) const;
+
+
   void MaybeCancelPrevious (void);
 
-  void NavCounterResetCtsMissed (Time rtsEndRxTime);
-  void NormalAckTimeout (void);
-  void FastAckTimeout (void);
-  void SuperFastAckTimeout (void);
-  void FastAckFailedTimeout (void);
-  void BlockAckTimeout (void);
-  void CtsTimeout (void);
-  void SendCtsAfterRts (Mac48Address source, Time duration, WifiMode txMode, double rtsSnr);
-  void SendAckAfterData (Mac48Address source, Time duration, WifiMode txMode, double rtsSnr);
-  void SendDataAfterCts (Mac48Address source, Time duration, WifiMode txMode);
+
   void WaitSifsAfterEndTx (void);
 
   void SendRtsForPacket (void);
@@ -299,56 +248,12 @@ private:
   void SendCurrentTxPacket (void);
   void StartDataTxTimers (void);
   virtual void DoDispose (void);
-  /**
-   * \param originator Address of peer participating in Block Ack mechanism.
-   * \param tid TID for which Block Ack was created.
-   * \param seq Starting sequence
-   *
-   * This function forward up all completed "old" packets with sequence number
-   * smaller than <i>seq</i>. All comparison are performed circularly mod 4096.
-   */
-  void RxCompleteBufferedPacketsWithSmallerSequence (uint16_t seq, Mac48Address originator, uint8_t tid);
-  /**
-   * \param originator Address of peer participating in Block Ack mechanism.
-   * \param tid TID for which Block Ack was created.
-   *
-   * This method is typically invoked when a MPDU with ack policy
-   * subfield set to Normal Ack is received and a block ack agreement
-   * for that packet exists.
-   * This happens when the originator of block ack has only few MPDUs to send.
-   * All completed MSDUs starting with starting sequence number of block ack
-   * agreement are forward up to WifiMac until there is an incomplete or missing MSDU.
-   * See section 9.10.4 in IEEE802.11 standard for more details.
-   */
-  void RxCompleteBufferedPacketsUntilFirstLost (Mac48Address originator, uint8_t tid);
-  /*
-   * This method checks if exists a valid established block ack agreement.
-   * If there is, store the packet without pass it up to WifiMac. The packet is buffered
-   * in order of increasing sequence control field. All comparison are performed
-   * circularly modulo 2^12.
-   */
-  bool StoreMpduIfNeeded (Ptr<Packet> packet, WifiMacHeader hdr);
-  /*
-   * Invoked after that a block ack request has been received. Looks for corresponding
-   * block ack agreement and creates block ack bitmap on a received packets basis.
-   */
-  void SendBlockAckAfterBlockAckRequest (const CtrlBAckRequestHeader reqHdr, Mac48Address originator,
-                                         Time duration, WifiMode blockAckReqTxMode);
-  /*
-   * This method creates block ack frame with header equals to <i>blockAck</i> and start its transmission.
-   */
-  void SendBlockAckResponse (const CtrlBAckResponseHeader* blockAck, Mac48Address originator, bool immediate,
-                             Time duration, WifiMode blockAckReqTxMode);
-  /*
-   * Every time that a block ack request or a packet with ack policy equals to <i>block ack</i>
-   * are received, if a relative block ack agreement exists and the value of inactivity timeout
-   * is not 0, the timer is reset.
-   * see section 11.5.3 in IEEE802.11e for more details.
-   */
-  void ResetBlockAckInactivityTimerIfNeeded (BlockAckAgreement &agreement);
+
 
   void SetupPhyMacLowListener (Ptr<WifiPhy> phy);
 
+  MacLowTransmissionParameters m_txParams;
+//  MacLowTransmissionListener *m_listener;
   Ptr<WifiPhy> m_phy;
   MacLowRxCallback m_rxCallback;
   EventId m_normalAckTimeoutEvent;
@@ -365,7 +270,7 @@ private:
 
   Ptr<Packet> m_currentPacket;
   WifiMacHeader m_currentHdr;
-  TosMacLowTransmissionListener *m_listener;
+  TosMacLowTransmissionListener * m_listener;
   Mac48Address m_self;
   Mac48Address m_bssid;
   Time m_ackTimeout;
@@ -376,8 +281,8 @@ private:
   Time m_slotTime;
   Time m_pifs;
 
-  Time m_lastNavStart;
-  Time m_lastNavDuration;
+//  Time m_lastNavStart;
+//  Time m_lastNavDuration;
 
   // Listerner needed to monitor when a channel switching occurs.
   class PhyMacLowListener * m_phyMacLowListener;
@@ -388,17 +293,17 @@ private:
   typedef std::pair<Ptr<Packet>, WifiMacHeader> BufferedPacket;
   typedef std::list<BufferedPacket>::iterator BufferedPacketI;
 
-  typedef std::pair<Mac48Address, uint8_t> AgreementKey;
-  typedef std::pair<BlockAckAgreement, std::list<BufferedPacket> > AgreementValue;
+//  typedef std::pair<Mac48Address, uint8_t> AgreementKey;
+//  typedef std::pair<BlockAckAgreement, std::list<BufferedPacket> > AgreementValue;
+//
+//  typedef std::map<AgreementKey, AgreementValue> Agreements;
+//  typedef std::map<AgreementKey, AgreementValue>::iterator AgreementsI;
+//
+//  typedef std::map<AgreementKey, BlockAckCache> BlockAckCaches;
+//  typedef std::map<AgreementKey, BlockAckCache>::iterator BlockAckCachesI;
 
-  typedef std::map<AgreementKey, AgreementValue> Agreements;
-  typedef std::map<AgreementKey, AgreementValue>::iterator AgreementsI;
-
-  typedef std::map<AgreementKey, BlockAckCache> BlockAckCaches;
-  typedef std::map<AgreementKey, BlockAckCache>::iterator BlockAckCachesI;
-
-  Agreements m_bAckAgreements;
-  BlockAckCaches m_bAckCaches;
+//  Agreements m_bAckAgreements;
+//  BlockAckCaches m_bAckCaches;
 
 };
 

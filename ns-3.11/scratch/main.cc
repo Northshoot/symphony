@@ -31,7 +31,7 @@ int main(void)
 
 	ns3::TosNodeContainer c;
 	c.Create(2);
-	ns3::TosMacLow mac = new ns3::TosMacLow();
+	ns3::TosMacLow* mac = new ns3::TosMacLow();
 //	std::vector<ns3::TosNode * > tos;
 //    srand((unsigned)time(0));
 //
