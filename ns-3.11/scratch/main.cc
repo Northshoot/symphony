@@ -15,12 +15,18 @@
 //#include "tosns-simulator-impl.h"
 #include "ns3/event-id.h"
 #include "ns3/nstime.h"
-#include "ns3/tos-node.h"
-#include "ns3/tos-node-container.h"
 #include "ns3/tos-module.h"
+#include "ns3/wsn-module.h"
+#include "ns3/core-module.h"
+#include "ns3/network-module.h"
+#include "ns3/mobility-module.h"
+#include "ns3/config-store-module.h"
+#include "ns3/wifi-module.h"
+#include "ns3/internet-module.h"
+#include "ns3/wsn-helper.h"
 
 
-
+using namespace ns3;
 
 int main(void)
 {
@@ -29,9 +35,32 @@ int main(void)
 //	      "ns3::TosNsRealtimeSimulatorImpl"));
 
 
-	ns3::TosNodeContainer c;
+	TosNodeContainer c;
 	c.Create(2);
-	ns3::TosMacLow* mac = new ns3::TosMacLow();
+
+	WsnHelper wifi;
+
+//	  if (verbose)
+//	    {
+//	      wifi.EnableLogComponents ();  // Turn on all Wifi logging
+//	    }
+	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
+
+	  YansWsnPhyHelper wifiPhy =  YansWsnPhyHelper::Default ();
+	  // This is one parameter that matters when using FixedRssLossModel
+	  // set it to zero; otherwise, gain will be added
+	  wifiPhy.Set ("RxGain", DoubleValue (0) );
+	  // ns-3 supports RadioTap and Prism tracing extensions for 802.11b
+	  //wifiPhy.SetPcapDataLinkType (YansWifiPhyHelper::DLT_IEEE802_11_RADIO);
+
+	  YansWifiChannelHelper wifiChannel;
+	  wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
+	  // The below FixedRssLossModel will cause the rss to be fixed regardless
+	  // of the distance between the two stations, and the transmit power
+	  wifiChannel.AddPropagationLoss ("ns3::FixedRssLossModel","Rss",DoubleValue (-80));
+	  wifiPhy.SetChannel (wifiChannel.Create ());
+
+	//ns3::TosMacLow* mac = new ns3::TosMacLow();
 //	std::vector<ns3::TosNode * > tos;
 //    srand((unsigned)time(0));
 //

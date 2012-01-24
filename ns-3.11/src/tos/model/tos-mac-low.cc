@@ -134,6 +134,7 @@ TosMacLow::TosMacLow ()
     m_listener (0)
 {
   NS_LOG_FUNCTION (this);
+
 //  m_lastNavDuration = Seconds (0);
 //  m_lastNavStart = Seconds (0);
 }
@@ -248,26 +249,26 @@ TosMacLow::SetAddress (Mac48Address ad)
 {
   m_self = ad;
 }
-void
-TosMacLow::SetAckTimeout (Time ackTimeout)
-{
-  m_ackTimeout = ackTimeout;
-}
-void
-TosMacLow::SetBasicBlockAckTimeout (Time blockAckTimeout)
-{
-  m_basicBlockAckTimeout = blockAckTimeout;
-}
-void
-TosMacLow::SetCompressedBlockAckTimeout (Time blockAckTimeout)
-{
-  m_compressedBlockAckTimeout = blockAckTimeout;
-}
-void
-TosMacLow::SetCtsTimeout (Time ctsTimeout)
-{
-  m_ctsTimeout = ctsTimeout;
-}
+//void
+//TosMacLow::SetAckTimeout (Time ackTimeout)
+//{
+//  m_ackTimeout = ackTimeout;
+//}
+//void
+//TosMacLow::SetBasicBlockAckTimeout (Time blockAckTimeout)
+//{
+//  m_basicBlockAckTimeout = blockAckTimeout;
+//}
+//void
+//TosMacLow::SetCompressedBlockAckTimeout (Time blockAckTimeout)
+//{
+//  m_compressedBlockAckTimeout = blockAckTimeout;
+//}
+//void
+//TosMacLow::SetCtsTimeout (Time ctsTimeout)
+//{
+//  m_ctsTimeout = ctsTimeout;
+//}
 void
 TosMacLow::SetSifs (Time sifs)
 {
@@ -293,26 +294,26 @@ TosMacLow::GetAddress (void) const
 {
   return m_self;
 }
-Time
-TosMacLow::GetAckTimeout (void) const
-{
-  return m_ackTimeout;
-}
-Time
-TosMacLow::GetBasicBlockAckTimeout () const
-{
-  return m_basicBlockAckTimeout;
-}
-Time
-TosMacLow::GetCompressedBlockAckTimeout () const
-{
-  return m_compressedBlockAckTimeout;
-}
-Time
-TosMacLow::GetCtsTimeout (void) const
-{
-  return m_ctsTimeout;
-}
+//Time
+//TosMacLow::GetAckTimeout (void) const
+//{
+//  return m_ackTimeout;
+//}
+//Time
+//TosMacLow::GetBasicBlockAckTimeout () const
+//{
+//  return m_basicBlockAckTimeout;
+//}
+//Time
+//TosMacLow::GetCompressedBlockAckTimeout () const
+//{
+//  return m_compressedBlockAckTimeout;
+//}
+//Time
+//TosMacLow::GetCtsTimeout (void) const
+//{
+//  return m_ctsTimeout;
+//}
 Time
 TosMacLow::GetSifs (void) const
 {
@@ -323,16 +324,16 @@ TosMacLow::GetSlotTime (void) const
 {
   return m_slotTime;
 }
-Time
-TosMacLow::GetPifs (void) const
-{
-  return m_pifs;
-}
-Mac48Address
-TosMacLow::GetBssid (void) const
-{
-  return m_bssid;
-}
+//Time
+//TosMacLow::GetPifs (void) const
+//{
+//  return m_pifs;
+//}
+//Mac48Address
+//TosMacLow::GetBssid (void) const
+//{
+//  return m_bssid;
+//}
 
 void
 TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callback)
@@ -378,14 +379,14 @@ TosMacLow::StartTransmission (Ptr<const Packet> packet,
   NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
                 ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
 
-  if (m_txParams.MustSendRts ())
-    {
-      SendRtsForPacket ();
-    }
-  else
-    {
+//  if (m_txParams.MustSendRts ())
+//    {
+//      SendRtsForPacket ();
+//    }
+//  else
+//    {
       SendDataPacket ();
-    }
+//    }
 
   /* When this method completes, we have taken ownership of the medium. */
   NS_ASSERT (m_phy->IsStateTx ());
@@ -472,29 +473,31 @@ TosMacLow::GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const
 
 
 
-//Time
-//TosMacLow::CalculateOverallTxTime (Ptr<const Packet> packet,
-//                                const WifiMacHeader* hdr,
-//                                const MacLowTransmissionParameters& params) const
-//{
-//  Time txTime = Seconds (0);
-//  WifiMode rtsMode = GetRtsTxMode (packet, hdr);
-//  WifiMode dataMode = GetDataTxMode (packet, hdr);
+Time
+TosMacLow::CalculateOverallTxTime (Ptr<const Packet> packet,
+                                const WifiMacHeader* hdr,
+                                const MacLowTransmissionParameters& params) const
+{
+  //TODO: must fix time calculations!
+
+  Time txTime = Seconds (0);
+  //WifiMode rtsMode = GetRtsTxMode (packet, hdr);
+  //WifiMode dataMode = GetDataTxMode (packet, hdr);
 //  if (params.MustSendRts ())
 //    {
-//      txTime += m_phy->CalculateTxDuration (GetRtsSize (), rtsMode, WIFI_PREAMBLE_LONG);
-//      txTime += GetCtsDuration (hdr->GetAddr1 (), rtsMode);
+//      //txTime += m_phy->CalculateTxDuration (GetRtsSize (), rtsMode, WIFI_PREAMBLE_LONG);
+//      //txTime += GetCtsDuration (hdr->GetAddr1 (), rtsMode);
 //      txTime += Time (GetSifs () * 2);
 //    }
-//  uint32_t dataSize = GetSize (packet, hdr);
-//  txTime += m_phy->CalculateTxDuration (dataSize, dataMode, WIFI_PREAMBLE_LONG);
+  uint32_t dataSize = GetSize (packet, hdr);
+  txTime += m_phy->CalculateTxDuration (dataSize, GetDataTxMode(), WIFI_PREAMBLE_LONG);
 //  if (params.MustWaitAck ())
 //    {
 //      txTime += GetSifs ();
-//      txTime += GetAckDuration (hdr->GetAddr1 (), dataMode);
+//      //txTime += GetAckDuration (hdr->GetAddr1 (), dataMode);
 //    }
-//  return txTime;
-//}
+  return txTime;
+}
 
 Time
 TosMacLow::CalculateTransmissionTime (Ptr<const Packet> packet,
@@ -504,7 +507,7 @@ TosMacLow::CalculateTransmissionTime (Ptr<const Packet> packet,
   Time txTime = CalculateOverallTxTime (packet, hdr, params);
   if (params.HasNextPacket ())
     {
-      WifiMode dataMode = GetDataTxMode (packet, hdr);
+      WifiMode dataMode = GetDataTxMode ();
       txTime += GetSifs ();
       txTime += m_phy->CalculateTxDuration (params.GetNextPacketSize (), dataMode, WIFI_PREAMBLE_LONG);
     }
@@ -531,7 +534,7 @@ TosMacLow::ForwardDown (Ptr<const Packet> packet, const WifiMacHeader* hdr,
 void
 TosMacLow::StartDataTxTimers (void)
 {
-  WifiMode dataTxMode = GetDataTxMode (m_currentPacket, &m_currentHdr);
+  WifiMode dataTxMode = GetDataTxMode ();
   Time txDuration = m_phy->CalculateTxDuration (GetSize (m_currentPacket, &m_currentHdr), dataTxMode, WIFI_PREAMBLE_LONG);
 if (m_txParams.HasNextPacket ())
     {
@@ -553,7 +556,7 @@ TosMacLow::SendDataPacket (void)
   /* send this packet directly. No RTS is needed. */
   StartDataTxTimers ();
 
-  WifiMode dataTxMode = GetDataTxMode (m_currentPacket, &m_currentHdr);
+  WifiMode dataTxMode = GetDataTxMode ();
   Time duration = Seconds (0.0);
   if (m_txParams.HasDurationId ())
     {
@@ -606,6 +609,11 @@ TosMacLow::WaitSifsAfterEndTx (void)
 {
   m_listener->StartNext ();
 }
+WifiMode
+TosMacLow::GetDataTxMode () const
+{
 
+  return WifiPhy::GetDsssRate1Mbps();
+}
 
 } // namespace ns3

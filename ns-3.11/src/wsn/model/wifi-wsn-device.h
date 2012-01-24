@@ -29,7 +29,7 @@
 
 namespace ns3 {
 
-class WifiRemoteStationManager;
+
 class WifiChannel;
 class WifiPhy;
 class WifiMac;
@@ -67,7 +67,6 @@ public:
   /**
    * \param manager the manager to use.
    */
-  void SetRemoteStationManager (Ptr<WifiRemoteStationManager> manager);
   /**
    * \returns the mac we are currently using.
    */
@@ -76,10 +75,7 @@ public:
    * \returns the phy we are currently using.
    */
   Ptr<WifiPhy> GetPhy (void) const;
-  /**
-   * \returns the remote station manager we are currently using.
-   */
-  Ptr<WifiRemoteStationManager> GetRemoteStationManager (void) const;
+
 
 
   // inherited from NetDevice base class.
@@ -126,7 +122,7 @@ private:
   Ptr<Node> m_node;
   Ptr<WifiPhy> m_phy;
   Ptr<WifiMac> m_mac;
-  Ptr<WifiRemoteStationManager> m_stationManager;
+
   NetDevice::ReceiveCallback m_forwardUp;
   NetDevice::PromiscReceiveCallback m_promiscRx;
 

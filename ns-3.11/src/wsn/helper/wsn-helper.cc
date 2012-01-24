@@ -100,7 +100,7 @@ WsnHelper::Install (const WsnPhyHelper &phyHelper,
     {
       Ptr<Node> node = *i;
       Ptr<WifiWsnDevice> device = CreateObject<WifiWsnDevice> ();
-      Ptr<WifiRemoteStationManager> manager = m_stationManager.Create<WifiRemoteStationManager> ();
+//      Ptr<WifiRemoteStationManager> manager = m_stationManager.Create<WifiRemoteStationManager> ();
       Ptr<WsnWifiMac> mac = macHelper.Create ();
       Ptr<WifiPhy> phy = phyHelper.Create (node, device);
       mac->SetAddress (Mac48Address::Allocate ());
@@ -109,7 +109,7 @@ WsnHelper::Install (const WsnPhyHelper &phyHelper,
       device->SetMac (mac);
       device->SetPhy (phy);
 
-      device->SetRemoteStationManager (manager);
+//      device->SetRemoteStationManager (manager);
       node->AddDevice (device);
       devices.Add (device);
       NS_LOG_DEBUG ("node=" << node << ", mob=" << node->GetObject<MobilityModel> ());

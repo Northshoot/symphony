@@ -24,10 +24,10 @@
 
 #include "simu-clock.h"
 #include "tos-to-lib-proxy.h"
-#include "lib-to-tos-proxy.h"
+#include "ns3/lib-to-tos-proxy.h"
 
-typedef int(LibToTosProxy::*fucnpoint)(int);
 
+//typedef int(LibToTosProxy::*fucnpoint)(int);
 
 namespace ns3 {
 

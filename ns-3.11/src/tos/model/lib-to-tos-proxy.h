@@ -13,16 +13,18 @@
  */
 
 #ifdef __cplusplus
+
 /**
  * Important that include does only for CPP
  * otherwise linking with C will fail
  * Which results in segfault
  */
 #include "ns3includes.h"
-#include "tos-node.h"
+//#include "tos-node.h"
 #include "simu-clock.h"
 typedef int (*tosfuncvoid)(void*);
 
+class TosNode;
 
 class LibToTosProxy {
    friend class TosNode;

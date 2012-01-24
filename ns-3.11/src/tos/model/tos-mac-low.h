@@ -235,7 +235,7 @@ private:
   void ForwardDown (Ptr<const Packet> packet, const WifiMacHeader *hdr,
                     WifiMode txMode);
 
-  WifiMode GetDataTxMode (Ptr<const Packet> packet, const WifiMacHeader *hdr) const;
+  WifiMode GetDataTxMode (void) const;
 
 
   void MaybeCancelPrevious (void);
@@ -243,7 +243,7 @@ private:
 
   void WaitSifsAfterEndTx (void);
 
-  void SendRtsForPacket (void);
+//  void SendRtsForPacket (void);
   void SendDataPacket (void);
   void SendCurrentTxPacket (void);
   void StartDataTxTimers (void);
@@ -273,6 +273,7 @@ private:
   TosMacLowTransmissionListener * m_listener;
   Mac48Address m_self;
   Mac48Address m_bssid;
+
   Time m_ackTimeout;
   Time m_basicBlockAckTimeout;
   Time m_compressedBlockAckTimeout;

@@ -61,11 +61,11 @@ WifiWsnDevice::GetTypeId (void)
                    MakePointerAccessor (&WifiWsnDevice::GetMac,
                                         &WifiWsnDevice::SetMac),
                    MakePointerChecker<WifiMac> ())
-    .AddAttribute ("RemoteStationManager", "The station manager attached to this device.",
-                   PointerValue (),
-                   MakePointerAccessor (&WifiWsnDevice::SetRemoteStationManager,
-                                        &WifiWsnDevice::GetRemoteStationManager),
-                   MakePointerChecker<WifiRemoteStationManager> ())
+//    .AddAttribute ("RemoteStationManager", "The station manager attached to this device.",
+//                   PointerValue (),
+//                   MakePointerAccessor (&WifiWsnDevice::SetRemoteStationManager,
+//                                        &WifiWsnDevice::GetRemoteStationManager),
+//                   MakePointerChecker<WifiRemoteStationManager> ())
   ;
   return tid;
 }
@@ -87,10 +87,10 @@ WifiWsnDevice::DoDispose (void)
   m_node = 0;
   m_mac->Dispose ();
   m_phy->Dispose ();
-  m_stationManager->Dispose ();
+//  m_stationManager->Dispose ();
   m_mac = 0;
   m_phy = 0;
-  m_stationManager = 0;
+//  m_stationManager = 0;
   // chain up.
   NetDevice::DoDispose ();
 }
@@ -100,7 +100,7 @@ WifiWsnDevice::DoStart (void)
 {
   m_phy->Start ();
   m_mac->Start ();
-  m_stationManager->Start ();
+  //m_stationManager->Start ();
   NetDevice::DoStart ();
 }
 
@@ -109,18 +109,18 @@ WifiWsnDevice::CompleteConfig (void)
 {
   if (m_mac == 0
       || m_phy == 0
-      || m_stationManager == 0
+     // || m_stationManager == 0
       || m_node == 0
       || m_configComplete)
     {
       return;
     }
-  m_mac->SetWifiRemoteStationManager (m_stationManager);
+ // m_mac->SetWifiRemoteStationManager (m_stationManager);
   m_mac->SetWifiPhy (m_phy);
   m_mac->SetForwardUpCallback (MakeCallback (&WifiWsnDevice::ForwardUp, this));
   m_mac->SetLinkUpCallback (MakeCallback (&WifiWsnDevice::LinkUp, this));
   m_mac->SetLinkDownCallback (MakeCallback (&WifiWsnDevice::LinkDown, this));
-  m_stationManager->SetupPhy (m_phy);
+  //m_stationManager->SetupPhy (m_phy);
   m_configComplete = true;
 }
 
@@ -136,12 +136,13 @@ WifiWsnDevice::SetPhy (Ptr<WifiPhy> phy)
   m_phy = phy;
   CompleteConfig ();
 }
-void
-WifiWsnDevice::SetRemoteStationManager (Ptr<WifiRemoteStationManager> manager)
-{
-  m_stationManager = manager;
-  CompleteConfig ();
-}
+//
+//void
+//WifiWsnDevice::SetRemoteStationManager (Ptr<WifiRemoteStationManager> manager)
+//{
+//  m_stationManager = manager;
+//  CompleteConfig ();
+//}
 Ptr<WifiMac>
 WifiWsnDevice::GetMac (void) const
 {
@@ -149,14 +150,16 @@ WifiWsnDevice::GetMac (void) const
 }
 Ptr<WifiPhy>
 WifiWsnDevice::GetPhy (void) const
+
 {
   return m_phy;
 }
-Ptr<WifiRemoteStationManager>
-WifiWsnDevice::GetRemoteStationManager (void) const
-{
-  return m_stationManager;
-}
+//
+//Ptr<WifiRemoteStationManager>
+//WifiWsnDevice::GetRemoteStationManager (void) const
+//{
+//  return m_stationManager;
+//}
 
 void
 WifiWsnDevice::SetIfIndex (const uint32_t index)
