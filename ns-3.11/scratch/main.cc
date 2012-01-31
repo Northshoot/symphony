@@ -60,6 +60,20 @@ int main(void)
 	  wifiChannel.AddPropagationLoss ("ns3::FixedRssLossModel","Rss",DoubleValue (-80));
 	  wifiPhy.SetChannel (wifiChannel.Create ());
 
+	  WsnWifiMacHelper wifiMac = WsnWifiMacHelper::Default ();
+	  wifiMac.SetType ("ns3::AdhocWifiMac");
+	  NetDeviceContainer devices = wifi.Install (wifiPhy, wifiMac, c);
+	  // Note that with FixedRssLossModel, the positions below are not
+	  // used for received signal strength.
+	  MobilityHelper mobility;
+	  Ptr<ListPositionAllocator> positionAlloc = CreateObject<ListPositionAllocator> ();
+	  positionAlloc->Add (Vector (0.0, 0.0, 0.0));
+	  positionAlloc->Add (Vector (5.0, 0.0, 0.0));
+	  mobility.SetPositionAllocator (positionAlloc);
+	  mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
+	  mobility.Install (c);
+
+
 	//ns3::TosMacLow* mac = new ns3::TosMacLow();
 //	std::vector<ns3::TosNode * > tos;
 //    srand((unsigned)time(0));
