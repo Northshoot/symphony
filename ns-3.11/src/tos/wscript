@@ -8,11 +8,11 @@ def build(bld):
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/types/') 
     obj.env.append_value('CCFLAGS','-std=gnu++0x')
     obj.env.append_value('LINKFLAGS','-ldl')
-    obj.source = ['model/lib-to-tos-proxy.cc',
+    obj.source = ['model/tos-to-ns3-proxy.cc',
     			  'model/tos-node.cc',
     			  'model/simu-clock.cc',
     			  #'model/tiny-bridge.cc',
-    			  'model/tos-to-lib-proxy.cc',
+    			  'model/ns3-to-tos-proxy.cc',
     			  'model/tos-packet.cc',
     			  'model/tos-node-list.cc',
     			  'model/tos-mac-low.cc',
@@ -25,11 +25,11 @@ def build(bld):
 
     headers = bld.new_task_gen('ns3header')
     headers.module = 'tos'
-    headers.source = ['model/lib-to-tos-proxy.h',
+    headers.source = ['model/tos-to-ns3-proxy.h',
     			  'model/tos-node.h',
     			  'model/simu-clock.h',
     			  #'model/tiny-bridge.h',
-    			  'model/tos-to-lib-proxy.h',
+    			  'model/ns3-to-tos-proxy.h',
     			  'model/tos-packet.h',
     			  'model/gateway.h',
     			  'model/ns3includes.h',

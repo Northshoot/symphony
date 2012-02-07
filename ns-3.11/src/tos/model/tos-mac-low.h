@@ -153,6 +153,7 @@ public:
                                      const WifiMacHeader* hdr,
                                      const MacLowTransmissionParameters& params) const;
 
+  void TransmitData(Ptr<const Packet> packet);
   void StartTransmission (Ptr<const Packet> packet,
           const WifiMacHeader* hdr,
           MacLowTransmissionParameters params,
@@ -175,7 +176,7 @@ public:
   Time GetSifs (void) const;
   Time GetSlotTime (void) const;
   Time GetPifs (void) const;
-  Mac48Address GetBssid (void) const;
+
 
   /**
    * \param callback the callback which receives every incoming packet.

@@ -45,6 +45,7 @@ int main(void)
 //	      wifi.EnableLogComponents ();  // Turn on all Wifi logging
 //	    }
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
+	  wifi.EnableLogComponents ();
 
 	  YansWsnPhyHelper wifiPhy =  YansWsnPhyHelper::Default ();
 	  // This is one parameter that matters when using FixedRssLossModel

@@ -8,7 +8,7 @@
 #ifndef GATEWAY_H_
 #define GATEWAY_H_
 #include <stdio.h>
-#include "lib-to-tos-proxy.h"
+#include "tos-to-ns3-proxy.h"
 #include "ns3includes.h"
 #include "tos-packet.h"
 /**
@@ -27,14 +27,14 @@ extern int gateway(void *tthis,int call, int arg){
   // or possibly an array of function pointers
 	switch (call) {
 		case 0:
-			return ((LibToTosProxy *)tthis)->confirmSet(arg);
+			return ((TosToNs3Proxy *)tthis)->confirmSet(arg);
 			break;
 
 		case 1:
-			return ((LibToTosProxy *)tthis)->getNow(arg);
+			return ((TosToNs3Proxy *)tthis)->getNow(arg);
 			break;
 		case 2:
-			std::cout << "((LibToTosProxy *)tthis)->getNow() "<< ((LibToTosProxy *)tthis)->getNow(arg) << std::endl;
+			std::cout << "((TosToNs3Proxy *)tthis)->getNow() "<< ((TosToNs3Proxy *)tthis)->getNow(arg) << std::endl;
 			return 0;
 			break;
 
@@ -45,7 +45,7 @@ extern int gateway(void *tthis,int call, int arg){
 			return -1;
 			break;
 	}
-
+	return 0;
 
 }
 
@@ -87,7 +87,7 @@ extern int gatewayRadio(void *obj, int func, void* hdr, void* msg){
 
 			std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
 			std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
-			((LibToTosProxy *)obj)->sendDown(msg);
+			((TosToNs3Proxy *)obj)->msgToChannel((ns3pack*)hdr,msg);
 //			std::cerr<<"data " << pkt->counter << std::endl;
 			//std::cerr <<"destination "<< d <<" "<< d1<< std::endl;
 			return 0;

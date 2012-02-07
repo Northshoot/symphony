@@ -18,9 +18,10 @@
 
 #include "simu-clock.h"
 #include "tos-node.h"
-#include "tos-to-lib-proxy.h"
-#include "lib-to-tos-proxy.h"
+#include "ns3-to-tos-proxy.h"
+#include "tos-to-ns3-proxy.h"
 #include "tos-node-list.h"
+
 
 using namespace std;
 
@@ -100,10 +101,10 @@ TosNode::BootBooted(void)
 			cout << simuclock->getTimeNow() << " ms"<<endl;
 	//tickTime(100);
 	//cout<<"booted node id " << node_id <<" at " <<Simulator::Now().GetMilliSeconds() <<endl;
-	tostolib->start_mote(node_id);
+	nstotos->start_mote(node_id);
 
 
-	Simulator::RunOneEvent();
+	//Simulator::RunOneEvent();
 	Simulator::Remove ( m_boot_event );
 
 }
@@ -114,7 +115,7 @@ TosNode::wrapFire(uint32_t a)
 {
 	a=simuclock->getTimeNow();
 	//cout<< "Time " << a << " ms"<<endl;
-	tostolib->timerFired(a);
+	nstotos->timerFired(a);
 	return 0;
 }
 uint32_t
@@ -144,8 +145,8 @@ TosNode::DoDispose(void)
 		Simulator::Remove(m_boot_event);
 	}
 	dlclose(handler);
-	delete tostolib;
-	delete libtotos;
+	delete nstotos;
+	delete tostons;
 	//finally despose object
 	Object::DoDispose();
 }
@@ -162,16 +163,20 @@ TosNode::DoStart(){	//open instance of the library  LM_ID_NEWLM
 	callBackFromClock = MakeCallback (&TosNode::wrapFire, this);
 	simuclock = new SimuClock(NANOSECOND,NONE, callBackFromClock);
 	//create proxy's
-	libtotos	= new LibToTosProxy(); //ns3 to tos
+	nstotos	= new Ns3ToTosProxy(); //ns3 to tos
 
-	libtotos->simu_clock=simuclock;
-	tostolib	= new TosToLibProxy(); //tos to ns3
+	tostons = new TosToNs3Proxy(); //tos to ns3
+	tostons->simu_clock=simuclock;
 //	DoStart();
 //	Object::DoStart();
 
-	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
+	m_libname = "/home/lauril/dev/symphony/ns-3.11/build/debug/libtos.so";
+
 	cout<<"TosNode::DoStart()"<<endl;
-	handler = dlmopen( LM_ID_NEWLM ,"./libtos.so", RTLD_LAZY );
+	//changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
+	//for eclipse debug full path is needed for the lib
+	//TODO: add script for copying libtos.so to build/debug
+	handler = dlopen( m_libname, RTLD_LAZY );
     if (!handler) {
         std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
         exit(1);
@@ -180,13 +185,14 @@ TosNode::DoStart(){	//open instance of the library  LM_ID_NEWLM
 		((tosfunc)getFunc("setUniqueID"))(GetId()); //set nodes id in lib
 		setObj=(tosfunc)getFunc("setProxy");
 
-		setObj((long)this->libtotos); //set link from ns3 to tos
-		tostolib->setStartMote(getFunc("sim_main_start_mote")); //boot node
-		tostolib->setTimerFired(getFunc("tickFired")); // connect clock tick
+		setObj((long)this->nstotos); //set link from ns3 to tos
+		nstotos->setStartMote(getFunc("sim_main_start_mote")); //boot node
+		nstotos->setTimerFired(getFunc("tickFired")); // connect clock tick
 		run_next = (tosfunc)getFunc("runNextEventExternal");
-		libtotos->setDownlink(getFunc("receivePkt"));
+		tostons->setDownlink(getFunc("receivePkt"));
     }
     Object::DoStart();
+	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
 }
 
 void *

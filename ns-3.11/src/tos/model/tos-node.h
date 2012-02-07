@@ -23,8 +23,8 @@
 #include "ns3/callback.h"
 
 #include "simu-clock.h"
-#include "tos-to-lib-proxy.h"
-#include "ns3/lib-to-tos-proxy.h"
+#include "ns3-to-tos-proxy.h"
+#include "tos-to-ns3-proxy.h"
 
 
 //typedef int(LibToTosProxy::*fucnpoint)(int);
@@ -143,11 +143,11 @@ private:
 	/**
 	 * Pointer to proxy for library to tos node communications
 	 */
-	LibToTosProxy *libtotos;
+	TosToNs3Proxy *tostons;
 	/**
 	 * Pointer to proxy for tos to lib communiactions
 	 */
-	TosToLibProxy *tostolib;
+	Ns3ToTosProxy *nstotos;
 
 };
 

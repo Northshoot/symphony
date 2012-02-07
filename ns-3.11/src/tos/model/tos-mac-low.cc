@@ -284,11 +284,7 @@ TosMacLow::SetPifs (Time pifs)
 {
   m_pifs = pifs;
 }
-void
-TosMacLow::SetBssid (Mac48Address bssid)
-{
-  m_bssid = bssid;
-}
+
 Mac48Address
 TosMacLow::GetAddress (void) const
 {
@@ -324,29 +320,43 @@ TosMacLow::GetSlotTime (void) const
 {
   return m_slotTime;
 }
-//Time
-//TosMacLow::GetPifs (void) const
-//{
-//  return m_pifs;
-//}
-//Mac48Address
-//TosMacLow::GetBssid (void) const
-//{
-//  return m_bssid;
-//}
+
 
 void
 TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callback)
 {
   m_rxCallback = callback;
 }
-//void
-//TosMacLow::RegisterDcfListener (MacLowDcfListener *listener)
-//{
-//  m_dcfListeners.push_back (listener);
-//}
 
+void
+TosMacLow::TransmitData(Ptr<const Packet> packet){
+	  //NS_LOG_FUNCTION (this << packet << hdr << params << listener);
+	  /* m_currentPacket is not NULL because someone started
+	   * a transmission and was interrupted before one of:
+	   *   - ctsTimeout
+	   *   - sendDataAfterCTS
+	   * expired. This means that one of these timers is still
+	   * running. They are all cancelled below anyway by the
+	   * call to CancelAllEvents (because of at least one
+	   * of these two timer) which will trigger a call to the
+	   * previous listener's cancel method.
+	   *
+	   * This typically happens because the high-priority
+	   * QapScheduler has taken access to the channel from
+	   * one of the Edca of the QAP.
+	   */
+	  m_currentPacket = packet->Copy ();
+//	  m_currentHdr = *hdr;
+	  CancelAllEvents ();
+//	  m_listener = listener;
+//	  m_txParams = params;
 
+	  //NS_ASSERT (m_phy->IsStateIdle ());
+
+	  NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
+	                ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
+	SendDataPacket();
+}
 void
 TosMacLow::StartTransmission (Ptr<const Packet> packet,
         const WifiMacHeader* hdr,
@@ -557,43 +567,43 @@ TosMacLow::SendDataPacket (void)
   StartDataTxTimers ();
 
   WifiMode dataTxMode = GetDataTxMode ();
-  Time duration = Seconds (0.0);
-  if (m_txParams.HasDurationId ())
-    {
-      duration += m_txParams.GetDurationId ();
-    }
-  else
-    {
-      if (m_txParams.MustWaitBasicBlockAck ())
-        {
-          duration += GetSifs ();
-//          duration += GetBlockAckDuration (m_currentHdr.GetAddr1 (), dataTxMode, BASIC_BLOCK_ACK);
-        }
-      else if (m_txParams.MustWaitCompressedBlockAck ())
-        {
-          duration += GetSifs ();
-//          duration += GetBlockAckDuration (m_currentHdr.GetAddr1 (), dataTxMode, COMPRESSED_BLOCK_ACK);
-        }
-      else if (m_txParams.MustWaitAck ())
-        {
-          duration += GetSifs ();
-//          duration += GetAckDuration (m_currentHdr.GetAddr1 (), dataTxMode);
-        }
-      if (m_txParams.HasNextPacket ())
-        {
-          duration += GetSifs ();
-          duration += m_phy->CalculateTxDuration (m_txParams.GetNextPacketSize (),
-                                                  dataTxMode, WIFI_PREAMBLE_LONG);
-          if (m_txParams.MustWaitAck ())
-            {
-              duration += GetSifs ();
-//              duration += GetAckDuration (m_currentHdr.GetAddr1 (), dataTxMode);
-            }
-        }
-    }
-  m_currentHdr.SetDuration (duration);
-
-  m_currentPacket->AddHeader (m_currentHdr);
+//  Time duration = Seconds (0.0);
+//  if (m_txParams.HasDurationId ())
+//    {
+//      duration += m_txParams.GetDurationId ();
+//    }
+//  else
+//    {
+//      if (m_txParams.MustWaitBasicBlockAck ())
+//        {
+//          duration += GetSifs ();
+////          duration += GetBlockAckDuration (m_currentHdr.GetAddr1 (), dataTxMode, BASIC_BLOCK_ACK);
+//        }
+//      else if (m_txParams.MustWaitCompressedBlockAck ())
+//        {
+//          duration += GetSifs ();
+////          duration += GetBlockAckDuration (m_currentHdr.GetAddr1 (), dataTxMode, COMPRESSED_BLOCK_ACK);
+//        }
+//      else if (m_txParams.MustWaitAck ())
+//        {
+//          duration += GetSifs ();
+////          duration += GetAckDuration (m_currentHdr.GetAddr1 (), dataTxMode);
+//        }
+//      if (m_txParams.HasNextPacket ())
+//        {
+//          duration += GetSifs ();
+//          duration += m_phy->CalculateTxDuration (m_txParams.GetNextPacketSize (),
+//                                                  dataTxMode, WIFI_PREAMBLE_LONG);
+//          if (m_txParams.MustWaitAck ())
+//            {
+//              duration += GetSifs ();
+////              duration += GetAckDuration (m_currentHdr.GetAddr1 (), dataTxMode);
+//            }
+//        }
+//    }
+//  m_currentHdr.SetDuration (duration);
+//
+//  m_currentPacket->AddHeader (m_currentHdr);
 //  WifiMacTrailer fcs;
 //  m_currentPacket->AddTrailer (fcs);
 
