@@ -8,6 +8,8 @@
 #include "ns3/assert.h"
 #include "ns3/ptr.h"
 #include "ns3/packet.h"
+#include "ns3/wifi-mac-header.h"
+#include "ns3/callback.h"
 #include "tos-node.h"
 
 #include "tos-to-ns3-proxy.h"
@@ -41,21 +43,31 @@ TosToNs3Proxy::getNow(int b){
 void
 TosToNs3Proxy::setMac(ns3::TosMacLow *mac){
 	this->mac=mac;
+	this->mac->SetRxCallback(ns3::MakeCallback (&TosToNs3Proxy::sendDown, this));
 }
 
 void
 TosToNs3Proxy::msgToChannel(ns3pack* hdr, void * msg){
 	std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
 	std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
+	ns3::WifiMacHeader whdr;
+    whdr.SetTypeData ();
+    whdr.SetAddr1 (0);
+    whdr.SetAddr2 (0);
+    whdr.SetDsNotFrom ();
+    whdr.SetDsNotTo ();
+
 	mac->TransmitData(ns3::Create<ns3::Packet>(20));
+
 }
 void
 TosToNs3Proxy::setDownlink(void *  tos){
 	downlink=(tosfuncvoid)tos;
 }
 void
-TosToNs3Proxy::sendDown(void *  msg){
-	downlink(msg);
+TosToNs3Proxy::sendDown(ns3::Ptr<ns3::Packet> pkt ,const ns3::WifiMacHeader *hdr){
+	std::cerr <<"got packet" << std::endl;
+	//downlink(msg);
 }
 
 TosToNs3Proxy::~TosToNs3Proxy() {

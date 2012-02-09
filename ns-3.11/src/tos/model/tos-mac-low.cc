@@ -345,14 +345,16 @@ TosMacLow::TransmitData(Ptr<const Packet> packet){
 	   * QapScheduler has taken access to the channel from
 	   * one of the Edca of the QAP.
 	   */
-	  m_currentPacket = packet->Copy ();
+	std::cerr <<"m_currentPacket = packet->Copy " << std::endl;
+	  //m_currentPacket = new Packet ();//packet->Copy ();
+
 //	  m_currentHdr = *hdr;
-	  CancelAllEvents ();
+	  //CancelAllEvents ();
 //	  m_listener = listener;
 //	  m_txParams = params;
 
 	  //NS_ASSERT (m_phy->IsStateIdle ());
-
+	  std::cerr <<"TosMacLow::TransmitData about to transmit" << std::endl;
 	  NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
 	                ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
 	SendDataPacket();
@@ -545,6 +547,7 @@ void
 TosMacLow::StartDataTxTimers (void)
 {
   WifiMode dataTxMode = GetDataTxMode ();
+  //TODO: WIFI_PREAMBLE_LONG need to be fixed for specific radio device
   Time txDuration = m_phy->CalculateTxDuration (GetSize (m_currentPacket, &m_currentHdr), dataTxMode, WIFI_PREAMBLE_LONG);
 if (m_txParams.HasNextPacket ())
     {
@@ -564,8 +567,9 @@ TosMacLow::SendDataPacket (void)
 {
   NS_LOG_FUNCTION (this);
   /* send this packet directly. No RTS is needed. */
-  StartDataTxTimers ();
 
+  StartDataTxTimers ();
+  std::cerr <<"TosMacLow::SendDataPacket about to forward" << std::endl;
   WifiMode dataTxMode = GetDataTxMode ();
 //  Time duration = Seconds (0.0);
 //  if (m_txParams.HasDurationId ())
@@ -606,7 +610,7 @@ TosMacLow::SendDataPacket (void)
 //  m_currentPacket->AddHeader (m_currentHdr);
 //  WifiMacTrailer fcs;
 //  m_currentPacket->AddTrailer (fcs);
-
+  std::cerr <<"TosMacLow::SendDataPacket about to forward" << std::endl;
   ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
   m_currentPacket = 0;
 }

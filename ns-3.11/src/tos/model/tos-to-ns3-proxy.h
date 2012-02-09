@@ -19,10 +19,14 @@
  * otherwise linking with C will fail
  * Which results in segfault
  */
+#include "ns3/ptr.h"
+#include "ns3/packet.h"
+#include "ns3/wifi-mac-header.h"
 #include "ns3includes.h"
 #include "tos-mac-low.h"
 //#include "tos-node.h"
 #include "simu-clock.h"
+
 typedef int (*tosfuncvoid)(void*);
 
 class TosNode;
@@ -42,7 +46,7 @@ class TosToNs3Proxy {
 
 	   uint32_t getNow(int);
 	   void setDownlink(void *  tos);
-	   void sendDown( void * msg);
+	   void sendDown(ns3::Ptr<ns3::Packet> pkt ,const ns3::WifiMacHeader *hdr);
 	   void msgToChannel(ns3pack* hdr, void * msg);
 	   ns3::SimuClock * simu_clock;
 

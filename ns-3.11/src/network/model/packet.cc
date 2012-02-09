@@ -122,6 +122,7 @@ Packet::Copy (void) const
   // we need to invoke the copy constructor directly
   // rather than calling Create because the copy constructor
   // is private.
+
   return Ptr<Packet> (new Packet (*this), false);
 }
 
