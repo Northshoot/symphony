@@ -153,7 +153,7 @@ public:
                                      const WifiMacHeader* hdr,
                                      const MacLowTransmissionParameters& params) const;
 
-  void TransmitData(Ptr<const Packet> packet);
+  void TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr);
   void StartTransmission (Ptr<const Packet> packet,
           const WifiMacHeader* hdr,
           MacLowTransmissionParameters params,

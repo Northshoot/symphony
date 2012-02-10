@@ -77,7 +77,9 @@ static void GenerateTraffic (Ptr<Socket> socket, uint32_t pktSize,
 {
   if (pktCount > 0)
     {
-      socket->Send (Create<Packet> (pktSize));
+	  Ptr<Packet> p = Create<Packet> (Packet(reinterpret_cast<uint8_t const
+	  		*>("hello"),5));
+      socket->Send (p->Copy());
       Simulator::Schedule (pktInterval, &GenerateTraffic, 
                            socket, pktSize,pktCount-1, pktInterval);
     }
@@ -93,12 +95,12 @@ int main (int argc, char *argv[])
   std::string phyMode ("DsssRate1Mbps");
   double rss = -80;  // -dBm
   uint32_t packetSize = 1000; // bytes
-  uint32_t numPackets = 1;
+  uint32_t numPackets = 10;
   double interval = 1.0; // seconds
   bool verbose = false;
 
   CommandLine cmd;
-
+  PacketMetadata::Enable ();
   cmd.AddValue ("phyMode", "Wifi Phy mode", phyMode);
   cmd.AddValue ("rss", "received signal strength", rss);
   cmd.AddValue ("packetSize", "size of application packet sent", packetSize);
@@ -186,9 +188,16 @@ int main (int argc, char *argv[])
 
   // Output what we are doing
   NS_LOG_UNCOND ("Testing " << numPackets  << " packets sent with receiver rss " << rss );
-
+  Ptr<Packet> p = Create<Packet> (Packet(reinterpret_cast<uint8_t const
+  		*>("hello"),5));
+  p->EnablePrinting();
+  std::cerr <<"first pkt: " << std::endl;
+  p->Print(std::cerr);
+  Ptr<Packet> p1 = p->Copy();
+  std::cerr <<"\n second pkt: "<< std::endl;
+  p1->Print(std::cerr);
   Simulator::ScheduleWithContext (source->GetNode ()->GetId (),
-                                  Seconds (1.0), &GenerateTraffic, 
+                                  Seconds (10.0), &GenerateTraffic,
                                   source, packetSize, numPackets, interPacketInterval);
 
   Simulator::Run ();

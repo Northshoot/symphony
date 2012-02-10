@@ -329,7 +329,7 @@ TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callb
 }
 
 void
-TosMacLow::TransmitData(Ptr<const Packet> packet){
+TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 	  //NS_LOG_FUNCTION (this << packet << hdr << params << listener);
 	  /* m_currentPacket is not NULL because someone started
 	   * a transmission and was interrupted before one of:
@@ -345,19 +345,38 @@ TosMacLow::TransmitData(Ptr<const Packet> packet){
 	   * QapScheduler has taken access to the channel from
 	   * one of the Edca of the QAP.
 	   */
-	std::cerr <<"m_currentPacket = packet->Copy " << std::endl;
-	  //m_currentPacket = new Packet ();//packet->Copy ();
 
-//	  m_currentHdr = *hdr;
+	 m_currentPacket = Create<Packet> (Packet(reinterpret_cast<uint8_t const*>("hello"),5));
+	 std::cerr <<"m_currentPacket = packet->Copy " << std::endl;
+	m_currentHdr.SetTypeData ();
+	m_currentHdr.SetAddr1 ("00:00:00:00:00:00");
+	m_currentHdr.SetAddr2 ("00:00:00:00:00:00");
+	m_currentHdr.SetDsNotFrom ();
+	m_currentHdr.SetDsNotTo ();
+	m_currentHdr.SetSequenceNumber (1);
+	m_currentHdr.SetFragmentNumber (0);
+	m_currentHdr.SetNoMoreFragments ();
+	m_currentHdr.SetNoRetry ();
+
+	 // m_currentHdr = *hdr;
 	  //CancelAllEvents ();
-//	  m_listener = listener;
+	  //m_listener = listener;
 //	  m_txParams = params;
 
-	  //NS_ASSERT (m_phy->IsStateIdle ());
+	  NS_ASSERT (m_phy->IsStateIdle ());
 	  std::cerr <<"TosMacLow::TransmitData about to transmit" << std::endl;
 	  NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
 	                ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
-	SendDataPacket();
+	  //Need DataMode
+	  WifiMode dataTxMode = GetDataTxMode ();
+	  m_currentHdr.SetDuration (Seconds (0.1));
+
+	  m_currentPacket->AddHeader (m_currentHdr);
+//	  WifiMacTrailer fcs;
+//	  m_currentPacket->AddTrailer (fcs);
+
+	  ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
+	  m_currentPacket = 0;
 }
 void
 TosMacLow::StartTransmission (Ptr<const Packet> packet,

@@ -50,14 +50,20 @@ void
 TosToNs3Proxy::msgToChannel(ns3pack* hdr, void * msg){
 	std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
 	std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
+
 	ns3::WifiMacHeader whdr;
     whdr.SetTypeData ();
-    whdr.SetAddr1 (0);
-    whdr.SetAddr2 (0);
+    whdr.SetAddr1 ("00:00:00:00:00:00");
+    whdr.SetAddr2 ("00:00:00:00:00:00");
     whdr.SetDsNotFrom ();
     whdr.SetDsNotTo ();
-
-	mac->TransmitData(ns3::Create<ns3::Packet>(20));
+    whdr.SetSequenceNumber (1);
+    whdr.SetFragmentNumber (0);
+    whdr.SetNoMoreFragments ();
+    whdr.SetNoRetry ();
+    ns3::Ptr<ns3::Packet> pkt = ns3::Create<ns3::Packet> (ns3::Packet(reinterpret_cast<uint8_t const
+      		*>("hello"),5));
+	mac->TransmitData(pkt->Copy(), &whdr);
 
 }
 void
