@@ -13,8 +13,7 @@
 
 #include "ns3/core-module.h"
 //#include "tosns-simulator-impl.h"
-#include "ns3/event-id.h"
-#include "ns3/nstime.h"
+
 #include "ns3/tos-module.h"
 #include "ns3/wsn-module.h"
 #include "ns3/core-module.h"
@@ -38,7 +37,7 @@ int main(void)
 	TosNodeContainer c;
 	c.Create(2);
 
-	WsnHelper wifi;
+	TosHelper wifi;
 
 //	  if (verbose)
 //	    {
@@ -61,9 +60,7 @@ int main(void)
 	  wifiChannel.AddPropagationLoss ("ns3::FixedRssLossModel","Rss",DoubleValue (-80));
 	  wifiPhy.SetChannel (wifiChannel.Create ());
 
-	  WsnWifiMacHelper wifiMac = WsnWifiMacHelper::Default ();
-	  wifiMac.SetType ("ns3::AdhocWifiMac");
-	  NetDeviceContainer devices = wifi.Install (wifiPhy, wifiMac, c);
+	  NetDeviceContainer devices = wifi.Install (wifiPhy,  c);
 	  // Note that with FixedRssLossModel, the positions below are not
 	  // used for received signal strength.
 	  MobilityHelper mobility;

@@ -95,7 +95,7 @@ int main (int argc, char *argv[])
   std::string phyMode ("DsssRate1Mbps");
   double rss = -80;  // -dBm
   uint32_t packetSize = 1000; // bytes
-  uint32_t numPackets = 10;
+  uint32_t numPackets = 1;
   double interval = 1.0; // seconds
   bool verbose = false;
 
@@ -125,10 +125,10 @@ int main (int argc, char *argv[])
 
   // The below set of helpers will help us to put together the wifi NICs we want
   WifiHelper wifi;
-  if (verbose)
-    {
+//  if (verbose)
+//    {
       wifi.EnableLogComponents ();  // Turn on all Wifi logging
-    }
+//    }
   wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
 
   YansWifiPhyHelper wifiPhy =  YansWifiPhyHelper::Default ();
@@ -188,14 +188,14 @@ int main (int argc, char *argv[])
 
   // Output what we are doing
   NS_LOG_UNCOND ("Testing " << numPackets  << " packets sent with receiver rss " << rss );
-  Ptr<Packet> p = Create<Packet> (Packet(reinterpret_cast<uint8_t const
-  		*>("hello"),5));
-  p->EnablePrinting();
-  std::cerr <<"first pkt: " << std::endl;
-  p->Print(std::cerr);
-  Ptr<Packet> p1 = p->Copy();
-  std::cerr <<"\n second pkt: "<< std::endl;
-  p1->Print(std::cerr);
+//  Ptr<Packet> p = Create<Packet> (Packet(reinterpret_cast<uint8_t const
+//  		*>("hello"),5));
+//  p->EnablePrinting();
+//  std::cerr <<"first pkt: " << std::endl;
+//  p->Print(std::cerr);
+//  Ptr<Packet> p1 = p->Copy();
+//  std::cerr <<"\n second pkt: "<< std::endl;
+//  p1->Print(std::cerr);
   Simulator::ScheduleWithContext (source->GetNode ()->GetId (),
                                   Seconds (10.0), &GenerateTraffic,
                                   source, packetSize, numPackets, interPacketInterval);

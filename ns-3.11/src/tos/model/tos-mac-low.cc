@@ -46,7 +46,7 @@
 NS_LOG_COMPONENT_DEFINE ("TosMacLow");
 
 #undef NS_LOG_APPEND_CONTEXT
-#define NS_LOG_APPEND_CONTEXT std::clog << "[mac=" << m_self << "] "
+#define NS_LOG_APPEND_CONTEXT std::clog << "[tos mac=" << m_self << "] "
 
 
 namespace ns3 {
@@ -330,7 +330,7 @@ TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callb
 
 void
 TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
-	  //NS_LOG_FUNCTION (this << packet << hdr << params << listener);
+	  //NS_LOG_FUNCTION (this << packet << hdr );
 	  /* m_currentPacket is not NULL because someone started
 	   * a transmission and was interrupted before one of:
 	   *   - ctsTimeout
@@ -346,23 +346,25 @@ TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 	   * one of the Edca of the QAP.
 	   */
 
-	 m_currentPacket = Create<Packet> (Packet(reinterpret_cast<uint8_t const*>("hello"),5));
-	 std::cerr <<"m_currentPacket = packet->Copy " << std::endl;
-	m_currentHdr.SetTypeData ();
-	m_currentHdr.SetAddr1 ("00:00:00:00:00:00");
-	m_currentHdr.SetAddr2 ("00:00:00:00:00:00");
-	m_currentHdr.SetDsNotFrom ();
-	m_currentHdr.SetDsNotTo ();
-	m_currentHdr.SetSequenceNumber (1);
-	m_currentHdr.SetFragmentNumber (0);
-	m_currentHdr.SetNoMoreFragments ();
-	m_currentHdr.SetNoRetry ();
 
+//	hdr.SetTypeData ();
+//	hdr.SetAddr1 ("00:00:00:00:00:01");
+//	hdr.SetAddr2 ("ff:ff:ff:ff:ff:ff");
+//	std::cerr <<"TosMacLow::TransmitData about to transmit" << std::endl;
+//	hdr.SetDsNotFrom ();
+//	hdr.SetDsNotTo ();
+//	m_currentHdr.SetSequenceNumber (1);
+//	m_currentHdr.SetFragmentNumber (0);
+//	m_currentHdr.SetNoMoreFragments ();
+//	m_currentHdr.SetNoRetry ();
+//	NS_LOG_FUNCTION (this << m_currentHdr );
+//	 m_currentPacket = Create<Packet> (Packet(reinterpret_cast<uint8_t const*>("hello"),5));
+//	 std::cerr <<"m_currentPacket = packet->Copy " << std::endl;
 	 // m_currentHdr = *hdr;
 	  //CancelAllEvents ();
 	  //m_listener = listener;
 //	  m_txParams = params;
-
+	std::cerr <<m_phy->IsStateIdle ()<< std::endl;
 	  NS_ASSERT (m_phy->IsStateIdle ());
 	  std::cerr <<"TosMacLow::TransmitData about to transmit" << std::endl;
 	  NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<

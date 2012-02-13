@@ -272,7 +272,7 @@ private:
   Ptr<Packet> m_currentPacket;
   WifiMacHeader m_currentHdr;
   TosMacLowTransmissionListener * m_listener;
-  Mac48Address m_self;
+  Mac48Address m_self ;
   Mac48Address m_bssid;
 
   Time m_ackTimeout;

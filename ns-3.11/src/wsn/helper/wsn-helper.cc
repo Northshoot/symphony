@@ -20,12 +20,11 @@
  * Author: Mirko Banchi <mk.banchi@gmail.com>
  */
 #include "wsn-helper.h"
-#include "ns3/wifi-helper.h"
+
 #include "wsn-mac-helper.h"
 #include "ns3/wifi-wsn-device.h"
 #include "ns3/wsn-wifi-mac.h"
 #include "ns3/wifi-phy.h"
-#include "ns3/wifi-remote-station-manager.h"
 #include "ns3/wifi-channel.h"
 #include "ns3/yans-wifi-channel.h"
 #include "ns3/propagation-delay-model.h"
@@ -57,32 +56,10 @@ WsnHelper
 WsnHelper::Default (void)
 {
   WsnHelper helper;
-  helper.SetRemoteStationManager ("ns3::ArfWifiManager");
   return helper;
 }
 
-void
-WsnHelper::SetRemoteStationManager (std::string type,
-                                     std::string n0, const AttributeValue &v0,
-                                     std::string n1, const AttributeValue &v1,
-                                     std::string n2, const AttributeValue &v2,
-                                     std::string n3, const AttributeValue &v3,
-                                     std::string n4, const AttributeValue &v4,
-                                     std::string n5, const AttributeValue &v5,
-                                     std::string n6, const AttributeValue &v6,
-                                     std::string n7, const AttributeValue &v7)
-{
-  m_stationManager = ObjectFactory ();
-  m_stationManager.SetTypeId (type);
-  m_stationManager.Set (n0, v0);
-  m_stationManager.Set (n1, v1);
-  m_stationManager.Set (n2, v2);
-  m_stationManager.Set (n3, v3);
-  m_stationManager.Set (n4, v4);
-  m_stationManager.Set (n5, v5);
-  m_stationManager.Set (n6, v6);
-  m_stationManager.Set (n7, v7);
-}
+
 
 void
 WsnHelper::SetStandard (enum WifiPhyStandard standard)
@@ -135,35 +112,23 @@ WsnHelper::Install (const WsnPhyHelper &phy,
 void
 WsnHelper::EnableLogComponents (void)
 {
-  LogComponentEnable ("Aarfcd", LOG_LEVEL_ALL);
-  LogComponentEnable ("AdhocWifiMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("AmrrWifiRemoteStation", LOG_LEVEL_ALL);
-  LogComponentEnable ("ApWifiMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("ns3::ArfWifiManager", LOG_LEVEL_ALL);
-  LogComponentEnable ("Cara", LOG_LEVEL_ALL);
-  LogComponentEnable ("DcaTxop", LOG_LEVEL_ALL);
-  LogComponentEnable ("DcfManager", LOG_LEVEL_ALL);
+
   LogComponentEnable ("DsssErrorRateModel", LOG_LEVEL_ALL);
-  LogComponentEnable ("EdcaTxopN", LOG_LEVEL_ALL);
   LogComponentEnable ("InterferenceHelper", LOG_LEVEL_ALL);
-  LogComponentEnable ("Jakes", LOG_LEVEL_ALL);
-  LogComponentEnable ("MacLow", LOG_LEVEL_ALL);
-  LogComponentEnable ("MacRxMiddle", LOG_LEVEL_ALL);
-  LogComponentEnable ("MsduAggregator", LOG_LEVEL_ALL);
-  LogComponentEnable ("MsduStandardAggregator", LOG_LEVEL_ALL);
+
   LogComponentEnable ("NistErrorRateModel", LOG_LEVEL_ALL);
   LogComponentEnable ("OnoeWifiRemoteStation", LOG_LEVEL_ALL);
   LogComponentEnable ("PropagationLossModel", LOG_LEVEL_ALL);
-  LogComponentEnable ("RegularWifiMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("RegularWsnMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("RraaWifiManager", LOG_LEVEL_ALL);
-  LogComponentEnable ("StaWifiMac", LOG_LEVEL_ALL);
-  LogComponentEnable ("SupportedRates", LOG_LEVEL_ALL);
   LogComponentEnable ("WifiChannel", LOG_LEVEL_ALL);
   LogComponentEnable ("WifiPhyStateHelper", LOG_LEVEL_ALL);
   LogComponentEnable ("WifiPhy", LOG_LEVEL_ALL);
-  LogComponentEnable ("WifiRemoteStationManager", LOG_LEVEL_ALL);
+
+  LogComponentEnable ("RegularWsnMac", LOG_LEVEL_ALL);
+  LogComponentEnable ("TosMacLow", LOG_LEVEL_ALL);
+  LogComponentEnable ("WsnHelper", LOG_LEVEL_ALL);
   LogComponentEnable ("WsnWifiMac", LOG_LEVEL_ALL);
+  LogComponentEnable ("RegularWsnMac", LOG_LEVEL_ALL);
+
   LogComponentEnable ("YansErrorRateModel", LOG_LEVEL_ALL);
   LogComponentEnable ("YansWifiChannel", LOG_LEVEL_ALL);
   LogComponentEnable ("YansWifiPhy", LOG_LEVEL_ALL);

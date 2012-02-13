@@ -78,23 +78,13 @@ WsnWifiMac::SetAddress (Mac48Address address)
   //
   // This is why we're overriding this method.
   RegularWsnMac::SetAddress (address);
-  RegularWsnMac::SetBssid (address);
+
 }
 
 void
 WsnWifiMac::Enqueue (Ptr<const Packet> packet, Mac48Address to)
 {
   NS_LOG_FUNCTION (this << packet << to);
-  if (m_stationManager->IsBrandNew (to))
-    {
-      // In ad hoc mode, we assume that every destination supports all
-      // the rates we support.
-      for (uint32_t i = 0; i < m_phy->GetNModes (); i++)
-        {
-          m_stationManager->AddSupportedMode (to, m_phy->GetMode (i));
-        }
-      m_stationManager->RecordDisassociated (to);
-    }
 
   WifiMacHeader hdr;
 
@@ -102,38 +92,7 @@ WsnWifiMac::Enqueue (Ptr<const Packet> packet, Mac48Address to)
   // transmit the packet. A TID of zero will map to AC_BE (through \c
   // QosUtilsMapTidToAc()), so we use that as our default here.
   uint8_t tid = 0;
-
-  // For now, a STA that supports QoS does not support non-QoS
-  // associations, and vice versa. In future the STA model should fall
-  // back to non-QoS if talking to a peer that is also non-QoS. At
-  // that point there will need to be per-station QoS state maintained
-  // by the association state machine, and consulted here.
-  if (m_qosSupported)
-    {
-      hdr.SetType (WIFI_MAC_QOSDATA);
-      hdr.SetQosAckPolicy (WifiMacHeader::NORMAL_ACK);
-      hdr.SetQosNoEosp ();
-      hdr.SetQosNoAmsdu ();
-      // Transmission of multiple frames in the same TXOP is not
-      // supported for now
-      hdr.SetQosTxopLimit (0);
-
-      // Fill in the QoS control field in the MAC header
-      tid = QosUtilsGetTidForPacket (packet);
-      // Any value greater than 7 is invalid and likely indicates that
-      // the packet had no QoS tag, so we revert to zero, which'll
-      // mean that AC_BE is used.
-      if (tid >= 7)
-        {
-          tid = 0;
-        }
-      hdr.SetQosTid (tid);
-    }
-  else
-    {
-      hdr.SetTypeData ();
-    }
-
+  hdr.SetTypeData ();
   hdr.SetAddr1 (to);
   hdr.SetAddr2 (m_low->GetAddress ());
   hdr.SetAddr3 (GetBssid ());
