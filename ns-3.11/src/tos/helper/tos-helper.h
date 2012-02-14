@@ -16,6 +16,7 @@
 #include "ns3/net-device-container.h"
 #include "ns3/wifi-phy-standard.h"
 #include "ns3/trace-helper.h"
+#include "ns3/wsn-tos-device.h"
 
 namespace ns3 {
 
@@ -23,6 +24,23 @@ class WifiPhy;
 class TosMacLow;
 class TosNode;
 class WsnTosDevice;
+
+class TosPhyHelper
+{
+public:
+  virtual ~TosPhyHelper ();
+
+  /**
+   * \param node the node on which the PHY object will reside
+   * \param device the device within which the PHY object will reside
+   * \returns a new PHY object.
+   *
+   * Subclasses must implement this method to allow the ns3::WsnHelper class
+   * to create PHY objects from ns3::WsnHelper::Install.
+   */
+  virtual Ptr<WifiPhy> Create (Ptr<TosNode> node, Ptr<WsnTosDevice> device) const = 0;
+
+};
 
 class TosHelper {
 public:
@@ -37,7 +55,7 @@ public:
    * \param c the set of nodes on which a wifi device must be created
    * \returns a device container which contains all the devices created by this method.
    */
-  NetDeviceContainer Install (const YansWsnPhyHelper &phy,
+  NetDeviceContainer Install (const TosPhyHelper &phyHelper,
                                TosNodeContainer c) const;
 
 

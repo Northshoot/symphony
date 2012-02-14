@@ -20,13 +20,13 @@
 
 #include "ns3/trace-helper.h"
 #include "ns3/yans-wifi-helper.h"
-#include "yans-wsn-helper.h"
+#include "yans-tos-helper.h"
 #include "ns3/error-rate-model.h"
 #include "ns3/propagation-loss-model.h"
 #include "ns3/propagation-delay-model.h"
 #include "ns3/yans-wifi-channel.h"
 #include "ns3/yans-wifi-phy.h"
-#include "ns3/wifi-wsn-device.h"
+#include "ns3/wsn-tos-device.h"
 #include "ns3/radiotap-header.h"
 #include "ns3/pcap-file-wrapper.h"
 #include "ns3/simulator.h"
@@ -35,7 +35,7 @@
 #include "ns3/abort.h"
 #include "ns3/log.h"
 
-NS_LOG_COMPONENT_DEFINE ("YansWsnHelper");
+NS_LOG_COMPONENT_DEFINE ("YansTosHelper");
 
 namespace ns3 {
 
@@ -174,40 +174,40 @@ AsciiPhyReceiveSinkWithoutContext (
 //}
 
 
-YansWsnPhyHelper::YansWsnPhyHelper ()
+YansTosPhyHelper::YansTosPhyHelper ()
   : m_channel (0),
     m_pcapDlt (PcapHelper::DLT_IEEE802_11)
 {
   m_phy.SetTypeId ("ns3::YansWifiPhy");
 }
 
-YansWsnPhyHelper
-YansWsnPhyHelper::Default (void)
+YansTosPhyHelper
+YansTosPhyHelper::Default (void)
 {
-  YansWsnPhyHelper helper;
+  YansTosPhyHelper helper;
   helper.SetErrorRateModel ("ns3::NistErrorRateModel");
   return helper;
 }
 
 void
-YansWsnPhyHelper::SetChannel (Ptr<YansWifiChannel> channel)
+YansTosPhyHelper::SetChannel (Ptr<YansWifiChannel> channel)
 {
   m_channel = channel;
 }
 void
-YansWsnPhyHelper::SetChannel (std::string channelName)
+YansTosPhyHelper::SetChannel (std::string channelName)
 {
   Ptr<YansWifiChannel> channel = Names::Find<YansWifiChannel> (channelName);
   m_channel = channel;
 }
 void
-YansWsnPhyHelper::Set (std::string name, const AttributeValue &v)
+YansTosPhyHelper::Set (std::string name, const AttributeValue &v)
 {
   m_phy.Set (name, v);
 }
 
 void
-YansWsnPhyHelper::SetErrorRateModel (std::string name,
+YansTosPhyHelper::SetErrorRateModel (std::string name,
                                       std::string n0, const AttributeValue &v0,
                                       std::string n1, const AttributeValue &v1,
                                       std::string n2, const AttributeValue &v2,
@@ -230,7 +230,7 @@ YansWsnPhyHelper::SetErrorRateModel (std::string name,
 }
 
 Ptr<WifiPhy>
-YansWsnPhyHelper::Create (Ptr<Node> node, Ptr<WifiWsnDevice> device) const
+YansTosPhyHelper::Create (Ptr<TosNode> node, Ptr<WsnTosDevice> device) const
 {
   Ptr<YansWifiPhy> phy = m_phy.Create<YansWifiPhy> ();
   Ptr<ErrorRateModel> error = m_errorRateModel.Create<ErrorRateModel> ();
@@ -395,7 +395,7 @@ PcapSniffRxEvent (
 }
 
 void
-YansWsnPhyHelper::SetPcapDataLinkType (enum SupportedPcapDataLinkTypes dlt)
+YansTosPhyHelper::SetPcapDataLinkType (enum SupportedPcapDataLinkTypes dlt)
 {
   switch (dlt)
     {
@@ -409,12 +409,12 @@ YansWsnPhyHelper::SetPcapDataLinkType (enum SupportedPcapDataLinkTypes dlt)
       m_pcapDlt = PcapHelper::DLT_IEEE802_11_RADIO;
       return;
     default:
-      NS_ABORT_MSG ("YansWsnPhyHelper::SetPcapFormat(): Unexpected format");
+      NS_ABORT_MSG ("YansTosPhyHelper::SetPcapFormat(): Unexpected format");
     }
 }
 
 void
-YansWsnPhyHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, bool promiscuous, bool explicitFilename)
+YansTosPhyHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, bool promiscuous, bool explicitFilename)
 {
   //
   // All of the Pcap enable functions vector through here including the ones
@@ -429,7 +429,7 @@ YansWsnPhyHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, boo
     }
 
   Ptr<WifiPhy> phy = device->GetPhy ();
-  NS_ABORT_MSG_IF (phy == 0, "YansWsnPhyHelper::EnablePcapInternal(): Phy layer in WifiNetDevice must be set");
+  NS_ABORT_MSG_IF (phy == 0, "YansTosPhyHelper::EnablePcapInternal(): Phy layer in WifiNetDevice must be set");
 
   PcapHelper pcapHelper;
 
@@ -450,7 +450,7 @@ YansWsnPhyHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, boo
 }
 
 void
-YansWsnPhyHelper::EnableAsciiInternal (
+YansTosPhyHelper::EnableAsciiInternal (
   Ptr<OutputStreamWrapper> stream,
   std::string prefix,
   Ptr<NetDevice> nd,

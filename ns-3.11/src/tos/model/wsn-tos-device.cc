@@ -20,182 +20,182 @@
 
 #include "wsn-tos-device.h"
 
-NS_LOG_COMPONENT_DEFINE("WsnTosDevice");
+NS_LOG_COMPONENT_DEFINE("TosNetDevice");
 
 namespace ns3 {
 
-WsnTosDevice::WsnTosDevice() {
+TosNetDevice::TosNetDevice() {
 	// TODO Auto-generated constructor stub
 
 }
 
-TypeId WsnTosDevice::GetTypeId(void) {
+TypeId TosNetDevice::GetTypeId(void) {
 	static TypeId tid =
-			TypeId("ns3::WsnTosDevice").SetParent<Object>().AddConstructor<
-			WsnTosDevice>().AddAttribute(
+			TypeId("ns3::TosNetDevice").SetParent<Object>().AddConstructor<
+			TosNetDevice>().AddAttribute(
 					"Mtu",
 					"The MAC-level Maximum Transmission Unit",
 					UintegerValue(MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH),
-					MakeUintegerAccessor(&WsnTosDevice::SetMtu,
-							&WsnTosDevice::GetMtu),
+					MakeUintegerAccessor(&TosNetDevice::SetMtu,
+							&TosNetDevice::GetMtu),
 							MakeUintegerChecker<uint16_t>(1,
 									MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH)).AddAttribute(
 											"Channel", "The channel attached to this device",
 											PointerValue(),
-											MakePointerAccessor(&WsnTosDevice::DoGetChannel),
+											MakePointerAccessor(&TosNetDevice::DoGetChannel),
 											MakePointerChecker<WifiChannel>()).AddAttribute(
 													"Phy",
 													"The PHY layer attached to this device.",
 													PointerValue(),
-													MakePointerAccessor(&WsnTosDevice::GetPhy,
-															&WsnTosDevice::SetPhy),
+													MakePointerAccessor(&TosNetDevice::GetPhy,
+															&TosNetDevice::SetPhy),
 															MakePointerChecker<WifiPhy>()).AddAttribute(
 																	"Mac",
 																	"The MAC layer attached to this device.",
 																	PointerValue(),
-																	MakePointerAccessor(&WsnTosDevice::GetMac,
-																			&WsnTosDevice::SetMac),
+																	MakePointerAccessor(&TosNetDevice::GetMac,
+																			&TosNetDevice::SetMac),
 																			MakePointerChecker<WifiMac>());
 	return tid;
 }
 
-WsnTosDevice::~WsnTosDevice() {
+TosNetDevice::~TosNetDevice() {
 	// TODO Auto-generated destructor stub
 }
 
-void WsnTosDevice::SetMac(Ptr<TosMacLow> mac) {
+void TosNetDevice::SetMac(Ptr<TosMacLow> mac) {
 	m_mac = mac;
 }
 
-void WsnTosDevice::SetPhy(Ptr<WifiPhy> phy) {
+void TosNetDevice::SetPhy(Ptr<WifiPhy> phy) {
 	m_phy = phy;
 }
 
-Ptr<TosMacLow> WsnTosDevice::GetMac(void) const {
+Ptr<TosMacLow> TosNetDevice::GetMac(void) const {
 	return m_mac;
 }
 
-Ptr<WifiPhy> WsnTosDevice::GetPhy(void) const {
+Ptr<WifiPhy> TosNetDevice::GetPhy(void) const {
 	return m_phy;
 }
 
-Ptr<Channel> WsnTosDevice::GetChannel(void) const {
+Ptr<Channel> TosNetDevice::GetChannel(void) const {
 	return m_phy->GetChannel();
 }
 
-void WsnTosDevice::SetAddress(Mac48Address address) {
+void TosNetDevice::SetAddress(Mac48Address address) {
 	m_mac->SetAddress(address);
 }
 
-Mac48Address WsnTosDevice::GetAddress(void) const {
+Mac48Address TosNetDevice::GetAddress(void) const {
 	return m_mac->GetAddress();
 }
 
-void WsnTosDevice::SetMtu(const uint16_t mtu) {
+void TosNetDevice::SetMtu(const uint16_t mtu) {
 	m_mtu = mtu;
 }
 
-uint16_t WsnTosDevice::GetMtu(void) const {
+uint16_t TosNetDevice::GetMtu(void) const {
 	return m_mtu;
 }
 
-bool WsnTosDevice::IsLinkUp(void) const {
+bool TosNetDevice::IsLinkUp(void) const {
 	return true;
 }
 
-void WsnTosDevice::AddLinkChangeCallback(Callback<void> callback) {
+void TosNetDevice::AddLinkChangeCallback(Callback<void> callback) {
 }
 
-bool WsnTosDevice::IsBroadcast(void) const {
+bool TosNetDevice::IsBroadcast(void) const {
 	return true;
 }
 
-//    Address WsnTosDevice::GetBroadcast(void) const
+//    Address TosNetDevice::GetBroadcast(void) const
 //    {
 //    	return
 //    }
 
-bool WsnTosDevice::IsMulticast(void) const {
+bool TosNetDevice::IsMulticast(void) const {
 	return true;
 }
 
-Ptr<TosNode> WsnTosDevice::GetNode(void) const {
+Ptr<TosNode> TosNetDevice::GetNode(void) const {
 	return m_node;
 }
 
-void WsnTosDevice::SetNode(Ptr<TosNode> node) {
+void TosNetDevice::SetNode(Ptr<TosNode> node) {
 	m_node = node;
 }
 
-uint8_t WsnTosDevice::DeviceTurnOff() {
+uint8_t TosNetDevice::DeviceTurnOff() {
 	return 0;
 }
 
-uint8_t WsnTosDevice::DeviceStandby() {
+uint8_t TosNetDevice::DeviceStandby() {
 	return 0;
 }
 
-uint8_t WsnTosDevice::DeviceTurnOn() {
+uint8_t TosNetDevice::DeviceTurnOn() {
 	return 0;
 }
 
-uint8_t WsnTosDevice::DeviceSetChannel(uint8_t channel) {
+uint8_t TosNetDevice::DeviceSetChannel(uint8_t channel) {
 	return 0;
 }
 
-void WsnTosDevice::done() {
+void TosNetDevice::done() {
 }
 
-uint8_t WsnTosDevice::DeviceGetChannel() {
+uint8_t TosNetDevice::DeviceGetChannel() {
 	return 0;
 }
 
-uint8_t WsnTosDevice::DeviceSend(message_t *msg) {
+uint8_t TosNetDevice::DeviceSend(message_t *msg) {
 	return 0;
 }
 
-void WsnTosDevice::DeviceendDone(message_t *msg, uint8_t error) {
+void TosNetDevice::DeviceendDone(message_t *msg, uint8_t error) {
 }
 
-void WsnTosDevice::DeviceCancel(message_t *msg) {
+void TosNetDevice::DeviceCancel(message_t *msg) {
 }
 
-bool WsnTosDevice::DeviceRXHeader(message_t *msg) {
+bool TosNetDevice::DeviceRXHeader(message_t *msg) {
 	return true;
 }
 
-message_t *WsnTosDevice::DeviceReceive(message_t *msg) {
+message_t *TosNetDevice::DeviceReceive(message_t *msg) {
 	return m_msg;
 }
 
-void WsnTosDevice::DoDispose(void) {
+void TosNetDevice::DoDispose(void) {
 }
 
-void WsnTosDevice::DoStart(void) {
+void TosNetDevice::DoStart(void) {
 }
-bool WsnTosDevice::Send(Ptr<Packet> packet, const Address& dest) {
+bool TosNetDevice::Send(Ptr<Packet> packet, const Address& dest) {
 	//m_mac->TransmitData();
 	return true;
 }
 
-void WsnTosDevice::ForwardUp(Ptr<Packet> packet, Mac48Address from,
+void TosNetDevice::ForwardUp(Ptr<Packet> packet, Mac48Address from,
 		Mac48Address to) {
 }
 
-void WsnTosDevice::LinkUp(void) {
+void TosNetDevice::LinkUp(void) {
 }
 
-void WsnTosDevice::LinkDown(void) {
+void TosNetDevice::LinkDown(void) {
 }
 
-void WsnTosDevice::Setup(void) {
+void TosNetDevice::Setup(void) {
 }
 
-Ptr<WifiChannel> WsnTosDevice::DoGetChannel(void) const {
+Ptr<WifiChannel> TosNetDevice::DoGetChannel(void) const {
 	return m_phy->GetChannel();
 }
 
-void WsnTosDevice::CompleteConfig(void) {
+void TosNetDevice::CompleteConfig(void) {
 
 }
 

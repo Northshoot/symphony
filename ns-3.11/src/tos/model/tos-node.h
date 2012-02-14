@@ -21,10 +21,12 @@
 #include "ns3/simulator.h"
 #include "ns3/event-id.h"
 #include "ns3/callback.h"
+#include "ns3/node.h"
 
 #include "simu-clock.h"
 #include "ns3-to-tos-proxy.h"
 #include "tos-to-ns3-proxy.h"
+#include "wsn-tos-device.h"
 
 
 //typedef int(LibToTosProxy::*fucnpoint)(int);
@@ -64,7 +66,27 @@ public:
 
 	void tickTime(int);
 
-
+	  /**
+	   * \param device WsnTosDevice to associate to this node.
+	   * \returns the index of the TosNetDevice into the Node's list of
+	   *          NetDevice.
+	   *
+	   * Associate this device to this node.
+	   */
+	  uint32_t AddDevice (Ptr<TosNetDevice> device);
+	  /**
+	   * \param index the index of the requested NetDevice
+	   * \returns the requested TosNetDevice associated to this Node.
+	   *
+	   * The indexes used by the GetDevice method start at one and
+	   * end at GetNDevices ()
+	   */
+	  Ptr<TosNetDevice> GetDevice (uint32_t index) const;
+	  /**
+	   * \returns the number of NetDevice instances associated
+	   *          to this Node.
+	   */
+	  uint32_t GetNDevices (void) const;
 
 
 	uint32_t  getNow();
@@ -108,6 +130,9 @@ private:
 	EventId		timer_event;
 	EventId		m_boot_event;	//boot event
 	EventId		m_shutdown_event;//shut down event
+	//reference to the
+	Ptr<Node>	m_node;
+	std::vector<Ptr<TosNetDevice> > m_devices;
 	bool m_started;
 
 	/**

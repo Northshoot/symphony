@@ -23,12 +23,12 @@ class WifiChannel;
 class WifiPhy;
 class WifiMac;
 
-class WsnTosDevice: public Object {
+class TosNetDevice: public Object {
 public:
 	static TypeId GetTypeId (void);	
 
-	WsnTosDevice();
-	virtual ~WsnTosDevice();
+	TosNetDevice();
+	virtual ~TosNetDevice();
 	
 	  /**
    * \param mac the mac layer to use.

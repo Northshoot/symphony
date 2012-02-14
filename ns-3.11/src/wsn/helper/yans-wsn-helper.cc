@@ -26,8 +26,8 @@
 #include "ns3/propagation-delay-model.h"
 #include "ns3/yans-wifi-channel.h"
 #include "ns3/yans-wifi-phy.h"
-#include "ns3/wsn-tos-device.h"
-#include "ns3/tos-node.h"
+#include "ns3/wifi-wsn-device.h"
+#include "ns3/node.h"
 #include "ns3/radiotap-header.h"
 #include "ns3/pcap-file-wrapper.h"
 #include "ns3/simulator.h"
@@ -231,7 +231,7 @@ YansWsnPhyHelper::SetErrorRateModel (std::string name,
 }
 
 Ptr<WifiPhy>
-YansWsnPhyHelper::Create (Ptr<TosNode> node, Ptr<WsnTosDevice> device) const
+YansWsnPhyHelper::Create (Ptr<Node> node, Ptr<WifiWsnDevice> device) const
 {
   Ptr<YansWifiPhy> phy = m_phy.Create<YansWifiPhy> ();
   Ptr<ErrorRateModel> error = m_errorRateModel.Create<ErrorRateModel> ();

@@ -17,8 +17,8 @@
  *
  * Author: Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  */
-#ifndef YANS_WSN_HELPER_H
-#define YANS_WSN_HELPER_H
+#ifndef YANS_TOS_HELPER_H
+#define YANS_TOS_HELPER_H
 
 #include "wsn-helper.h"
 #include "ns3/wifi-helper.h"
@@ -142,7 +142,7 @@ namespace ns3 {
  * in this class correspond to PHY-level traces and come to us via WifiPhyHelper
  *
  */
-class YansWsnPhyHelper : public WsnPhyHelper,
+class YansTosPhyHelper : public TosPhyHelper,
                           public PcapHelperForDevice,
                           public AsciiTraceHelperForDevice
 {
@@ -151,12 +151,12 @@ public:
    * Create a phy helper without any parameter set. The user must set
    * them all to be able to call Install later.
    */
-  YansWsnPhyHelper ();
+  YansTosPhyHelper ();
 
   /**
    * Create a phy helper in a default working state.
    */
-  static YansWsnPhyHelper Default (void);
+  static YansTosPhyHelper Default (void);
 
   /**
    * \param channel the channel to associate to this helper
@@ -240,7 +240,7 @@ private:
    *
    * This method implements the pure virtual method defined in \ref ns3::WifiPhyHelper.
    */
-  virtual Ptr<WifiPhy> Create (Ptr<Node> node, Ptr<WifiWsnDevice> device) const;
+  virtual Ptr<WifiPhy> Create (Ptr<TosNode> node, Ptr<WsnTosDevice> device) const;
 
   /**
    * @brief Enable pcap output the indicated net device.
