@@ -15,14 +15,13 @@
 //#include "tosns-simulator-impl.h"
 
 #include "ns3/tos-module.h"
-#include "ns3/wsn-module.h"
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
 #include "ns3/mobility-module.h"
 #include "ns3/config-store-module.h"
 #include "ns3/wifi-module.h"
 #include "ns3/internet-module.h"
-#include "ns3/wsn-helper.h"
+
 
 
 using namespace ns3;
@@ -46,7 +45,7 @@ int main(void)
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
 	  wifi.EnableLogComponents ();
 
-	  YansWsnPhyHelper wifiPhy =  YansWsnPhyHelper::Default ();
+	  YansTosPhyHelper wifiPhy =  YansTosPhyHelper::Default ();
 	  // This is one parameter that matters when using FixedRssLossModel
 	  // set it to zero; otherwise, gain will be added
 	  wifiPhy.Set ("RxGain", DoubleValue (0) );
@@ -60,7 +59,7 @@ int main(void)
 	  wifiChannel.AddPropagationLoss ("ns3::FixedRssLossModel","Rss",DoubleValue (-80));
 	  wifiPhy.SetChannel (wifiChannel.Create ());
 
-	  NetDeviceContainer devices = wifi.Install (wifiPhy,  c);
+	  TosNetDeviceContainer devices = wifi.Install (wifiPhy,  c);
 	  // Note that with FixedRssLossModel, the positions below are not
 	  // used for received signal strength.
 	  MobilityHelper mobility;

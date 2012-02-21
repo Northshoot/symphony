@@ -5,7 +5,7 @@
  *      Author: lauril
  */
 
-#include "tos-helper.h"
+
 #include "ns3/tos-node.h"
 #include "ns3/wifi-phy.h"
 #include "ns3/wifi-channel.h"
@@ -17,6 +17,9 @@
 #include "ns3/config.h"
 #include "ns3/simulator.h"
 #include "ns3/names.h"
+
+#include "tos-net-device-container.h"
+#include "tos-helper.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosHelper");
 
@@ -37,14 +40,14 @@ TosHelper::Default(void)
 	return toshelper;
 }
 
-NetDeviceContainer
+TosNetDeviceContainer
 TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 {
-	  NetDeviceContainer devices;
+	TosNetDeviceContainer devices;
 	  for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
 	    {
 	      Ptr<TosNode> node = *i;
-	      Ptr<WsnTosDevice> device = CreateObject<WsnTosDevice> ();
+	      Ptr<TosNetDevice> device = CreateObject<TosNetDevice> ();
 	      Ptr<TosMacLow> mac = new TosMacLow();
 	      Ptr<WifiPhy> phy = phyHelper.Create (node, device);
 	      mac->SetAddress (Mac48Address::Allocate ());

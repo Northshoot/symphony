@@ -60,7 +60,7 @@ all_modules = (
     'point-to-point-layout',
     'csma-layout',
     'template',
-    'wsn',
+    #'wsn',
     'tos',
     )
 

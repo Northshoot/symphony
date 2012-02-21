@@ -16,9 +16,11 @@ def build(bld):
     			  'model/tos-packet.cc',
     			  'model/tos-node-list.cc',
     			  'model/tos-mac-low.cc',
-    			  'model/wsn-tos-device.cc',
+    			  'model/tos-net-device.cc',
     			  'helper/tos-node-container.cc',
     			  'helper/tos-helper.cc',
+    			  'helper/yans-tos-helper.cc',
+    			  'helper/tos-net-device-container.cc',
     			  
     			  
 
@@ -39,9 +41,10 @@ def build(bld):
     			  #'model/tosmessage.h',
     			  'helper/tos-node-container.h',
     			  'model/tos-node-list.h',
-    			  'model/wsn-tos-device.h',
+    			  'model/tos-net-device.h',
     			  'helper/tos-helper.h',
-
+				  'helper/yans-tos-helper.h',
+				  'helper/tos-net-device-container.h',
         ]
 
 

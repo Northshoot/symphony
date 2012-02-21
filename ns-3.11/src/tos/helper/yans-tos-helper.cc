@@ -19,14 +19,11 @@
  */
 
 #include "ns3/trace-helper.h"
-#include "ns3/yans-wifi-helper.h"
-#include "yans-tos-helper.h"
 #include "ns3/error-rate-model.h"
 #include "ns3/propagation-loss-model.h"
 #include "ns3/propagation-delay-model.h"
 #include "ns3/yans-wifi-channel.h"
 #include "ns3/yans-wifi-phy.h"
-#include "ns3/wsn-tos-device.h"
 #include "ns3/radiotap-header.h"
 #include "ns3/pcap-file-wrapper.h"
 #include "ns3/simulator.h"
@@ -34,6 +31,9 @@
 #include "ns3/names.h"
 #include "ns3/abort.h"
 #include "ns3/log.h"
+
+#include "ns3/tos-net-device.h"
+#include "yans-tos-helper.h"
 
 NS_LOG_COMPONENT_DEFINE ("YansTosHelper");
 
@@ -181,6 +181,18 @@ YansTosPhyHelper::YansTosPhyHelper ()
   m_phy.SetTypeId ("ns3::YansWifiPhy");
 }
 
+Ptr<WifiPhy>
+YansTosPhyHelper::Create (Ptr<TosNode> node, Ptr<TosNetDevice> device) const
+{
+  Ptr<YansWifiPhy> phy = m_phy.Create<YansWifiPhy> ();
+  Ptr<ErrorRateModel> error = m_errorRateModel.Create<ErrorRateModel> ();
+  phy->SetErrorRateModel (error);
+  phy->SetChannel (m_channel);
+  phy->SetMobility (node);
+  phy->SetDevice (device);
+  return phy;
+}
+
 YansTosPhyHelper
 YansTosPhyHelper::Default (void)
 {
@@ -229,170 +241,161 @@ YansTosPhyHelper::SetErrorRateModel (std::string name,
   m_errorRateModel.Set (n7, v7);
 }
 
-Ptr<WifiPhy>
-YansTosPhyHelper::Create (Ptr<TosNode> node, Ptr<WsnTosDevice> device) const
-{
-  Ptr<YansWifiPhy> phy = m_phy.Create<YansWifiPhy> ();
-  Ptr<ErrorRateModel> error = m_errorRateModel.Create<ErrorRateModel> ();
-  phy->SetErrorRateModel (error);
-  phy->SetChannel (m_channel);
-  phy->SetMobility (node);
-  phy->SetDevice (device);
-  return phy;
-}
 
-static void
-PcapSniffTxEvent (
-  Ptr<PcapFileWrapper> file,
-  Ptr<const Packet>   packet,
-  uint16_t            channelFreqMhz,
-  uint16_t            channelNumber,
-  uint32_t            rate,
-  bool                isShortPreamble)
-{
-  uint32_t dlt = file->GetDataLinkType ();
-
-  switch (dlt)
-    {
-    case PcapHelper::DLT_IEEE802_11:
-      file->Write (Simulator::Now (), packet);
-      return;
-    case PcapHelper::DLT_PRISM_HEADER:
-      {
-        NS_FATAL_ERROR ("PcapSniffTxEvent(): DLT_PRISM_HEADER not implemented");
-        return;
-      }
-    case PcapHelper::DLT_IEEE802_11_RADIO:
-      {
-        Ptr<Packet> p = packet->Copy ();
-        RadiotapHeader header;
-        uint8_t frameFlags = RadiotapHeader::FRAME_FLAG_NONE;
-        header.SetTsft (Simulator::Now ().GetMicroSeconds ());
-
-        // Our capture includes the FCS, so we set the flag to say so.
-        frameFlags |= RadiotapHeader::FRAME_FLAG_FCS_INCLUDED;
-
-        if (isShortPreamble)
-          {
-            frameFlags |= RadiotapHeader::FRAME_FLAG_SHORT_PREAMBLE;
-          }
-
-        header.SetFrameFlags (frameFlags);
-        header.SetRate (rate);
-
-        uint16_t channelFlags = 0;
-        switch (rate)
-          {
-          case 2:  // 1Mbps
-          case 4:  // 2Mbps
-          case 10: // 5Mbps
-          case 22: // 11Mbps
-            channelFlags |= RadiotapHeader::CHANNEL_FLAG_CCK;
-            break;
-
-          default:
-            channelFlags |= RadiotapHeader::CHANNEL_FLAG_OFDM;
-            break;
-          }
-
-        if (channelFreqMhz < 2500)
-          {
-            channelFlags |= RadiotapHeader::CHANNEL_FLAG_SPECTRUM_2GHZ;
-          }
-        else
-          {
-            channelFlags |= RadiotapHeader::CHANNEL_FLAG_SPECTRUM_5GHZ;
-          }
-
-        header.SetChannelFrequencyAndFlags (channelFreqMhz, channelFlags);
-
-        p->AddHeader (header);
-        file->Write (Simulator::Now (), p);
-        return;
-      }
-    default:
-      NS_ABORT_MSG ("PcapSniffTxEvent(): Unexpected data link type " << dlt);
-    }
-}
-
-static void
-PcapSniffRxEvent (
-  Ptr<PcapFileWrapper> file,
-  Ptr<const Packet> packet,
-  uint16_t channelFreqMhz,
-  uint16_t channelNumber,
-  uint32_t rate,
-  bool isShortPreamble,
-  double signalDbm,
-  double noiseDbm)
-{
-  uint32_t dlt = file->GetDataLinkType ();
-
-  switch (dlt)
-    {
-    case PcapHelper::DLT_IEEE802_11:
-      file->Write (Simulator::Now (), packet);
-      return;
-    case PcapHelper::DLT_PRISM_HEADER:
-      {
-        NS_FATAL_ERROR ("PcapSniffRxEvent(): DLT_PRISM_HEADER not implemented");
-        return;
-      }
-    case PcapHelper::DLT_IEEE802_11_RADIO:
-      {
-        Ptr<Packet> p = packet->Copy ();
-        RadiotapHeader header;
-        uint8_t frameFlags = RadiotapHeader::FRAME_FLAG_NONE;
-        header.SetTsft (Simulator::Now ().GetMicroSeconds ());
-
-        // Our capture includes the FCS, so we set the flag to say so.
-        frameFlags |= RadiotapHeader::FRAME_FLAG_FCS_INCLUDED;
-
-        if (isShortPreamble)
-          {
-            frameFlags |= RadiotapHeader::FRAME_FLAG_SHORT_PREAMBLE;
-          }
-
-        header.SetFrameFlags (frameFlags);
-        header.SetRate (rate);
-
-        uint16_t channelFlags = 0;
-        switch (rate)
-          {
-          case 2:  // 1Mbps
-          case 4:  // 2Mbps
-          case 10: // 5Mbps
-          case 22: // 11Mbps
-            channelFlags |= RadiotapHeader::CHANNEL_FLAG_CCK;
-            break;
-
-          default:
-            channelFlags |= RadiotapHeader::CHANNEL_FLAG_OFDM;
-            break;
-          }
-
-        if (channelFreqMhz < 2500)
-          {
-            channelFlags |= RadiotapHeader::CHANNEL_FLAG_SPECTRUM_2GHZ;
-          }
-        else
-          {
-            channelFlags |= RadiotapHeader::CHANNEL_FLAG_SPECTRUM_5GHZ;
-          }
-
-        header.SetChannelFrequencyAndFlags (channelFreqMhz, channelFlags);
-
-        header.SetAntennaSignalPower (signalDbm);
-        header.SetAntennaNoisePower (noiseDbm);
-
-        p->AddHeader (header);
-        file->Write (Simulator::Now (), p);
-        return;
-      }
-    default:
-      NS_ABORT_MSG ("PcapSniffRxEvent(): Unexpected data link type " << dlt);
-    }
-}
+//
+//static void
+//PcapSniffTxEvent (
+//  Ptr<PcapFileWrapper> file,
+//  Ptr<const Packet>   packet,
+//  uint16_t            channelFreqMhz,
+//  uint16_t            channelNumber,
+//  uint32_t            rate,
+//  bool                isShortPreamble)
+//{
+//  uint32_t dlt = file->GetDataLinkType ();
+//
+//  switch (dlt)
+//    {
+//    case PcapHelper::DLT_IEEE802_11:
+//      file->Write (Simulator::Now (), packet);
+//      return;
+//    case PcapHelper::DLT_PRISM_HEADER:
+//      {
+//        NS_FATAL_ERROR ("PcapSniffTxEvent(): DLT_PRISM_HEADER not implemented");
+//        return;
+//      }
+//    case PcapHelper::DLT_IEEE802_11_RADIO:
+//      {
+//        Ptr<Packet> p = packet->Copy ();
+//        RadiotapHeader header;
+//        uint8_t frameFlags = RadiotapHeader::FRAME_FLAG_NONE;
+//        header.SetTsft (Simulator::Now ().GetMicroSeconds ());
+//
+//        // Our capture includes the FCS, so we set the flag to say so.
+//        frameFlags |= RadiotapHeader::FRAME_FLAG_FCS_INCLUDED;
+//
+//        if (isShortPreamble)
+//          {
+//            frameFlags |= RadiotapHeader::FRAME_FLAG_SHORT_PREAMBLE;
+//          }
+//
+//        header.SetFrameFlags (frameFlags);
+//        header.SetRate (rate);
+//
+//        uint16_t channelFlags = 0;
+//        switch (rate)
+//          {
+//          case 2:  // 1Mbps
+//          case 4:  // 2Mbps
+//          case 10: // 5Mbps
+//          case 22: // 11Mbps
+//            channelFlags |= RadiotapHeader::CHANNEL_FLAG_CCK;
+//            break;
+//
+//          default:
+//            channelFlags |= RadiotapHeader::CHANNEL_FLAG_OFDM;
+//            break;
+//          }
+//
+//        if (channelFreqMhz < 2500)
+//          {
+//            channelFlags |= RadiotapHeader::CHANNEL_FLAG_SPECTRUM_2GHZ;
+//          }
+//        else
+//          {
+//            channelFlags |= RadiotapHeader::CHANNEL_FLAG_SPECTRUM_5GHZ;
+//          }
+//
+//        header.SetChannelFrequencyAndFlags (channelFreqMhz, channelFlags);
+//
+//        p->AddHeader (header);
+//        file->Write (Simulator::Now (), p);
+//        return;
+//      }
+//    default:
+//      NS_ABORT_MSG ("PcapSniffTxEvent(): Unexpected data link type " << dlt);
+//    }
+//}
+//
+//static void
+//PcapSniffRxEvent (
+//  Ptr<PcapFileWrapper> file,
+//  Ptr<const Packet> packet,
+//  uint16_t channelFreqMhz,
+//  uint16_t channelNumber,
+//  uint32_t rate,
+//  bool isShortPreamble,
+//  double signalDbm,
+//  double noiseDbm)
+//{
+//  uint32_t dlt = file->GetDataLinkType ();
+//
+//  switch (dlt)
+//    {
+//    case PcapHelper::DLT_IEEE802_11:
+//      file->Write (Simulator::Now (), packet);
+//      return;
+//    case PcapHelper::DLT_PRISM_HEADER:
+//      {
+//        NS_FATAL_ERROR ("PcapSniffRxEvent(): DLT_PRISM_HEADER not implemented");
+//        return;
+//      }
+//    case PcapHelper::DLT_IEEE802_11_RADIO:
+//      {
+//        Ptr<Packet> p = packet->Copy ();
+//        RadiotapHeader header;
+//        uint8_t frameFlags = RadiotapHeader::FRAME_FLAG_NONE;
+//        header.SetTsft (Simulator::Now ().GetMicroSeconds ());
+//
+//        // Our capture includes the FCS, so we set the flag to say so.
+//        frameFlags |= RadiotapHeader::FRAME_FLAG_FCS_INCLUDED;
+//
+//        if (isShortPreamble)
+//          {
+//            frameFlags |= RadiotapHeader::FRAME_FLAG_SHORT_PREAMBLE;
+//          }
+//
+//        header.SetFrameFlags (frameFlags);
+//        header.SetRate (rate);
+//
+//        uint16_t channelFlags = 0;
+//        switch (rate)
+//          {
+//          case 2:  // 1Mbps
+//          case 4:  // 2Mbps
+//          case 10: // 5Mbps
+//          case 22: // 11Mbps
+//            channelFlags |= RadiotapHeader::CHANNEL_FLAG_CCK;
+//            break;
+//
+//          default:
+//            channelFlags |= RadiotapHeader::CHANNEL_FLAG_OFDM;
+//            break;
+//          }
+//
+//        if (channelFreqMhz < 2500)
+//          {
+//            channelFlags |= RadiotapHeader::CHANNEL_FLAG_SPECTRUM_2GHZ;
+//          }
+//        else
+//          {
+//            channelFlags |= RadiotapHeader::CHANNEL_FLAG_SPECTRUM_5GHZ;
+//          }
+//
+//        header.SetChannelFrequencyAndFlags (channelFreqMhz, channelFlags);
+//
+//        header.SetAntennaSignalPower (signalDbm);
+//        header.SetAntennaNoisePower (noiseDbm);
+//
+//        p->AddHeader (header);
+//        file->Write (Simulator::Now (), p);
+//        return;
+//      }
+//    default:
+//      NS_ABORT_MSG ("PcapSniffRxEvent(): Unexpected data link type " << dlt);
+//      return;
+//    }
+//}
 
 void
 YansTosPhyHelper::SetPcapDataLinkType (enum SupportedPcapDataLinkTypes dlt)
@@ -410,6 +413,7 @@ YansTosPhyHelper::SetPcapDataLinkType (enum SupportedPcapDataLinkTypes dlt)
       return;
     default:
       NS_ABORT_MSG ("YansTosPhyHelper::SetPcapFormat(): Unexpected format");
+      return;
     }
 }
 
@@ -421,15 +425,15 @@ YansTosPhyHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, boo
   // that are wandering through all of devices on perhaps all of the nodes in
   // the system.  We can only deal with devices of type WifiNetDevice.
   //
-  Ptr<WifiWsnDevice> device = nd->GetObject<WifiWsnDevice> ();
+  Ptr<NetDevice> device = nd->GetObject<NetDevice> ();
   if (device == 0)
     {
       NS_LOG_INFO ("YansWifiHelper::EnablePcapInternal(): Device " << &device << " not of type ns3::WifiNetDevice");
       return;
     }
-
-  Ptr<WifiPhy> phy = device->GetPhy ();
-  NS_ABORT_MSG_IF (phy == 0, "YansTosPhyHelper::EnablePcapInternal(): Phy layer in WifiNetDevice must be set");
+//
+//  Ptr<WifiPhy> phy = device->GetPhy ();
+//  NS_ABORT_MSG_IF (phy == 0, "YansTosPhyHelper::EnablePcapInternal(): Phy layer in WifiNetDevice must be set");
 
   PcapHelper pcapHelper;
 
@@ -443,10 +447,10 @@ YansTosPhyHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, boo
       filename = pcapHelper.GetFilenameFromDevice (prefix, device);
     }
 
-  Ptr<PcapFileWrapper> file = pcapHelper.CreateFile (filename, std::ios::out, m_pcapDlt);
-
-  phy->TraceConnectWithoutContext ("PromiscSnifferTx", MakeBoundCallback (&PcapSniffTxEvent, file));
-  phy->TraceConnectWithoutContext ("PromiscSnifferRx", MakeBoundCallback (&PcapSniffRxEvent, file));
+  //Ptr<PcapFileWrapper> file = pcapHelper.CreateFile (filename, std::ios::out, m_pcapDlt);
+//
+//  phy->TraceConnectWithoutContext ("PromiscSnifferTx", MakeBoundCallback (&PcapSniffTxEvent, file));
+//  phy->TraceConnectWithoutContext ("PromiscSnifferRx", MakeBoundCallback (&PcapSniffRxEvent, file));
 }
 
 void
@@ -461,7 +465,7 @@ YansTosPhyHelper::EnableAsciiInternal (
   // that are wandering through all of devices on perhaps all of the nodes in
   // the system.  We can only deal with devices of type CsmaNetDevice.
   //
-  Ptr<WifiWsnDevice> device = nd->GetObject<WifiWsnDevice> ();
+  Ptr<NetDevice> device = nd->GetObject<NetDevice> ();
   if (device == 0)
     {
       NS_LOG_INFO ("YansWifiHelper::EnableAsciiInternal(): Device " << device << " not of type ns3::WifiNetDevice");

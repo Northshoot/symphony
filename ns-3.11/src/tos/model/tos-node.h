@@ -8,25 +8,18 @@
 #ifndef TOSNODE_H_
 #define TOSNODE_H_
 #include <vector>
-#include <stdint.h>
-#include <inttypes.h>
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <stdlib.h>
-#include <dlfcn.h>
-#include <link.h>
 
 #include "ns3/nstime.h"
 #include "ns3/simulator.h"
 #include "ns3/event-id.h"
 #include "ns3/callback.h"
 #include "ns3/node.h"
+#include "ns3/ptr.h"
 
 #include "simu-clock.h"
 #include "ns3-to-tos-proxy.h"
 #include "tos-to-ns3-proxy.h"
-#include "wsn-tos-device.h"
+#include "tos-net-device.h"
 
 
 //typedef int(LibToTosProxy::*fucnpoint)(int);
@@ -120,9 +113,8 @@ protected:
 
 private:
 	 void Construct (void);
-
+	uint32_t    m_id;         // Node id for this node
 	SimuClock *	simuclock;
-	uint32_t    node_id;         	// Node id for this node
 	uint32_t    m_sid;        	// System id for this node
 	Time        m_bootTime; 	//boot time of the node
 	Time        m_shutDownTime;	//shut down time of the node
@@ -132,7 +124,7 @@ private:
 	EventId		m_shutdown_event;//shut down event
 	//reference to the
 	Ptr<Node>	m_node;
-	std::vector<Ptr<TosNetDevice> > m_devices;
+	std::vector<Ptr <TosNetDevice> > m_devices;
 	bool m_started;
 
 	/**

@@ -20,8 +20,10 @@
 #ifndef YANS_TOS_HELPER_H
 #define YANS_TOS_HELPER_H
 
-#include "wsn-helper.h"
-#include "ns3/wifi-helper.h"
+#include "tos-helper.h"
+#include "ns3/tos-net-device.h"
+
+
 #include "ns3/trace-helper.h"
 #include "ns3/yans-wifi-channel.h"
 #include "ns3/deprecated.h"
@@ -240,7 +242,8 @@ private:
    *
    * This method implements the pure virtual method defined in \ref ns3::WifiPhyHelper.
    */
-  virtual Ptr<WifiPhy> Create (Ptr<TosNode> node, Ptr<WsnTosDevice> device) const;
+  virtual Ptr<WifiPhy> Create (Ptr<Node> node, Ptr<NetDevice> device) const;
+  virtual Ptr<WifiPhy> Create (Ptr<TosNode> node, Ptr<TosNetDevice> device) const;
 
   /**
    * @brief Enable pcap output the indicated net device.
