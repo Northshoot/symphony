@@ -196,7 +196,7 @@ TosNode::AddDevice(Ptr<TosNetDevice> device)
 {
 	  uint32_t index = m_devices.size ();
 	  m_devices.push_back (device);
-	  device->SetNode (this);
+	 // device->SetNode (this);
 //    	  device->SetIfIndex (index);
 //    	  device->SetReceiveCallback (MakeCallback (&Node::NonPromiscReceiveFromDevice, this));
 	  //TosNetDevice is started explicitly from tinyos code

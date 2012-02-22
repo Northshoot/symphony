@@ -9,21 +9,24 @@
 #define TOS_NET_DEVICE_H_
 
 
-#include "ns3/packet.h"
+#include "ns3/callback.h"
+#include "ns3/object.h"
 #include "ns3/ptr.h"
 #include "ns3/traced-callback.h"
 #include "ns3/mac48-address.h"
+#include "ns3/ns3includes.h"
 
-#include "tos-node.h"
-#include "tos-mac-low.h"
 
 #include <string>
 
 namespace ns3 {
 
+class TosNode;
+class Packet;
+class Channel;
 class WifiChannel;
 class WifiPhy;
-class WifiMac;
+class TosMacLow;
 
 class TosNetDevice: public Object {
 public:
@@ -53,7 +56,7 @@ public:
   Ptr<WifiPhy> GetPhy (void) const;
   
 
-   Ptr<Channel> GetChannel (void) const;
+   virtual Ptr<Channel> GetChannel (void) const;
    void SetAddress (Mac48Address address);
    Mac48Address GetAddress (void) const;
    void SetMtu (const uint16_t mtu);

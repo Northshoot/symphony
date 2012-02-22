@@ -88,10 +88,7 @@ typedef struct message_t {
 
 #endif
 
-typedef struct {
-	int x;
-	int y;
-} Foo;
+
 
 
 

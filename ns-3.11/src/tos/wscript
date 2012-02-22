@@ -38,7 +38,6 @@ def build(bld):
     			  'model/gateway.h',
     			  'model/ns3includes.h',
     			  'model/tos-mac-low.h',
-    			  #'model/tosmessage.h',
     			  'helper/tos-node-container.h',
     			  'model/tos-node-list.h',
     			  'model/tos-net-device.h',

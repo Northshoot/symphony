@@ -330,7 +330,7 @@ TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callb
 
 void
 TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
-	  //NS_LOG_FUNCTION (this << packet << hdr );
+	  NS_LOG_FUNCTION (this << packet << hdr );
 	  /* m_currentPacket is not NULL because someone started
 	   * a transmission and was interrupted before one of:
 	   *   - ctsTimeout

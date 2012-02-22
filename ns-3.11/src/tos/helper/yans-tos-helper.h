@@ -21,8 +21,6 @@
 #define YANS_TOS_HELPER_H
 
 #include "tos-helper.h"
-#include "ns3/tos-net-device.h"
-
 
 #include "ns3/trace-helper.h"
 #include "ns3/yans-wifi-channel.h"
@@ -242,7 +240,7 @@ private:
    *
    * This method implements the pure virtual method defined in \ref ns3::WifiPhyHelper.
    */
-  virtual Ptr<WifiPhy> Create (Ptr<Node> node, Ptr<NetDevice> device) const;
+
   virtual Ptr<WifiPhy> Create (Ptr<TosNode> node, Ptr<TosNetDevice> device) const;
 
   /**

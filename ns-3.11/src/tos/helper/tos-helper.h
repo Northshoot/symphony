@@ -14,7 +14,7 @@
 #include "ns3/wifi-phy-standard.h"
 #include "ns3/trace-helper.h"
 
-#include "yans-tos-helper.h"
+
 #include "ns3/tos-net-device.h"
 #include "tos-node-container.h"
 #include "tos-net-device-container.h"
@@ -39,7 +39,7 @@ public:
    * Subclasses must implement this method to allow the ns3::WsnHelper class
    * to create PHY objects from ns3::WsnHelper::Install.
    */
-   Ptr<WifiPhy> Create (Ptr<TosNode> node, Ptr<TosNetDevice> device);
+  virtual Ptr<WifiPhy> Create (Ptr<TosNode> node, Ptr<TosNetDevice> device) const = 0;
 
 };
 

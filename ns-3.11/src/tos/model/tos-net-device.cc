@@ -8,18 +8,17 @@
 #include "ns3/log.h"
 #include "ns3/wifi-mac.h"
 #include "ns3/wifi-phy.h"
-#include "ns3/wifi-remote-station-manager.h"
 #include "ns3/wifi-channel.h"
-#include "ns3/llc-snap-header.h"
 #include "ns3/packet.h"
 #include "ns3/uinteger.h"
 #include "ns3/pointer.h"
 #include "ns3/ptr.h"
-#include "ns3/node.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/log.h"
 
-#include "tos-net-device.h"
+#include "ns3/tos-net-device.h"
+#include "ns3/tos-node.h"
+#include "ns3/tos-mac-low.h"
 
 NS_LOG_COMPONENT_DEFINE("TosNetDevice");
 
@@ -38,10 +37,10 @@ TypeId TosNetDevice::GetTypeId(void) {
 			.SetParent<Object>()
 			.AddConstructor<TosNetDevice>()
 			.AddAttribute("Mtu","The MAC-level Maximum Transmission Unit",
-					UintegerValue(MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH),
+					UintegerValue(MAX_MSDU_SIZE - 8),
 					MakeUintegerAccessor(&TosNetDevice::SetMtu,
 							&TosNetDevice::GetMtu),
-					MakeUintegerChecker<uint16_t>(1,MAX_MSDU_SIZE - LLC_SNAP_HEADER_LENGTH)).AddAttribute(
+					MakeUintegerChecker<uint16_t>(1,MAX_MSDU_SIZE - 8)).AddAttribute(
 											"Channel", "The channel attached to this device",
 					PointerValue(),
 				    MakePointerAccessor(&TosNetDevice::DoGetChannel),
