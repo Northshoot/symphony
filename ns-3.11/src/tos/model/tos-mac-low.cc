@@ -364,19 +364,20 @@ TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 	  //CancelAllEvents ();
 	  //m_listener = listener;
 //	  m_txParams = params;
-	std::cerr <<m_phy->IsStateIdle ()<< std::endl;
-	  NS_ASSERT (m_phy->IsStateIdle ());
-	  std::cerr <<"TosMacLow::TransmitData about to transmit" << std::endl;
-	  NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
-	                ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
+	//std::cerr <<m_phy->IsStateIdle ()<< std::endl;
+
+	  //NS_ASSERT (m_phy->IsStateIdle ());
+	  //std::cerr <<"TosMacLow::TransmitData about to transmit" << std::endl;
+	  //NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
+	               // ", to=" << m_currentHdr.GetAddr1 () );
 	  //Need DataMode
 	  WifiMode dataTxMode = GetDataTxMode ();
-	  m_currentHdr.SetDuration (Seconds (0.1));
+	  m_currentHdr.SetDuration (Seconds (0.0002));
 
 	  m_currentPacket->AddHeader (m_currentHdr);
 //	  WifiMacTrailer fcs;
 //	  m_currentPacket->AddTrailer (fcs);
-
+	  NS_LOG_FUNCTION(this);
 	  ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
 	  m_currentPacket = 0;
 }

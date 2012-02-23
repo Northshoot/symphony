@@ -30,8 +30,8 @@
 
 using namespace std;
 NS_LOG_COMPONENT_DEFINE("TosNode");
-//#undef NS_LOG_APPEND_CONTEXT
-//#define NS_LOG_APPEND_CONTEXT std::clog << "[tos node=" << m_self << "] "
+#undef NS_LOG_APPEND_CONTEXT
+#define NS_LOG_APPEND_CONTEXT std::clog << "[TosNode=" << m_id << "] "
 
 namespace ns3 {
 
@@ -74,7 +74,7 @@ TosNode::TosNode(uint32_t node_id, Time bootTime)
 TosNode::TosNode(uint32_t node_id, Time bootTime, const char *lib)
 :m_id(node_id), m_bootTime(bootTime), m_libname(lib)
 {
-	cout << "Node created " << node_id << " " << Simulator::Now().GetMilliSeconds() << " ms" << endl;
+	NS_LOG_DEBUG(this<< Simulator::Now().GetMilliSeconds());
 	Construct();
 }
 
@@ -165,7 +165,7 @@ void TosNode::DoStart()
 	//	DoStart();
 	//	Object::DoStart();
 	m_libname = "/home/lauril/dev/symphony/ns-3.11/build/debug/libtos.so";
-	cout << "TosNode::DoStart()" << endl;
+
 	//changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
 	//for eclipse debug full path is needed for the lib
 	//TODO: add script for copying libtos.so to build/debug
@@ -182,6 +182,7 @@ void TosNode::DoStart()
 		run_next = (tosfunc)(getFunc("runNextEventExternal"));
 		tostons->setDownlink(getFunc("receivePkt"));
 	}
+	NS_LOG_DEBUG(this<<m_libname);
 	Object::DoStart();
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
 }

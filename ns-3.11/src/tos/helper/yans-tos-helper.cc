@@ -35,7 +35,9 @@
 #include "ns3/tos-net-device.h"
 #include "yans-tos-helper.h"
 
-NS_LOG_COMPONENT_DEFINE ("YansTosHelper");
+NS_LOG_COMPONENT_DEFINE ("YansTosPhyHelper");
+#undef NS_LOG_APPEND_CONTEXT
+#define NS_LOG_APPEND_CONTEXT std::clog << "[YTH = ] "
 
 namespace ns3 {
 
@@ -186,6 +188,8 @@ YansTosPhyHelper::Create (Ptr<TosNode> node, Ptr<TosNetDevice> device) const
 {
   Ptr<YansWifiPhy> phy = m_phy.Create<YansWifiPhy> ();
   Ptr<ErrorRateModel> error = m_errorRateModel.Create<ErrorRateModel> ();
+  NS_LOG_FUNCTION(this <<" phy: "<<phy<<" ErrorRate: "<<error<<" channel: " <<m_channel <<
+		  " node: " << node << " device: "<<device);
   phy->SetErrorRateModel (error);
   phy->SetChannel (m_channel);
   phy->SetMobility (node);

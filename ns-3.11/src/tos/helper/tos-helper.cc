@@ -80,10 +80,14 @@ TosHelper::EnableLogComponents(void)
 	  LogComponentEnable ("WifiPhyStateHelper", LOG_LEVEL_ALL);
 	  LogComponentEnable ("WifiPhy", LOG_LEVEL_ALL);
 
+	  LogComponentEnable ("Packet", LOG_LEVEL_ALL);
+
 
 	  LogComponentEnable ("TosMacLow", LOG_LEVEL_ALL);
 	  LogComponentEnable ("TosHelper", LOG_LEVEL_ALL);
-	  LogComponentEnable ("WsnTosDevice", LOG_LEVEL_ALL);
+	  LogComponentEnable ("YansTosPhyHelper", LOG_LEVEL_ALL);
+	  LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
+	  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
 
 
 	  LogComponentEnable ("YansErrorRateModel", LOG_LEVEL_ALL);
