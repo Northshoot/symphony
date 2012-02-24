@@ -331,22 +331,9 @@ TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callb
 void
 TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 	  NS_LOG_FUNCTION (this << packet << hdr );
-	  /* m_currentPacket is not NULL because someone started
-	   * a transmission and was interrupted before one of:
-	   *   - ctsTimeout
-	   *   - sendDataAfterCTS
-	   * expired. This means that one of these timers is still
-	   * running. They are all cancelled below anyway by the
-	   * call to CancelAllEvents (because of at least one
-	   * of these two timer) which will trigger a call to the
-	   * previous listener's cancel method.
-	   *
-	   * This typically happens because the high-priority
-	   * QapScheduler has taken access to the channel from
-	   * one of the Edca of the QAP.
-	   */
 
 
+	  m_currentPacket = packet->Copy();
 //	hdr.SetTypeData ();
 //	hdr.SetAddr1 ("00:00:00:00:00:01");
 //	hdr.SetAddr2 ("ff:ff:ff:ff:ff:ff");

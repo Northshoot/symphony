@@ -63,7 +63,7 @@ TosToNs3Proxy::msgToChannel(ns3pack* hdr, void * msg){
     whdr.SetNoRetry ();
     ns3::Ptr<ns3::Packet> pkt = ns3::Create<ns3::Packet> (ns3::Packet(reinterpret_cast<uint8_t const
       		*>("hello"),5));
-	mac->TransmitData(pkt->Copy(), &whdr);
+	mac->TransmitData(pkt, &whdr);
 
 }
 void

@@ -182,7 +182,7 @@ void TosNode::DoStart()
 		run_next = (tosfunc)(getFunc("runNextEventExternal"));
 		tostons->setDownlink(getFunc("receivePkt"));
 	}
-	NS_LOG_DEBUG(this<<m_libname);
+	NS_LOG_DEBUG(this<<" " << m_libname);
 	Object::DoStart();
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
 }

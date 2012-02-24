@@ -1,0 +1,75 @@
+Waf: Entering directory `/home/lauril/dev/symphony/ns-3.11/build'
+[881/913] cxx: src/tos/model/tos-node.cc -> build/debug/src/tos/model/tos-node_1.o
+[911/913] cxx_link: build/debug/src/tos/model/tos-to-ns3-proxy_1.o build/debug/src/tos/model/tos-node_1.o build/debug/src/tos/model/simu-clock_1.o build/debug/src/tos/model/ns3-to-tos-proxy_1.o build/debug/src/tos/model/tos-packet_1.o build/debug/src/tos/model/tos-node-list_1.o build/debug/src/tos/model/tos-mac-low_1.o build/debug/src/tos/model/tos-net-device_1.o build/debug/src/tos/helper/tos-node-container_1.o build/debug/src/tos/helper/tos-helper_1.o build/debug/src/tos/helper/yans-tos-helper_1.o build/debug/src/tos/helper/tos-net-device-container_1.o -> build/debug/libns3-tos.so
+[912/913] cxx_link: build/debug/scratch/main_4.o -> build/debug/scratch/main
+Waf: Leaving directory `/home/lauril/dev/symphony/ns-3.11/build'
+'build' finished successfully (0.884s)
+[tos mac=00:00:00:00:00:00] TosMacLow:TosMacLow(0x1922c10)
+WifiPhy:WifiPhy(0x1922e20)
+YansWifiPhy:YansWifiPhy(0x1922e20)
+WifiPhyStateHelper:WifiPhyStateHelper(0x1923000)
+YansWifiPhy:SetEdThreshold(0x1922e20, -96)
+YansWifiPhy:SetCcaMode1Threshold(0x1922e20, -99)
+YansWifiPhy:SetTxGain(0x1922e20, 1)
+YansWifiPhy:SetRxGain(0x1922e20, 0)
+YansWifiPhy:SetTxPowerEnd(0x1922e20, 16.0206)
+YansWifiPhy:SetTxPowerStart(0x1922e20, 16.0206)
+YansWifiPhy:SetRxNoiseFigure(0x1922e20, 7)
+start at channel 1
+[YTH = ] YansTosPhyHelper:Create(0x7fff7d63ce00,  phy: , 0x1922e20,  ErrorRate: , 0x1923100,  channel: , 0x19229e0,  node: , 0x19223e0,  device: , 0x19221d0)
+YansWifiPhy:ConfigureStandard(0x1922e20, 1)
+YansWifiPhy:Configure80211b(0x1922e20)
+node=0x19223e0, mob=0
+[tos mac=00:00:00:00:00:00] TosMacLow:TosMacLow(0x1923260)
+WifiPhy:WifiPhy(0x1923470)
+YansWifiPhy:YansWifiPhy(0x1923470)
+WifiPhyStateHelper:WifiPhyStateHelper(0x1923650)
+YansWifiPhy:SetEdThreshold(0x1923470, -96)
+YansWifiPhy:SetCcaMode1Threshold(0x1923470, -99)
+YansWifiPhy:SetTxGain(0x1923470, 1)
+YansWifiPhy:SetRxGain(0x1923470, 0)
+YansWifiPhy:SetTxPowerEnd(0x1923470, 16.0206)
+YansWifiPhy:SetTxPowerStart(0x1923470, 16.0206)
+YansWifiPhy:SetRxNoiseFigure(0x1923470, 7)
+start at channel 1
+[YTH = ] YansTosPhyHelper:Create(0x7fff7d63ce00,  phy: , 0x1923470,  ErrorRate: , 0x1923750,  channel: , 0x19229e0,  node: , 0x1922750,  device: , 0x19231d0)
+YansWifiPhy:ConfigureStandard(0x1923470, 1)
+YansWifiPhy:Configure80211b(0x1923470)
+node=0x1922750, mob=0
+uniq: 0
+gateway call 0 arg 0
+[TosNode=0] 0x19223e0 /home/lauril/dev/symphony/ns-3.11/build/debug/libtos.so
+LibToTosProxy called: 0 time 0
+FROM toslib: gateway(proxy,0,id_this_lib): 0
+uniq: 1
+gateway call 0 arg 1
+[TosNode=1] 0x1922750 /home/lauril/dev/symphony/ns-3.11/build/debug/libtos.so
+LibToTosProxy called: 1 time 0
+FROM toslib: gateway(proxy,0,id_this_lib): 0
+BootBooted 
+0 ms
+FROM toslib: sim_main_start_mote
+Scheduler.init()
+App: booted
+command error_t SplitControl.start()BootBooted 
+0 ms
+FROM toslib: sim_main_start_mote
+Scheduler.init()
+App: booted
+command error_t SplitControl.start()App: AMControl.startDone(error_t err) 
+AMControl.startDone: about to send
+src: 1 setting dest: 220
+NS3MsgGatewayP.Send.send: size of sent msg 14
+header dest: 220
+header src: 1
+header dest: 220
+header src: 1
+[tos mac=ff:ff:ff:ff:ff:ff] TosMacLow:TransmitData(0x19067f0, 0x19242a0, 0x7fff7d63c870)
+Command ['/home/lauril/dev/symphony/ns-3.11/build/debug/scratch/main'] terminated with signal SIGSEGV. Run it under a debugger to get more information (./waf --run <program> --command-template="gdb --args %s <args>").
+
+Modules built:
+bridge                    config-store              core                     
+internet                  mobility                  mpi                      
+network                   propagation               tos                      
+wifi                     
+
