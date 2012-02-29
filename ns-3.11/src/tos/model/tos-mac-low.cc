@@ -41,7 +41,7 @@
 #include "ns3/packet.h"
 #include "ns3/nstime.h"
 #include "ns3/block-ack-cache.h"
-#include "ns3/mac-low.h"
+#include "ns3/wifi-mac-trailer.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosMacLow");
 
@@ -362,9 +362,11 @@ TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 	  m_currentHdr.SetDuration (Seconds (0.0002));
 
 	  m_currentPacket->AddHeader (m_currentHdr);
-//	  WifiMacTrailer fcs;
-//	  m_currentPacket->AddTrailer (fcs);
+
+	  WifiMacTrailer fcs;
+	  m_currentPacket->AddTrailer (fcs);
 	  NS_LOG_FUNCTION(this);
+	  NS_LOG_DEBUG("Forwarding Down");
 	  ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
 	  m_currentPacket = 0;
 }

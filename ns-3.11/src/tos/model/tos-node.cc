@@ -30,8 +30,6 @@
 
 using namespace std;
 NS_LOG_COMPONENT_DEFINE("TosNode");
-#undef NS_LOG_APPEND_CONTEXT
-#define NS_LOG_APPEND_CONTEXT std::clog << "[TosNode=" << m_id << "] "
 
 namespace ns3 {
 
@@ -74,7 +72,6 @@ TosNode::TosNode(uint32_t node_id, Time bootTime)
 TosNode::TosNode(uint32_t node_id, Time bootTime, const char *lib)
 :m_id(node_id), m_bootTime(bootTime), m_libname(lib)
 {
-	NS_LOG_DEBUG(this<< Simulator::Now().GetMilliSeconds());
 	Construct();
 }
 
@@ -101,8 +98,7 @@ void TosNode::ShutDownNode(Time ttl)
 void TosNode::BootBooted(void)
 {
 	simuclock->Start();
-	cout << "BootBooted " << endl;
-	cout << simuclock->getTimeNow() << " ms" << endl;
+	NS_LOG_FUNCTION(this << " " <<m_id << " " << simuclock->getTimeNow() << " ms" );
 	//tickTime(100);
 	//cout<<"booted node id " << node_id <<" at " <<Simulator::Now().GetMilliSeconds() <<endl;
 	nstotos->start_mote(m_id);
@@ -182,7 +178,7 @@ void TosNode::DoStart()
 		run_next = (tosfunc)(getFunc("runNextEventExternal"));
 		tostons->setDownlink(getFunc("receivePkt"));
 	}
-	NS_LOG_DEBUG(this<<" " << m_libname);
+	NS_LOG_FUNCTION(this<<" " << m_libname);
 	Object::DoStart();
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
 }

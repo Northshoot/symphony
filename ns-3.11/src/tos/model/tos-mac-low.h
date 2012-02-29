@@ -48,6 +48,7 @@ namespace ns3 {
 class WifiPhy;
 class WifiMac;
 
+
 class MacLowTransmissionParameters;
 /**
  * \ingroup wifi

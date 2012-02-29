@@ -60,50 +60,62 @@ TosNetDevice::~TosNetDevice() {
 	// TODO Auto-generated destructor stub
 }
 
-void TosNetDevice::SetMac(Ptr<TosMacLow> mac) {
+void
+TosNetDevice::SetMac(Ptr<TosMacLow> mac) {
 	m_mac = mac;
 }
 
-void TosNetDevice::SetPhy(Ptr<WifiPhy> phy) {
+void
+TosNetDevice::SetPhy(Ptr<WifiPhy> phy) {
 	m_phy = phy;
 }
 
-Ptr<TosMacLow> TosNetDevice::GetMac(void) const {
+Ptr<TosMacLow>
+TosNetDevice::GetMac(void) const {
 	return m_mac;
 }
 
-Ptr<WifiPhy> TosNetDevice::GetPhy(void) const {
+Ptr<WifiPhy>
+TosNetDevice::GetPhy(void) const {
 	return m_phy;
 }
 
-Ptr<Channel> TosNetDevice::GetChannel(void) const {
+Ptr<Channel>
+TosNetDevice::GetChannel(void) const {
 	return m_phy->GetChannel();
 }
 
-void TosNetDevice::SetAddress(Mac48Address address) {
+void
+TosNetDevice::SetAddress(Mac48Address address) {
 	m_mac->SetAddress(address);
 }
 
-Mac48Address TosNetDevice::GetAddress(void) const {
+Mac48Address
+TosNetDevice::GetAddress(void) const {
 	return m_mac->GetAddress();
 }
 
-void TosNetDevice::SetMtu(const uint16_t mtu) {
+void
+TosNetDevice::SetMtu(const uint16_t mtu) {
 	m_mtu = mtu;
 }
 
-uint16_t TosNetDevice::GetMtu(void) const {
+uint16_t
+TosNetDevice::GetMtu(void) const {
 	return m_mtu;
 }
 
-bool TosNetDevice::IsLinkUp(void) const {
+bool
+TosNetDevice::IsLinkUp(void) const {
 	return true;
 }
 
-void TosNetDevice::AddLinkChangeCallback(Callback<void> callback) {
+void
+TosNetDevice::AddLinkChangeCallback(Callback<void> callback) {
 }
 
-bool TosNetDevice::IsBroadcast(void) const {
+bool
+TosNetDevice::IsBroadcast(void) const {
 	return true;
 }
 
@@ -112,11 +124,13 @@ bool TosNetDevice::IsBroadcast(void) const {
 //    	return
 //    }
 
-bool TosNetDevice::IsMulticast(void) const {
+bool
+TosNetDevice::IsMulticast(void) const {
 	return true;
 }
 
-Ptr<TosNode> TosNetDevice::GetNode(void) const {
+Ptr<TosNode>
+TosNetDevice::GetNode(void) const {
 	return m_node;
 }
 
@@ -125,72 +139,92 @@ TosNetDevice::SetNode(Ptr<TosNode> node) {
 	m_node = node;
 }
 
-uint8_t TosNetDevice::DeviceTurnOff() {
+uint8_t
+TosNetDevice::DeviceTurnOff() {
 	return 0;
 }
 
-uint8_t TosNetDevice::DeviceStandby() {
+uint8_t
+TosNetDevice::DeviceStandby() {
 	return 0;
 }
 
-uint8_t TosNetDevice::DeviceTurnOn() {
+uint8_t
+TosNetDevice::DeviceTurnOn() {
 	return 0;
 }
 
-uint8_t TosNetDevice::DeviceSetChannel(uint8_t channel) {
+uint8_t
+TosNetDevice::DeviceSetChannel(uint8_t channel) {
 	return 0;
 }
 
-void TosNetDevice::done() {
+void
+TosNetDevice::done() {
 }
 
-uint8_t TosNetDevice::DeviceGetChannel() {
+uint8_t
+TosNetDevice::DeviceGetChannel() {
 	return 0;
 }
 
-uint8_t TosNetDevice::DeviceSend(message_t *msg) {
+uint8_t
+TosNetDevice::DeviceSend(message_t *msg) {
 	return 0;
 }
 
-void TosNetDevice::DeviceendDone(message_t *msg, uint8_t error) {
+void
+TosNetDevice::DeviceSendDone(message_t *msg, uint8_t error) {
+
 }
 
-void TosNetDevice::DeviceCancel(message_t *msg) {
+void
+TosNetDevice::DeviceCancel(message_t *msg) {
 }
 
-bool TosNetDevice::DeviceRXHeader(message_t *msg) {
+bool
+TosNetDevice::DeviceRXHeader(message_t *msg) {
 	return true;
 }
 
-message_t *TosNetDevice::DeviceReceive(message_t *msg) {
+message_t *
+TosNetDevice::DeviceReceive(message_t *msg) {
 	return m_msg;
 }
 
-void TosNetDevice::DoDispose(void) {
+void
+TosNetDevice::DoDispose(void) {
 }
 
-void TosNetDevice::DoStart(void) {
+void
+TosNetDevice::DoStart(void) {
 }
-bool TosNetDevice::Send(Ptr<Packet> packet, const Address& dest) {
+bool
+TosNetDevice::Send(Ptr<Packet> packet, const Address& dest) {
 	//TODO: convert address
 	//m_mac->TransmitData();
 	return true;
 }
 
-void TosNetDevice::ForwardUp(Ptr<Packet> packet, Mac48Address from,
+void
+TosNetDevice::ForwardUp(Ptr<Packet> packet, Mac48Address from,
 		Mac48Address to) {
 }
 
-void TosNetDevice::LinkUp(void) {
+void
+TosNetDevice::LinkUp(void) {
 }
 
-void TosNetDevice::LinkDown(void) {
+void
+TosNetDevice::LinkDown(void) {
 }
 
-void TosNetDevice::Setup(void) {
+void
+TosNetDevice::Setup(void) {
 }
 
-Ptr<WifiChannel> TosNetDevice::DoGetChannel(void) const {
+Ptr<WifiChannel>
+TosNetDevice::DoGetChannel(void) const {
 	return m_phy->GetChannel();
 }
 

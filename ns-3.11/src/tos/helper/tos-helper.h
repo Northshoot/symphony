@@ -72,6 +72,8 @@ public:
    */
   static void EnableLogComponents (void);
 
+  static void EnableLogComponentsAll (LogLevel level);
+
 
 
 private:

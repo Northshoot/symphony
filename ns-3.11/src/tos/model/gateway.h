@@ -11,6 +11,7 @@
 #include "tos-to-ns3-proxy.h"
 #include "ns3includes.h"
 #include "tos-packet.h"
+#include "ns3/log.h"
 /**
  * This function is used by all objects.
  * C does not care about void * tthis

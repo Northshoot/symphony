@@ -90,7 +90,7 @@ public:
   //implementation of RadioSend
 	uint8_t DeviceSend(message_t* msg);
 	//callback
-	void DeviceendDone(message_t* msg, uint8_t error);
+	void DeviceSendDone(message_t* msg, uint8_t error);
 	void DeviceCancel(message_t* msg);
   //implementation of BareReceive
 	//callback

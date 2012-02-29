@@ -79,6 +79,7 @@ def build(bld):
     headers = bld.new_task_gen('ns3header')
     headers.module = 'wifi'
     headers.source = [
+        'model/wifi-mac-trailer.h',
         'model/wifi-information-element.h',
         'model/wifi-information-element-vector.h',
         'model/wifi-net-device.h',

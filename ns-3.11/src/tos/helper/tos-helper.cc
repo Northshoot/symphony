@@ -74,7 +74,6 @@ TosHelper::EnableLogComponents(void)
 	  LogComponentEnable ("InterferenceHelper", LOG_LEVEL_ALL);
 
 	  LogComponentEnable ("NistErrorRateModel", LOG_LEVEL_ALL);
-	  LogComponentEnable ("OnoeWifiRemoteStation", LOG_LEVEL_ALL);
 	  LogComponentEnable ("PropagationLossModel", LOG_LEVEL_ALL);
 	  LogComponentEnable ("WifiChannel", LOG_LEVEL_ALL);
 	  LogComponentEnable ("WifiPhyStateHelper", LOG_LEVEL_ALL);
@@ -89,12 +88,17 @@ TosHelper::EnableLogComponents(void)
 	  LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
 	  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
 
+	  LogComponentEnable("MobilityHelper", LOG_LEVEL_ALL);
+
 
 	  LogComponentEnable ("YansErrorRateModel", LOG_LEVEL_ALL);
 	  LogComponentEnable ("YansWifiChannel", LOG_LEVEL_ALL);
 	  LogComponentEnable ("YansWifiPhy", LOG_LEVEL_ALL);
 }
 
-
+void
+TosHelper::EnableLogComponentsAll (LogLevel level){
+	LogComponentEnableAll(level);
+}
 
 } /* namespace ns3 */

@@ -127,7 +127,7 @@ int main (int argc, char *argv[])
   WifiHelper wifi;
 //  if (verbose)
 //    {
-      wifi.EnableLogComponents ();  // Turn on all Wifi logging
+  	  LogComponentEnableAll (LOG_LEVEL_ALL);  // Turn on all Wifi logging
 //    }
   wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
 
