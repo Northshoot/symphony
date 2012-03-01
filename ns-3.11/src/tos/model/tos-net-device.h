@@ -116,7 +116,7 @@ private:
 
   Ptr<TosNode> m_node;
   Ptr<WifiPhy> m_phy;
-  Ptr<TosMacLow> m_mac;
+  Ptr<TosMacLow> m_tos_mac;
   message_t * m_msg;
 
 

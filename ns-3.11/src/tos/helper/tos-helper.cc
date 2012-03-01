@@ -44,17 +44,19 @@ TosHelper::Default(void)
 TosNetDeviceContainer
 TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 {
+	NS_LOG_FUNCTION_NOARGS();
 	TosNetDeviceContainer devices;
 	  for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
 	    {
 	      Ptr<TosNode> node = *i;
 	      Ptr<TosNetDevice> device = CreateObject<TosNetDevice> ();
-	      Ptr<TosMacLow> mac = new TosMacLow();
+	      Ptr<TosMacLow> mac = CreateObject<TosMacLow>();
 	      Ptr<WifiPhy> phy = phyHelper.Create (node, device);
 	      mac->SetAddress (Mac48Address::Allocate ());
 	      phy->ConfigureStandard (m_standard);
-	      device->SetMac (mac);
+	      device->SetNode(node);
 	      device->SetPhy (phy);
+	      device->SetMac (mac);
 	      node->AddDevice (device);
 	      devices.Add (device);
 	      NS_LOG_DEBUG ("node=" << node << ", mob=" << node->GetObject<MobilityModel> ());

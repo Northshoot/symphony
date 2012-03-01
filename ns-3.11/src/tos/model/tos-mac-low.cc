@@ -237,9 +237,11 @@ TosMacLow::CancelAllEvents (void)
 void
 TosMacLow::SetPhy (Ptr<WifiPhy> phy)
 {
+	NS_LOG_DEBUG(this<< " before PHY: " << m_phy);
   m_phy = phy;
   m_phy->SetReceiveOkCallback (MakeCallback (&TosMacLow::ReceiveOk, this));
   m_phy->SetReceiveErrorCallback (MakeCallback (&TosMacLow::ReceiveError, this));
+  NS_LOG_DEBUG(this<< " after PHY: " << m_phy);
   SetupPhyMacLowListener (phy);
 }
 

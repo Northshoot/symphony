@@ -6,6 +6,7 @@
  */
 
 #include "ns3/log.h"
+#include "ns3/assert.h"
 #include "ns3/wifi-mac.h"
 #include "ns3/wifi-phy.h"
 #include "ns3/wifi-channel.h"
@@ -14,7 +15,6 @@
 #include "ns3/pointer.h"
 #include "ns3/ptr.h"
 #include "ns3/trace-source-accessor.h"
-#include "ns3/log.h"
 #include "ns3/wifi-mac-header.h"
 
 #include "ns3/tos-net-device.h"
@@ -27,8 +27,9 @@ namespace ns3 {
 
 NS_OBJECT_ENSURE_REGISTERED (TosNetDevice);
 
-TosNetDevice::TosNetDevice() {
-	// TODO Auto-generated constructor stub
+TosNetDevice::TosNetDevice()
+: m_configComplete (false){
+	NS_LOG_FUNCTION_NOARGS ();
 
 }
 
@@ -53,7 +54,7 @@ TypeId TosNetDevice::GetTypeId(void) {
 					.AddAttribute("Mac","The MAC layer attached to this device.",
 					PointerValue(),
 					MakePointerAccessor(&TosNetDevice::GetMac,&TosNetDevice::SetMac),
-					MakePointerChecker<WifiMac>());
+					MakePointerChecker<TosMacLow>());
 	return tid;
 }
 
@@ -63,8 +64,9 @@ TosNetDevice::~TosNetDevice() {
 
 void
 TosNetDevice::SetMac(Ptr<TosMacLow> mac) {
-	NS_LOG_FUNCTION(this<<" <-this,mac-> "<<mac);
-	m_mac = mac;
+	NS_LOG_FUNCTION(this<<mac);
+	m_tos_mac = mac;
+	CompleteConfig ();
 }
 
 void
@@ -74,7 +76,7 @@ TosNetDevice::SetPhy(Ptr<WifiPhy> phy) {
 
 Ptr<TosMacLow>
 TosNetDevice::GetMac(void) const {
-	return m_mac;
+	return m_tos_mac;
 }
 
 Ptr<WifiPhy>
@@ -89,12 +91,12 @@ TosNetDevice::GetChannel(void) const {
 
 void
 TosNetDevice::SetAddress(Mac48Address address) {
-	m_mac->SetAddress(address);
+	m_tos_mac->SetAddress(address);
 }
 
 Mac48Address
 TosNetDevice::GetAddress(void) const {
-	return m_mac->GetAddress();
+	return m_tos_mac->GetAddress();
 }
 
 void
@@ -172,7 +174,8 @@ TosNetDevice::DeviceGetChannel() {
 
 uint8_t
 TosNetDevice::DeviceSend(ns3pack* hder, void * msg) {
-	NS_LOG_FUNCTION_NOARGS();
+	NS_LOG_FUNCTION(this);
+
 	//TODO: logic for device needs to be added
 	//TODO: implement callbacks to tos
 	//TODO: implement time delay;
@@ -181,7 +184,7 @@ TosNetDevice::DeviceSend(ns3pack* hder, void * msg) {
 	  WifiMacHeader hdr;
 	  hdr.SetTypeData ();
 	  hdr.SetAddr1 (Mac48Address::GetBroadcast());
-//	  hdr.SetAddr2 (m_mac->GetAddress ());
+	  //hdr.SetAddr2 (m_tos_mac->GetAddress ());
 //	  hdr.SetAddr3 (GetBssid ());
 //	  hdr.SetDsNotFrom ();
 //	  hdr.SetDsNotTo ();
@@ -219,14 +222,14 @@ TosNetDevice::DoDispose(void) {
 void
 TosNetDevice::DoStart(void) {
 	NS_LOG_FUNCTION(this);
-	m_mac->Start();
+	m_tos_mac->Start();
 	m_phy->Start();
 	Object::DoStart();
 }
 bool
 TosNetDevice::Send(Ptr<Packet> packet, const Address& dest) {
 	//TODO: convert address
-	//m_mac->TransmitData();
+	NS_LOG_ERROR("Function is not in use");
 	return true;
 }
 
@@ -254,8 +257,37 @@ TosNetDevice::DoGetChannel(void) const {
 	return m_phy->GetChannel();
 }
 
-void TosNetDevice::CompleteConfig(void) {
+void
+TosNetDevice::CompleteConfig(void) {
+	NS_LOG_DEBUG(this << " MAC: " << m_tos_mac
+					  << " PHY: " << m_phy
+					  << " NOD: " << m_node);
+	  if (m_tos_mac == 0
+	      || m_phy == 0
+	      || m_node == 0)
+	    {
+		  NS_LOG_FUNCTION_NOARGS();
+		 NS_LOG_ERROR("TosNetDevice has not completed configuration");
+	      return;
+	    }
+	  m_tos_mac->SetPhy(m_phy);
 
+	 // m_tos_mac->SetWifiPhy (m_phy);
+//	  m_tos_mac->SetForwardUpCallback (MakeCallback (&WifiNetDevice::ForwardUp, this));
+//	  m_tos_mac->SetLinkUpCallback (MakeCallback (&WifiNetDevice::LinkUp, this));
+//	  m_tos_mac->SetLinkDownCallback (MakeCallback (&WifiNetDevice::LinkDown, this));
+	  WifiMacHeader hdr;
+	  hdr.SetTypeData ();
+	  hdr.SetAddr1 (Mac48Address::GetBroadcast());
+	  hdr.SetAddr2 (m_tos_mac->GetAddress ());
+//	  hdr.SetAddr3 (GetBssid ());
+	  hdr.SetDsNotFrom ();
+	  hdr.SetDsNotTo ();
+	  Ptr<Packet> pkt = Create<Packet> (Packet(reinterpret_cast<uint8_t const
+		  		*>("hello"),5));
+	  pkt->AddHeader(hdr);
+	  m_tos_mac->TransmitData(pkt->Copy(), &hdr);
+	  m_configComplete = true;
 }
 
 } /* namespace ns3 */
