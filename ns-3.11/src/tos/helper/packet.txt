@@ -1,4 +1,14 @@
-
+	ns3::WifiMacHeader whdr;
+    whdr.SetTypeData ();
+    whdr.SetAddr1 ("00:00:00:00:00:00");
+    whdr.SetAddr2 ("00:00:00:00:00:00");
+    whdr.SetDsNotFrom ();
+    whdr.SetDsNotTo ();
+    whdr.SetSequenceNumber (1);
+    whdr.SetFragmentNumber (0);
+    whdr.SetNoMoreFragments ();
+    whdr.SetNoRetry ();
+    
 adhocWIFI
   WifiMacHeader hdr;
   hdr.SetTypeData ();

@@ -6,7 +6,7 @@
  */
 #include <iostream>
 #include "ns3/assert.h"
-#include "ns3/ptr.h"
+#include "ns3/pointer.h"
 #include "ns3/packet.h"
 #include "ns3/wifi-mac-header.h"
 #include "ns3/callback.h"
@@ -38,32 +38,21 @@ TosToNs3Proxy::getNow(int b){
 	return a;
 }
 
-
-//functions for radiooh
 void
-TosToNs3Proxy::setMac(ns3::TosMacLow *mac){
-	this->mac=mac;
-	this->mac->SetRxCallback(ns3::MakeCallback (&TosToNs3Proxy::sendDown, this));
+TosToNs3Proxy::setDevice(ns3::Ptr<ns3::TosNetDevice> device){
+	m_tosnetdevice  = device;
 }
+void
+TosToNs3Proxy::msgToTos(ns3pack* hdr, void * msg){ }
+
 
 void
-TosToNs3Proxy::msgToChannel(ns3pack* hdr, void * msg){
+TosToNs3Proxy::msgToNs3(ns3pack* hdr, void * msg){
 	std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
 	std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
 
-	ns3::WifiMacHeader whdr;
-    whdr.SetTypeData ();
-    whdr.SetAddr1 ("00:00:00:00:00:00");
-    whdr.SetAddr2 ("00:00:00:00:00:00");
-    whdr.SetDsNotFrom ();
-    whdr.SetDsNotTo ();
-    whdr.SetSequenceNumber (1);
-    whdr.SetFragmentNumber (0);
-    whdr.SetNoMoreFragments ();
-    whdr.SetNoRetry ();
-    ns3::Ptr<ns3::Packet> pkt = ns3::Create<ns3::Packet> (ns3::Packet(reinterpret_cast<uint8_t const
-      		*>("hello"),5));
-	mac->TransmitData(pkt, &whdr);
+	m_tosnetdevice->DeviceSend(hdr, msg);
+
 
 }
 void

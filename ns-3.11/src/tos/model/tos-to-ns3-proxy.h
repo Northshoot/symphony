@@ -19,11 +19,11 @@
  * otherwise linking with C will fail
  * Which results in segfault
  */
-#include "ns3/ptr.h"
+#include "ns3/pointer.h"
 #include "ns3/packet.h"
 #include "ns3/wifi-mac-header.h"
 #include "ns3includes.h"
-#include "tos-mac-low.h"
+#include "tos-net-device.h"
 //#include "tos-node.h"
 #include "simu-clock.h"
 
@@ -42,12 +42,12 @@ class TosToNs3Proxy {
 		 * Functions are proxied to tos node
 		 */
 	   int confirmSet(int);
-	   void setMac(ns3::TosMacLow *mac);
-
+	   void setDevice(ns3::Ptr<ns3::TosNetDevice> device);
 	   uint32_t getNow(int);
 	   void setDownlink(void *  tos);
 	   void sendDown(ns3::Ptr<ns3::Packet> pkt ,const ns3::WifiMacHeader *hdr);
-	   void msgToChannel(ns3pack* hdr, void * msg);
+	   void msgToNs3(ns3pack* hdr, void * msg);
+	   void msgToTos(ns3pack* hdr, void * msg);
 	   ns3::SimuClock * simu_clock;
 
 	~TosToNs3Proxy();
@@ -55,7 +55,7 @@ private:
 
 
     tosfuncvoid downlink;
-    ns3::TosMacLow *mac;
+     ns3::Ptr<ns3::TosNetDevice> m_tosnetdevice;
 
     //LibToTosProxyToC * proxy;
 	

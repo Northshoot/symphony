@@ -21,6 +21,7 @@ def build(bld):
     			  'helper/tos-helper.cc',
     			  'helper/yans-tos-helper.cc',
     			  'helper/tos-net-device-container.cc',
+    			  'helper/tos-mobility-helper.cc',
     			  
     			  
 
@@ -44,6 +45,7 @@ def build(bld):
     			  'helper/tos-helper.h',
 				  'helper/yans-tos-helper.h',
 				  'helper/tos-net-device-container.h',
+				  'helper/tos-mobility-helper.h',
         ]
 
 

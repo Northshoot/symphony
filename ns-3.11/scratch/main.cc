@@ -44,7 +44,7 @@ int main(void)
 //	    }
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
 	  //wifi.EnableLogComponents ();
-	  wifi.EnableLogComponentsAll(LOG_LEVEL_ALL);
+	  wifi.EnableLogComponents();
 	  YansTosPhyHelper wifiPhy =  YansTosPhyHelper::Default ();
 	  // This is one parameter that matters when using FixedRssLossModel
 	  // set it to zero; otherwise, gain will be added
@@ -62,7 +62,7 @@ int main(void)
 	  TosNetDeviceContainer devices = wifi.Install (wifiPhy,  c);
 	  // Note that with FixedRssLossModel, the positions below are not
 	  // used for received signal strength.
-	  MobilityHelper mobility;
+	  TosMobilityHelper mobility;
 	  Ptr<ListPositionAllocator> positionAlloc = CreateObject<ListPositionAllocator> ();
 	  positionAlloc->Add (Vector (0.0, 0.0, 0.0));
 	  positionAlloc->Add (Vector (5.0, 0.0, 0.0));

@@ -247,6 +247,7 @@ TosMacLow::SetPhy (Ptr<WifiPhy> phy)
 void
 TosMacLow::SetAddress (Mac48Address ad)
 {
+
   m_self = ad;
 }
 //void
@@ -288,6 +289,7 @@ TosMacLow::SetPifs (Time pifs)
 Mac48Address
 TosMacLow::GetAddress (void) const
 {
+	NS_LOG_FUNCTION(this << " mac: "<< m_self);
   return m_self;
 }
 //Time
@@ -334,6 +336,7 @@ TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 
 
 	  m_currentPacket = packet->Copy();
+	  m_currentHdr = *hdr;
 //	hdr.SetTypeData ();
 //	hdr.SetAddr1 ("00:00:00:00:00:01");
 //	hdr.SetAddr2 ("ff:ff:ff:ff:ff:ff");

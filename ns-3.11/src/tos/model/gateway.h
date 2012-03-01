@@ -88,7 +88,7 @@ extern int gatewayRadio(void *obj, int func, void* hdr, void* msg){
 
 			std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
 			std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
-			((TosToNs3Proxy *)obj)->msgToChannel((ns3pack*)hdr,msg);
+			((TosToNs3Proxy *)obj)->msgToNs3((ns3pack*)hdr,msg);
 //			std::cerr<<"data " << pkt->counter << std::endl;
 			//std::cerr <<"destination "<< d <<" "<< d1<< std::endl;
 			return 0;

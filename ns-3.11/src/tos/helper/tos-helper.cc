@@ -20,6 +20,7 @@
 
 #include "tos-net-device-container.h"
 #include "tos-helper.h"
+#include "ns3/tos-mac-low.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosHelper");
 
@@ -88,7 +89,7 @@ TosHelper::EnableLogComponents(void)
 	  LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
 	  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
 
-	  LogComponentEnable("MobilityHelper", LOG_LEVEL_ALL);
+	  LogComponentEnable("TosMobilityHelper", LOG_LEVEL_ALL);
 
 
 	  LogComponentEnable ("YansErrorRateModel", LOG_LEVEL_ALL);

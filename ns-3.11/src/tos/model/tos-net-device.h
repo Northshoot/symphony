@@ -70,6 +70,7 @@ public:
 
    bool Send (Ptr<Packet> packet, const Address& dest);
 
+
    Ptr<TosNode> GetNode (void) const;
    void SetNode (Ptr<TosNode> node);
 
@@ -88,7 +89,7 @@ public:
 	uint8_t DeviceGetChannel();
 
   //implementation of RadioSend
-	uint8_t DeviceSend(message_t* msg);
+	uint8_t DeviceSend(ns3pack* hdr, void * msg);
 	//callback
 	void DeviceSendDone(message_t* msg, uint8_t error);
 	void DeviceCancel(message_t* msg);

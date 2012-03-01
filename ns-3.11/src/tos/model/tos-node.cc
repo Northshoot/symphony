@@ -102,6 +102,7 @@ void TosNode::BootBooted(void)
 	//tickTime(100);
 	//cout<<"booted node id " << node_id <<" at " <<Simulator::Now().GetMilliSeconds() <<endl;
 	nstotos->start_mote(m_id);
+	GetDevice(0)->Start();
 	//Simulator::RunOneEvent();
 	Simulator::Remove(m_boot_event);
 }
@@ -157,6 +158,8 @@ void TosNode::DoStart()
 	//create proxy's
 	nstotos = new Ns3ToTosProxy(); //ns3 to tos
 	tostons = new TosToNs3Proxy(); //tos to ns3
+
+	tostons->setDevice(GetDevice(0));
 	tostons->simu_clock = simuclock;
 	//	DoStart();
 	//	Object::DoStart();
@@ -179,6 +182,13 @@ void TosNode::DoStart()
 		tostons->setDownlink(getFunc("receivePkt"));
 	}
 	NS_LOG_FUNCTION(this<<" " << m_libname);
+
+	for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
+	       i != m_devices.end (); i++)
+	    {
+	      Ptr<TosNetDevice> device = *i;
+	      device->Start ();
+	    }
 	Object::DoStart();
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
 }
