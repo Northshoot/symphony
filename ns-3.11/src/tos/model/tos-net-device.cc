@@ -16,6 +16,7 @@
 #include "ns3/ptr.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/wifi-mac-header.h"
+#include "ns3/net-device.h"
 
 #include "ns3/tos-net-device.h"
 #include "ns3/tos-node.h"
@@ -174,7 +175,7 @@ TosNetDevice::DeviceGetChannel() {
 
 uint8_t
 TosNetDevice::DeviceSend(ns3pack* hder, void * msg) {
-	NS_LOG_FUNCTION(this);
+	NS_LOG_FUNCTION(this <<m_node );
 
 	//TODO: logic for device needs to be added
 	//TODO: implement callbacks to tos
@@ -185,14 +186,14 @@ TosNetDevice::DeviceSend(ns3pack* hder, void * msg) {
 	  hdr.SetTypeData ();
 	  hdr.SetAddr1 (Mac48Address::GetBroadcast());
 	  //hdr.SetAddr2 (m_tos_mac->GetAddress ());
-//	  hdr.SetAddr3 (GetBssid ());
-//	  hdr.SetDsNotFrom ();
-//	  hdr.SetDsNotTo ();
-//	  Ptr<Packet> pkt = Create<Packet> (Packet(reinterpret_cast<uint8_t const
-//		  		*>("hello"),5));
-//	  pkt->AddHeader(hdr);
+	 // hdr.SetAddr3 (GetBssid ());
+	  hdr.SetDsNotFrom ();
+	  hdr.SetDsNotTo ();
+	  Ptr<Packet> pkt = Create<Packet> (Packet(reinterpret_cast<uint8_t const
+		  		*>("hello"),5));
+	  pkt->AddHeader(hdr);
 	  NS_LOG_DEBUG(this<<" to: " << hdr.GetAddr1());
-	  //m_mac->TransmitData(pkt->Copy(), &hdr);
+	  m_tos_mac->TransmitData(pkt->Copy(), &hdr);
 	return 0;
 }
 
@@ -273,21 +274,22 @@ TosNetDevice::CompleteConfig(void) {
 	  m_tos_mac->SetPhy(m_phy);
 
 	 // m_tos_mac->SetWifiPhy (m_phy);
-//	  m_tos_mac->SetForwardUpCallback (MakeCallback (&WifiNetDevice::ForwardUp, this));
-//	  m_tos_mac->SetLinkUpCallback (MakeCallback (&WifiNetDevice::LinkUp, this));
-//	  m_tos_mac->SetLinkDownCallback (MakeCallback (&WifiNetDevice::LinkDown, this));
-	  WifiMacHeader hdr;
-	  hdr.SetTypeData ();
-	  hdr.SetAddr1 (Mac48Address::GetBroadcast());
-	  hdr.SetAddr2 (m_tos_mac->GetAddress ());
-//	  hdr.SetAddr3 (GetBssid ());
-	  hdr.SetDsNotFrom ();
-	  hdr.SetDsNotTo ();
-	  Ptr<Packet> pkt = Create<Packet> (Packet(reinterpret_cast<uint8_t const
-		  		*>("hello"),5));
-	  pkt->AddHeader(hdr);
-	  m_tos_mac->TransmitData(pkt->Copy(), &hdr);
+//	  m_tos_mac->SetRxCallback (MakeCallback (&TosWifiNetDevice::ForwardUp, this));
+//	  m_tos_mac->ReceiveError (MakeCallback (&TosWifiNetDevice::LinkUp, this));
+//	  m_tos_mac->ReceiveOk (MakeCallback (&TosWifiNetDevice::LinkDown, this));
+//	  WifiMacHeader hdr;
+//	  hdr.SetTypeData ();
+//	  hdr.SetAddr1 (Mac48Address::GetBroadcast());
+//	  hdr.SetAddr2 (m_tos_mac->GetAddress ());
+////	  hdr.SetAddr3 (GetBssid ());
+//	  hdr.SetDsNotFrom ();
+//	  hdr.SetDsNotTo ();
+//	  Ptr<Packet> pkt = Create<Packet> (Packet(reinterpret_cast<uint8_t const
+//		  		*>("hello"),5));
+//	  pkt->AddHeader(hdr);
+//	  m_tos_mac->TransmitData(pkt->Copy(), &hdr);
 	  m_configComplete = true;
 }
+
 
 } /* namespace ns3 */

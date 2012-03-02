@@ -49,8 +49,9 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	  for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
 	    {
 	      Ptr<TosNode> node = *i;
+	      NS_LOG_DEBUG(node);
 	      Ptr<TosNetDevice> device = CreateObject<TosNetDevice> ();
-	      Ptr<TosMacLow> mac = CreateObject<TosMacLow>();
+	      Ptr<TosMacLow> mac = new TosMacLow();
 	      Ptr<WifiPhy> phy = phyHelper.Create (node, device);
 	      mac->SetAddress (Mac48Address::Allocate ());
 	      phy->ConfigureStandard (m_standard);
@@ -90,8 +91,7 @@ TosHelper::EnableLogComponents(void)
 	  LogComponentEnable ("YansTosPhyHelper", LOG_LEVEL_ALL);
 	  LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
 	  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
-
-	  LogComponentEnable("TosMobilityHelper", LOG_LEVEL_ALL);
+	  LogComponentEnable ("TosMobilityHelper", LOG_LEVEL_ALL);
 
 
 	  LogComponentEnable ("YansErrorRateModel", LOG_LEVEL_ALL);

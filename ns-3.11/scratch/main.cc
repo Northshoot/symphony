@@ -17,7 +17,6 @@
 #include "ns3/tos-module.h"
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"
-#include "ns3/mobility-module.h"
 #include "ns3/config-store-module.h"
 #include "ns3/wifi-module.h"
 #include "ns3/internet-module.h"
@@ -43,8 +42,8 @@ int main(void)
 //	      wifi.EnableLogComponents ();  // Turn on all Wifi logging
 //	    }
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
-	  //wifi.EnableLogComponents ();
-	  wifi.EnableLogComponents();
+	  wifi.EnableLogComponents ();
+	 //LogComponentEnableAll(LOG_ALL);
 	  YansTosPhyHelper wifiPhy =  YansTosPhyHelper::Default ();
 	  // This is one parameter that matters when using FixedRssLossModel
 	  // set it to zero; otherwise, gain will be added

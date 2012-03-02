@@ -25,13 +25,13 @@
 #include "ns3/object-factory.h"
 #include "ns3/attribute.h"
 #include "ns3/position-allocator.h"
-#include "ns3/mobility-helper.h"
+
 #include "tos-node-container.h"
 
 namespace ns3 {
 
 class PositionAllocator;
-class TosMobilityModel;
+class MobilityModel;
 
 /**
  * \ingroup mobility
@@ -39,7 +39,7 @@ class TosMobilityModel;
  *
  * TosMobilityHelper::Install is the most important method here.
  */
-class TosMobilityHelper: public MobilityHelper
+class TosMobilityHelper
 {
 public:
   /**

@@ -20,8 +20,8 @@
 #include "ns3/packet.h"
 #include "ns3/simulator.h"
 #include "ns3/mobility-model.h"
-#include "ns3/net-device.h"
-#include "ns3/node.h"
+#include "ns3/tos-net-device.h"
+#include "ns3/tos-node.h"
 #include "ns3/log.h"
 #include "ns3/pointer.h"
 #include "ns3/object-factory.h"
@@ -97,7 +97,9 @@ YansWifiChannel::Send (Ptr<YansWifiPhy> sender, Ptr<const Packet> packet, double
           NS_LOG_DEBUG ("propagation: txPower=" << txPowerDbm << "dbm, rxPower=" << rxPowerDbm << "dbm, " <<
                         "distance=" << senderMobility->GetDistanceFrom (receiverMobility) << "m, delay=" << delay);
           Ptr<Packet> copy = packet->Copy ();
+
           Ptr<Object> dstNetDevice = m_phyList[j]->GetDevice ();
+
           uint32_t dstNode;
           if (dstNetDevice == 0)
             {
@@ -105,11 +107,14 @@ YansWifiChannel::Send (Ptr<YansWifiPhy> sender, Ptr<const Packet> packet, double
             }
           else
             {
-              dstNode = dstNetDevice->GetObject<NetDevice> ()->GetNode ()->GetId ();
+              dstNode = dstNetDevice->GetObject<TosNetDevice> ()->GetNode ()->GetId ();
+              NS_LOG_FUNCTION(dstNetDevice<<dstNode);
             }
+
           Simulator::ScheduleWithContext (dstNode,
                                           delay, &YansWifiChannel::Receive, this,
                                           j, copy, rxPowerDbm, wifiMode, preamble);
+
         }
     }
 }
@@ -118,6 +123,7 @@ void
 YansWifiChannel::Receive (uint32_t i, Ptr<Packet> packet, double rxPowerDbm,
                           WifiMode txMode, WifiPreamble preamble) const
 {
+
   m_phyList[i]->StartReceivePacket (packet, rxPowerDbm, txMode, preamble);
 }
 

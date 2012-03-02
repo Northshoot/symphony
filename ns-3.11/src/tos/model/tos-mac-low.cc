@@ -487,7 +487,7 @@ TosMacLow::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPre
     }
   return;
 rxPacket:
-  m_rxCallback (packet, &hdr);
+  //m_rxCallback (packet, &hdr);
   return;
 }
 

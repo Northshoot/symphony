@@ -34,6 +34,7 @@ NS_LOG_COMPONENT_DEFINE ("TosMobilityHelper");
 
 TosMobilityHelper::TosMobilityHelper ()
 {
+
   m_position = CreateObjectWithAttributes<RandomRectanglePositionAllocator> 
       ("X", RandomVariableValue (ConstantVariable (0.0)),
       "Y", RandomVariableValue (ConstantVariable (0.0)));
@@ -128,6 +129,7 @@ TosMobilityHelper::GetMobilityModelType (void) const
 void
 TosMobilityHelper::Install (Ptr<TosNode> node) const
 {
+	NS_LOG_FUNCTION_NOARGS();
   Ptr<Object> object = node;
   Ptr<MobilityModel> model = object->GetObject<MobilityModel> ();
   if (model == 0)

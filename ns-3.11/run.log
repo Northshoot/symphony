@@ -1,0 +1,29 @@
+uniq: 0
+gateway call 0 arg 0
+LibToTosProxy called: 0 time 0
+FROM toslib: gateway(proxy,0,id_this_lib): 0
+uniq: 1
+gateway call 0 arg 1
+LibToTosProxy called: 1 time 0
+FROM toslib: gateway(proxy,0,id_this_lib): 0
+FROM toslib: sim_main_start_mote
+Scheduler.init()
+App: booted
+command error_t SplitControl.start()FROM toslib: sim_main_start_mote
+Scheduler.init()
+App: booted
+command error_t SplitControl.start()App: AMControl.startDone(error_t err) 
+AMControl.startDone: about to send
+src: 1 setting dest: 220
+NS3MsgGatewayP.Send.send: size of sent msg 14
+gatewayRadio(proxy, 0, f) return: 0
+about to destroy 
+TosNode::DoDispose(void)
+TosNode::DoDispose(void)
+
+Modules built:
+bridge                    config-store              core                     
+internet                  mobility                  mpi                      
+network                   propagation               tos                      
+wifi                     
+

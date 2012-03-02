@@ -75,9 +75,13 @@ TosNode::TosNode(uint32_t node_id, Time bootTime, const char *lib)
 	Construct();
 }
 
-void TosNode::Construct(void)
+void
+TosNode::Construct(void)
 {
 	m_id = TosNodeList::Add(this);
+	nstotos = new Ns3ToTosProxy(); //ns3 to tos
+	tostons = new TosToNs3Proxy(); //tos to ns3
+	NS_LOG_FUNCTION_NOARGS();
 }
 
 uint32_t TosNode::GetId(void) const
@@ -155,11 +159,6 @@ void TosNode::DoStart()
 	//open instance of the library  LM_ID_NEWLM
 	callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
 	simuclock = new SimuClock(NANOSECOND, NONE, callBackFromClock);
-	//create proxy's
-	nstotos = new Ns3ToTosProxy(); //ns3 to tos
-	tostons = new TosToNs3Proxy(); //tos to ns3
-
-	tostons->setDevice(GetDevice(0));
 	tostons->simu_clock = simuclock;
 	//	DoStart();
 	//	Object::DoStart();
@@ -175,7 +174,7 @@ void TosNode::DoStart()
 	}else{
 		((tosfunc)(getFunc("setUniqueID")))(GetId()); //set nodes id in lib
 		setObj = (tosfunc)(getFunc("setProxy"));
-		setObj((long )(this->nstotos)); //set link from ns3 to tos
+		setObj((long )(tostons)); //set link from ns3 to tos
 		nstotos->setStartMote(getFunc("sim_main_start_mote")); //boot node
 		nstotos->setTimerFired(getFunc("tickFired")); // connect clock tick
 		run_next = (tosfunc)(getFunc("runNextEventExternal"));
@@ -209,6 +208,7 @@ TosNode::AddDevice(Ptr<TosNetDevice> device)
 	  //TosNetDevice is started explicitly from tinyos code
 //    	  Simulator::ScheduleWithContext (GetId (), Seconds (0.0),
 //    	                                  &TosNetDevice::Start, device);
+	  tostons->setDevice(device);
 	  return index;
 
 }
