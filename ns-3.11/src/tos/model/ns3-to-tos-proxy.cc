@@ -21,6 +21,12 @@ void
 Ns3ToTosProxy::setTimerFired(void *  tos){
 	pass__timerFired=(tosfunc)tos;
 }
+
+void
+Ns3ToTosProxy::setDownlink(void * tos){
+	pass__rxMsg =(tosfuncvoid)tos;
+}
+
 void
 Ns3ToTosProxy::runNextEvent(void *  tos){
 	pass__runNext=(tosfunc)tos;
@@ -37,6 +43,12 @@ Ns3ToTosProxy::start_mote(int id){
 //	std::cout<<"TosToLibProxy boot node " <<std::endl;
 	pass__sim_main_start_mote(id);
 
+}
+
+void
+Ns3ToTosProxy::rxMsg(void *msg){
+	std::cout<<"Ns3ToTosProxy::rxMsg(void *msg) "<<std::endl;
+	pass__rxMsg(msg);
 }
 
 Ns3ToTosProxy::~Ns3ToTosProxy() {

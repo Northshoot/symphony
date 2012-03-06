@@ -20,7 +20,15 @@
  */
 
 //TODO: make this auto generated
-
+void
+printPacket( char *buf , int size){
+	int i;
+	printf("SIZE: %d\n", size);
+	for (i=0;i<size-1;i++){
+		printf("%02X ", (char)buf[i]);
+	}
+	printf("%02X\n",buf[i]);
+}
 
 extern int gateway(void *tthis,int call, int arg){
  std::cout << "gateway call "<< call <<" arg " << arg << std::endl;
@@ -75,19 +83,19 @@ extern int gatewayRadio(void *obj, int func, void* hdr, void* msg){
 //	raw_ptr = (uintptr_t *) (((message_t*)msg)->data - sizeof(ns3packet_header_t));
 	switch (func) {
 		case 0:
-//			printf("bytes of struct located at 0x%08lx\n",(uintptr_t) raw_ptr);
-//			for(i=sizeof(msg); i >0 ; i--) {
-//				printf("%u ", raw_ptr[i]);
-//				if(i%16 == 15) // Print a newline every 16 bytes.
-//					printf("\n");
-//				}
-//				printf("\n");
-
-
+//			printf("gateway msg\n");
+////			for(i=sizeof(msg); i >0 ; i--) {
+////				printf("%u ", raw_ptr[i]);
+////				if(i%16 == 15) // Print a newline every 16 bytes.
+////					printf("\n");
+////				}
+////				printf("\n");
+//			printPacket((char*)msg, 28);
+//			fflush(stdout);
 			//std::cerr <<"gatewayRadio got msg: "<< sizeof(msg) << std::endl;
-
-			std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
-			std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
+//
+//			std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
+//			std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
 			((TosToNs3Proxy *)obj)->msgToNs3((ns3pack*)hdr,msg);
 //			std::cerr<<"data " << pkt->counter << std::endl;
 			//std::cerr <<"destination "<< d <<" "<< d1<< std::endl;

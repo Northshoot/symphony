@@ -53,27 +53,14 @@ MAIN=main
 OUT=time_t
 
 SIM_LIB=libtos
+#we just build libtos.so and copy it to the ns3/debug
+#the simulation app can be developed in the scratch folder and run
+#./waf --run="main"
+#remember that you need to build ns simulation enviroment
+
+#TODO: integrate tos build with waf
 
 all:
-		@echo "                                   "
-		@echo "Building TinyOS image              "
-		$(NCC) $(NCC_OPT)
-		$(PY) $(POST) $(TOS_APP_C) $(SIM_LIB).c
-		@echo ""
-		@echo "Building TinyOS object             "
-		$(GPP) -fPIC -g -c $(SIM_LIB).c	$(NS3_INCL)
-		@echo ""
-		@echo "Creating library and linking with proxy objects            "
-		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) $(NS3_CORE) $(NS3_NET) -ldl 
-		@echo ""
-		@echo "Linking all together              "
-		$(GPP) $(MAIN).cc -o $(OUT) $(TOS_INCL) $(NS3_INCL) $(NS3_OBJ) -ldl
-		@echo "                           "		
-		@echo "*** tos-ns was successfully build***"
-		@echo ""
-		@echo "run it: ./"$(OUT)
-
-wall:
 		@echo "                                   "
 		@echo "Building TinyOS image              "
 		$(NCC) $(NCC_OPT_WALL)
@@ -83,14 +70,13 @@ wall:
 		$(GPP) -fPIC -Wall -g -c $(SIM_LIB).c	$(NS3_INCL)
 		@echo ""
 		@echo "Creating library and linking with proxy objects            "
-		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) $(NS3_CORE) $(NS3_NET) -ldl 
-		@echo ""
-		@echo "Linking all together              "
-		$(GPP) $(MAIN).cc -o $(OUT) $(TOS_INCL) $(NS3_INCL) $(NS3_OBJ) -ldl
+		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) -ldl 
+
 		@echo "                           "		
+		@echo "*** copying library to ns_dir***"
+		cp $(SIM_LIB).so $(NS3_DIR)/		
 		@echo "*** tos-ns was successfully build***"
 		@echo ""
-		@echo "run it: ./"$(OUT)
 		
 clean:
 	rm -rf $(OUT) *.o app.c

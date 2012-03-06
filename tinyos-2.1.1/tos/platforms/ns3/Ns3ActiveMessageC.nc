@@ -159,12 +159,12 @@ implementation
 		am_id_t id = call AMPacket.type(msg);
 		void* payload = getPayload(msg);
 		uint8_t len = call Packet.payloadLength(msg);
-		printf("event message_t* SubReceive.receive(message_t* msg)\n");
-		signal Receive.receive[id](msg, payload, len);
+		printf("event message_t* SubReceive.receive(message_t* msg) id %d\n",id);
+		signal Receive.receive[3](msg, payload, len);
 //		call AMPacket.isForMe(msg) 
 //			? signal Receive.receive[id](msg, payload, len)
 //			: signal Snoop.receive[id](msg, payload, len);
-
+		
 		return msg;
 	}
 

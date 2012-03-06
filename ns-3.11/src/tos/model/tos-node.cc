@@ -178,7 +178,7 @@ void TosNode::DoStart()
 		nstotos->setStartMote(getFunc("sim_main_start_mote")); //boot node
 		nstotos->setTimerFired(getFunc("tickFired")); // connect clock tick
 		run_next = (tosfunc)(getFunc("runNextEventExternal"));
-		tostons->setDownlink(getFunc("receivePkt"));
+		nstotos->setDownlink(getFunc("receivePkt"));
 	}
 	NS_LOG_FUNCTION(this<<" " << m_libname);
 
@@ -209,6 +209,7 @@ TosNode::AddDevice(Ptr<TosNetDevice> device)
 //    	  Simulator::ScheduleWithContext (GetId (), Seconds (0.0),
 //    	                                  &TosNetDevice::Start, device);
 	  tostons->setDevice(device);
+	  device->setNs3ToTos(nstotos);
 	  return index;
 
 }

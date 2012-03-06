@@ -15,7 +15,9 @@
 #include "ns3/traced-callback.h"
 #include "ns3/net-device.h"
 #include "ns3/mac48-address.h"
+#include "ns3/wifi-mac-header.h"
 #include "ns3/ns3includes.h"
+#include "ns3-to-tos-proxy.h"
 
 
 #include <string>
@@ -31,6 +33,7 @@ class TosMacLow;
 
 class TosNetDevice: public Object {
 public:
+	typedef Callback<void, message_t *> Ns3ToTosRxCallback;
 	static TypeId GetTypeId (void);	
 
 	TosNetDevice();
@@ -44,6 +47,8 @@ public:
    * \param phy the phy layer to use.
    */
   void SetPhy (Ptr<WifiPhy> phy);
+
+  void setNs3ToTos(Ns3ToTosProxy * nstos);
   /**
    * \param manager the manager to use.
    */
@@ -67,7 +72,7 @@ public:
    bool IsBroadcast (void) const;
 
    bool IsMulticast (void) const;
-
+   void ForwardUp (Ptr<Packet> packet, const WifiMacHeader* hdr);
 
    bool Send (Ptr<Packet> packet, const Address& dest);
 
@@ -100,15 +105,19 @@ public:
 	//callback
 	message_t* DeviceReceive(message_t* msg);
 
+	Ptr<Packet> TosToNsPacket(message_t *msg);
+
+	message_t* NsToTosPacket(Ptr<Packet> pkt);
+
 
 
 private:
   // This value conforms to the 802.11 specification
   static const uint16_t MAX_MSDU_SIZE = 2304;
-
+  Ns3ToTosRxCallback m_ns2totosRx;
   virtual void DoDispose (void);
   virtual void DoStart (void);
-  void ForwardUp (Ptr<Packet> packet, Mac48Address from, Mac48Address to);
+
   void LinkUp (void);
   void LinkDown (void);
   void Setup (void);
@@ -119,7 +128,7 @@ private:
   Ptr<WifiPhy> m_phy;
   Ptr<TosMacLow> m_tos_mac;
   message_t * m_msg;
-
+  Ns3ToTosProxy * m_ns3totos;
 
 //  TracedCallback<Ptr<const Packet>, Mac48Address> m_rxLogger;
 //  TracedCallback<Ptr<const Packet>, Mac48Address> m_txLogger;

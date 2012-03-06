@@ -25,7 +25,7 @@ implementation {
 	message_t packet;
 
 	bool locked;
-	uint16_t counter = 111;
+	uint16_t counter = 0;
  
 	event void Boot.booted() {
 		printf("App: booted\n");
@@ -34,7 +34,7 @@ implementation {
 
 	event void AMControl.startDone(error_t err) {
 		printf("App: AMControl.startDone(error_t err) \n");
-		if (err == SUCCESS) {
+		if (err == SUCCESS && TOS_NODE_ID == 1) {
 			counter++;
 			//dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
 			if (locked) {
@@ -45,9 +45,9 @@ implementation {
 				if (rcm == NULL) {
 					return;
 				}
-
+				rcm->counter =4;
 				printf("AMControl.startDone: about to send\n");
-				if (call AMSend.send(220, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+				if (call AMSend.send(2, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 					//dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
 					locked = TRUE;
 				}
@@ -76,8 +76,8 @@ implementation {
 				return;
 			}
 
-			rcm->counter = counter;
-			if (call AMSend.send(22, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+			rcm->counter = 6;
+			if (call AMSend.send(2, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 				dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
 				locked = TRUE;
 			}
@@ -90,6 +90,7 @@ implementation {
 	event message_t* Receive.receive(message_t* bufPtr, 
 			void* payload, uint8_t len) {
 		printf("RadioTest event message_t* Receive.receive %u\n",((radio_count_msg_t*)payload)->counter);
+		//post send();
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
 		else {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;

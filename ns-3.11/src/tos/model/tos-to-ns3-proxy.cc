@@ -48,9 +48,6 @@ TosToNs3Proxy::msgToTos(ns3pack* hdr, void * msg){ }
 
 void
 TosToNs3Proxy::msgToNs3(ns3pack* hdr, void * msg){
-	std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
-	std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
-
 	m_tosnetdevice->DeviceSend(hdr, msg);
 
 

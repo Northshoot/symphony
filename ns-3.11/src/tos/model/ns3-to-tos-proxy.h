@@ -11,6 +11,8 @@
 
 typedef int (*tosfunc)(int);
 
+typedef int (*tosfuncvoid)(void *);
+
 class Ns3ToTosProxy {
 	friend class TosNode;
 
@@ -24,7 +26,9 @@ public:
 	 */
 	void setStartMote(void *  tos);
 	void setTimerFired(void *  tos);
+	void setDownlink(void * tos);
 	void runNextEvent(void *  tos);
+	void rxMsg(void *msg);
 
 
 	~Ns3ToTosProxy();
@@ -33,6 +37,7 @@ private:
 	tosfunc pass__timerFired;
 	tosfunc pass__sim_main_start_mote;
 	tosfunc pass__runNext;
+	tosfuncvoid pass__rxMsg;
 
 };
 

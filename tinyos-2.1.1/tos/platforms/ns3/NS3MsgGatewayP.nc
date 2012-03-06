@@ -28,8 +28,10 @@ implementation{
 	}
         
 	extern int receivePkt(void * msg)@C() @spontaneous(){
-		ns3packet_header_t* hdr = (ns3packet_header_t*)(((message_t*)msg)->header);
-		printf("msg received: dst: %u src: %u\n", hdr->dest, hdr->src);
+		printf("receivePkt(void * msg)@C() @spontaneous()\n");
+		printPacket( (char *)msg, 28);
+//		ns3packet_header_t* hdr = (ns3packet_header_t*)(((message_t*)msg)->header);
+//		printf("msg received: dst: %u src: %u\n", hdr->dest, hdr->src);
 		msg_in = (message_t*)msg;
 		post receive();
 		return 0;
@@ -42,7 +44,6 @@ implementation{
 //		int a=100;
 		fo = convertToNS3(msg);
 		msg_out = msg;
-		printf("NS3MsgGatewayP.Send.send: size of sent msg %lu\n", sizeof(fo));
 		a=gatewayRadio(proxy, 0,  &fo, msg);
 		printf("gatewayRadio(proxy, 0, f) return: %d\n", a);
 		post sendDone();
