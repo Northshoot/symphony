@@ -197,11 +197,19 @@ void TosNetDevice::DoStart(void) {
 	NetDevice::DoStart();
 }
 
-void TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
+message_t
+TosNetDevice::GetCurrentMsg(){
+	return m_tx_msg;
+}
 
-	uint8_t* msg = (uint8_t*) (malloc(sizeof(message_t)));
-	packet->CopyData(msg, sizeof(message_t));
-	m_ns3totos->rxMsg((void*) (msg));
+void
+TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
+	NS_LOG_FUNCTION(this << m_phy->GetChannel()->GetDevice(1));
+	//cannot dynamic_cast ‘ns3::Channel::GetDevice(1u)’ (of type ‘class ns3::Ptr<ns3::NetDevice>’) to type ‘class ns3::Ptr<ns3::TosNetDevice>’ (target is not pointer or reference)
+	Ptr<TosNetDevice> tx_device =DynamicCast<TosNetDevice>( DoGetChannel()->GetDevice(1));
+	m_rx_msg = tx_device->GetCurrentMsg();
+
+	m_ns3totos->rxMsg((void*) &m_rx_msg);
 }
 
 void TosNetDevice::Setup(void) {

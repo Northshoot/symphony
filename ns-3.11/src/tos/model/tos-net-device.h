@@ -80,7 +80,7 @@ public:
 	//call back function
 	void done();
 	uint8_t DeviceGetChannel();
-
+	message_t GetCurrentMsg();
   //implementation of RadioSend
 	uint8_t DeviceSend(ns3pack* hdr, void * msg);
 	//callback
