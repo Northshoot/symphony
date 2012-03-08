@@ -204,11 +204,11 @@ TosNetDevice::GetCurrentMsg(){
 
 void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
+	//TODO: this need fixing. Works only when knowing who send this message
+	//which is not the case in general scenario
 	NS_LOG_FUNCTION(this << m_phy->GetChannel()->GetDevice(1));
-	//cannot dynamic_cast ‘ns3::Channel::GetDevice(1u)’ (of type ‘class ns3::Ptr<ns3::NetDevice>’) to type ‘class ns3::Ptr<ns3::TosNetDevice>’ (target is not pointer or reference)
 	Ptr<TosNetDevice> tx_device =DynamicCast<TosNetDevice>( DoGetChannel()->GetDevice(1));
 	m_rx_msg = tx_device->GetCurrentMsg();
-
 	m_ns3totos->rxMsg((void*) &m_rx_msg);
 }
 
