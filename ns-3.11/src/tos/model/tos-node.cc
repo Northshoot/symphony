@@ -39,13 +39,13 @@ TypeId
 TosNode::GetTypeId(void)
 {
 	static TypeId tid = TypeId("ns3::TosNode")
-			.SetParent<Object>()
+			.SetParent<Node>()
 			.AddConstructor<TosNode>()
-		    .AddAttribute ("DeviceList", "The list of devices associated to this Node.",
+		    .AddAttribute ("TosDeviceList", "The list of devices associated to this Node.",
 		                   ObjectVectorValue (),
 		                   MakeObjectVectorAccessor (&TosNode::m_devices),
 		                   MakeObjectVectorChecker<TosNetDevice> ())
-			.AddAttribute ("Id", "The id (unique integer) of this Node.",
+			.AddAttribute ("Tid", "The id (unique integer) of this Node.",
 			                   TypeId::ATTR_GET, // allow only getting it.
 			                   UintegerValue (0),
 			                   MakeUintegerAccessor (&TosNode::m_id),
@@ -84,12 +84,14 @@ TosNode::Construct(void)
 	NS_LOG_FUNCTION_NOARGS();
 }
 
-uint32_t TosNode::GetId(void) const
+uint32_t
+TosNode::GetId(void) const
 {
 	return m_id;
 }
 
-SimuClock *TosNode::getClock()
+SimuClock *
+TosNode::getClock()
 {
 	return simuclock;
 }
@@ -188,7 +190,7 @@ void TosNode::DoStart()
 	      Ptr<TosNetDevice> device = *i;
 	      device->Start ();
 	    }
-	Object::DoStart();
+	Node::DoStart();
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
 }
 

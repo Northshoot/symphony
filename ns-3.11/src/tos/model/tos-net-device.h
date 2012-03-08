@@ -31,7 +31,7 @@ class WifiChannel;
 class WifiPhy;
 class TosMacLow;
 
-class TosNetDevice: public Object {
+class TosNetDevice: public NetDevice {
 public:
 	typedef Callback<void, message_t *> Ns3ToTosRxCallback;
 	static TypeId GetTypeId (void);	
@@ -61,27 +61,14 @@ public:
    */
   Ptr<WifiPhy> GetPhy (void) const;
   
+//  void SetTosNodeContainer(TosNodeContainer c);
 
-   virtual Ptr<Channel> GetChannel (void) const;
-   void SetAddress (Mac48Address address);
-   Mac48Address GetAddress (void) const;
-   void SetMtu (const uint16_t mtu);
-   uint16_t GetMtu (void) const;
-   bool IsLinkUp (void) const;
-   void AddLinkChangeCallback (Callback<void> callback);
-   bool IsBroadcast (void) const;
+   void SetMac48Address (Mac48Address address);
+   Mac48Address GetMac48Address (void) const;
 
-   bool IsMulticast (void) const;
    void ForwardUp (Ptr<Packet> packet, const WifiMacHeader* hdr);
 
    bool Send (Ptr<Packet> packet, const Address& dest);
-
-
-   Ptr<TosNode> GetNode (void) const;
-   void SetNode (Ptr<TosNode> node);
-
-
-  // void SetPromiscReceiveCallback (PromiscReceiveCallback cb);
 
   
   //commands from tos-radio emulations
@@ -109,7 +96,31 @@ public:
 
 	message_t* NsToTosPacket(Ptr<Packet> pkt);
 
-
+	  // inherited from NetDevice base class.
+	  virtual void SetIfIndex (const uint32_t index);
+	  virtual uint32_t GetIfIndex (void) const;
+	  virtual Ptr<Channel> GetChannel (void) const;
+	  virtual void SetAddress (Address address);
+	  virtual Address GetAddress (void) const;
+	  virtual bool SetMtu (const uint16_t mtu);
+	  virtual uint16_t GetMtu (void) const;
+	  virtual bool IsLinkUp (void) const;
+	  virtual void AddLinkChangeCallback (Callback<void> callback);
+	  virtual bool IsBroadcast (void) const;
+	  virtual Address GetBroadcast (void) const;
+	  virtual bool IsMulticast (void) const;
+	  virtual Address GetMulticast (Ipv4Address multicastGroup) const;
+	  virtual bool IsPointToPoint (void) const;
+	  virtual bool IsBridge (void) const;
+	  virtual bool Send (Ptr<Packet> packet, const Address& dest, uint16_t protocolNumber);
+	  virtual Ptr<Node> GetNode (void) const;
+	  virtual void SetNode (Ptr<Node> node);
+	  virtual bool NeedsArp (void) const;
+	  virtual void SetReceiveCallback (NetDevice::ReceiveCallback cb);
+	  virtual Address GetMulticast (Ipv6Address addr) const;
+	  virtual bool SendFrom (Ptr<Packet> packet, const Address& source, const Address& dest, uint16_t protocolNumber);
+	  virtual void SetPromiscReceiveCallback (PromiscReceiveCallback cb);
+	  virtual bool SupportsSendFrom (void) const;
 
 private:
   // This value conforms to the 802.11 specification
@@ -124,14 +135,25 @@ private:
   Ptr<WifiChannel> DoGetChannel (void) const;
   void CompleteConfig (void);
 
-  Ptr<TosNode> m_node;
-  Ptr<WifiPhy> m_phy;
-  Ptr<TosMacLow> m_tos_mac;
-  message_t * m_msg;
-  Ns3ToTosProxy * m_ns3totos;
+  Ptr<TosMacLow>	m_tos_mac;
+  message_t  		m_tx_msg;
+  ns3pack  			m_tx_hdr;
+  message_t  		m_rx_msg;
+  ns3pack			m_rx_hdr;
+  Ns3ToTosProxy*  	m_ns3totos;
+  TosNodeContainer  m_node_container;
 
-//  TracedCallback<Ptr<const Packet>, Mac48Address> m_rxLogger;
-//  TracedCallback<Ptr<const Packet>, Mac48Address> m_txLogger;
+
+  //inherited from NetDevice
+  Ptr<Node> m_node;
+  Ptr<WifiPhy> m_phy;
+  NetDevice::ReceiveCallback m_forwardUp;
+  NetDevice::PromiscReceiveCallback m_promiscRx;
+
+  TracedCallback<Ptr<const Packet>, Mac48Address> m_rxLogger;
+  TracedCallback<Ptr<const Packet>, Mac48Address> m_txLogger;
+
+  bool m_busy;
 
   uint32_t m_ifIndex;
   bool m_linkUp;

@@ -107,7 +107,7 @@ YansWifiChannel::Send (Ptr<YansWifiPhy> sender, Ptr<const Packet> packet, double
             }
           else
             {
-              dstNode = dstNetDevice->GetObject<TosNetDevice> ()->GetNode ()->GetId ();
+              dstNode = dstNetDevice->GetObject<NetDevice> ()->GetNode ()->GetId ();
               NS_LOG_FUNCTION(dstNetDevice<<dstNode);
             }
 

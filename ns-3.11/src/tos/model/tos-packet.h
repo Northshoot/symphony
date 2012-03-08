@@ -10,13 +10,20 @@
 //TODO: refactor with ns3 stuff
 #include <stdlib.h>
 #include <stdint.h>
+#include "ns3/packet.h"
 #include "ns3includes.h"
 
-class TosPacket {
+namespace ns3 {
+
+
+class TosPacket : public Packet {
  public:
     TosPacket();
     TosPacket(message_t* msg);
+    TosPacket (uint8_t const*buffer, uint32_t size);
     ~TosPacket();
+
+    Ptr<Packet> Copy (void) const;
 
     void setSource(int src);
     int source();
@@ -46,5 +53,5 @@ class TosPacket {
     int allocated;
     message_t* msgPtr;
 };
-
+}
 #endif /* TOS_PACKET_H_ */

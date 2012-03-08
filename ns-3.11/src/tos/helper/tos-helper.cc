@@ -20,6 +20,7 @@
 
 #include "tos-net-device-container.h"
 #include "tos-helper.h"
+#include "ns3/tos-net-device.h"
 #include "ns3/tos-mac-low.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosHelper");
@@ -57,6 +58,7 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	      phy->ConfigureStandard (m_standard);
 	      device->SetNode(node);
 	      device->SetPhy (phy);
+	      device->SetTosNodeContainer(c);
 	      device->SetMac (mac);
 	      node->AddDevice (device);
 	      devices.Add (device);

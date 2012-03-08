@@ -121,13 +121,13 @@ int main (int argc, char *argv[])
                       StringValue (phyMode));
 
   NodeContainer c;
-  c.Create (2);
+  c.Create (300);
 
   // The below set of helpers will help us to put together the wifi NICs we want
   WifiHelper wifi;
 //  if (verbose)
 //    {
-  	  LogComponentEnableAll (LOG_LEVEL_ALL);  // Turn on all Wifi logging
+  	  //LogComponentEnableAll (LOG_LEVEL_ALL);  // Turn on all Wifi logging
 //    }
   wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
 
@@ -169,7 +169,7 @@ int main (int argc, char *argv[])
 
   Ipv4AddressHelper ipv4;
   NS_LOG_INFO ("Assign IP Addresses.");
-  ipv4.SetBase ("10.1.1.0", "255.255.255.0");
+  ipv4.SetBase ("1.0.0.0", "255.255.255.0");
   Ipv4InterfaceContainer i = ipv4.Assign (devices);
 
   TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");

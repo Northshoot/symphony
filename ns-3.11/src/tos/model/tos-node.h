@@ -27,7 +27,7 @@
 namespace ns3 {
 
 
-class TosNode : public Object{
+class TosNode : public Node{
 public:
 
 	static TypeId GetTypeId (void);

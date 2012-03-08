@@ -41,13 +41,15 @@ void
 RunSimulation (void)
 {
   NodeContainer c;
-  c.Create (1);
+  c.Create (1000000000000);
 
   InternetStackHelper internet;
   internet.Install (c);
 
 
   TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
+  std::vector<Ptr<Socket>> socketC;
+
   Ptr<Socket> sink = Socket::CreateSocket (c.Get (0), tid);
   InetSocketAddress local = InetSocketAddress (Ipv4Address::GetAny (), 80);
   sink->Bind (local);
@@ -61,7 +63,7 @@ RunSimulation (void)
 
 
   Simulator::Run ();
-
+  std::cout << "# nodes " <<c.GetN()<<std::endl;
   Simulator::Destroy ();
 }
 
