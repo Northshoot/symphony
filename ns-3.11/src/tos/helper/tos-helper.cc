@@ -58,7 +58,7 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	      phy->ConfigureStandard (m_standard);
 	      device->SetNode(node);
 	      device->SetPhy (phy);
-	      device->SetTosNodeContainer(c);
+	      //device->SetTosNodeContainer(c);
 	      device->SetMac (mac);
 	      node->AddDevice (device);
 	      devices.Add (device);

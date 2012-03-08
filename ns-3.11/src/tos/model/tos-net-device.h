@@ -141,7 +141,7 @@ private:
   message_t  		m_rx_msg;
   ns3pack			m_rx_hdr;
   Ns3ToTosProxy*  	m_ns3totos;
-  TosNodeContainer  m_node_container;
+  //TosNodeContainer  m_node_container;
 
 
   //inherited from NetDevice
