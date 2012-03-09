@@ -12,6 +12,7 @@
 #include "ns3includes.h"
 #include "tos-packet.h"
 #include "ns3/log.h"
+#include "calls-to-ns3.h"
 /**
  * This function is used by all objects.
  * C does not care about void * tthis
@@ -31,7 +32,6 @@ printPacket( char *buf , int size){
 }
 
 extern int gateway(void *tthis,int call, int arg){
- std::cout << "gateway call "<< call <<" arg " << arg << std::endl;
   // here should be a switch case on "call"
   // or possibly an array of function pointers
 	switch (call) {
@@ -60,45 +60,42 @@ extern int gateway(void *tthis,int call, int arg){
 
 
 extern int gatewayRadio(void *obj, int func, void* hdr, void* msg){
-	//TosPacket* tpk = new TosPacket((message_t*) msg);
-//	ns3packet_header_t* hdr = (ns3packet_header_t*)(((message_t*)msg)->data - sizeof(ns3packet_header_t));
-//	message_t tempmsg ;
-//	uint i;
-//	memcpy((void *)&tempmsg, msg, sizeof(message_t));
-//
-////	message_t* p = (message_t*)msg;
-//	radio_count_msg_t* rcm = (radio_count_msg_t*)&tempmsg.data;
-//	ns3packet_header_t* h =(ns3packet_header_t*)&tempmsg.header;
-//	am_addr_t d =h->dest;
-//	am_addr_t d1 =h->src;
-//
-//	uint8_t *pkt = (uint8_t *)&tempmsg;
-//    for(i=0; i<sizeof(msg); i++){
-//    	 std::cout << pkt[i] <<" ";
-//    }
-//    std::cerr<< std::endl;
-//	radio* pkt = (radio*)((message_t*)msg)->data;
-//	uintptr_t *raw_ptr;
-//	uint i;
-//	raw_ptr = (uintptr_t *) (((message_t*)msg)->data - sizeof(ns3packet_header_t));
 	switch (func) {
-		case 0:
-//			printf("gateway msg\n");
-////			for(i=sizeof(msg); i >0 ; i--) {
-////				printf("%u ", raw_ptr[i]);
-////				if(i%16 == 15) // Print a newline every 16 bytes.
-////					printf("\n");
-////				}
-////				printf("\n");
-//			printPacket((char*)msg, 28);
-//			fflush(stdout);
-			//std::cerr <<"gatewayRadio got msg: "<< sizeof(msg) << std::endl;
-//
-//			std::cerr <<"header dest: "<< ((ns3pack*)hdr)->dest << std::endl;
-//			std::cerr <<"header src: "<< ((ns3pack*)hdr)->src << std::endl;
+		case RADIO_ON:
+			return 0;
+			break;
+
+		case RADIO_START:
+			return 0;
+			break;
+
+		case RADIO_SLEEP:
+			return 0;
+			break;
+
+		case RADIO_STOP:
+			return 0;
+			break;
+
+		case RADIO_SET_CHANNEL:
+			return 0;
+			break;
+
+		case RADIO_GET_CHANNEL:
+			return 0;
+			break;
+
+		case RADIO_SET_TX_POWER:
+			return 0;
+			break;
+		case RADIO_GET_TX_POWER:
+
+			return 0;
+			break;
+		case RADIO_SEND:
+
 			((TosToNs3Proxy *)obj)->msgToNs3((ns3pack*)hdr,msg);
-//			std::cerr<<"data " << pkt->counter << std::endl;
-			//std::cerr <<"destination "<< d <<" "<< d1<< std::endl;
+
 			return 0;
 			break;
 
@@ -106,7 +103,7 @@ extern int gatewayRadio(void *obj, int func, void* hdr, void* msg){
 		default:
 			//OPS! never ever go here!
 			//if you have -> core dump :D
-			//std::cerr <<" bad index no where to go "<< call<< std::endl;
+			std::cerr <<" bad index no where to go "<< func<< std::endl;
 			return -1;
 			break;
 	}

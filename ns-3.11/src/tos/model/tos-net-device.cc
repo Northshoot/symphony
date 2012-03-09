@@ -4,7 +4,7 @@
  *  Created on: Feb 13, 2012
  *      Author: lauril
  */
-
+#include <memory>
 #include "ns3/log.h"
 #include "ns3/assert.h"
 #include "ns3/wifi-mac.h"
@@ -24,12 +24,28 @@
 #include "ns3/tos-mac-low.h"
 #include "tos-mac-low.h"
 #include "ns3-to-tos-proxy.h"
+#include <stdio.h>
+
+void
+printTosPacket( char *buf , int size){
+	int i;
+	printf("SIZE: %d\n", size);
+	for (i=0;i<size-1;i++){
+		printf("%02X ", (uint8_t)buf[i]);
+	}
+	printf("%02X\n",buf[i]);
+}
 
 NS_LOG_COMPONENT_DEFINE("TosNetDevice");
-
+using namespace std;
 namespace ns3 {
 
 NS_OBJECT_ENSURE_REGISTERED (TosNetDevice);
+typedef struct {
+	int a;
+	int b;
+	int c;
+}Foo;
 
 TosNetDevice::TosNetDevice() :
 		m_configComplete(false) {
@@ -136,6 +152,7 @@ uint8_t TosNetDevice::DeviceSend(ns3pack* hder, void* msg) {
 	//TODO: implement callbacks to tos
 	//TODO: implement time delay;
 	//make ns 3 packet from the tos packet
+	Ptr<Packet> pkt = TosToNsPacket((message_t*)msg);
 
 	WifiMacHeader hdr;
 	hdr.SetTypeData();
@@ -144,26 +161,31 @@ uint8_t TosNetDevice::DeviceSend(ns3pack* hder, void* msg) {
 	// hdr.SetAddr3 (GetBssid ());
 	hdr.SetDsNotFrom();
 	hdr.SetDsNotTo();
-	Ptr < Packet > pkt = TosToNsPacket((message_t*) (msg));
-	pkt->AddHeader(hdr);
-
+//	pkt->AddHeader(hdr);
+//	message_t * msg1  = (message_t*) malloc(sizeof(message_t));
+//	pkt->RemoveHeader(hdr);
+//	pkt->CopyData(reinterpret_cast< uint8_t*>(msg1), sizeof(message_t));
+//	printTosPacket((char*)msg1,sizeof(message_t));
 	m_tos_mac->TransmitData(pkt->Copy(), &hdr);
 	return 0;
 }
 
-Ptr<Packet> TosNetDevice::TosToNsPacket(message_t* msg) {
-	Ptr < Packet > pkt =
-			Create < Packet
-					> (Packet(reinterpret_cast<const uint8_t*>(msg),
+Ptr<Packet>
+TosNetDevice::TosToNsPacket(message_t* msg) {
+	Ptr <Packet> pkt =Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
 							sizeof(message_t)));
-	//	message_t *tosmsg=(message_t*)malloc(sizeof(message_t));
-	//	tosmsg = msg;
 	return pkt;
 }
 
-message_t* TosNetDevice::NsToTosPacket(Ptr<Packet> pkt) {
-	message_t* msg = (message_t*) (malloc(sizeof(message_t)));
-	return msg;
+message_t* TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
+	WifiMacHeader hdrr;
+	message_t * msg  = (message_t*) malloc(sizeof(message_t));
+	packet->RemoveHeader(hdrr);
+	packet->CopyData(reinterpret_cast< uint8_t*>(msg), sizeof(message_t));
+//	NS_LOG_FUNCTION_NOARGS();
+//	printTosPacket((char *) msg, 28);
+	memcpy((void *)&m_rx_msg, (void *)msg, sizeof(message_t));
+	return &m_rx_msg;
 }
 
 void TosNetDevice::DeviceSendDone(message_t* msg, uint8_t error) {
@@ -204,12 +226,8 @@ TosNetDevice::GetCurrentMsg(){
 
 void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
-	//TODO: this need fixing. Works only when knowing who send this message
-	//which is not the case in general scenario
-	NS_LOG_FUNCTION(this << m_phy->GetChannel()->GetDevice(1));
-	Ptr<TosNetDevice> tx_device =DynamicCast<TosNetDevice>( DoGetChannel()->GetDevice(1));
-	m_rx_msg = tx_device->GetCurrentMsg();
-	m_ns3totos->rxMsg((void*) &m_rx_msg);
+	message_t * msg = NsToTosPacket(packet, hdr);
+	m_ns3totos->rxMsg((void*) msg);
 }
 
 void TosNetDevice::Setup(void) {

@@ -1,6 +1,7 @@
 #include "sim/sim_main.h"
 #include "defines.h"
 #include "sim_packet.h"
+#include "ns3/calls-to-ns3.h"
 
 module NS3MsgGatewayP{
 	provides 
@@ -23,15 +24,11 @@ implementation{
 	}
 	
 	task void receive(){
-		printf("RX node\n");
 		signal Receive.receive(msg_in);
 	}
         
 	extern int receivePkt(void * msg)@C() @spontaneous(){
-		printf("receivePkt(void * msg)@C() @spontaneous()\n");
-		printPacket( (char *)msg, 28);
-//		ns3packet_header_t* hdr = (ns3packet_header_t*)(((message_t*)msg)->header);
-//		printf("msg received: dst: %u src: %u\n", hdr->dest, hdr->src);
+
 		msg_in = (message_t*)msg;
 		post receive();
 		return 0;
@@ -44,7 +41,7 @@ implementation{
 //		int a=100;
 		fo = convertToNS3(msg);
 		msg_out = msg;
-		a=gatewayRadio(proxy, 0,  &fo, msg);
+		a=gatewayRadio(proxy, RADIO_SEND,  &fo, msg);
 		printf("gatewayRadio(proxy, 0, f) return: %d\n", a);
 		post sendDone();
 		return 0;
@@ -70,7 +67,8 @@ implementation{
 	 * it is quicker to recover from this state.
 	 */
 	tasklet_async command error_t State.standby(){
-		return 0;
+		void * buff;
+		return gatewayRadio(proxy, RADIO_SLEEP,  buff, buff);
 	}
 
 	/**
@@ -78,7 +76,8 @@ implementation{
 	 * and able to transmit.
 	 */
 	tasklet_async command error_t State.turnOn(){
-		return 0;
+		void * buff;
+        return gatewayRadio(proxy, RADIO_ON,  buff, buff);
 	}
 
 	/**
@@ -94,6 +93,7 @@ implementation{
 	//tasklet_async event void done();
 
 	tasklet_async command uint8_t State.getChannel(){
-		return 0;
+		void * buff;
+		return gatewayRadio(proxy, RADIO_GET_CHANNEL,  buff, buff);
 		}
 }

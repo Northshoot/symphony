@@ -28,8 +28,8 @@ using namespace ns3;
 int main(void)
 {
 	  //set real time mode
-//	  ns3::GlobalValue::Bind("SimulatorImplementationType", ns3::StringValue(
-//	      "ns3::TosNsRealtimeSimulatorImpl"));
+//  ns3::GlobalValue::Bind("SimulatorImplementationType", ns3::StringValue(
+//	      "ns3::RealtimeSimulatorImpl"));
 
 
 	TosNodeContainer c;
@@ -42,7 +42,7 @@ int main(void)
 //	      wifi.EnableLogComponents ();  // Turn on all Wifi logging
 //	    }
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
-	  wifi.EnableLogComponents ();
+	  //wifi.EnableLogComponents ();
 	 //LogComponentEnableAll(LOG_ALL);
 	  YansTosPhyHelper wifiPhy =  YansTosPhyHelper::Default ();
 	  // This is one parameter that matters when using FixedRssLossModel
@@ -70,25 +70,9 @@ int main(void)
 	  mobility.Install (c);
 
 
-	//ns3::TosMacLow* mac = new ns3::TosMacLow();
-//	std::vector<ns3::TosNode * > tos;
-//    srand((unsigned)time(0));
-//
-//    for(int i=0; i<1;i++){
-//    	//std::cout<<"Round ./libtos.so "<<i<<std::endl;
-//
-//    	tos.push_back( new ns3::TosNode((rand()%1000)+1, ns3::MilliSeconds(0)));
-//
-//
-//
-//    }
 
 
-//	ns3::TosNode * n2 = new ns3::TosNode((rand()%1000)+1, ns3::MilliSeconds(0));
-//	TinyBridge *tbridge2 = new TinyBridge(n2, "./libtos.so");
-
-
-    ns3::Simulator::Stop(ns3::Seconds(10.0));
+    ns3::Simulator::Stop(ns3::Seconds(100.0));
     ns3::Simulator::Run();
     std::cout<<"about to destroy "<<std::endl;
     ns3::Simulator::Destroy ();

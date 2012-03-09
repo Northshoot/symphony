@@ -46,6 +46,7 @@ def build(bld):
 				  'helper/yans-tos-helper.h',
 				  'helper/tos-net-device-container.h',
 				  'helper/tos-mobility-helper.h',
+				  'model/calls-to-ns3.h',
         ]
 
 

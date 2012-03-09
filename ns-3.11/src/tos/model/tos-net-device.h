@@ -94,7 +94,7 @@ public:
 
 	Ptr<Packet> TosToNsPacket(message_t *msg);
 
-	message_t* NsToTosPacket(Ptr<Packet> pkt);
+	message_t* NsToTosPacket(Ptr<Packet> pkt, const WifiMacHeader * hdr);
 
 	  // inherited from NetDevice base class.
 	  virtual void SetIfIndex (const uint32_t index);
