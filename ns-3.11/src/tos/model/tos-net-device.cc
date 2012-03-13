@@ -18,22 +18,31 @@
 #include "ns3/wifi-mac-header.h"
 #include "ns3/net-device.h"
 #include "ns3/wifi-mac-header.h"
-
-#include "ns3/tos-net-device.h"
-#include "ns3/tos-node.h"
-#include "ns3/tos-mac-low.h"
+#include "calls-to-ns3.h"
+#include "ns3includes.h"
+#include "tos-net-device.h"
+#include "tos-node.h"
+#include "tos-mac-low.h"
 #include "tos-mac-low.h"
 #include "ns3-to-tos-proxy.h"
 #include <stdio.h>
 
 void
-printTosPacket( char *buf , int size){
-	int i;
-	printf("SIZE: %d\n", size);
-	for (i=0;i<size-1;i++){
+printTosPacket( char *buf){
+	int size = sizeof(message_t);
+	int hsize = sizeof(ns3packet_header_t);
+	int i=0;
+	ns3packet_header_t *hdr;
+	hdr =(ns3packet_header_t*)(((message_t*)buf)->header);
+	printf("FROM NS3 - SIZE: %d :: HEADER size: %d\n", size, hsize);
+	printf("HEX: ");
+	for (;i<size-1;i++){
 		printf("%02X ", (uint8_t)buf[i]);
 	}
-	printf("%02X\n",buf[i]);
+	printf("%02X\n",(uint8_t)buf[i]);
+	printf("header: ");
+	printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
+	printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
 }
 
 NS_LOG_COMPONENT_DEFINE("TosNetDevice");
@@ -41,11 +50,7 @@ using namespace std;
 namespace ns3 {
 
 NS_OBJECT_ENSURE_REGISTERED (TosNetDevice);
-typedef struct {
-	int a;
-	int b;
-	int c;
-}Foo;
+
 
 TosNetDevice::TosNetDevice() :
 		m_configComplete(false) {
@@ -121,30 +126,34 @@ void TosNetDevice::SetNode(Ptr<Node> node) {
 	m_node = node;
 }
 
-uint8_t TosNetDevice::DeviceTurnOff() {
-	return 0;
+error_t
+TosNetDevice::DeviceTurnOff() {
+	m_state = RADIO_STATE_OFF;
+	return SUCCESS;
 }
 
-uint8_t TosNetDevice::DeviceStandby() {
-	return 0;
+error_t TosNetDevice::DeviceStandby() {
+	return EBUSY;
 }
 
-uint8_t TosNetDevice::DeviceTurnOn() {
-	return 0;
+error_t TosNetDevice::DeviceTurnOn() {
+	return EBUSY;
 }
 
-uint8_t TosNetDevice::DeviceSetChannel(uint8_t channel) {
-	return 0;
+error_t TosNetDevice::DeviceSetChannel(uint8_t channel) {
+	return EBUSY;
 }
 
 void TosNetDevice::done() {
 }
 
 uint8_t TosNetDevice::DeviceGetChannel() {
-	return 0;
+	uint16_t channel = m_phy->GetChannelNumber();
+	NS_ASSERT(channel<=14);
+	return static_cast<uint8_t>(channel);
 }
 
-uint8_t TosNetDevice::DeviceSend(ns3pack* hder, void* msg) {
+error_t TosNetDevice::DeviceSend(ns3pack* hder, void* msg) {
 	NS_ASSERT(!m_busy);
 	memcpy((void *)&m_tx_msg, (void *)msg, sizeof(message_t));
 	memcpy((void *)&m_tx_hdr, (void *)hder, sizeof(ns3pack));
@@ -153,7 +162,7 @@ uint8_t TosNetDevice::DeviceSend(ns3pack* hder, void* msg) {
 	//TODO: implement time delay;
 	//make ns 3 packet from the tos packet
 	Ptr<Packet> pkt = TosToNsPacket((message_t*)msg);
-
+	printTosPacket((char*)msg);
 	WifiMacHeader hdr;
 	hdr.SetTypeData();
 	hdr.SetAddr1(Mac48Address::GetBroadcast());
@@ -161,13 +170,15 @@ uint8_t TosNetDevice::DeviceSend(ns3pack* hder, void* msg) {
 	// hdr.SetAddr3 (GetBssid ());
 	hdr.SetDsNotFrom();
 	hdr.SetDsNotTo();
+
 //	pkt->AddHeader(hdr);
 //	message_t * msg1  = (message_t*) malloc(sizeof(message_t));
 //	pkt->RemoveHeader(hdr);
 //	pkt->CopyData(reinterpret_cast< uint8_t*>(msg1), sizeof(message_t));
 //	printTosPacket((char*)msg1,sizeof(message_t));
-	m_tos_mac->TransmitData(pkt->Copy(), &hdr);
-	return 0;
+	DeviceGetChannel();
+	//m_tos_mac->TransmitData(pkt->Copy(), &hdr);
+	return SUCCESS;
 }
 
 Ptr<Packet>

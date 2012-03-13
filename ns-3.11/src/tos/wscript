@@ -5,7 +5,7 @@ def configure(conf):
 def build(bld):
     obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
-    obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/types/') 
+    #obj.env.append_value('CXXFLAGS', '-I/home/lauril/dev/symphony/tinyos-2.1.1/tos/types') 
     obj.env.append_value('CCFLAGS','-std=gnu++0x')
     obj.env.append_value('LINKFLAGS','-ldl')
     obj.source = ['model/tos-to-ns3-proxy.cc',
@@ -22,10 +22,7 @@ def build(bld):
     			  'helper/yans-tos-helper.cc',
     			  'helper/tos-net-device-container.cc',
     			  'helper/tos-mobility-helper.cc',
-    			  
-    			  
-
-        ]
+    	        ]
 
 
     headers = bld.new_task_gen('ns3header')
@@ -33,7 +30,6 @@ def build(bld):
     headers.source = ['model/tos-to-ns3-proxy.h',
     			  'model/tos-node.h',
     			  'model/simu-clock.h',
-    			  #'model/tiny-bridge.h',
     			  'model/ns3-to-tos-proxy.h',
     			  'model/tos-packet.h',
     			  'model/gateway.h',

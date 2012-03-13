@@ -18,6 +18,7 @@
 #include "ns3/wifi-mac-header.h"
 #include "ns3/ns3includes.h"
 #include "ns3-to-tos-proxy.h"
+#include "calls-to-ns3.h"
 
 
 #include <string>
@@ -73,16 +74,15 @@ public:
   
   //commands from tos-radio emulations
   //implementation of radio state
-	uint8_t DeviceTurnOff();
-	uint8_t DeviceStandby();
-	uint8_t DeviceTurnOn();
-	uint8_t DeviceSetChannel(uint8_t channel);
-	//call back function
+   error_t DeviceTurnOff();
+   error_t DeviceStandby();
+   error_t DeviceTurnOn();
+   error_t DeviceSetChannel(uint8_t channel);
 	void done();
 	uint8_t DeviceGetChannel();
 	message_t GetCurrentMsg();
   //implementation of RadioSend
-	uint8_t DeviceSend(ns3pack* hdr, void * msg);
+	error_t DeviceSend(ns3pack* hdr, void * msg);
 	//callback
 	void DeviceSendDone(message_t* msg, uint8_t error);
 	void DeviceCancel(message_t* msg);
@@ -141,6 +141,9 @@ private:
   message_t  		m_rx_msg;
   ns3pack			m_rx_hdr;
   Ns3ToTosProxy*  	m_ns3totos;
+  DeviceCall		m_current;
+  RadioState		m_state;
+
   //TosNodeContainer  m_node_container;
 
 

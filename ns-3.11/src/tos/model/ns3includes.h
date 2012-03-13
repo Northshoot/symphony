@@ -8,7 +8,7 @@
 #ifndef NS3INCLUDES_H_
 #define NS3INCLUDES_H_
 
-#ifdef __cplusplus
+
 typedef uint8_t am_id_t;
 typedef uint8_t am_group_t;
 typedef uint16_t am_addr_t;
@@ -45,11 +45,11 @@ typedef struct ns3packet_header_t
 {
 	uint8_t length;
 	uint8_t dsn;
-	am_id_t type;
+	uint8_t type;
 	uint16_t fdest;
-	am_group_t destpan;
-	am_addr_t dest;
-	am_addr_t src;
+	uint8_t destpan;
+	uint16_t dest;
+	uint16_t src;
 	uint8_t padd;
 
 } ns3packet_header_t;
@@ -86,10 +86,37 @@ typedef struct message_t {
   uint8_t metadata[sizeof(ns3_metadata_t)];
 } message_t;
 
-#endif
+//XXX: redefined from TinyError.h
+//simply to reduce the complexity of build system
 
 
+typedef enum {
+  SUCCESS        =  0,
+  FAIL           =  1,           // Generic condition: backwards compatible
+  ESIZE          =  2,           // Parameter passed in was too big.
+  ECANCEL        =  3,           // Operation cancelled by a call.
+  EOFF           =  4,           // Subsystem is not active
+  EBUSY          =  5,           // The underlying system is busy; retry later
+  EINVAL         =  6,           // An invalid parameter was passed
+  ERETRY         =  7,           // A rare and transient failure: can retry
+  ERESERVE       =  8,           // Reservation required before usage
+  EALREADY       =  9,           // The device state you are requesting is already set
+  ENOMEM         = 10,           // Memory required not available
+  ENOACK         = 11,           // A packet was not acknowledged
+  ELAST          = 11            // Last enum value
+}error_t;
 
+
+//TODO: with multiple includes brakes function...
+
+//error_t errCombine(error_t r1, error_t r2)
+///* Returns: r1 if r1 == r2, FAIL otherwise. This is the standard error
+//     combination function: two successes, or two identical errors are
+//     preserved, while conflicting errors are represented by FAIL.
+//*/
+//{
+//  return r1 == r2 ? r1 : FAIL;
+//}
 
 
 #endif /* NS3INCLUDES_H_ */

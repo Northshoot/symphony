@@ -3,6 +3,23 @@
 #include "sim_packet.h"
 #include "ns3/calls-to-ns3.h"
 
+void
+printTosPacket( char *buf){
+    int size = sizeof(message_t);
+    int i=0;
+    ns3packet_header_t *hdr;
+    hdr =(ns3packet_header_t*)(((message_t*)buf)->header);
+    printf("FROM TOS - SIZE: %d :: HEADER size: %d\n", size, sizeof(ns3packet_header_t));
+    printf("HEX: ");
+    for (;i<size-1;i++){
+        printf("%02X ", (uint8_t)buf[i]);
+    }
+    printf("%02X\n",(uint8_t)buf[i]);
+    printf("header: ");
+    printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
+    printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
+}
+
 module NS3MsgGatewayP{
 	provides 
 	{
@@ -28,21 +45,20 @@ implementation{
 	}
         
 	extern int receivePkt(void * msg)@C() @spontaneous(){
-
 		msg_in = (message_t*)msg;
 		post receive();
 		return 0;
 	}
 	
 
-	
+//gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);	
 	command error_t Send.send(message_t* msg){
-		ns3pack fo;
+		//ns3pack fo;
 //		int a=100;
-		fo = convertToNS3(msg);
-		msg_out = msg;
-		a=gatewayRadio(proxy, RADIO_SEND,  &fo, msg);
-		printf("gatewayRadio(proxy, 0, f) return: %d\n", a);
+		//fo = convertToNS3(msg);
+		msg_out = msg;		
+		printTosPacket((char*)msg);
+		a=gatewayRadio(proxy, RADIO_SEND,-1,-1,(void *)msg, (void *) msg);
 		post sendDone();
 		return 0;
 	
@@ -68,7 +84,7 @@ implementation{
 	 */
 	tasklet_async command error_t State.standby(){
 		void * buff;
-		return gatewayRadio(proxy, RADIO_SLEEP,  buff, buff);
+		return gatewayRadio(proxy, RADIO_SLEEP,  -1,-1, buff, buff);
 	}
 
 	/**
@@ -77,7 +93,7 @@ implementation{
 	 */
 	tasklet_async command error_t State.turnOn(){
 		void * buff;
-        return gatewayRadio(proxy, RADIO_ON,  buff, buff);
+        return gatewayRadio(proxy, RADIO_ON, -1,-1, buff, buff);
 	}
 
 	/**
@@ -86,7 +102,8 @@ implementation{
 	 * SUCCESS otherwise.
 	 */
 	tasklet_async command error_t State.setChannel(uint8_t channel){
-		return 0;
+		void * buff;
+        return gatewayRadio(proxy, RADIO_SET_CHANNEL, -1, -1, buff, buff);
 	}
 
 
@@ -94,6 +111,6 @@ implementation{
 
 	tasklet_async command uint8_t State.getChannel(){
 		void * buff;
-		return gatewayRadio(proxy, RADIO_GET_CHANNEL,  buff, buff);
+		return gatewayRadio(proxy, RADIO_GET_CHANNEL, -1, -1, buff, buff);
 		}
 }

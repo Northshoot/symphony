@@ -14,12 +14,14 @@
 
 #include "tos-to-ns3-proxy.h"
 #include "gateway.h"
+#include "calls-to-ns3.h"
 
-#include "ns3/packet.h"
-
+#include "tos-net-device.h"
 
 
 TosToNs3Proxy::TosToNs3Proxy() { }
+
+
 
 //fucntions for TosNode
 int
@@ -42,25 +44,72 @@ void
 TosToNs3Proxy::setDevice(ns3::Ptr<ns3::TosNetDevice> device){
 	m_tosnetdevice  = device;
 }
-void
-TosToNs3Proxy::msgToTos(ns3pack* hdr, void * msg){ }
 
+int
+TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2){
+	switch (call) {
+	case RADIO_ON:
+		return m_tosnetdevice->DeviceTurnOn();
+		break;
 
+	case RADIO_START:
+		return m_tosnetdevice->DeviceTurnOn();;
+		break;
+
+	case RADIO_SLEEP:
+		return m_tosnetdevice->DeviceStandby();
+		break;
+
+	case RADIO_STOP:
+		return m_tosnetdevice->DeviceTurnOff();
+		break;
+
+	case RADIO_SET_CHANNEL:
+		//perform sanity check
+		if(val1>0)
+			return m_tosnetdevice->DeviceSetChannel(val1);
+		else
+			return -1;
+		break;
+
+	case RADIO_GET_CHANNEL:
+		return m_tosnetdevice->DeviceGetChannel();
+		break;
+
+	case RADIO_SET_TX_POWER:
+		return -1;
+		break;
+	case RADIO_GET_TX_POWER:
+
+		return -1;
+		break;
+	case RADIO_SEND:
+		//keep the tongue in right mouth
+		//TODO: make some sanity check
+		return m_tosnetdevice->DeviceSend((ns3pack*)obj1, obj2);
+		break;
+
+	case RADIO_CANCEL:
+		m_tosnetdevice->DeviceCancel((message_t *)obj2);
+		return  0;
+	default:
+		//OPS! never ever go here!
+		//if you have -> core dump :D
+		std::cerr <<" bad index no where to go "<< call<< std::endl;
+		return -1;
+		break;
+}
+//just in case if anything else fails
+return -1;
+}
 void
 TosToNs3Proxy::msgToNs3(ns3pack* hdr, void * msg){
 	m_tosnetdevice->DeviceSend(hdr, msg);
 
 
 }
-void
-TosToNs3Proxy::setDownlink(void *  tos){
-	downlink=(tosfuncvoid)tos;
-}
-void
-TosToNs3Proxy::sendDown(ns3::Ptr<ns3::Packet> pkt ,const ns3::WifiMacHeader *hdr){
-	std::cerr <<"got packet" << std::endl;
-	//downlink(msg);
-}
+
+
 
 TosToNs3Proxy::~TosToNs3Proxy() {
 	// TODO Auto-generated destructor stub

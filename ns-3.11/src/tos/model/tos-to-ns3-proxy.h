@@ -11,7 +11,7 @@
  * This struct is compiled in to C
  * Then the objects is send to C library as struct
  */
-
+#include "calls-to-ns3.h"
 #ifdef __cplusplus
 
 /**
@@ -20,14 +20,13 @@
  * Which results in segfault
  */
 #include "ns3/pointer.h"
-#include "ns3/packet.h"
 #include "ns3/wifi-mac-header.h"
 #include "ns3includes.h"
 #include "tos-net-device.h"
-//#include "tos-node.h"
+
 #include "simu-clock.h"
 
-typedef int (*tosfuncvoid)(void*);
+
 
 class TosNode;
 
@@ -45,19 +44,19 @@ class TosToNs3Proxy {
 	   void setDevice(ns3::Ptr<ns3::TosNetDevice> device);
 	   uint32_t getNow(int);
 	   void setDownlink(void *  tos);
-	   void sendDown(ns3::Ptr<ns3::Packet> pkt ,const ns3::WifiMacHeader *hdr);
+
 	   void msgToNs3(ns3pack* hdr, void * msg);
-	   void msgToTos(ns3pack* hdr, void * msg);
+	   //we define a generic function for calls from TinyOS to
+	   //ns3 then each function is dispatched to the right format by casting
+	   int deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2 );
 	   ns3::SimuClock * simu_clock;
 
 	~TosToNs3Proxy();
 private:
 
-
-    tosfuncvoid downlink;
      ns3::Ptr<ns3::TosNetDevice> m_tosnetdevice;
 
-    //LibToTosProxyToC * proxy;
+
 	
 };
 
@@ -68,7 +67,7 @@ extern "C" {
 int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
 
-int gatewayRadio(void *obj, int func, void * hdr, void* msg);
+int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);
 
 
 #ifdef __cplusplus

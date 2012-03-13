@@ -34,6 +34,7 @@ printPacket( char *buf , int size){
 extern int gateway(void *tthis,int call, int arg){
   // here should be a switch case on "call"
   // or possibly an array of function pointers
+	//TODO: dispatch from TosToNs3Proxy as in radio gateway
 	switch (call) {
 		case 0:
 			return ((TosToNs3Proxy *)tthis)->confirmSet(arg);
@@ -58,56 +59,13 @@ extern int gateway(void *tthis,int call, int arg){
 
 }
 
+/**
+ * Dispatching of functions,
+ * We just move call to the proxy object
+ */
+extern int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg){
+	return ((TosToNs3Proxy *)obj)->deviceCommand(call, val1, val2, hdr,msg);
 
-extern int gatewayRadio(void *obj, int func, void* hdr, void* msg){
-	switch (func) {
-		case RADIO_ON:
-			return 0;
-			break;
-
-		case RADIO_START:
-			return 0;
-			break;
-
-		case RADIO_SLEEP:
-			return 0;
-			break;
-
-		case RADIO_STOP:
-			return 0;
-			break;
-
-		case RADIO_SET_CHANNEL:
-			return 0;
-			break;
-
-		case RADIO_GET_CHANNEL:
-			return 0;
-			break;
-
-		case RADIO_SET_TX_POWER:
-			return 0;
-			break;
-		case RADIO_GET_TX_POWER:
-
-			return 0;
-			break;
-		case RADIO_SEND:
-
-			((TosToNs3Proxy *)obj)->msgToNs3((ns3pack*)hdr,msg);
-
-			return 0;
-			break;
-
-
-		default:
-			//OPS! never ever go here!
-			//if you have -> core dump :D
-			std::cerr <<" bad index no where to go "<< func<< std::endl;
-			return -1;
-			break;
-	}
-	return -1;
 }
 
 #endif /* GATEWAY_H_ */
