@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include "tos-to-ns3-proxy.h"
 #include "ns3includes.h"
-#include "tos-packet.h"
 #include "ns3/log.h"
 #include "calls-to-ns3.h"
 /**

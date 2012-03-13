@@ -7,15 +7,13 @@
 #include <iostream>
 #include "ns3/assert.h"
 #include "ns3/pointer.h"
-#include "ns3/packet.h"
 #include "ns3/wifi-mac-header.h"
 #include "ns3/callback.h"
-#include "tos-node.h"
 
+#include "tos-node.h"
 #include "tos-to-ns3-proxy.h"
 #include "gateway.h"
 #include "calls-to-ns3.h"
-
 #include "tos-net-device.h"
 
 
@@ -86,7 +84,7 @@ TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, v
 	case RADIO_SEND:
 		//keep the tongue in right mouth
 		//TODO: make some sanity check
-		return m_tosnetdevice->DeviceSend((ns3pack*)obj1, obj2);
+		return m_tosnetdevice->DeviceSend(obj2);
 		break;
 
 	case RADIO_CANCEL:
@@ -102,13 +100,6 @@ TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, v
 //just in case if anything else fails
 return -1;
 }
-void
-TosToNs3Proxy::msgToNs3(ns3pack* hdr, void * msg){
-	m_tosnetdevice->DeviceSend(hdr, msg);
-
-
-}
-
 
 
 TosToNs3Proxy::~TosToNs3Proxy() {

@@ -19,8 +19,6 @@
 #include "ns3/ns3includes.h"
 #include "ns3-to-tos-proxy.h"
 #include "calls-to-ns3.h"
-
-
 #include <string>
 
 namespace ns3 {
@@ -82,7 +80,7 @@ public:
 	uint8_t DeviceGetChannel();
 	message_t GetCurrentMsg();
   //implementation of RadioSend
-	error_t DeviceSend(ns3pack* hdr, void * msg);
+	error_t DeviceSend(void * msg);
 	//callback
 	void DeviceSendDone(message_t* msg, uint8_t error);
 	void DeviceCancel(message_t* msg);
@@ -137,9 +135,7 @@ private:
 
   Ptr<TosMacLow>	m_tos_mac;
   message_t  		m_tx_msg;
-  ns3pack  			m_tx_hdr;
   message_t  		m_rx_msg;
-  ns3pack			m_rx_hdr;
   Ns3ToTosProxy*  	m_ns3totos;
   DeviceCall		m_current;
   RadioState		m_state;

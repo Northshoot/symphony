@@ -13,7 +13,6 @@ def build(bld):
     			  'model/simu-clock.cc',
     			  #'model/tiny-bridge.cc',
     			  'model/ns3-to-tos-proxy.cc',
-    			  'model/tos-packet.cc',
     			  'model/tos-node-list.cc',
     			  'model/tos-mac-low.cc',
     			  'model/tos-net-device.cc',

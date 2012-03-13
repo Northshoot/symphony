@@ -8,13 +8,20 @@
 #include "ns3-to-tos-proxy.h"
 
 
-Ns3ToTosProxy::Ns3ToTosProxy() { }
-
+Ns3ToTosProxy::Ns3ToTosProxy() {
+	m_tos_functions.set_empty_key("empty");
+}
 
 
 void
+Ns3ToTosProxy::addFunction(std::string name, void * pointer){
+	m_tos_functions[name]=pointer;
+
+}
+
+void
 Ns3ToTosProxy::setStartMote(void * tos){
-	//std::cout<<"TosToLibProxy boot node " << (int)tos <<std::endl;
+
 	pass__sim_main_start_mote=(tosfunc)tos;
 }
 void
@@ -33,15 +40,14 @@ Ns3ToTosProxy::runNextEvent(void *  tos){
 }
 uint32_t
 Ns3ToTosProxy::timerFired(uint32_t a){
-	//std::cout<<"TosToLibProxy::timerFired() "<<a<<std::endl;
+
 	pass__timerFired(a);
 
 	return a;
 }
 void
 Ns3ToTosProxy::start_mote(int id){
-//	std::cout<<"TosToLibProxy boot node " <<std::endl;
-	pass__sim_main_start_mote(id);
+	((tosfunc)m_tos_functions["sim_main_start_mote"])(id);
 
 }
 

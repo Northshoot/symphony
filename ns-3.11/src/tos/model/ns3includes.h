@@ -18,16 +18,7 @@ typedef uint16_t nx_uint16_t;
 #define TOSH_DATA_LENGTH 28
 #define TOS_BCAST_ADDR 0xFFFF
 
-typedef struct ns3pack{
-	uint8_t length;
-	uint8_t dsn;
-	uint8_t type;
-	uint16_t fdest;
-	uint8_t destpan;
-	uint16_t dest;
-	uint16_t src;
-	uint8_t padd;
-} ns3pack;
+
 
 typedef struct ns3_metadata_t
 {
@@ -37,11 +28,11 @@ typedef struct ns3_metadata_t
 		uint8_t power;
 		uint8_t rssi;
 	};
-} ns3_metadata_t;
+}__attribute__ ((__packed__)) ns3_metadata_t;
 
 
 
-typedef struct ns3packet_header_t
+struct ns3packet_header_t
 {
 	uint8_t length;
 	uint8_t dsn;
@@ -51,24 +42,25 @@ typedef struct ns3packet_header_t
 	uint16_t dest;
 	uint16_t src;
 	uint8_t padd;
+} __attribute__ ((__packed__));
 
-} ns3packet_header_t;
+typedef struct ns3packet_header_t ns3packet_header_t;
 
 typedef struct timestamp_metadata_t
 {
 	uint32_t timestamp;
-} timestamp_metadata_t;
+}__attribute__ ((__packed__)) timestamp_metadata_t;
 
 typedef struct ns3packet_footer_t
 {
 	// the time stamp is not recorded here, time stamped messaged cannot have max length
-} ns3packet_footer_t;
+} __attribute__ ((__packed__))ns3packet_footer_t;
 
 typedef struct flags_metadata_t
 {
 	// TODO: make sure that we have no more than 8 flags
 	uint8_t flags;
-} flags_metadata_t;
+}__attribute__ ((__packed__)) flags_metadata_t;
 
 
 typedef struct ns3packet_metadata_t
@@ -76,7 +68,7 @@ typedef struct ns3packet_metadata_t
 	timestamp_metadata_t timestamp;
 	flags_metadata_t flags;
 	ns3_metadata_t ns3;
-} ns3packet_metadata_t;
+}__attribute__ ((__packed__)) ns3packet_metadata_t;
 
 
 typedef struct message_t {
@@ -84,7 +76,7 @@ typedef struct message_t {
   uint8_t data[TOSH_DATA_LENGTH];
   uint8_t footer[sizeof(ns3packet_footer_t)];
   uint8_t metadata[sizeof(ns3_metadata_t)];
-} message_t;
+}__attribute__ ((__packed__)) message_t;
 
 //XXX: redefined from TinyError.h
 //simply to reduce the complexity of build system

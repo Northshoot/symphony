@@ -50,12 +50,13 @@ implementation{
 		return 0;
 	}
 	
-
+    extern void sendSendDone(void * msg, error_t err){
+    	error_out = err;
+    	post sendDone();
+    	
+    }
 //gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);	
 	command error_t Send.send(message_t* msg){
-		//ns3pack fo;
-//		int a=100;
-		//fo = convertToNS3(msg);
 		msg_out = msg;		
 		printTosPacket((char*)msg);
 		a=gatewayRadio(proxy, RADIO_SEND,-1,-1,(void *)msg, (void *) msg);
@@ -63,10 +64,9 @@ implementation{
 		return 0;
 	
 	}
-	
 
 	command error_t Send.cancel(message_t* msg){
-		return 0;
+		return gatewayRadio(proxy, RADIO_CANCEL,-1,-1,(void *)msg, (void *) msg);;
 		}
 		
 	/**

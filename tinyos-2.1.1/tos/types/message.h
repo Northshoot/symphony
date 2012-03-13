@@ -16,7 +16,7 @@ typedef nx_struct message_t {
   nx_uint8_t data[TOSH_DATA_LENGTH];
   nx_uint8_t footer[sizeof(message_footer_t)];
   nx_uint8_t metadata[sizeof(message_metadata_t)];
-} message_t;
+}__attribute__ ((__packed__)) message_t;
 
 /*
  * This resource is used to arbitrate access between ActiveMessageC,

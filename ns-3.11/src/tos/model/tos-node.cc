@@ -177,7 +177,7 @@ void TosNode::DoStart()
 		((tosfunc)(getFunc("setUniqueID")))(GetId()); //set nodes id in lib
 		setObj = (tosfunc)(getFunc("setProxy"));
 		setObj((long )(tostons)); //set link from ns3 to tos
-		nstotos->setStartMote(getFunc("sim_main_start_mote")); //boot node
+		nstotos->addFunction("sim_main_start_mote",getFunc("sim_main_start_mote"));
 		nstotos->setTimerFired(getFunc("tickFired")); // connect clock tick
 		run_next = (tosfunc)(getFunc("runNextEventExternal"));
 		nstotos->setDownlink(getFunc("receivePkt"));

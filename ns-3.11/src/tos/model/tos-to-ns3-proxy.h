@@ -21,20 +21,15 @@
  */
 #include "ns3/pointer.h"
 #include "ns3/wifi-mac-header.h"
-#include "ns3includes.h"
-#include "tos-net-device.h"
 
 #include "simu-clock.h"
-
-
-
-class TosNode;
+#include "tos-net-device.h"
 
 class TosToNs3Proxy {
    friend class TosNode;
     public:
    	   TosToNs3Proxy();
-   	   //LibToTosProxy( ns3::TosNode * tos);
+
 		/**
 		 * Here goes functions that can be
 		 * called from C-library
@@ -45,7 +40,6 @@ class TosToNs3Proxy {
 	   uint32_t getNow(int);
 	   void setDownlink(void *  tos);
 
-	   void msgToNs3(ns3pack* hdr, void * msg);
 	   //we define a generic function for calls from TinyOS to
 	   //ns3 then each function is dispatched to the right format by casting
 	   int deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2 );
