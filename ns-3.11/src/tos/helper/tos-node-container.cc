@@ -17,10 +17,15 @@
  *
  * Author: Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  */
+#include <string>
+#include <vector>
+
 #include "tos-node-container.h"
 #include "ns3/tos-node-list.h"
 #include "ns3/names.h"
 #include "ns3/nstime.h"
+
+#include "symphony-xml.h"
 
 namespace ns3 {
 
@@ -28,15 +33,15 @@ TosNodeContainer::TosNodeContainer ()
 {
 }
 
+TosNodeContainer::TosNodeContainer( std::string filename): m_xml_file(filename){
+	m_xml_set = true;
+}
+
 TosNodeContainer::TosNodeContainer (Ptr<TosNode> TosNode)
 {
   m_TosNode.push_back (TosNode);
 }
-TosNodeContainer::TosNodeContainer (std::string NodeTestName)
-{
-  Ptr<TosNode> node = Names::Find<TosNode> (NodeTestName);
-  m_TosNode.push_back (node);
-}
+
 TosNodeContainer::TosNodeContainer (const TosNodeContainer &a, const TosNodeContainer &b)
 {
   Add (a);
@@ -93,9 +98,13 @@ TosNodeContainer::Get (uint32_t i) const
 void 
 TosNodeContainer::Create (uint32_t n)
 {
+  NS_ASSERT(m_xml_set);
+  SymphonyXML sym;
+  sym.readConfigFile(m_xml_file);
+  std::vector<std::string> tos = sym.getTosFunctions();
   for (uint32_t i = 0; i < n; i++)
     {
-      m_TosNode.push_back (CreateObject<TosNode> (i+2 ,MilliSeconds(0),"./libtos.so"));
+      m_TosNode.push_back (CreateObject<TosNode> (i ,MilliSeconds(0),"./libtos.so", tos));
     }
 }
 void 

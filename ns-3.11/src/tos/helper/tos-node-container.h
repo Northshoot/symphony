@@ -48,6 +48,13 @@ public:
   TosNodeContainer ();
 
   /**
+   * Create a TosNodeContainer with tos configuration described in fileName
+   *
+   * \param fileName The absolut file name to be loaded.
+   */
+  TosNodeContainer(std::string fileName);
+
+  /**
    * Create a TosNodeContainer with exactly one TosNode which has been previously
    * instantiated.  The single TosNode is specified by a smart pointer.
    *
@@ -55,14 +62,7 @@ public:
    */
   TosNodeContainer (Ptr<TosNode> TosNode);
 
-  /**
-   * Create a TosNodeContainer with exactly one TosNode which has been previously
-   * instantiated and assigned a name using the Object Name Service.  This 
-   * TosNode is then specified by its assigned name.
-   *
-   * \param NodeTestName The name of the TosNode Object to add to the container.
-   */
-  TosNodeContainer (std::string NodeTestName);
+
 
   /**
    * Create a TosNode container which is a concatenation of two input
@@ -290,6 +290,8 @@ public:
   static TosNodeContainer GetGlobal (void);
 
 private:
+  std::string m_xml_file;
+  bool m_xml_set;
   std::vector<Ptr<TosNode> > m_TosNode;
 };
 

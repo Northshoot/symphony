@@ -12,14 +12,10 @@ void * proxy; //pointer to tthis proxy object
 extern "C" {
 #endif
 int setUniqueID(int i) @C() @spontaneous(){
-  printf("uniq: %i\n", i);
-  id_this_lib=i;
+	TOS_NODE_ID =i;
+	id_this_lib=i;
   return id_this_lib;
 }
-
-int runNextEventExternal(uint32_t a);
-int sim_main_start_mote(int id) ;
-int receivePkt(void * msg);
 
 int setProxy(void * con) @C() @spontaneous() {
          proxy=con;

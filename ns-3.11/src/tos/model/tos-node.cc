@@ -66,11 +66,12 @@ TosNode::TosNode(uint32_t node_id)
 
 TosNode::TosNode(uint32_t node_id, Time bootTime)
 {
-	TosNode(node_id, bootTime, "./libtos.so");
+	std::vector<std::string> ex;
+	TosNode(node_id, bootTime, "./libtos.so",ex);
 }
 
-TosNode::TosNode(uint32_t node_id, Time bootTime, const char *lib)
-:m_id(node_id), m_bootTime(bootTime), m_libname(lib)
+TosNode::TosNode(uint32_t node_id, Time bootTime, const char *lib, std::vector<std::string> externs)
+:m_id(node_id), m_bootTime(bootTime), m_libname(lib), m_tos_functions(externs)
 {
 	Construct();
 }
@@ -170,6 +171,10 @@ void TosNode::DoStart()
 	//for eclipse debug full path is needed for the lib
 	//TODO: add script for copying libtos.so to build/debug
 	handler = dlopen(m_libname, RTLD_LAZY);
+	for(uint32_t i=0; i < m_tos_functions.size();i++){
+	  string f = m_tos_functions.at(i);
+	  nstotos->addFunction(f,getFunc(f.c_str()));
+	}
 	if(!handler){
 		std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
 		exit(1);

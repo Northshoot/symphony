@@ -40,11 +40,10 @@ Ns3ToTosProxy::runNextEvent(void *  tos){
 }
 uint32_t
 Ns3ToTosProxy::timerFired(uint32_t a){
-
 	pass__timerFired(a);
-
 	return a;
 }
+
 void
 Ns3ToTosProxy::start_mote(int id){
 	((tosfunc)m_tos_functions["sim_main_start_mote"])(id);

@@ -1,6 +1,5 @@
 #include "sim/sim_main.h"
 #include "defines.h"
-#include "sim_packet.h"
 #include "ns3/calls-to-ns3.h"
 
 void
@@ -9,7 +8,7 @@ printTosPacket( char *buf){
     int i=0;
     ns3packet_header_t *hdr;
     hdr =(ns3packet_header_t*)(((message_t*)buf)->header);
-    printf("FROM TOS - SIZE: %d :: HEADER size: %d\n", size, sizeof(ns3packet_header_t));
+    printf("FROM TOS - SIZE: %d :: HEADER size: %lu\n", size, sizeof(ns3packet_header_t));
     printf("HEX: ");
     for (;i<size-1;i++){
         printf("%02X ", (uint8_t)buf[i]);
@@ -50,11 +49,18 @@ implementation{
 		return 0;
 	}
 	
-    extern void sendSendDone(void * msg, error_t err){
+    extern int sendSendDone(void * msg, error_t err)@C() @spontaneous(){
     	error_out = err;
-    	post sendDone();
-    	
+    	post sendDone();   
+    	return 0; 	
     }
+    
+    extern int radioStartDone()@C() @spontaneous(){
+    	printf("radio state done\n");
+    	return 0;
+    }
+    
+
 //gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);	
 	command error_t Send.send(message_t* msg){
 		msg_out = msg;		

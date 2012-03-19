@@ -8,7 +8,7 @@
 #ifndef TOSNODE_H_
 #define TOSNODE_H_
 #include <vector>
-
+#include <string>
 #include "ns3/nstime.h"
 #include "ns3/simulator.h"
 #include "ns3/event-id.h"
@@ -21,8 +21,6 @@
 #include "tos-to-ns3-proxy.h"
 #include "tos-net-device.h"
 
-
-//typedef int(LibToTosProxy::*fucnpoint)(int);
 
 namespace ns3 {
 
@@ -44,7 +42,8 @@ public:
 	 */
 	TosNode(uint32_t node_id, Time bootTime);
 
-	TosNode(uint32_t node_id ,Time bootTime,const char * lib);
+	//TosNode(uint32_t node_id ,Time bootTime,const char * lib);
+	TosNode(uint32_t node_id ,Time bootTime, const char * lib, std::vector<std::string> externs);
 
 	/**
 	 * Starts tos implementation of node at bootTime
@@ -125,6 +124,9 @@ private:
 	//reference to the
 	Ptr<Node>	m_node;
 	std::vector<Ptr <TosNetDevice> > m_devices;
+	const char * m_libname;
+
+	std::vector<std::string> m_tos_functions;
 	bool m_started;
 
 	/**
@@ -152,7 +154,7 @@ private:
 	/**
 	 * name of the library to open
 	 */
-	const char * m_libname;
+
 	/**
 	 * Error variable, used then opening library
 	 */

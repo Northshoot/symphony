@@ -55,9 +55,14 @@ implementation
 		signal SplitControl.startDone(SUCCESS);
 	}
 	
+	extern int radioStateDone() @C() @spontaneous(){
+        printf("radio state done\n");
+        
+		signal SplitControl.startDone(SUCCESS);
+		return 0;
+		
+	}	
 	command error_t SplitControl.start(){
-		printf("command error_t SplitControl.start()");
-		post SplitControlStartDone();
 		return SUCCESS;
 	}
 
@@ -115,9 +120,7 @@ implementation
 		call AMPacket.setGroup(msg, call AMPacket.localGroup());
 		call AMPacket.setType(msg, id);
 		call AMPacket.setDestination(msg, addr);
-		printf("src: %u setting dest: %u\n", call AMPacket.address(), addr);
 		signal SendNotifier.aboutToSend[id](addr, msg);
-
 		return call SubSend.send(msg);
 	}
 
@@ -159,8 +162,7 @@ implementation
 		am_id_t id = call AMPacket.type(msg);
 		void* payload = getPayload(msg);
 		uint8_t len = call Packet.payloadLength(msg);
-		printf("event message_t* SubReceive.receive(message_t* msg) id %d\n",id);
-		signal Receive.receive[3](msg, payload, len);
+		signal Receive.receive[id](msg, payload, len);
 //		call AMPacket.isForMe(msg) 
 //			? signal Receive.receive[id](msg, payload, len)
 //			: signal Snoop.receive[id](msg, payload, len);

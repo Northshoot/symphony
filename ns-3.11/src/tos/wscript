@@ -7,7 +7,9 @@ def build(bld):
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
     #obj.env.append_value('CXXFLAGS', '-I/home/lauril/dev/symphony/tinyos-2.1.1/tos/types') 
     obj.env.append_value('CCFLAGS','-std=gnu++0x')
+    #obj.env.append_value('CXXFLAGS','-lxerces-c')
     obj.env.append_value('LINKFLAGS','-ldl')
+    obj.env.append_value('LINKFLAGS','-lxerces-c')
     obj.source = ['model/tos-to-ns3-proxy.cc',
     			  'model/tos-node.cc',
     			  'model/simu-clock.cc',
@@ -21,6 +23,7 @@ def build(bld):
     			  'helper/yans-tos-helper.cc',
     			  'helper/tos-net-device-container.cc',
     			  'helper/tos-mobility-helper.cc',
+    			  'helper/symphony-xml.cc',
     	        ]
 
 
@@ -43,6 +46,4 @@ def build(bld):
 				  'helper/tos-mobility-helper.h',
 				  'model/calls-to-ns3.h',
         ]
-
-
 

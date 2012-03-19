@@ -28,7 +28,7 @@ implementation {
 	uint16_t counter = 0;
  
 	event void Boot.booted() {
-		printf("App: booted\n");
+		printf("App: booted %d\n", TOS_NODE_ID);
 		call AMControl.start();
 	}
 
