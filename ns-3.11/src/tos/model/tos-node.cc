@@ -182,10 +182,10 @@ void TosNode::DoStart()
 		((tosfunc)(getFunc("setUniqueID")))(GetId()); //set nodes id in lib
 		setObj = (tosfunc)(getFunc("setProxy"));
 		setObj((long )(tostons)); //set link from ns3 to tos
-		nstotos->addFunction("sim_main_start_mote",getFunc("sim_main_start_mote"));
-		nstotos->setTimerFired(getFunc("tickFired")); // connect clock tick
+//		nstotos->addFunction("sim_main_start_mote",getFunc("sim_main_start_mote"));
+//		nstotos->setTimerFired(getFunc("tickFired")); // connect clock tick
 		run_next = (tosfunc)(getFunc("runNextEventExternal"));
-		nstotos->setDownlink(getFunc("receivePkt"));
+//		nstotos->setDownlink(getFunc("receivePkt"));
 	}
 	NS_LOG_FUNCTION(this<<" " << m_libname);
 

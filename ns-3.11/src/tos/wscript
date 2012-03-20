@@ -1,8 +1,15 @@
-def configure(conf):
-	print "configure"
+#//TODO: chech and configure tinyos environment 
+from proxy_generator import *
 
+def configure(conf):
+    pass
+
+#call module for generating proxy implementation   
+def generate():
+	a=Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml")
 
 def build(bld):
+    Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml")
     obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
     #obj.env.append_value('CXXFLAGS', '-I/home/lauril/dev/symphony/tinyos-2.1.1/tos/types') 
@@ -46,4 +53,4 @@ def build(bld):
 				  'helper/tos-mobility-helper.h',
 				  'model/calls-to-ns3.h',
         ]
-
+    pymod = bld.ns3_python_bindings()

@@ -1,5 +1,10 @@
 eclipse.preferences.version=1
+encoding//src/core/wscript=utf-8
+encoding//src/internet/wscript=utf-8
 encoding//src/mpi/wscript=utf-8
+encoding//src/test/perf/wscript=utf-8
+encoding//src/test/wscript=utf-8
+encoding//src/virtual-net-device/wscript=utf-8
 encoding//src/wifi/wscript=utf-8
 encoding//src/wscript=utf-8
 encoding/wscript=utf-8
