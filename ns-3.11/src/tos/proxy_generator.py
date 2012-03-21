@@ -16,10 +16,8 @@ class Ns3ToTosProxyGenerator:
         self.xml_file   = xml_file
         self.cwd        = os.getcwd() + '/'
         self.text       = self.TextFolder()
-        self.header_name     = "ns3-to-tos-proxy_auto.h"
-        self.cpp_name        = "ns3-to-tos-proxy_auto.cc"
-        self.header     = open(self.cwd + self.header_name,'w')
-        self.cpp        = open(self.cwd + self.cpp_name,'w')
+        self.header_name     = "src/tos/model/ns3-to-tos-proxy_auto.h"
+        self.cpp_name        = "src/tos/model/ns3-to-tos-proxy_auto.cc"
         self.tree       = None
         self.root_element = None
         self.external_elements = None
@@ -31,7 +29,18 @@ class Ns3ToTosProxyGenerator:
         self.val_class = "Ns3ToTosProxy::"
         self.functions = []
         self.typedefs = []
-        self.createProxy()
+        self.checkLastModified()
+     
+    #we first check if there is a need to create new file
+    def checkLastModified(self):
+        print os.getcwd()
+        xml_file_time = os.path.getmtime(self.xml_file)
+        cpp_file_time = os.path.getmtime(self.cpp_name)
+        #if cpp is older -> we need to build it
+        if cpp_file_time < xml_file_time :
+            self.header = open(self.cwd + self.header_name,'w')
+            self.cpp  = open(self.cwd + self.cpp_name,'w')
+            self.createProxy()
         
     #everything needs to be performed in order otherwise you will get bogus output
     def createProxy(self):

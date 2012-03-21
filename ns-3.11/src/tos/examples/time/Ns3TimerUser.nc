@@ -22,9 +22,9 @@ uint16_t ev = 0;
 
   event void Boot.booted()
   {
-    printf("boot.booted\n");
+    printf("boot.booted %d\n",TOS_NODE_ID);
     call Timer0.startPeriodic( 500 );
-    call Timer1.startPeriodic(490);
+    call Timer1.startPeriodic(220);
 
 
 

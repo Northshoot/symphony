@@ -22,7 +22,7 @@
 
 #include "simu-clock.h"
 #include "tos-node.h"
-#include "ns3-to-tos-proxy.h"
+#include "ns3-to-tos-proxy_auto.h"
 #include "tos-to-ns3-proxy.h"
 #include "tos-node-list.h"
 #include "tos-net-device.h"
@@ -108,8 +108,8 @@ void TosNode::BootBooted(void)
 	NS_LOG_FUNCTION(this << " " <<m_id << " " << simuclock->getTimeNow() << " ms" );
 	//tickTime(100);
 	//cout<<"booted node id " << node_id <<" at " <<Simulator::Now().GetMilliSeconds() <<endl;
-	nstotos->start_mote(m_id);
-	GetDevice(0)->Start();
+	nstotos->sim_main_start_mote(m_id);
+	//GetDevice(0)->Start();
 	//Simulator::RunOneEvent();
 	Simulator::Remove(m_boot_event);
 }
@@ -118,7 +118,7 @@ uint32_t TosNode::wrapFire(uint32_t a)
 {
 	a = simuclock->getTimeNow();
 	//cout<< "Time " << a << " ms"<<endl;
-	nstotos->timerFired(a);
+	nstotos->tickFired(a);
 	return 0;
 }
 
@@ -163,46 +163,37 @@ void TosNode::DoStart()
 	callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
 	simuclock = new SimuClock(NANOSECOND, NONE, callBackFromClock);
 	tostons->simu_clock = simuclock;
-	//	DoStart();
-	//	Object::DoStart();
 	m_libname = "/home/lauril/dev/symphony/ns-3.11/build/debug/libtos.so";
 
 	//changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
 	//for eclipse debug full path is needed for the lib
 	//TODO: add script for copying libtos.so to build/debug
-	handler = dlopen(m_libname, RTLD_LAZY);
-	for(uint32_t i=0; i < m_tos_functions.size();i++){
-	  string f = m_tos_functions.at(i);
-	  nstotos->addFunction(f,getFunc(f.c_str()));
-	}
+	handler = dlmopen(LM_ID_NEWLM, m_libname, RTLD_LAZY);
 	if(!handler){
 		std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
 		exit(1);
 	}else{
-		((tosfunc)(getFunc("setUniqueID")))(GetId()); //set nodes id in lib
-		setObj = (tosfunc)(getFunc("setProxy"));
-		setObj((long )(tostons)); //set link from ns3 to tos
-//		nstotos->addFunction("sim_main_start_mote",getFunc("sim_main_start_mote"));
-//		nstotos->setTimerFired(getFunc("tickFired")); // connect clock tick
-		run_next = (tosfunc)(getFunc("runNextEventExternal"));
-//		nstotos->setDownlink(getFunc("receivePkt"));
-	}
-	NS_LOG_FUNCTION(this<<" " << m_libname);
 
-	for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
-	       i != m_devices.end (); i++)
-	    {
-	      Ptr<TosNetDevice> device = *i;
-	      device->Start ();
-	    }
+	  for(uint32_t i=0; i < m_tos_functions.size();i++){
+	    string f = m_tos_functions.at(i);
+	    nstotos->addFunction(f,getFunc(f.c_str()));
+	  }
+
+	}
+	nstotos->setProxy((long)tostons);
+	NS_LOG_FUNCTION(this<<" " << m_libname);
+	//has to be started from nodes
+//	for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
+//	       i != m_devices.end (); i++)
+//	    {
+//	      Ptr<TosNetDevice> device = *i;
+//	      device->Start ();
+//	    }
 	Node::DoStart();
 	Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
 }
 
-void
-TosNode::tickTime(int int1)
-{
-}
+
 
 uint32_t
 TosNode::AddDevice(Ptr<TosNetDevice> device)
@@ -237,15 +228,15 @@ TosNode::GetNDevices(void) const
 
 void *
 TosNode::getFunc(const char* func_name){
-char *error=NULL;
-void * tmp = dlsym(handler,func_name);
-if( (error = dlerror()) != NULL){
-	std::cerr<<"func "<< tmp <<'\n';
-	std::cerr << "Cannot get function: " << func_name <<" " << error << '\n';
-	exit(1);
-} else {
-	return tmp;
-}
-}
+  char *error=NULL;
+  void * tmp = dlsym(handler,func_name);
+    if( (error = dlerror()) != NULL){
+      std::cerr<<"func "<< tmp <<'\n';
+      std::cerr << "Cannot get function: " << func_name <<" " << error << '\n';
+      exit(1);
+    } else {
+      return tmp;
+    }
+  }
 
 }

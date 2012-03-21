@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<symphony>
+  <tos_externals>
+  	<function return="int" params="1" param1="int">sendSendDone</function>
+  	<function return="void" params="1" param1="int">radioStartDone</function>
+  	<function return="int" params="1" param1="int">setUniqueID</function>
+  	<function return="void" params="1" param1="int">sim_main_start_mote</function>
+  	<function return="int" params="1" param1="long">setProxy</function>
+  	<function return="int" params="1" param1="uint32_t">tickFired</function>
+  	<function return="int" params="0">radioStateDone</function>
+  	<function return="int" params="1" param1="void *">receiveMessage</function>
+  	<function return="int" params="1" param1="uint32_t">runNextEventExternal</function>
+  </tos_externals>
+  <sensors>
+  	<netdevice> param
+  	</netdevice>
+  	</sensors>
+</symphony>

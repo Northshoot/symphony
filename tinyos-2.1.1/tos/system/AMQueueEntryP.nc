@@ -74,4 +74,6 @@ implementation {
     return call Send.getPayload(m, len);
   }
   
+  default event void AMSend.sendDone(message_t* m, error_t err){}
+  
 }

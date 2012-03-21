@@ -17,7 +17,7 @@
 #include "ns3/ptr.h"
 
 #include "simu-clock.h"
-#include "ns3-to-tos-proxy.h"
+#include "ns3-to-tos-proxy_auto.h"
 #include "tos-to-ns3-proxy.h"
 #include "tos-net-device.h"
 
@@ -55,8 +55,6 @@ public:
 	 * calls DoDispose()
 	 */
 	void ShutDownNode(Time ttl);
-
-	void tickTime(int);
 
 	  /**
 	   * \param device WsnTosDevice to associate to this node.
@@ -117,7 +115,7 @@ private:
 	uint32_t    m_sid;        	// System id for this node
 	Time        m_bootTime; 	//boot time of the node
 	Time        m_shutDownTime;	//shut down time of the node
-	Time		m_timer;
+	Time		    m_timer;
 	EventId		timer_event;
 	EventId		m_boot_event;	//boot event
 	EventId		m_shutdown_event;//shut down event
@@ -144,16 +142,6 @@ private:
 	 * Unique id of this
 	 */
 	int un;
-
-	/**
-	 * Function to set proxy in node image
-	 */
-	tosfunc setObj;
-
-	tosfunc run_next;
-	/**
-	 * name of the library to open
-	 */
 
 	/**
 	 * Error variable, used then opening library

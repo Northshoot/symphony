@@ -6,10 +6,10 @@ def configure(conf):
 
 #call module for generating proxy implementation   
 def generate():
-	a=Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml")
+	 Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml")
 
 def build(bld):
-    Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml")
+    generate()
     obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
     #obj.env.append_value('CXXFLAGS', '-I/home/lauril/dev/symphony/tinyos-2.1.1/tos/types') 
@@ -18,10 +18,8 @@ def build(bld):
     obj.env.append_value('LINKFLAGS','-ldl')
     obj.env.append_value('LINKFLAGS','-lxerces-c')
     obj.source = ['model/tos-to-ns3-proxy.cc',
-    			  'model/tos-node.cc',
-    			  'model/simu-clock.cc',
     			  #'model/tiny-bridge.cc',
-    			  'model/ns3-to-tos-proxy.cc',
+    			  'model/ns3-to-tos-proxy_auto.cc',
     			  'model/tos-node-list.cc',
     			  'model/tos-mac-low.cc',
     			  'model/tos-net-device.cc',
@@ -31,15 +29,18 @@ def build(bld):
     			  'helper/tos-net-device-container.cc',
     			  'helper/tos-mobility-helper.cc',
     			  'helper/symphony-xml.cc',
+                   'model/tos-node.cc',
+                  'model/simu-clock.cc',
     	        ]
 
 
     headers = bld.new_task_gen('ns3header')
     headers.module = 'tos'
-    headers.source = ['model/tos-to-ns3-proxy.h',
+    headers.source = ['model/calls-to-ns3.h',
+                  'model/tos-to-ns3-proxy.h',
     			  'model/tos-node.h',
     			  'model/simu-clock.h',
-    			  'model/ns3-to-tos-proxy.h',
+    			  'model/ns3-to-tos-proxy_auto.h',
     			  'model/tos-packet.h',
     			  'model/gateway.h',
     			  'model/ns3includes.h',
@@ -51,6 +52,6 @@ def build(bld):
 				  'helper/yans-tos-helper.h',
 				  'helper/tos-net-device-container.h',
 				  'helper/tos-mobility-helper.h',
-				  'model/calls-to-ns3.h',
+				  
         ]
     pymod = bld.ns3_python_bindings()

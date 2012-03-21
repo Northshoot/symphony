@@ -755,7 +755,7 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b5e6642e6b0, const void *arg_0x2b5e6642e988);
+typedef int (*__compar_fn_t)(const void *arg_0x2ba4852616b0, const void *arg_0x2ba485261988);
 #line 776
 __extension__ 
 #line 793
@@ -1259,11 +1259,6 @@ typedef nx_struct message_t {
   nx_uint8_t footer[sizeof(message_footer_t )];
   nx_uint8_t metadata[sizeof(message_metadata_t )];
 } __attribute__((packed)) __attribute((__packed__))  message_t;
-# 6 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/NS3MsgGatewayP.nc"
-static inline 
-#line 5
-void 
-printTosPacket(char *buf);
 typedef TMilli RadioTestC$MilliTimer$precision_tag;
 enum AMQueueP$__nesc_unnamed4281 {
   AMQueueP$NUM_CLIENTS = 1U
@@ -1277,11 +1272,11 @@ static error_t PlatformC$Init$init(void );
 # 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b5e666cecb0);
+uint8_t arg_0x2ba485501cb0);
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b5e666cecb0);
+uint8_t arg_0x2ba485501cb0);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1358,7 +1353,7 @@ error_t error);
 # 110 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$AMSend$sendDone(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/system/AMQueueImplP.nc"
-am_id_t arg_0x2b5e667e4488, 
+am_id_t arg_0x2ba485614340, 
 # 103 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 message_t * msg, 
 
@@ -1371,7 +1366,7 @@ error_t error);
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Send.nc"
 static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$send(
 # 46 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2b5e667e6318, 
+uint8_t arg_0x2ba4856161c8, 
 # 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Send.nc"
 message_t * msg, 
 
@@ -1385,7 +1380,7 @@ uint8_t len);
 #line 100
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$default$sendDone(
 # 46 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2b5e667e6318, 
+uint8_t arg_0x2ba4856161c8, 
 # 96 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Send.nc"
 message_t * msg, 
 
@@ -1405,7 +1400,7 @@ static message_t *Ns3ActiveMessageC$SubReceive$receive(message_t *msg);
 # 59 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SendNotifier.nc"
 static void Ns3ActiveMessageC$SendNotifier$default$aboutToSend(
 # 19 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
-am_id_t arg_0x2b5e6682ddf8, 
+am_id_t arg_0x2ba485679df8, 
 # 59 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SendNotifier.nc"
 am_addr_t dest, 
 #line 57
@@ -1441,7 +1436,7 @@ uint8_t len);
 # 80 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 static error_t Ns3ActiveMessageC$AMSend$send(
 # 16 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
-am_id_t arg_0x2b5e668305f0, 
+am_id_t arg_0x2ba4856605f0, 
 # 80 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 am_addr_t addr, 
 #line 71
@@ -1466,7 +1461,7 @@ message_t *
 
 Ns3ActiveMessageC$Receive$default$receive(
 # 17 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
-am_id_t arg_0x2b5e6682f780, 
+am_id_t arg_0x2ba48565f780, 
 # 71 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -1537,6 +1532,8 @@ static am_group_t Ns3ActiveMessageC$AMPacket$localGroup(void );
 static void NS3MsgGatewayP$receive$runTask(void );
 # 46 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/radio/BareSend.nc"
 static error_t NS3MsgGatewayP$Send$send(message_t *msg);
+# 56 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/radio/RadioState.nc"
+static error_t NS3MsgGatewayP$State$turnOn(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void NS3MsgGatewayP$sendDone$runTask(void );
 # 55 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/system/ActiveMessageAddressC.nc"
@@ -1555,11 +1552,11 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fire
 #line 83
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b5e6692ede0);
+uint8_t arg_0x2ba48575dde0);
 # 73 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startOneShot(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b5e6692ede0, 
+uint8_t arg_0x2ba48575dde0, 
 # 73 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 uint32_t dt);
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
@@ -1585,7 +1582,7 @@ int sim_main_start_mote(int id)   ;
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b5e666cecb0);
+uint8_t arg_0x2ba485501cb0);
 
 
 
@@ -1741,12 +1738,12 @@ uint8_t len);
 static error_t RadioTestC$send$postTask(void );
 # 73 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void RadioTestC$MilliTimer$startOneShot(uint32_t dt);
-# 67 "RadioTestC.nc"
+# 68 "RadioTestC.nc"
 enum RadioTestC$__nesc_unnamed4283 {
-#line 67
+#line 68
   RadioTestC$send = 0U
 };
-#line 67
+#line 68
 typedef int RadioTestC$__nesc_sillytask_send[RadioTestC$send];
 #line 25
 message_t RadioTestC$packet;
@@ -1760,16 +1757,16 @@ static inline void RadioTestC$Boot$booted(void );
 
 
 static void RadioTestC$AMControl$startDone(error_t err);
-#line 67
+#line 68
 static inline void RadioTestC$send$runTask(void );
-#line 86
+#line 87
 static inline void RadioTestC$MilliTimer$fired(void );
 
 
 
 static inline message_t *RadioTestC$Receive$receive(message_t *bufPtr, 
 void *payload, uint8_t len);
-#line 103
+#line 106
 static inline void RadioTestC$AMSend$sendDone(message_t *bufPtr, error_t error);
 # 110 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 static void /*RadioApp.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP$0$AMSend$sendDone(
@@ -1827,7 +1824,7 @@ static inline void /*RadioApp.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP$0$S
 # 80 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$AMSend$send(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/system/AMQueueImplP.nc"
-am_id_t arg_0x2b5e667e4488, 
+am_id_t arg_0x2ba485614340, 
 # 80 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 am_addr_t addr, 
 #line 71
@@ -1844,7 +1841,7 @@ uint8_t len);
 # 100 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Send.nc"
 static void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$sendDone(
 # 46 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/system/AMQueueImplP.nc"
-uint8_t arg_0x2b5e667e6318, 
+uint8_t arg_0x2ba4856161c8, 
 # 96 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Send.nc"
 message_t * msg, 
 
@@ -1929,7 +1926,7 @@ static error_t Ns3ActiveMessageC$SubSend$send(message_t *msg);
 # 59 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SendNotifier.nc"
 static void Ns3ActiveMessageC$SendNotifier$aboutToSend(
 # 19 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
-am_id_t arg_0x2b5e6682ddf8, 
+am_id_t arg_0x2ba485679df8, 
 # 59 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SendNotifier.nc"
 am_addr_t dest, 
 #line 57
@@ -1937,7 +1934,7 @@ message_t * msg);
 # 110 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 static void Ns3ActiveMessageC$AMSend$sendDone(
 # 16 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
-am_id_t arg_0x2b5e668305f0, 
+am_id_t arg_0x2ba4856605f0, 
 # 103 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
 message_t * msg, 
 
@@ -1947,6 +1944,8 @@ message_t * msg,
 
 
 error_t error);
+# 56 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/radio/RadioState.nc"
+static error_t Ns3ActiveMessageC$SubState$turnOn(void );
 # 50 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/ActiveMessageAddress.nc"
 static am_addr_t Ns3ActiveMessageC$ActiveMessageAddress$amAddress(void );
 
@@ -1963,7 +1962,7 @@ message_t *
 
 Ns3ActiveMessageC$Receive$receive(
 # 17 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
-am_id_t arg_0x2b5e6682f780, 
+am_id_t arg_0x2ba48565f780, 
 # 71 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -1993,15 +1992,7 @@ extern int radioStateDone(void )   ;
 
 
 static inline error_t Ns3ActiveMessageC$SplitControl$start(void );
-
-
-
-
-
-
-
-
-
+#line 79
 static inline ns3packet_header_t *Ns3ActiveMessageC$getHeader(message_t *msg);
 
 
@@ -2041,9 +2032,9 @@ static inline void Ns3ActiveMessageC$setGroup(message_t *msg, am_group_t grp);
 
 
 static error_t Ns3ActiveMessageC$AMSend$send(am_id_t id, am_addr_t addr, message_t *msg, uint8_t len);
-#line 127
+#line 131
 static inline void Ns3ActiveMessageC$SubSend$sendDone(message_t *msg, error_t error);
-#line 151
+#line 155
 static inline void Ns3ActiveMessageC$SendNotifier$default$aboutToSend(am_id_t id, am_addr_t addr, message_t *msg);
 
 
@@ -2054,9 +2045,9 @@ static inline void Ns3ActiveMessageC$SendNotifier$default$aboutToSend(am_id_t id
 
 
 static inline message_t *Ns3ActiveMessageC$SubReceive$receive(message_t *msg);
-#line 173
+#line 177
 static inline message_t *Ns3ActiveMessageC$Receive$default$receive(am_id_t id, message_t *msg, void *payload, uint8_t len);
-#line 185
+#line 189
 static __inline am_addr_t Ns3ActiveMessageC$AMPacket$address(void );
 
 
@@ -2109,7 +2100,7 @@ static __inline void Ns3ActiveMessageC$AMPacket$setType(message_t *msg, am_id_t 
 
 
 static __inline void Ns3ActiveMessageC$AMPacket$setGroup(message_t *msg, am_group_t grp);
-#line 255
+#line 259
 static inline uint8_t Ns3ActiveMessageC$Packet$payloadLength(message_t *msg);
 
 
@@ -2166,7 +2157,7 @@ static inline void NS3MsgGatewayP$receive$runTask(void );
 
 
 
-extern int receivePkt(void *msg)   ;
+extern int receiveMessage(void *msg)   ;
 
 
 
@@ -2186,6 +2177,8 @@ extern int radioStartDone(void )   ;
 
 
 static inline error_t NS3MsgGatewayP$Send$send(message_t *msg);
+#line 100
+static error_t NS3MsgGatewayP$State$turnOn(void );
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/system/ActiveMessageAddressC.nc"
 am_addr_t ActiveMessageAddressC$addr = TOS_AM_ADDRESS;
 
@@ -2216,7 +2209,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b5e6692ede0);
+uint8_t arg_0x2ba48575dde0);
 #line 71
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4290 {
 #line 71
@@ -2349,7 +2342,7 @@ inline static error_t RadioTestC$AMSend$send(am_addr_t addr, message_t * msg, ui
 #line 80
 }
 #line 80
-# 271 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 275 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline void *Ns3ActiveMessageC$Packet$getPayload(message_t *msg, uint8_t len)
 {
   for (; 0; ) ;
@@ -2372,9 +2365,9 @@ inline static void * RadioTestC$Packet$getPayload(message_t * msg, uint8_t len){
 #line 126
 }
 #line 126
-# 67 "RadioTestC.nc"
+# 68 "RadioTestC.nc"
 static inline void RadioTestC$send$runTask(void )
-#line 67
+#line 68
 {
   RadioTestC$counter++;
   ;
@@ -2384,7 +2377,7 @@ static inline void RadioTestC$send$runTask(void )
   else {
       radio_count_msg_t *rcm = (radio_count_msg_t *)RadioTestC$Packet$getPayload(&RadioTestC$packet, sizeof(radio_count_msg_t ));
 
-#line 75
+#line 76
       if (rcm == (void *)0) {
           return;
         }
@@ -2397,9 +2390,9 @@ static inline void RadioTestC$send$runTask(void )
     }
 }
 
-#line 103
+#line 106
 static inline void RadioTestC$AMSend$sendDone(message_t *bufPtr, error_t error)
-#line 103
+#line 106
 {
   if (&RadioTestC$packet == bufPtr) {
       RadioTestC$locked = FALSE;
@@ -2427,9 +2420,9 @@ static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$default$sendDone
 }
 
 # 100 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Send.nc"
-inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$sendDone(uint8_t arg_0x2b5e667e6318, message_t * msg, error_t error){
+inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$sendDone(uint8_t arg_0x2ba4856161c8, message_t * msg, error_t error){
 #line 100
-  switch (arg_0x2b5e667e6318) {
+  switch (arg_0x2ba4856161c8) {
 #line 100
     case 0U:
 #line 100
@@ -2439,7 +2432,7 @@ inline static void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$sendDone(uint8_t
 #line 100
     default:
 #line 100
-      /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$default$sendDone(arg_0x2b5e667e6318, msg, error);
+      /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Send$default$sendDone(arg_0x2ba4856161c8, msg, error);
 #line 100
       break;
 #line 100
@@ -2516,14 +2509,14 @@ static __inline  uint8_t __nesc_ntoh_uint8(const void * source)
   return base[0];
 }
 
-# 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 79 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline ns3packet_header_t *Ns3ActiveMessageC$getHeader(message_t *msg)
-#line 75
+#line 79
 {
   return (ns3packet_header_t *)msg->header;
 }
 
-#line 221
+#line 225
 static __inline am_id_t Ns3ActiveMessageC$AMPacket$type(message_t *msg)
 {
   return __nesc_ntoh_uint8(Ns3ActiveMessageC$getHeader(msg)->type.nxdata);
@@ -2550,13 +2543,13 @@ static inline void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$AMSend$sendDone(am_id
 }
 
 # 110 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
-inline static void Ns3ActiveMessageC$AMSend$sendDone(am_id_t arg_0x2b5e668305f0, message_t * msg, error_t error){
+inline static void Ns3ActiveMessageC$AMSend$sendDone(am_id_t arg_0x2ba4856605f0, message_t * msg, error_t error){
 #line 110
-  /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$AMSend$sendDone(arg_0x2b5e668305f0, msg, error);
+  /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$AMSend$sendDone(arg_0x2ba4856605f0, msg, error);
 #line 110
 }
 #line 110
-# 127 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 131 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline void Ns3ActiveMessageC$SubSend$sendDone(message_t *msg, error_t error)
 {
   Ns3ActiveMessageC$AMSend$sendDone(Ns3ActiveMessageC$AMPacket$type(msg), msg, error);
@@ -2655,40 +2648,46 @@ inline static void RadioTestC$MilliTimer$startOneShot(uint32_t dt){
 #line 73
 }
 #line 73
-# 90 "RadioTestC.nc"
+# 91 "RadioTestC.nc"
 static inline message_t *RadioTestC$Receive$receive(message_t *bufPtr, 
 void *payload, uint8_t len)
-#line 91
+#line 92
 {
-  printf("# %d RadioTest event message_t* Receive.receive %u\n", TOS_NODE_ID, __nesc_ntoh_uint16(((radio_count_msg_t *)payload)->counter.nxdata));
+
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+#line 94
+    RadioTestC$counter = __nesc_ntoh_uint16(((radio_count_msg_t *)payload)->counter.nxdata);
+#line 94
+    __nesc_atomic_end(__nesc_atomic); }
+  printf("# %d RadioTest event message_t* Receive.receive %u\n", TOS_NODE_ID, RadioTestC$counter);
   RadioTestC$MilliTimer$startOneShot(1000);
   if (len != sizeof(radio_count_msg_t )) {
-#line 94
+#line 97
       return bufPtr;
     }
   else 
-#line 95
+#line 98
     {
 
-      ;
+      printf("Buffer error on reception\n");
       return bufPtr;
     }
 }
 
-# 173 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 177 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline message_t *Ns3ActiveMessageC$Receive$default$receive(am_id_t id, message_t *msg, void *payload, uint8_t len)
 {
   return msg;
 }
 
 # 78 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
-inline static message_t * Ns3ActiveMessageC$Receive$receive(am_id_t arg_0x2b5e6682f780, message_t * msg, void * payload, uint8_t len){
+inline static message_t * Ns3ActiveMessageC$Receive$receive(am_id_t arg_0x2ba48565f780, message_t * msg, void * payload, uint8_t len){
 #line 78
   nx_struct message_t *__nesc_result;
 #line 78
 
 #line 78
-  switch (arg_0x2b5e6682f780) {
+  switch (arg_0x2ba48565f780) {
 #line 78
     case 3:
 #line 78
@@ -2698,7 +2697,7 @@ inline static message_t * Ns3ActiveMessageC$Receive$receive(am_id_t arg_0x2b5e66
 #line 78
     default:
 #line 78
-      __nesc_result = Ns3ActiveMessageC$Receive$default$receive(arg_0x2b5e6682f780, msg, payload, len);
+      __nesc_result = Ns3ActiveMessageC$Receive$default$receive(arg_0x2ba48565f780, msg, payload, len);
 #line 78
       break;
 #line 78
@@ -2710,27 +2709,27 @@ inline static message_t * Ns3ActiveMessageC$Receive$receive(am_id_t arg_0x2b5e66
 #line 78
 }
 #line 78
-# 255 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 259 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline uint8_t Ns3ActiveMessageC$Packet$payloadLength(message_t *msg)
 {
   return sizeof(ns3packet_header_t );
 }
 
-#line 79
+#line 83
 static inline void *Ns3ActiveMessageC$getPayload(message_t *msg)
-#line 79
+#line 83
 {
   return (void *)msg->data;
 }
 
-#line 160
+#line 164
 static inline message_t *Ns3ActiveMessageC$SubReceive$receive(message_t *msg)
 {
   am_id_t id = Ns3ActiveMessageC$AMPacket$type(msg);
   void *payload = Ns3ActiveMessageC$getPayload(msg);
   uint8_t len = Ns3ActiveMessageC$Packet$payloadLength(msg);
 
-#line 165
+#line 169
   Ns3ActiveMessageC$Receive$receive(id, msg, payload, len);
 
 
@@ -2885,9 +2884,9 @@ static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b5e666cecb0){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2ba485501cb0){
 #line 75
-  switch (arg_0x2b5e666cecb0) {
+  switch (arg_0x2ba485501cb0) {
 #line 75
     case RadioTestC$send:
 #line 75
@@ -2933,7 +2932,7 @@ inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b5e666cecb0)
 #line 75
     default:
 #line 75
-      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b5e666cecb0);
+      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2ba485501cb0);
 #line 75
       break;
 #line 75
@@ -3011,9 +3010,9 @@ inline static error_t RadioTestC$send$postTask(void ){
 #line 67
 }
 #line 67
-# 86 "RadioTestC.nc"
+# 87 "RadioTestC.nc"
 static inline void RadioTestC$MilliTimer$fired(void )
-#line 86
+#line 87
 {
   RadioTestC$send$postTask();
 }
@@ -3024,9 +3023,9 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$d
 }
 
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b5e6692ede0){
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2ba48575dde0){
 #line 83
-  switch (arg_0x2b5e6692ede0) {
+  switch (arg_0x2ba48575dde0) {
 #line 83
     case 0U:
 #line 83
@@ -3036,7 +3035,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$f
 #line 83
     default:
 #line 83
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b5e6692ede0);
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2ba48575dde0);
 #line 83
       break;
 #line 83
@@ -3111,20 +3110,20 @@ inline static uint8_t /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$Packet$payloadLeng
 #line 78
 }
 #line 78
-# 266 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 270 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline uint8_t Ns3ActiveMessageC$Packet$maxPayloadLength(void )
 {
   return 28;
 }
 
-#line 99
+#line 103
 static inline void Ns3ActiveMessageC$setSource(message_t *msg, am_addr_t addr)
-#line 99
+#line 103
 {
   __nesc_hton_uint16(Ns3ActiveMessageC$getHeader(msg)->src.nxdata, addr);
 }
 
-#line 216
+#line 220
 static __inline void Ns3ActiveMessageC$AMPacket$setSource(message_t *msg, am_addr_t addr)
 {
   Ns3ActiveMessageC$setSource(msg, addr);
@@ -3167,7 +3166,7 @@ inline static am_addr_t Ns3ActiveMessageC$ActiveMessageAddress$amAddress(void ){
 #line 50
 }
 #line 50
-# 185 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 189 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static __inline am_addr_t Ns3ActiveMessageC$AMPacket$address(void )
 {
   return Ns3ActiveMessageC$ActiveMessageAddress$amAddress();
@@ -3184,14 +3183,14 @@ static __inline  uint8_t __nesc_hton_uint8(void * target, uint8_t value)
   return value;
 }
 
-# 107 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 111 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline void Ns3ActiveMessageC$setGroup(message_t *msg, am_group_t grp)
-#line 107
+#line 111
 {
   __nesc_hton_uint8(Ns3ActiveMessageC$getHeader(msg)->destpan.nxdata, grp);
 }
 
-#line 236
+#line 240
 static __inline void Ns3ActiveMessageC$AMPacket$setGroup(message_t *msg, am_group_t grp)
 {
   Ns3ActiveMessageC$setGroup(msg, grp);
@@ -3227,21 +3226,21 @@ inline static am_group_t Ns3ActiveMessageC$ActiveMessageAddress$amGroup(void ){
 #line 55
 }
 #line 55
-# 190 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 194 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static __inline am_group_t Ns3ActiveMessageC$AMPacket$localGroup(void )
 {
   return Ns3ActiveMessageC$ActiveMessageAddress$amGroup();
 }
 
-#line 151
+#line 155
 static inline void Ns3ActiveMessageC$SendNotifier$default$aboutToSend(am_id_t id, am_addr_t addr, message_t *msg)
 {
 }
 
 # 59 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SendNotifier.nc"
-inline static void Ns3ActiveMessageC$SendNotifier$aboutToSend(am_id_t arg_0x2b5e6682ddf8, am_addr_t dest, message_t * msg){
+inline static void Ns3ActiveMessageC$SendNotifier$aboutToSend(am_id_t arg_0x2ba485679df8, am_addr_t dest, message_t * msg){
 #line 59
-    Ns3ActiveMessageC$SendNotifier$default$aboutToSend(arg_0x2b5e6682ddf8, dest, msg);
+    Ns3ActiveMessageC$SendNotifier$default$aboutToSend(arg_0x2ba485679df8, dest, msg);
 #line 59
 }
 #line 59
@@ -3260,36 +3259,12 @@ inline static error_t NS3MsgGatewayP$sendDone$postTask(void ){
 #line 67
 }
 #line 67
-# 6 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/NS3MsgGatewayP.nc"
-static inline 
-#line 5
-void 
-printTosPacket(char *buf)
-#line 6
-{
-  int size = sizeof(message_t );
-  int i = 0;
-  ns3packet_header_t *hdr;
-
-#line 10
-  hdr = (ns3packet_header_t *)((message_t *)buf)->header;
-  printf("FROM TOS - SIZE: %d :: HEADER size: %lu\n", size, sizeof(ns3packet_header_t ));
-  printf("HEX: ");
-  for (; i < size - 1; i++) {
-      printf("%02X ", (uint8_t )buf[i]);
-    }
-  printf("%02X\n", (uint8_t )buf[i]);
-  printf("header: ");
-  printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n", __nesc_ntoh_uint8(hdr->length.nxdata), __nesc_ntoh_uint8(hdr->dsn.nxdata), __nesc_ntoh_uint8(hdr->type.nxdata), __nesc_ntoh_uint16(hdr->fdest.nxdata), __nesc_ntoh_uint8(hdr->destpan.nxdata));
-  printf("dest %d :: src %d :: padd %d\n", __nesc_ntoh_uint16(hdr->dest.nxdata), __nesc_ntoh_uint16(hdr->src.nxdata), __nesc_ntoh_uint8(hdr->padd.nxdata));
-}
-
-#line 65
+# 65 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/NS3MsgGatewayP.nc"
 static inline error_t NS3MsgGatewayP$Send$send(message_t *msg)
 #line 65
 {
   NS3MsgGatewayP$msg_out = msg;
-  printTosPacket((char *)msg);
+
   a = gatewayRadio(proxy, RADIO_SEND, -1, -1, (void *)msg, (void *)msg);
   NS3MsgGatewayP$sendDone$postTask();
   return 0;
@@ -3325,14 +3300,14 @@ inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$errorTask$postTask
 #line 67
 }
 #line 67
-# 91 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 95 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline void Ns3ActiveMessageC$setDestination(message_t *msg, am_addr_t addr)
-#line 91
+#line 95
 {
   __nesc_hton_uint16(Ns3ActiveMessageC$getHeader(msg)->dest.nxdata, addr);
 }
 
-#line 206
+#line 210
 static __inline void Ns3ActiveMessageC$AMPacket$setDestination(message_t *msg, am_addr_t addr)
 {
   Ns3ActiveMessageC$setDestination(msg, addr);
@@ -3345,7 +3320,7 @@ inline static void /*RadioApp.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP$0$A
 #line 103
 }
 #line 103
-# 226 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 230 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static __inline void Ns3ActiveMessageC$AMPacket$setType(message_t *msg, am_id_t type)
 {
   __nesc_hton_uint8(Ns3ActiveMessageC$getHeader(msg)->type.nxdata, type);
@@ -3359,13 +3334,13 @@ inline static void /*RadioApp.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP$0$A
 }
 #line 162
 # 80 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/AMSend.nc"
-inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$AMSend$send(am_id_t arg_0x2b5e667e4488, am_addr_t addr, message_t * msg, uint8_t len){
+inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$AMSend$send(am_id_t arg_0x2ba485614340, am_addr_t addr, message_t * msg, uint8_t len){
 #line 80
   unsigned char __nesc_result;
 #line 80
 
 #line 80
-  __nesc_result = Ns3ActiveMessageC$AMSend$send(arg_0x2b5e667e4488, addr, msg, len);
+  __nesc_result = Ns3ActiveMessageC$AMSend$send(arg_0x2ba485614340, addr, msg, len);
 #line 80
 
 #line 80
@@ -3373,14 +3348,14 @@ inline static error_t /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$AMSend$send(am_id_
 #line 80
 }
 #line 80
-# 87 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 91 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline am_addr_t Ns3ActiveMessageC$destination(message_t *msg)
-#line 87
+#line 91
 {
   return __nesc_ntoh_uint16(Ns3ActiveMessageC$getHeader(msg)->dest.nxdata);
 }
 
-#line 201
+#line 205
 static __inline am_addr_t Ns3ActiveMessageC$AMPacket$destination(message_t *msg)
 {
   return Ns3ActiveMessageC$destination(msg);
@@ -3545,11 +3520,27 @@ inline static error_t SimMainP$SoftwareInit$init(void ){
 #line 62
 }
 #line 62
+# 56 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/radio/RadioState.nc"
+inline static error_t Ns3ActiveMessageC$SubState$turnOn(void ){
+#line 56
+  unsigned char __nesc_result;
+#line 56
+
+#line 56
+  __nesc_result = NS3MsgGatewayP$State$turnOn();
+#line 56
+
+#line 56
+  return __nesc_result;
+#line 56
+}
+#line 56
 # 65 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static inline error_t Ns3ActiveMessageC$SplitControl$start(void )
 #line 65
 {
-  return SUCCESS;
+  printf("\t SplitControl.start()\n");
+  return Ns3ActiveMessageC$SubState$turnOn();
 }
 
 # 104 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
@@ -3647,7 +3638,7 @@ static __inline void __nesc_disable_interrupt()
   proxy = con;
   if (proxy != (void *)0) {
       a = gateway(proxy, 0, id_this_lib);
-      printf("FROM toslib: gateway(proxy,0,id_this_lib): %i\n", a);
+      printf("\tFROM toslib: gateway(proxy,0,id_this_lib): %i\n", a);
     }
   else {
       printf("FROM toslib: ops! no proxy\n");
@@ -3740,7 +3731,7 @@ static void /*AMQueueP.AMQueueImplP*/AMQueueImplP$0$tryToSend(void )
     }
 }
 
-# 113 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
+# 117 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/Ns3ActiveMessageC.nc"
 static error_t Ns3ActiveMessageC$AMSend$send(am_id_t id, am_addr_t addr, message_t *msg, uint8_t len)
 {
   if (len > Ns3ActiveMessageC$Packet$maxPayloadLength()) {
@@ -3755,7 +3746,7 @@ static error_t Ns3ActiveMessageC$AMSend$send(am_id_t id, am_addr_t addr, message
   return Ns3ActiveMessageC$SubSend$send(msg);
 }
 
-#line 260
+#line 264
 static void Ns3ActiveMessageC$Packet$setPayloadLength(message_t *msg, uint8_t len)
 {
   for (; 0; ) ;
@@ -3766,28 +3757,29 @@ static void Ns3ActiveMessageC$Packet$setPayloadLength(message_t *msg, uint8_t le
 static void RadioTestC$AMControl$startDone(error_t err)
 #line 35
 {
-  printf("App: AMControl.startDone(error_t err) \n");
-  if (err == SUCCESS && TOS_NODE_ID == 1) {
-      RadioTestC$counter++;
+  printf("\tApp: AMControl.startDone(error_t err) \n");
+  if (err == SUCCESS) {
+      if (TOS_NODE_ID == 1) {
+          RadioTestC$counter++;
 
-      if (RadioTestC$locked) {
-          printf("App: AMControl.startDone(error_t err) LOCKED \n");
-        }
-      else {
-          radio_count_msg_t *rcm = (radio_count_msg_t *)RadioTestC$Packet$getPayload(&RadioTestC$packet, sizeof(radio_count_msg_t ));
-
-#line 45
-          if (rcm == (void *)0) {
-              return;
+          if (RadioTestC$locked) {
+              printf("App: AMControl.startDone(error_t err) LOCKED \n");
             }
-          __nesc_hton_uint16(rcm->counter.nxdata, RadioTestC$counter);
-          printf("AMControl.startDone: about to send\n");
-          if (RadioTestC$AMSend$send(AM_BROADCAST_ADDR, &RadioTestC$packet, sizeof(radio_count_msg_t )) == SUCCESS) {
+          else {
+              radio_count_msg_t *rcm = (radio_count_msg_t *)RadioTestC$Packet$getPayload(&RadioTestC$packet, sizeof(radio_count_msg_t ));
+
+#line 46
+              if (rcm == (void *)0) {
+                  return;
+                }
+              __nesc_hton_uint16(rcm->counter.nxdata, RadioTestC$counter);
+              printf("AMControl.startDone: about to send\n");
+              if (RadioTestC$AMSend$send(AM_BROADCAST_ADDR, &RadioTestC$packet, sizeof(radio_count_msg_t )) == SUCCESS) {
+                }
             }
         }
     }
   else 
-
 
 
     {
@@ -3804,6 +3796,16 @@ uint8_t len)
   /*RadioApp.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP$0$AMPacket$setDestination(msg, dest);
   /*RadioApp.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP$0$AMPacket$setType(msg, 3);
   return /*RadioApp.AMSenderC.SenderC.AMQueueEntryP*/AMQueueEntryP$0$Send$send(msg, len);
+}
+
+# 100 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/NS3MsgGatewayP.nc"
+static error_t NS3MsgGatewayP$State$turnOn(void )
+#line 100
+{
+  void *buff;
+
+#line 102
+  return gatewayRadio(proxy, RADIO_ON, -1, -1, buff, buff);
 }
 
 # 13 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
@@ -3950,14 +3952,14 @@ uint8_t len)
 extern   int radioStateDone(void )
 #line 58
 {
-  printf("radio state done\n");
+  printf("\t radio state done\n");
 
   Ns3ActiveMessageC$SplitControl$startDone(SUCCESS);
   return 0;
 }
 
 # 46 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/NS3MsgGatewayP.nc"
-extern   int receivePkt(void *msg)
+extern   int receiveMessage(void *msg)
 #line 46
 {
   NS3MsgGatewayP$msg_in = (message_t *)msg;
@@ -3976,7 +3978,7 @@ extern   int sendSendDone(void *msg, error_t err)
 extern   int radioStartDone(void )
 #line 58
 {
-  printf("radio state done\n");
+  printf("radioStartDone\n");
   return 0;
 }
 

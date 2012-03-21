@@ -33,8 +33,9 @@ implementation {
 	}
 
 	event void AMControl.startDone(error_t err) {
-		printf("App: AMControl.startDone(error_t err) \n");
-		if (err == SUCCESS && TOS_NODE_ID == 1) {
+		printf("\tApp: AMControl.startDone(error_t err) \n");
+		if (err == SUCCESS) {
+		  if  (TOS_NODE_ID == 1){
 			counter++;
 			//dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
 			if (locked) {
@@ -54,8 +55,8 @@ implementation {
 			}
 			//call MilliTimer.startPeriodic(500); 
 			
-		}
-		else {
+		  }
+		}else {
 			call AMControl.start();
 		}
 	}
@@ -89,12 +90,14 @@ implementation {
 
 	event message_t* Receive.receive(message_t* bufPtr, 
 			void* payload, uint8_t len) {
-		printf("# %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID, ((radio_count_msg_t*)payload)->counter);
+				
+	    atomic counter = ((radio_count_msg_t*)payload)->counter;
+		printf("# %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
 		call MilliTimer.startOneShot(1000);
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
 		else {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;
-			dbg("RadioCountToLedsC", "Received counter %u.\n", ((radio_count_msg_t*)payload)->counter);
+			printf("Buffer error on reception\n");
 			return bufPtr;
 		}
 		

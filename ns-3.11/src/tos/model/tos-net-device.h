@@ -8,7 +8,9 @@
 #ifndef TOS_NET_DEVICE_H_
 #define TOS_NET_DEVICE_H_
 
-
+#include "ns3/nstime.h"
+#include "ns3/simulator.h"
+#include "ns3/event-id.h"
 #include "ns3/callback.h"
 #include "ns3/object.h"
 #include "ns3/ptr.h"
@@ -17,7 +19,7 @@
 #include "ns3/mac48-address.h"
 #include "ns3/wifi-mac-header.h"
 #include "ns3/ns3includes.h"
-#include "ns3-to-tos-proxy.h"
+#include "ns3-to-tos-proxy_auto.h"
 #include "calls-to-ns3.h"
 #include <string>
 
@@ -68,7 +70,7 @@ public:
    void ForwardUp (Ptr<Packet> packet, const WifiMacHeader* hdr);
 
    bool Send (Ptr<Packet> packet, const Address& dest);
-
+   void radioStartDone(void);
   
   //commands from tos-radio emulations
   //implementation of radio state
@@ -139,6 +141,8 @@ private:
   Ns3ToTosProxy*  	m_ns3totos;
   DeviceCall		m_current;
   RadioState		m_state;
+  Time          m_startUpTime;
+  EventId       m_startUpEvent;
 
   //TosNodeContainer  m_node_container;
 

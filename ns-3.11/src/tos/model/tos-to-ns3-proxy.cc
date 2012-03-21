@@ -7,6 +7,7 @@
 #include <iostream>
 #include "ns3/assert.h"
 #include "ns3/pointer.h"
+
 #include "ns3/wifi-mac-header.h"
 #include "ns3/callback.h"
 
@@ -45,13 +46,14 @@ TosToNs3Proxy::setDevice(ns3::Ptr<ns3::TosNetDevice> device){
 
 int
 TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2){
+  std::cout<< call<<"\n";
 	switch (call) {
 	case RADIO_ON:
 		return m_tosnetdevice->DeviceTurnOn();
 		break;
 
 	case RADIO_START:
-		return m_tosnetdevice->DeviceTurnOn();;
+		return m_tosnetdevice->DeviceTurnOn();
 		break;
 
 	case RADIO_SLEEP:

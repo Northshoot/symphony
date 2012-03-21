@@ -55,7 +55,7 @@ int main(void)
 	  wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
 	  // The below FixedRssLossModel will cause the rss to be fixed regardless
 	  // of the distance between the two stations, and the transmit power
-	  wifiChannel.AddPropagationLoss ("ns3::FixedRssLossModel","Rss",DoubleValue (-80));
+	  wifiChannel.AddPropagationLoss ("ns3::RandomPropagationLossModel");
 	  wifiPhy.SetChannel (wifiChannel.Create ());
 
 	  TosNetDeviceContainer devices = wifi.Install (wifiPhy,  c);
@@ -64,7 +64,7 @@ int main(void)
 	  TosMobilityHelper mobility;
 	  Ptr<ListPositionAllocator> positionAlloc = CreateObject<ListPositionAllocator> ();
 	  positionAlloc->Add (Vector (0.0, 0.0, 0.0));
-	  positionAlloc->Add (Vector (5.0, 0.0, 0.0));
+	  positionAlloc->Add (Vector (100000.0, 0.0, 0.0));
 	  mobility.SetPositionAllocator (positionAlloc);
 	  mobility.SetMobilityModel ("ns3::ConstantPositionMobilityModel");
 	  mobility.Install (c);
@@ -72,9 +72,8 @@ int main(void)
 
 
 
-    ns3::Simulator::Stop(ns3::Seconds(100.0));
+    ns3::Simulator::Stop(ns3::Seconds(10.0));
     ns3::Simulator::Run();
-    std::cout<<"about to destroy "<<std::endl;
     ns3::Simulator::Destroy ();
 
 

@@ -8,6 +8,9 @@
 #include <stddef.h>
 #include <memory>
 
+#include "ns3/nstime.h"
+#include "ns3/simulator.h"
+#include "ns3/event-id.h"
 #include "ns3/log.h"
 #include "ns3/assert.h"
 #include "ns3/wifi-mac.h"
@@ -137,7 +140,8 @@ error_t TosNetDevice::DeviceStandby() {
 }
 
 error_t TosNetDevice::DeviceTurnOn() {
-	return EBUSY;
+  DoStart();
+	return SUCCESS;
 }
 
 error_t TosNetDevice::DeviceSetChannel(uint8_t channel) {
@@ -170,10 +174,24 @@ error_t TosNetDevice::DeviceSend(void* msg) {
 	hdr.SetDsNotTo();
 
 
-	//m_tos_mac->TransmitData(pkt->Copy(), &hdr);
+	m_tos_mac->TransmitData(pkt->Copy(), &hdr);
 	return SUCCESS;
 }
-
+void
+TosNetDevice::radioStartDone()
+{
+  Simulator::Remove(m_startUpEvent);
+  m_ns3totos->radioStateDone();
+}
+void
+TosNetDevice::DoStart(void)
+{
+  NS_LOG_FUNCTION_NOARGS ();
+  m_tos_mac->Start();
+  m_phy->Start();
+  NetDevice::DoStart();
+  m_startUpEvent = Simulator::Schedule(m_startUpTime, &TosNetDevice::radioStartDone, this);
+}
 Ptr<Packet>
 TosNetDevice::TosToNsPacket(message_t* msg) {
 	Ptr <Packet> pkt =Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
@@ -187,7 +205,7 @@ message_t* TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* 
 	packet->RemoveHeader(hdrr);
 	packet->CopyData(reinterpret_cast< uint8_t*>(msg), sizeof(message_t));
 //	NS_LOG_FUNCTION_NOARGS();
-	printTosPacket((char *) msg);
+	//printTosPacket((char *) msg);
 	memcpy((void *)&m_rx_msg, (void *)msg, sizeof(message_t));
 	return &m_rx_msg;
 }
@@ -216,12 +234,6 @@ void TosNetDevice::DoDispose(void) {
 	NetDevice::DoDispose ();
 }
 
-void TosNetDevice::DoStart(void) {
-	NS_LOG_FUNCTION_NOARGS ();
-	m_tos_mac->Start();
-	m_phy->Start();
-	NetDevice::DoStart();
-}
 
 message_t
 TosNetDevice::GetCurrentMsg(){
@@ -231,7 +243,7 @@ TosNetDevice::GetCurrentMsg(){
 void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	message_t * msg = NsToTosPacket(packet, hdr);
-	m_ns3totos->rxMsg((void*) msg);
+	m_ns3totos->receiveMessage((void*) msg);
 }
 
 void TosNetDevice::Setup(void) {
@@ -386,7 +398,7 @@ void TosNetDevice::CompleteConfig(void) {
 	  m_tos_mac->SetRxCallback (MakeCallback (&TosNetDevice::ForwardUp, this));
 //	  m_tos_mac->ReceiveError (MakeCallback (&TosWifiNetDevice::LinkUp, this));
 //	  m_tos_mac->ReceiveOk (MakeCallback (&TosWifiNetDevice::LinkDown, this));
-
+	  m_startUpTime = MicroSeconds(700);
 	  m_configComplete = true;
 	  m_busy = false;
 }

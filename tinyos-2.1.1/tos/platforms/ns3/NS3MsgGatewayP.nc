@@ -43,7 +43,7 @@ implementation{
 		signal Receive.receive(msg_in);
 	}
         
-	extern int receivePkt(void * msg)@C() @spontaneous(){
+	extern int receiveMessage(void * msg)@C() @spontaneous(){
 		msg_in = (message_t*)msg;
 		post receive();
 		return 0;
@@ -56,7 +56,7 @@ implementation{
     }
     
     extern int radioStartDone()@C() @spontaneous(){
-    	printf("radio state done\n");
+    	printf("radioStartDone\n");
     	return 0;
     }
     
@@ -64,7 +64,7 @@ implementation{
 //gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);	
 	command error_t Send.send(message_t* msg){
 		msg_out = msg;		
-		printTosPacket((char*)msg);
+		//printTosPacket((char*)msg);
 		a=gatewayRadio(proxy, RADIO_SEND,-1,-1,(void *)msg, (void *) msg);
 		post sendDone();
 		return 0;

@@ -13,6 +13,7 @@
 TOS_APP=RadioApp
 SIM_OBJ=sim
 TARGET=ns3
+NODE=symphony.xml
 
 #compilers
 GPP=g++
@@ -74,7 +75,8 @@ all:
 
 		@echo "                           "		
 		@echo "*** copying library to ns_dir***"
-		cp $(SIM_LIB).so $(NS3_DIR)/		
+		cp $(SIM_LIB).so $(NS3_DIR)/
+		cp $(NODE) $(NS3_DIR)/		
 		@echo "*** tos-ns was successfully build***"
 		@echo ""
 		

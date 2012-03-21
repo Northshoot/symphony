@@ -31,7 +31,7 @@ typedef struct
 Timer_t m_timer;
 
   void updateTimer(){
-    //printf("updateTimer( %i\n",  time_now);
+    //printf("updateTimer %i\n",  time_now);
     if(m_timer.shoot == time_now) {
         //printf("m_timer.shoot == time_now %i\n",  time_now);
         signal Timer.fired();
