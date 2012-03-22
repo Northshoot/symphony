@@ -255,7 +255,7 @@ private:
   void SetupPhyMacLowListener (Ptr<WifiPhy> phy);
 
   MacLowTransmissionParameters m_txParams;
-//  MacLowTransmissionListener *m_listener;
+  class PhyTosMacLowListener *m_phy_listner;
   Ptr<WifiPhy> m_phy;
   MacLowRxCallback m_rxCallback;
   EventId m_normalAckTimeoutEvent;

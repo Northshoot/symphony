@@ -20,6 +20,10 @@
  * Author: Mirko Banchi <mk.banchi@gmail.com>
  */
 
+#include <stdio.h>
+#include <unistd.h>
+#include <iostream>
+
 #include "ns3/assert.h"
 #include "ns3/simulator.h"
 #include "ns3/tag.h"
@@ -44,6 +48,7 @@
 #include "ns3/wifi-mac-trailer.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosMacLow");
+
 
 #undef NS_LOG_APPEND_CONTEXT
 #define NS_LOG_APPEND_CONTEXT std::clog << "[tos mac=" << m_self << "] "
@@ -96,22 +101,27 @@ public:
   }
   virtual void NotifyRxStart (Time duration)
   {
-
+    std::cout<<" \tNotifyRxStart"<<std::endl;
   }
   virtual void NotifyRxEndOk (void)
   {
+    std::cout<<" \tNotifyRxEndOk"<<std::endl;
   }
   virtual void NotifyRxEndError (void)
   {
+    std::cout<<" \tNotifyRxEndError"<<std::endl;
   }
   virtual void NotifyTxStart (Time duration)
   {
+    std::cout<<" \tNotifyTxStart "<< duration.GetMicroSeconds()<< std::endl;
   }
   virtual void NotifyMaybeCcaBusyStart (Time duration)
   {
+    std::cout<<" \tNotifyMaybeCcaBusyStart "<<duration.GetMicroSeconds()<<std::endl;
   }
   virtual void NotifySwitchingStart (Time duration)
   {
+    std::cout<<" \tNotifySwitchingStart"<<duration.GetMicroSeconds()<<std::endl;
     m_macLow->NotifySwitchingStartNow (duration);
   }
 private:
@@ -239,6 +249,8 @@ TosMacLow::SetPhy (Ptr<WifiPhy> phy)
 {
 	NS_LOG_DEBUG(this<< " before PHY: " << m_phy);
   m_phy = phy;
+  m_phy_listner = new PhyTosMacLowListener(this);
+  m_phy->RegisterListener(m_phy_listner);
   m_phy->SetReceiveOkCallback (MakeCallback (&TosMacLow::ReceiveOk, this));
   m_phy->SetReceiveErrorCallback (MakeCallback (&TosMacLow::ReceiveError, this));
   NS_LOG_DEBUG(this<< " after PHY: " << m_phy);

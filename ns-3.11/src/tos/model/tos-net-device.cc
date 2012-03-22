@@ -231,6 +231,7 @@ void TosNetDevice::DoDispose(void) {
 	m_phy->Dispose();
 	m_tos_mac=0;
 	m_phy=0;
+
 	NetDevice::DoDispose ();
 }
 
