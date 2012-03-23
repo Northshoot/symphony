@@ -107,6 +107,7 @@ implementation {
 		if (&packet == bufPtr) {
 			locked = FALSE;
 		}
+		call MilliTimer.startOneShot(1000);
 	}
 
 }

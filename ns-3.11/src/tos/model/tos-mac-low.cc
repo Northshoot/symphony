@@ -559,13 +559,14 @@ void
 TosMacLow::ForwardDown (Ptr<const Packet> packet, const WifiMacHeader* hdr,
                      WifiMode txMode)
 {
-  NS_LOG_FUNCTION (this << packet << hdr << txMode);
+  NS_LOG_FUNCTION (this << packet << hdr << txMode );
   NS_LOG_DEBUG ("send " << hdr->GetTypeString () <<
                 ", to=" << hdr->GetAddr1 () <<
                 ", size=" << packet->GetSize () <<
                 ", mode=" << txMode <<
                 ", duration=" << hdr->GetDuration () <<
                 ", seq=0x" << std::hex << m_currentHdr.GetSequenceControl () << std::dec);
+  std::cout<<"TosMacLow::ForwardDown phy state: "<< m_phy->IsStateCcaBusy()<<std::endl;
   m_phy->SendPacket (packet, txMode, WIFI_PREAMBLE_LONG, 0);
 }
 
