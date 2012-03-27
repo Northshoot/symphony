@@ -30,7 +30,7 @@
 #include "ns3/log.h"
 #include "ns3/double.h"
 
-#include "tos-mac-low.h"
+
 #include "ns3/wifi-mac-header.h"
 #include "ns3/wifi-mode.h"
 #include "ns3/wifi-preamble.h"
@@ -47,6 +47,8 @@
 #include "ns3/block-ack-cache.h"
 #include "ns3/wifi-mac-trailer.h"
 
+#include "tos-radio-model.h"
+
 NS_LOG_COMPONENT_DEFINE ("TosMacLow");
 
 
@@ -55,39 +57,6 @@ NS_LOG_COMPONENT_DEFINE ("TosMacLow");
 
 
 namespace ns3 {
-class PhyMacLowListener : public ns3::WifiPhyListener
-{
-public:
-  PhyMacLowListener (ns3::TosMacLow *macLow)
-    : m_macLow (macLow)
-  {
-  }
-  virtual ~PhyMacLowListener ()
-  {
-  }
-  virtual void NotifyRxStart (Time duration)
-  {
-
-  }
-  virtual void NotifyRxEndOk (void)
-  {
-  }
-  virtual void NotifyRxEndError (void)
-  {
-  }
-  virtual void NotifyTxStart (Time duration)
-  {
-  }
-  virtual void NotifyMaybeCcaBusyStart (Time duration)
-  {
-  }
-  virtual void NotifySwitchingStart (Time duration)
-  {
-    m_macLow->NotifySwitchingStartNow (duration);
-  }
-private:
-  ns3::TosMacLow *m_macLow;
-};
 
 class PhyTosMacLowListener : public ns3::WifiPhyListener
 {
@@ -106,6 +75,7 @@ public:
   virtual void NotifyRxEndOk (void)
   {
     std::cout<<" \tNotifyRxEndOk"<<std::endl;
+
   }
   virtual void NotifyRxEndError (void)
   {
@@ -117,6 +87,7 @@ public:
   }
   virtual void NotifyMaybeCcaBusyStart (Time duration)
   {
+    m_macLow->
     std::cout<<" \tNotifyMaybeCcaBusyStart "<<duration.GetMicroSeconds()<<std::endl;
   }
   virtual void NotifySwitchingStart (Time duration)
@@ -130,23 +101,18 @@ private:
 
 
 TosMacLow::TosMacLow ()
-  : m_normalAckTimeoutEvent (),
-    m_fastAckTimeoutEvent (),
-    m_superFastAckTimeoutEvent (),
-    m_fastAckFailedTimeoutEvent (),
-    m_blockAckTimeoutEvent (),
-    m_ctsTimeoutEvent (),
-    m_sendCtsEvent (),
-    m_sendAckEvent (),
-    m_sendDataEvent (),
-    m_waitSifsEvent (),
-    m_currentPacket (0),
+  : m_currentPacket (0),
     m_listener (0)
 {
   NS_LOG_FUNCTION (this);
+  //we change datarate to fit zigbee phy
+  m_wifiMode= WifiModeFactory::CreateWifiMode ("DsssRate1Mbps",
+                                       WIFI_MOD_CLASS_DSSS,
+                                       true,
+                                       22000000, 250000,
+                                       WIFI_CODE_RATE_UNDEFINED,
+                                       2);
 
-//  m_lastNavDuration = Seconds (0);
-//  m_lastNavStart = Seconds (0);
 }
 
 TosMacLow::~TosMacLow ()
@@ -166,18 +132,9 @@ void
 TosMacLow::DoDispose (void)
 {
   NS_LOG_FUNCTION (this);
-  m_normalAckTimeoutEvent.Cancel ();
-  m_fastAckTimeoutEvent.Cancel ();
-  m_superFastAckTimeoutEvent.Cancel ();
-  m_fastAckFailedTimeoutEvent.Cancel ();
-  m_blockAckTimeoutEvent.Cancel ();
-  m_ctsTimeoutEvent.Cancel ();
-  m_sendCtsEvent.Cancel ();
-  m_sendAckEvent.Cancel ();
   m_sendDataEvent.Cancel ();
-  m_waitSifsEvent.Cancel ();
   m_phy = 0;
-//  m_stationManager = 0;
+
   delete m_phyMacLowListener;
   m_phyMacLowListener = 0;
 }
@@ -187,56 +144,14 @@ TosMacLow::CancelAllEvents (void)
 {
   NS_LOG_FUNCTION (this);
   bool oneRunning = false;
-  if (m_normalAckTimeoutEvent.IsRunning ())
-    {
-      m_normalAckTimeoutEvent.Cancel ();
-      oneRunning = true;
-    }
-  if (m_fastAckTimeoutEvent.IsRunning ())
-    {
-      m_fastAckTimeoutEvent.Cancel ();
-      oneRunning = true;
-    }
-  if (m_superFastAckTimeoutEvent.IsRunning ())
-    {
-      m_superFastAckTimeoutEvent.Cancel ();
-      oneRunning = true;
-    }
-  if (m_fastAckFailedTimeoutEvent.IsRunning ())
-    {
-      m_fastAckFailedTimeoutEvent.Cancel ();
-      oneRunning = true;
-    }
-  if (m_blockAckTimeoutEvent.IsRunning ())
-    {
-      m_blockAckTimeoutEvent.Cancel ();
-      oneRunning = true;
-    }
-  if (m_ctsTimeoutEvent.IsRunning ())
-    {
-      m_ctsTimeoutEvent.Cancel ();
-      oneRunning = true;
-    }
-  if (m_sendCtsEvent.IsRunning ())
-    {
-      m_sendCtsEvent.Cancel ();
-      oneRunning = true;
-    }
-  if (m_sendAckEvent.IsRunning ())
-    {
-      m_sendAckEvent.Cancel ();
-      oneRunning = true;
-    }
+
+
   if (m_sendDataEvent.IsRunning ())
     {
       m_sendDataEvent.Cancel ();
       oneRunning = true;
     }
-  if (m_waitSifsEvent.IsRunning ())
-    {
-      m_waitSifsEvent.Cancel ();
-      oneRunning = true;
-    }
+
   if (oneRunning && m_listener != 0)
     {
       m_listener->Cancel ();
@@ -261,43 +176,7 @@ TosMacLow::SetPhy (Ptr<WifiPhy> phy)
 void
 TosMacLow::SetAddress (Mac48Address ad)
 {
-
   m_self = ad;
-}
-//void
-//TosMacLow::SetAckTimeout (Time ackTimeout)
-//{
-//  m_ackTimeout = ackTimeout;
-//}
-//void
-//TosMacLow::SetBasicBlockAckTimeout (Time blockAckTimeout)
-//{
-//  m_basicBlockAckTimeout = blockAckTimeout;
-//}
-//void
-//TosMacLow::SetCompressedBlockAckTimeout (Time blockAckTimeout)
-//{
-//  m_compressedBlockAckTimeout = blockAckTimeout;
-//}
-//void
-//TosMacLow::SetCtsTimeout (Time ctsTimeout)
-//{
-//  m_ctsTimeout = ctsTimeout;
-//}
-void
-TosMacLow::SetSifs (Time sifs)
-{
-  m_sifs = sifs;
-}
-void
-TosMacLow::SetSlotTime (Time slotTime)
-{
-  m_slotTime = slotTime;
-}
-void
-TosMacLow::SetPifs (Time pifs)
-{
-  m_pifs = pifs;
 }
 
 Mac48Address
@@ -305,36 +184,6 @@ TosMacLow::GetAddress (void) const
 {
 	NS_LOG_FUNCTION(this << " mac: "<< m_self);
   return m_self;
-}
-//Time
-//TosMacLow::GetAckTimeout (void) const
-//{
-//  return m_ackTimeout;
-//}
-//Time
-//TosMacLow::GetBasicBlockAckTimeout () const
-//{
-//  return m_basicBlockAckTimeout;
-//}
-//Time
-//TosMacLow::GetCompressedBlockAckTimeout () const
-//{
-//  return m_compressedBlockAckTimeout;
-//}
-//Time
-//TosMacLow::GetCtsTimeout (void) const
-//{
-//  return m_ctsTimeout;
-//}
-Time
-TosMacLow::GetSifs (void) const
-{
-  return m_sifs;
-}
-Time
-TosMacLow::GetSlotTime (void) const
-{
-  return m_slotTime;
 }
 
 
@@ -347,50 +196,39 @@ TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callb
 void
 TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 	  NS_LOG_FUNCTION (this << packet << hdr );
-
+	  //here we just save data
 
 	  m_currentPacket = packet->Copy();
 	  m_currentHdr = *hdr;
-//	hdr.SetTypeData ();
-//	hdr.SetAddr1 ("00:00:00:00:00:01");
-//	hdr.SetAddr2 ("ff:ff:ff:ff:ff:ff");
-//	std::cerr <<"TosMacLow::TransmitData about to transmit" << std::endl;
-//	hdr.SetDsNotFrom ();
-//	hdr.SetDsNotTo ();
-//	m_currentHdr.SetSequenceNumber (1);
-//	m_currentHdr.SetFragmentNumber (0);
-//	m_currentHdr.SetNoMoreFragments ();
-//	m_currentHdr.SetNoRetry ();
-//	NS_LOG_FUNCTION (this << m_currentHdr );
-//	 m_currentPacket = Create<Packet> (Packet(reinterpret_cast<uint8_t const*>("hello"),5));
-//	 std::cerr <<"m_currentPacket = packet->Copy " << std::endl;
-	 // m_currentHdr = *hdr;
-	  //CancelAllEvents ();
-	  //m_listener = listener;
-//	  m_txParams = params;
-	//std::cerr <<m_phy->IsStateIdle ()<< std::endl;
-
-	  //NS_ASSERT (m_phy->IsStateIdle ());
-	  //std::cerr <<"TosMacLow::TransmitData about to transmit" << std::endl;
-	  //NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
-	               // ", to=" << m_currentHdr.GetAddr1 () );
 	  //Need DataMode
+//	  WifiMode dataTxMode = GetDataTxMode ();
+//	  m_currentHdr.SetDuration (Seconds (0.0002));
+//
+//	  m_currentPacket->AddHeader (m_currentHdr);
+//
+//	  WifiMacTrailer fcs;
+//	  m_currentPacket->AddTrailer (fcs);
+	  StartDataTxTimers ();
+
 	  WifiMode dataTxMode = GetDataTxMode ();
-	  m_currentHdr.SetDuration (Seconds (0.0002));
+	  //TODO: need implementation for time delay
+	  Time duration = Seconds (0.0);
+
+	  m_currentHdr.SetDuration (duration);
 
 	  m_currentPacket->AddHeader (m_currentHdr);
-
 	  WifiMacTrailer fcs;
 	  m_currentPacket->AddTrailer (fcs);
-	  NS_LOG_FUNCTION(this);
-	  NS_LOG_DEBUG("Forwarding Down");
+
 	  ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
 	  m_currentPacket = 0;
+
+	  NS_ASSERT (m_phy->IsStateTx ());
 }
 void
 TosMacLow::StartTransmission (Ptr<const Packet> packet,
         const WifiMacHeader* hdr,
-        MacLowTransmissionParameters params,
+        TosRadioModel params,
         TosMacLowTransmissionListener *listener)
 {
   NS_LOG_FUNCTION (this << packet << hdr << params << listener);
@@ -419,30 +257,20 @@ TosMacLow::StartTransmission (Ptr<const Packet> packet,
   NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
                 ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
 
-//  if (m_txParams.MustSendRts ())
-//    {
-//      SendRtsForPacket ();
-//    }
-//  else
-//    {
-      SendDataPacket ();
-//    }
+
+
 
   /* When this method completes, we have taken ownership of the medium. */
   NS_ASSERT (m_phy->IsStateTx ());
 }
 
+//TODO: not clear here for virtualization what to do?
 void
 TosMacLow::ReceiveError (Ptr<const Packet> packet, double rxSnr)
 {
   NS_LOG_FUNCTION (this << packet << rxSnr);
   NS_LOG_DEBUG ("rx failed ");
-  if (m_txParams.MustWaitFastAck ())
-    {
-      NS_ASSERT (m_fastAckFailedTimeoutEvent.IsExpired ());
-      //m_fastAckFailedTimeoutEvent = Simulator::Schedule (GetSifs (),
-//                                                         &TosMacLow::FastAckFailedTimeout, this);
-    }
+
   return;
 }
 
@@ -450,14 +278,8 @@ void
 TosMacLow::NotifySwitchingStartNow (Time duration)
 {
   NS_LOG_DEBUG ("switching channel. Cancelling MAC pending events");
- // m_stationManager->Reset ();
   CancelAllEvents ();
-  if (m_navCounterResetCtsMissed.IsRunning ())
-    {
-      m_navCounterResetCtsMissed.Cancel ();
-    }
-//  m_lastNavStart = Simulator::Now ();
-//  m_lastNavDuration = Seconds (0);
+  //TODO: notify if packet drop if there is one
   m_currentPacket = 0;
   m_listener = 0;
 }
@@ -472,33 +294,12 @@ TosMacLow::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPre
    * packet queue.
    */
   WifiMacHeader hdr;
-  packet->PeekHeader(hdr);
-//
-//  NS_LOG_DEBUG ("duration/id=" << hdr.GetDuration ());
-//
-//  if (hdr.GetAddr1 () == m_self)
-//    {
-//
-//      goto rxPacket;
-//    }
-//  else if (hdr.GetAddr1 ().IsGroup ())
-//    {
-//      if (hdr.IsData () || hdr.IsMgt ())
-//        {
-//          NS_LOG_DEBUG ("rx group from=" << hdr.GetAddr2 ());
-//          goto rxPacket;
-//        }
-//      else
-//        {
-//          // DROP
-//        }
-//    }
-//  else
-//    {
-//      //NS_LOG_DEBUG_VERBOSE ("rx not-for-me from %d", GetSource (packet));
-//    }
-//  return;
-//rxPacket:
+  packet->RemoveHeader (hdr);
+  //TODO: inmplement snr convertion
+//  SnrTag tag;
+//  packet->RemovePacketTag (tag);
+  NS_LOG_DEBUG ("duration/id=" << hdr.GetDuration ());
+
   m_rxCallback (packet,&hdr);
   return;
 }
@@ -514,43 +315,14 @@ TosMacLow::GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const
 
 
 Time
-TosMacLow::CalculateOverallTxTime (Ptr<const Packet> packet,
-                                const WifiMacHeader* hdr,
-                                const MacLowTransmissionParameters& params) const
-{
-  //TODO: must fix time calculations!
-
-  Time txTime = Seconds (0);
-  //WifiMode rtsMode = GetRtsTxMode (packet, hdr);
-  //WifiMode dataMode = GetDataTxMode (packet, hdr);
-//  if (params.MustSendRts ())
-//    {
-//      //txTime += m_phy->CalculateTxDuration (GetRtsSize (), rtsMode, WIFI_PREAMBLE_LONG);
-//      //txTime += GetCtsDuration (hdr->GetAddr1 (), rtsMode);
-//      txTime += Time (GetSifs () * 2);
-//    }
-  uint32_t dataSize = GetSize (packet, hdr);
-  txTime += m_phy->CalculateTxDuration (dataSize, GetDataTxMode(), WIFI_PREAMBLE_LONG);
-//  if (params.MustWaitAck ())
-//    {
-//      txTime += GetSifs ();
-//      //txTime += GetAckDuration (hdr->GetAddr1 (), dataMode);
-//    }
-  return txTime;
-}
-
-Time
 TosMacLow::CalculateTransmissionTime (Ptr<const Packet> packet,
                                    const WifiMacHeader* hdr,
-                                   const MacLowTransmissionParameters& params) const
+                                   const TosRadioModel& params) const
 {
-  Time txTime = CalculateOverallTxTime (packet, hdr, params);
-  if (params.HasNextPacket ())
-    {
-      WifiMode dataMode = GetDataTxMode ();
-      txTime += GetSifs ();
-      txTime += m_phy->CalculateTxDuration (params.GetNextPacketSize (), dataMode, WIFI_PREAMBLE_LONG);
-    }
+  //TODO: must fix time calculations!
+  Time txTime = Seconds (0);
+  uint32_t dataSize = GetSize (packet, hdr);
+  txTime += m_phy->CalculateTxDuration (dataSize, GetDataTxMode(), WIFI_PREAMBLE_SHORT);
   return txTime;
 }
 
@@ -578,85 +350,22 @@ TosMacLow::StartDataTxTimers (void)
   WifiMode dataTxMode = GetDataTxMode ();
   //TODO: WIFI_PREAMBLE_LONG need to be fixed for specific radio device
   Time txDuration = m_phy->CalculateTxDuration (GetSize (m_currentPacket, &m_currentHdr), dataTxMode, WIFI_PREAMBLE_LONG);
-if (m_txParams.HasNextPacket ())
-    {
-      Time delay = txDuration + GetSifs ();
-      NS_ASSERT (m_waitSifsEvent.IsExpired ());
-      m_waitSifsEvent = Simulator::Schedule (delay, &TosMacLow::WaitSifsAfterEndTx, this);
-    }
-  else
-    {
-      // since we do not expect any timer to be triggered.
-      m_listener = 0;
-    }
+  Time delay = txDuration + GetSifs ();
+  NS_ASSERT (m_waitSifsEvent.IsExpired ());
+  m_sendDataEvent = Simulator::Schedule (delay, &TosMacLow::WaitSifsAfterEndTx, this);
+
 }
 
 void
 TosMacLow::SendDataPacket (void)
 {
-  NS_LOG_FUNCTION (this);
-  /* send this packet directly. No RTS is needed. */
-
-  StartDataTxTimers ();
-  std::cerr <<"TosMacLow::SendDataPacket about to forward" << std::endl;
-  WifiMode dataTxMode = GetDataTxMode ();
-//  Time duration = Seconds (0.0);
-//  if (m_txParams.HasDurationId ())
-//    {
-//      duration += m_txParams.GetDurationId ();
-//    }
-//  else
-//    {
-//      if (m_txParams.MustWaitBasicBlockAck ())
-//        {
-//          duration += GetSifs ();
-////          duration += GetBlockAckDuration (m_currentHdr.GetAddr1 (), dataTxMode, BASIC_BLOCK_ACK);
-//        }
-//      else if (m_txParams.MustWaitCompressedBlockAck ())
-//        {
-//          duration += GetSifs ();
-////          duration += GetBlockAckDuration (m_currentHdr.GetAddr1 (), dataTxMode, COMPRESSED_BLOCK_ACK);
-//        }
-//      else if (m_txParams.MustWaitAck ())
-//        {
-//          duration += GetSifs ();
-////          duration += GetAckDuration (m_currentHdr.GetAddr1 (), dataTxMode);
-//        }
-//      if (m_txParams.HasNextPacket ())
-//        {
-//          duration += GetSifs ();
-//          duration += m_phy->CalculateTxDuration (m_txParams.GetNextPacketSize (),
-//                                                  dataTxMode, WIFI_PREAMBLE_LONG);
-//          if (m_txParams.MustWaitAck ())
-//            {
-//              duration += GetSifs ();
-////              duration += GetAckDuration (m_currentHdr.GetAddr1 (), dataTxMode);
-//            }
-//        }
-//    }
-//  m_currentHdr.SetDuration (duration);
-//
-//  m_currentPacket->AddHeader (m_currentHdr);
-//  WifiMacTrailer fcs;
-//  m_currentPacket->AddTrailer (fcs);
-  std::cerr <<"TosMacLow::SendDataPacket about to forward" << std::endl;
-  ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
-  m_currentPacket = 0;
+  NS_LOG_FUNCTION (this<<"NOT IMPLEMENTED");
 }
 
-
-
-
-void
-TosMacLow::WaitSifsAfterEndTx (void)
-{
-  m_listener->StartNext ();
-}
 WifiMode
 TosMacLow::GetDataTxMode () const
 {
-
-  return WifiPhy::GetDsssRate1Mbps();
+  return m_wifiMode;
 }
 
 } // namespace ns3

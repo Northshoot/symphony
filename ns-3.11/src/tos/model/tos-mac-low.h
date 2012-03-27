@@ -41,7 +41,7 @@
 #include "ns3/packet.h"
 #include "ns3/nstime.h"
 #include "ns3/block-ack-cache.h"
-#include "ns3/mac-low.h"
+#include "tos-radio-model.h"
 
 namespace ns3 {
 
@@ -49,7 +49,6 @@ class WifiPhy;
 class WifiMac;
 
 
-class MacLowTransmissionParameters;
 /**
  * \ingroup wifi
  * \brief listen to events coming from ns3::MacLow.
@@ -132,8 +131,9 @@ public:
 
 
 /**
- * \ingroup wifi
- * \brief handle RTS/CTS/DATA/ACK transactions.
+ * \ingroup tos
+ * \brief wrapper for sending data from TosNetDevice to yans-wifi-phy
+ *
  */
 class TosMacLow : public Object
 {
@@ -145,39 +145,20 @@ public:
 
   void SetPhy (Ptr<WifiPhy> phy);
 
-
-  Time CalculateOverallTxTime (Ptr<const Packet> packet,
-                               const WifiMacHeader* hdr,
-                               const MacLowTransmissionParameters &params) const;
   Time
   CalculateTransmissionTime (Ptr<const Packet> packet,
                                      const WifiMacHeader* hdr,
-                                     const MacLowTransmissionParameters& params) const;
+                                     const TosRadioModel& params) const;
 
   void TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr);
   void StartTransmission (Ptr<const Packet> packet,
           const WifiMacHeader* hdr,
-          MacLowTransmissionParameters params,
+          TosRadioModel params,
           TosMacLowTransmissionListener *listener);
 
   void SetAddress (Mac48Address ad);
-  void SetAckTimeout (Time ackTimeout);
-  void SetBasicBlockAckTimeout (Time blockAckTimeout);
-  void SetCompressedBlockAckTimeout (Time blockAckTimeout);
-  void SetCtsTimeout (Time ctsTimeout);
-  void SetSifs (Time sifs);
-  void SetSlotTime (Time slotTime);
-  void SetPifs (Time pifs);
-  void SetBssid (Mac48Address ad);
-  Mac48Address GetAddress (void) const;
-  Time GetAckTimeout (void) const;
-  Time GetBasicBlockAckTimeout () const;
-  Time GetCompressedBlockAckTimeout () const;
-  Time GetCtsTimeout (void) const;
-  Time GetSifs (void) const;
-  Time GetSlotTime (void) const;
-  Time GetPifs (void) const;
 
+  Mac48Address GetAddress (void) const;
 
   /**
    * \param callback the callback which receives every incoming packet.
@@ -242,9 +223,6 @@ private:
 
   void MaybeCancelPrevious (void);
 
-
-  void WaitSifsAfterEndTx (void);
-
 //  void SendRtsForPacket (void);
   void SendDataPacket (void);
   void SendCurrentTxPacket (void);
@@ -258,17 +236,9 @@ private:
   class PhyTosMacLowListener *m_phy_listner;
   Ptr<WifiPhy> m_phy;
   MacLowRxCallback m_rxCallback;
-  EventId m_normalAckTimeoutEvent;
-  EventId m_fastAckTimeoutEvent;
-  EventId m_superFastAckTimeoutEvent;
-  EventId m_fastAckFailedTimeoutEvent;
-  EventId m_blockAckTimeoutEvent;
-  EventId m_ctsTimeoutEvent;
-  EventId m_sendCtsEvent;
-  EventId m_sendAckEvent;
   EventId m_sendDataEvent;
-  EventId m_waitSifsEvent;
-  EventId m_navCounterResetCtsMissed;
+
+  WifiMode m_wifiMode;
 
   Ptr<Packet> m_currentPacket;
   WifiMacHeader m_currentHdr;
@@ -276,16 +246,11 @@ private:
   Mac48Address m_self ;
   Mac48Address m_bssid;
 
-  Time m_ackTimeout;
-  Time m_basicBlockAckTimeout;
-  Time m_compressedBlockAckTimeout;
-  Time m_ctsTimeout;
+
   Time m_sifs;
   Time m_slotTime;
-  Time m_pifs;
 
-//  Time m_lastNavStart;
-//  Time m_lastNavDuration;
+
 
   // Listerner needed to monitor when a channel switching occurs.
   class PhyMacLowListener * m_phyMacLowListener;
@@ -296,17 +261,7 @@ private:
   typedef std::pair<Ptr<Packet>, WifiMacHeader> BufferedPacket;
   typedef std::list<BufferedPacket>::iterator BufferedPacketI;
 
-//  typedef std::pair<Mac48Address, uint8_t> AgreementKey;
-//  typedef std::pair<BlockAckAgreement, std::list<BufferedPacket> > AgreementValue;
-//
-//  typedef std::map<AgreementKey, AgreementValue> Agreements;
-//  typedef std::map<AgreementKey, AgreementValue>::iterator AgreementsI;
-//
-//  typedef std::map<AgreementKey, BlockAckCache> BlockAckCaches;
-//  typedef std::map<AgreementKey, BlockAckCache>::iterator BlockAckCachesI;
 
-//  Agreements m_bAckAgreements;
-//  BlockAckCaches m_bAckCaches;
 
 };
 

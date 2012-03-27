@@ -31,6 +31,7 @@ def build(bld):
     			  'helper/symphony-xml.cc',
                    'model/tos-node.cc',
                   'model/simu-clock.cc',
+                  'model/RF230-radio-model.cc',
     	        ]
 
 
@@ -52,6 +53,8 @@ def build(bld):
 				  'helper/yans-tos-helper.h',
 				  'helper/tos-net-device-container.h',
 				  'helper/tos-mobility-helper.h',
+                  'model/RF230-radio-model.h',
+                  'model/tos-radio-model.h'
 				  
         ]
     pymod = bld.ns3_python_bindings()
