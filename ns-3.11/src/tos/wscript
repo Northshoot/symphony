@@ -32,6 +32,7 @@ def build(bld):
                    'model/tos-node.cc',
                   'model/simu-clock.cc',
                   'model/RF230-radio-model.cc',
+                  'model/tos-radio-model.cc',
     	        ]
 
 

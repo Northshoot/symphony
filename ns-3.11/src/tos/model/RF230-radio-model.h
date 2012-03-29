@@ -10,6 +10,7 @@
 
 #include "tos-radio-model.h"
 #include "ns3/nstime.h"
+
 class RF230RadioModel : public TosRadioModel {
 	public : RF230RadioModel();
 		virtual ~RF230RadioModel();

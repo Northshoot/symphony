@@ -41,7 +41,7 @@
 #include "ns3/packet.h"
 #include "ns3/nstime.h"
 #include "ns3/block-ack-cache.h"
-#include "tos-radio-model.h"
+#include "RF230-radio-model.h"
 
 namespace ns3 {
 
@@ -153,7 +153,7 @@ public:
   void TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr);
   void StartTransmission (Ptr<const Packet> packet,
           const WifiMacHeader* hdr,
-          TosRadioModel params,
+          RF230RadioModel params,
           TosMacLowTransmissionListener *listener);
 
   void SetAddress (Mac48Address ad);
@@ -232,7 +232,7 @@ private:
 
   void SetupPhyMacLowListener (Ptr<WifiPhy> phy);
 
-  MacLowTransmissionParameters m_txParams;
+  RF230RadioModel m_txParams;
   class PhyTosMacLowListener *m_phy_listner;
   Ptr<WifiPhy> m_phy;
   MacLowRxCallback m_rxCallback;
@@ -242,9 +242,9 @@ private:
 
   Ptr<Packet> m_currentPacket;
   WifiMacHeader m_currentHdr;
+
   TosMacLowTransmissionListener * m_listener;
   Mac48Address m_self ;
-  Mac48Address m_bssid;
 
 
   Time m_sifs;
@@ -253,7 +253,7 @@ private:
 
 
   // Listerner needed to monitor when a channel switching occurs.
-  class PhyMacLowListener * m_phyMacLowListener;
+  class PhyTosMacLowListener * m_phyMacLowListener;
 
   /*
    * BlockAck data structures.

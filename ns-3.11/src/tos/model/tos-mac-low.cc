@@ -47,7 +47,9 @@
 #include "ns3/block-ack-cache.h"
 #include "ns3/wifi-mac-trailer.h"
 
-#include "tos-radio-model.h"
+#include "tos-mac-low.h"
+
+#include "RF230-radio-model.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosMacLow");
 
@@ -87,7 +89,7 @@ public:
   }
   virtual void NotifyMaybeCcaBusyStart (Time duration)
   {
-    m_macLow->
+
     std::cout<<" \tNotifyMaybeCcaBusyStart "<<duration.GetMicroSeconds()<<std::endl;
   }
   virtual void NotifySwitchingStart (Time duration)
@@ -123,7 +125,7 @@ TosMacLow::~TosMacLow ()
 void
 TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
 {
-  m_phyMacLowListener = new PhyMacLowListener (this);
+  m_phyMacLowListener = new PhyTosMacLowListener (this);
   phy->RegisterListener (m_phyMacLowListener);
 }
 
@@ -228,10 +230,10 @@ TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 void
 TosMacLow::StartTransmission (Ptr<const Packet> packet,
         const WifiMacHeader* hdr,
-        TosRadioModel params,
+        RF230RadioModel params,
         TosMacLowTransmissionListener *listener)
 {
-  NS_LOG_FUNCTION (this << packet << hdr << params << listener);
+  //NS_LOG_FUNCTION (this << packet << hdr << params << listener);
   /* m_currentPacket is not NULL because someone started
    * a transmission and was interrupted before one of:
    *   - ctsTimeout
@@ -350,9 +352,9 @@ TosMacLow::StartDataTxTimers (void)
   WifiMode dataTxMode = GetDataTxMode ();
   //TODO: WIFI_PREAMBLE_LONG need to be fixed for specific radio device
   Time txDuration = m_phy->CalculateTxDuration (GetSize (m_currentPacket, &m_currentHdr), dataTxMode, WIFI_PREAMBLE_LONG);
-  Time delay = txDuration + GetSifs ();
-  NS_ASSERT (m_waitSifsEvent.IsExpired ());
-  m_sendDataEvent = Simulator::Schedule (delay, &TosMacLow::WaitSifsAfterEndTx, this);
+  Time delay = txDuration ;//+ GetSifs ();
+  //NS_ASSERT (m_waitSifsEvent.IsExpired ());
+  m_sendDataEvent = Simulator::Schedule (delay, &TosMacLow::SendDataPacket, this);
 
 }
 
