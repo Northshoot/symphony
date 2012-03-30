@@ -22,6 +22,7 @@
 #include "ns3-to-tos-proxy_auto.h"
 #include "calls-to-ns3.h"
 #include <string>
+#include "RF230-radio-model.h"
 
 namespace ns3 {
 
@@ -84,7 +85,7 @@ public:
   //implementation of RadioSend
 	error_t DeviceSend(void * msg);
 	//callback
-	void DeviceSendDone(message_t* msg, uint8_t error);
+	void DeviceSendDone(uint8_t error);
 	void DeviceCancel(message_t* msg);
   //implementation of BareReceive
 	//callback
@@ -95,6 +96,8 @@ public:
 	Ptr<Packet> TosToNsPacket(message_t *msg);
 
 	message_t* NsToTosPacket(Ptr<Packet> pkt, const WifiMacHeader * hdr);
+
+	void SetRadioModel(RF230RadioModel * model);
 
 	  // inherited from NetDevice base class.
 	  virtual void SetIfIndex (const uint32_t index);
@@ -143,8 +146,10 @@ private:
   RadioState		m_state;
   Time          m_startUpTime;
   EventId       m_startUpEvent;
+  EventId       m_sendEvent;
 
-  //TosNodeContainer  m_node_container;
+  RF230RadioModel * m_txParams;
+
 
 
   //inherited from NetDevice

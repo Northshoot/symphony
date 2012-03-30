@@ -60,7 +60,8 @@ TosNetDevice::TosNetDevice() :
 	NS_LOG_FUNCTION_NOARGS ();
 }
 
-TypeId TosNetDevice::GetTypeId(void) {
+TypeId
+TosNetDevice::GetTypeId(void) {
 	  static TypeId tid = TypeId ("ns3::TosNetDevice")
 	    .SetParent<NetDevice> ()
 	    .AddConstructor<TosNetDevice> ()
@@ -91,41 +92,50 @@ TosNetDevice::~TosNetDevice() {
 	NS_LOG_FUNCTION_NOARGS ();
 }
 
-void TosNetDevice::SetMac(Ptr<TosMacLow> mac) {
+void
+TosNetDevice::SetMac(Ptr<TosMacLow> mac) {
 	m_tos_mac = mac;
 	CompleteConfig();
 }
 
-void TosNetDevice::SetPhy(Ptr<WifiPhy> phy) {
+void
+TosNetDevice::SetPhy(Ptr<WifiPhy> phy) {
 	m_phy = phy;
 }
 
-Ptr<TosMacLow> TosNetDevice::GetMac(void) const {
+Ptr<TosMacLow>
+TosNetDevice::GetMac(void) const {
 	return m_tos_mac;
 }
 
-Ptr<WifiPhy> TosNetDevice::GetPhy(void) const {
+Ptr<WifiPhy>
+TosNetDevice::GetPhy(void) const {
 	return m_phy;
 }
 
-Ptr<Channel> TosNetDevice::GetChannel(void) const {
+Ptr<Channel>
+TosNetDevice::GetChannel(void) const {
 	return m_phy->GetChannel();
 }
 
-void TosNetDevice::SetMac48Address(Mac48Address address) {
+void
+TosNetDevice::SetMac48Address(Mac48Address address) {
 	m_tos_mac->SetAddress(address);
 }
 
-Mac48Address TosNetDevice::GetMac48Address(void) const {
+Mac48Address
+TosNetDevice::GetMac48Address(void) const {
 	return m_tos_mac->GetAddress();
 }
 
-Ptr<Node> TosNetDevice::GetNode(void) const {
+Ptr<Node>
+TosNetDevice::GetNode(void) const {
    NS_LOG_FUNCTION(m_node << typeid(m_node).name());
 	return m_node;
 }
 
-void TosNetDevice::SetNode(Ptr<Node> node) {
+void
+TosNetDevice::SetNode(Ptr<Node> node) {
 	m_node = node;
 }
 
@@ -135,53 +145,62 @@ TosNetDevice::DeviceTurnOff() {
 	return SUCCESS;
 }
 
-error_t TosNetDevice::DeviceStandby() {
+error_t
+TosNetDevice::DeviceStandby() {
 	return EBUSY;
 }
 
-error_t TosNetDevice::DeviceTurnOn() {
+error_t
+TosNetDevice::DeviceTurnOn() {
   DoStart();
 	return SUCCESS;
 }
 
-error_t TosNetDevice::DeviceSetChannel(uint8_t channel) {
+error_t
+TosNetDevice::DeviceSetChannel(uint8_t channel) {
 	return EBUSY;
 }
 
-void TosNetDevice::done() {
+void
+TosNetDevice::done() {
 }
 
-uint8_t TosNetDevice::DeviceGetChannel() {
+uint8_t
+TosNetDevice::DeviceGetChannel() {
 	uint16_t channel = m_phy->GetChannelNumber();
 	NS_ASSERT(channel<=14);
 	return static_cast<uint8_t>(channel);
 }
 
-error_t TosNetDevice::DeviceSend(void* msg) {
-	NS_ASSERT(!m_busy);
-	memcpy((void *)&m_tx_msg, (void *)msg, sizeof(message_t));
-	//TODO: logic for device needs to be added
-	//TODO: implement callbacks to tos
-	//TODO: implement time delay;
-	//make ns 3 packet from the tos packet
-	Ptr<Packet> pkt = TosToNsPacket((message_t*)msg);
-	WifiMacHeader hdr;
-	hdr.SetTypeData();
-	hdr.SetAddr1(Mac48Address::GetBroadcast());
-	hdr.SetAddr2 (m_tos_mac->GetAddress ());
-	// hdr.SetAddr3 (GetBssid ());
-	hdr.SetDsNotFrom();
-	hdr.SetDsNotTo();
+error_t
+TosNetDevice::DeviceSend(void* msg) {
+	if(m_busy) {
+	  return EBUSY;
+	} else {
+    memcpy((void *)&m_tx_msg, (void *)msg, sizeof(message_t));
+    //TODO: logic for device needs to be added
+    //TODO: implement callbacks to tos
+    //TODO: implement time delay;
+    //make ns 3 packet from the tos packet
+    Ptr<Packet> pkt = TosToNsPacket((message_t*)msg);
+    WifiMacHeader hdr;
+    hdr.SetTypeData();
+    hdr.SetAddr1(Mac48Address::GetBroadcast());
+    hdr.SetAddr2 (m_tos_mac->GetAddress ());
+    // hdr.SetAddr3 (GetBssid ());
+    hdr.SetDsNotFrom();
+    hdr.SetDsNotTo();
 
-
-	m_tos_mac->TransmitData(pkt->Copy(), &hdr);
-	return SUCCESS;
+    m_tos_mac->TransmitData(pkt->Copy(), &hdr);
+    return SUCCESS;
+    }
+	return FAIL;
 }
 void
 TosNetDevice::radioStartDone()
 {
   Simulator::Remove(m_startUpEvent);
-  m_ns3totos->radioStateDone();
+  m_ns3totos->radioStartDone(SUCCESS);
 }
 void
 TosNetDevice::DoStart(void)
@@ -190,7 +209,7 @@ TosNetDevice::DoStart(void)
   m_tos_mac->Start();
   m_phy->Start();
   NetDevice::DoStart();
-  m_startUpEvent = Simulator::Schedule(m_startUpTime, &TosNetDevice::radioStartDone, this);
+  m_startUpEvent = Simulator::Schedule(m_txParams->GetStartUpTime(), &TosNetDevice::radioStartDone, this);
 }
 Ptr<Packet>
 TosNetDevice::TosToNsPacket(message_t* msg) {
@@ -210,7 +229,8 @@ message_t* TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* 
 	return &m_rx_msg;
 }
 
-void TosNetDevice::DeviceSendDone(message_t* msg, uint8_t error) {
+void TosNetDevice::DeviceSendDone(uint8_t error) {
+ m_sendEvent = Simulator::Schedule (m_txParams->GetRadioTxDelay(), &Ns3ToTosProxy::sendSendDone, m_ns3totos, SUCCESS);
 }
 
 void TosNetDevice::DeviceCancel(message_t* msg) {
@@ -267,141 +287,60 @@ TosNetDevice::SetIfIndex(const uint32_t index) {
 	m_ifIndex = index;
 }
 
-uint32_t
-TosNetDevice::GetIfIndex(void) const {
-	NS_LOG_FUNCTION(this << "NOT in use");
-	return m_ifIndex;
-}
 
-void
-TosNetDevice::SetAddress(Address address) {
-	m_tos_mac->SetAddress (Mac48Address::ConvertFrom (address));
-
-}
-
-Address
-TosNetDevice::GetAddress(void) const {
-	return m_tos_mac->GetAddress();
-}
-
-bool
-TosNetDevice::SetMtu(const uint16_t mtu) {
-	if(mtu <= MAX_MSDU_SIZE){
-		m_mtu = mtu;
-		return true;
-	}
-	return false;
-}
-
-uint16_t
-TosNetDevice::GetMtu(void) const {
-	return m_mtu;
-}
-
-bool
-TosNetDevice::IsLinkUp(void) const {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return false;
-}
-
-void
-TosNetDevice::AddLinkChangeCallback(Callback<void> callback) {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-}
-
-bool
-TosNetDevice::IsBroadcast(void) const {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return false;
-}
-
-Address
-TosNetDevice::GetBroadcast(void) const {
-	return Mac48Address::GetBroadcast ();
-}
-
-bool
-TosNetDevice::IsMulticast(void) const {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return false;
-}
-
-Address
-TosNetDevice::GetMulticast(Ipv4Address multicastGroup) const {
-	return Mac48Address::GetMulticast (multicastGroup);
-}
-
-bool
-TosNetDevice::IsPointToPoint(void) const {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return false;
-}
-
-bool
-TosNetDevice::IsBridge(void) const {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return false;
-}
-
-bool
-TosNetDevice::Send(Ptr<Packet> packet, const Address& dest,
-		uint16_t protocolNumber) {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return false;
-}
-
-bool
-TosNetDevice::NeedsArp(void) const {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return true;
-}
-
-void
-TosNetDevice::SetReceiveCallback(NetDevice::ReceiveCallback cb) {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-}
-
-void
-TosNetDevice::LinkUp(void) {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-}
-
-void
-TosNetDevice::LinkDown(void) {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-}
-Address
-TosNetDevice::GetMulticast (Ipv6Address addr) const{
-	return Mac48Address::GetMulticast (addr);
-}
-bool
-TosNetDevice::SendFrom(Ptr<Packet> packet, const Address& source,
-		const Address& dest, uint16_t protocolNumber) {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return false;
-}
-
-void
-TosNetDevice::SetPromiscReceiveCallback(PromiscReceiveCallback cb) {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-}
-
-bool
-TosNetDevice::SupportsSendFrom(void) const {
-	NS_LOG_FUNCTION(this << "NOT implemented");
-	return false;
-}
 
 void TosNetDevice::CompleteConfig(void) {
 	if (m_tos_mac == 0 || m_phy == 0 || m_node == 0)
 	{ return; }
 	  m_tos_mac->SetPhy(m_phy);
 	  m_tos_mac->SetRxCallback (MakeCallback (&TosNetDevice::ForwardUp, this));
+	  m_tos_mac->SetTxCallback(MakeCallback(&TosNetDevice::DeviceSendDone, this));
 //	  m_tos_mac->ReceiveError (MakeCallback (&TosWifiNetDevice::LinkUp, this));
 //	  m_tos_mac->ReceiveOk (MakeCallback (&TosWifiNetDevice::LinkDown, this));
 	  m_startUpTime = MicroSeconds(700);
 	  m_configComplete = true;
 	  m_busy = false;
+}
+uint32_t
+TosNetDevice::GetIfIndex(void) const {
+  NS_LOG_FUNCTION(this << "NOT in use");
+  return m_ifIndex;
+}
+
+void
+TosNetDevice::SetAddress(Address address) {
+  m_tos_mac->SetAddress (Mac48Address::ConvertFrom (address));
+
+}
+
+Address
+TosNetDevice::GetAddress(void) const {
+  return m_tos_mac->GetAddress();
+}
+
+bool
+TosNetDevice::SetMtu(const uint16_t mtu) {
+  if(mtu <= MAX_MSDU_SIZE){
+    m_mtu = mtu;
+    return true;
+  }
+  return false;
+}
+
+uint16_t
+TosNetDevice::GetMtu(void) const {
+  return m_mtu;
+}
+
+
+Address
+TosNetDevice::GetMulticast(Ipv4Address multicastGroup) const {
+  return Mac48Address::GetMulticast (multicastGroup);
+}
+
+Address
+TosNetDevice::GetMulticast (Ipv6Address addr) const{
+  return Mac48Address::GetMulticast (addr);
 }
 
 void
@@ -409,10 +348,89 @@ TosNetDevice::setNs3ToTos(Ns3ToTosProxy * nstos){
 	m_ns3totos=nstos;
 }
 
-//void
-//TosNetDevice::SetTosNodeContainer(TosNodeContainer c){
-//	m_node_container = c;
-//}
+void
+TosNetDevice::SetRadioModel(RF230RadioModel * model){
+  m_txParams = model;
+}
+bool
+TosNetDevice::IsLinkUp(void) const {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return false;
+}
 
+void
+TosNetDevice::AddLinkChangeCallback(Callback<void> callback) {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+}
 
+bool
+TosNetDevice::IsBroadcast(void) const {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return false;
+}
+
+Address
+TosNetDevice::GetBroadcast(void) const {
+  return Mac48Address::GetBroadcast ();
+}
+
+bool
+TosNetDevice::IsMulticast(void) const {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return false;
+}
+bool
+TosNetDevice::NeedsArp(void) const {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return true;
+}
+
+void
+TosNetDevice::SetReceiveCallback(NetDevice::ReceiveCallback cb) {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+}
+
+void
+TosNetDevice::LinkUp(void) {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+}
+
+void
+TosNetDevice::LinkDown(void) {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+}
+bool
+TosNetDevice::IsPointToPoint(void) const {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return false;
+}
+
+bool
+TosNetDevice::IsBridge(void) const {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return false;
+}
+
+bool
+TosNetDevice::Send(Ptr<Packet> packet, const Address& dest,
+    uint16_t protocolNumber) {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return false;
+}
+void
+TosNetDevice::SetPromiscReceiveCallback(PromiscReceiveCallback cb) {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+}
+
+bool
+TosNetDevice::SupportsSendFrom(void) const {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return false;
+}
+bool
+TosNetDevice::SendFrom(Ptr<Packet> packet, const Address& source,
+    const Address& dest, uint16_t protocolNumber) {
+  NS_LOG_FUNCTION(this << "NOT implemented");
+  return false;
+}
 } /* namespace ns3 */

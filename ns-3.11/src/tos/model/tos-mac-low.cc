@@ -85,6 +85,7 @@ public:
   }
   virtual void NotifyTxStart (Time duration)
   {
+    m_macLow->m_txCallback(0);
     std::cout<<" \tNotifyTxStart "<< duration.GetMicroSeconds()<< std::endl;
   }
   virtual void NotifyMaybeCcaBusyStart (Time duration)
@@ -194,6 +195,10 @@ TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callb
 {
   m_rxCallback = callback;
 }
+void
+TosMacLow::SetTxCallback (Callback<void,uint8_t> callback){
+  m_txCallback = callback;
+}
 
 void
 TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
@@ -230,7 +235,7 @@ TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 void
 TosMacLow::StartTransmission (Ptr<const Packet> packet,
         const WifiMacHeader* hdr,
-        RF230RadioModel params,
+        RF230RadioModel * params,
         TosMacLowTransmissionListener *listener)
 {
   //NS_LOG_FUNCTION (this << packet << hdr << params << listener);
@@ -258,9 +263,6 @@ TosMacLow::StartTransmission (Ptr<const Packet> packet,
 
   NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
                 ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
-
-
-
 
   /* When this method completes, we have taken ownership of the medium. */
   NS_ASSERT (m_phy->IsStateTx ());
@@ -319,7 +321,7 @@ TosMacLow::GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const
 Time
 TosMacLow::CalculateTransmissionTime (Ptr<const Packet> packet,
                                    const WifiMacHeader* hdr,
-                                   const TosRadioModel& params) const
+                                   const RF230RadioModel& params) const
 {
   //TODO: must fix time calculations!
   Time txTime = Seconds (0);
@@ -368,6 +370,10 @@ WifiMode
 TosMacLow::GetDataTxMode () const
 {
   return m_wifiMode;
+}
+void
+TosMacLow::SetRadioModel(RF230RadioModel * model){
+  m_txParams = model;
 }
 
 } // namespace ns3

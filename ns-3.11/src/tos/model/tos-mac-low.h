@@ -139,7 +139,7 @@ class TosMacLow : public Object
 {
 public:
   typedef Callback<void, Ptr<Packet>, const WifiMacHeader*> MacLowRxCallback;
-
+  typedef Callback<void, uint8_t> MacLowTxCallback;
   TosMacLow ();
   virtual ~TosMacLow ();
 
@@ -148,12 +148,12 @@ public:
   Time
   CalculateTransmissionTime (Ptr<const Packet> packet,
                                      const WifiMacHeader* hdr,
-                                     const TosRadioModel& params) const;
+                                     const RF230RadioModel& params) const;
 
   void TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr);
   void StartTransmission (Ptr<const Packet> packet,
           const WifiMacHeader* hdr,
-          RF230RadioModel params,
+          RF230RadioModel * params,
           TosMacLowTransmissionListener *listener);
 
   void SetAddress (Mac48Address ad);
@@ -167,7 +167,7 @@ public:
    * an instance of ns3::MacRxMiddle.
    */
   void SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callback);
-
+  void SetTxCallback (Callback<void,uint8_t> callback);
 
   /**
    * \param packet to send (does not include the 802.11 MAC header and checksum)
@@ -210,6 +210,9 @@ public:
    */
   void NotifySwitchingStartNow (Time duration);
 
+  void SetRadioModel(RF230RadioModel * model);
+
+  MacLowTxCallback m_txCallback;
 private:
   void CancelAllEvents (void);
 
@@ -223,7 +226,7 @@ private:
 
   void MaybeCancelPrevious (void);
 
-//  void SendRtsForPacket (void);
+
   void SendDataPacket (void);
   void SendCurrentTxPacket (void);
   void StartDataTxTimers (void);
@@ -232,10 +235,11 @@ private:
 
   void SetupPhyMacLowListener (Ptr<WifiPhy> phy);
 
-  RF230RadioModel m_txParams;
+  RF230RadioModel * m_txParams;
   class PhyTosMacLowListener *m_phy_listner;
   Ptr<WifiPhy> m_phy;
   MacLowRxCallback m_rxCallback;
+  //MacLowTxCallback m_txCallback;
   EventId m_sendDataEvent;
 
   WifiMode m_wifiMode;
