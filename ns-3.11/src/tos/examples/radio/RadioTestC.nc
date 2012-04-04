@@ -106,8 +106,10 @@ implementation {
 	event void AMSend.sendDone(message_t* bufPtr, error_t error) {
 		if (&packet == bufPtr) {
 			locked = FALSE;
+			printf("AMSend.sendDone\n");
 		}
-		call MilliTimer.startOneShot(1000);
+		printf("AMSend.sendDone\n");
+		//call MilliTimer.startOneShot(1000);
 	}
 
 }

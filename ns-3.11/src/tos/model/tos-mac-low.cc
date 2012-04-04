@@ -130,6 +130,11 @@ TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
   phy->RegisterListener (m_phyMacLowListener);
 }
 
+void
+TosMacLow::DoStart(void)
+{
+  SetupPhyMacLowListener(m_phy);
+}
 
 void
 TosMacLow::DoDispose (void)

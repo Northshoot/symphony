@@ -158,6 +158,7 @@ public:
 
   void SetAddress (Mac48Address ad);
 
+  void DoStart (void);
   Mac48Address GetAddress (void) const;
 
   /**
@@ -231,6 +232,7 @@ private:
   void SendCurrentTxPacket (void);
   void StartDataTxTimers (void);
   virtual void DoDispose (void);
+
 
 
   void SetupPhyMacLowListener (Ptr<WifiPhy> phy);

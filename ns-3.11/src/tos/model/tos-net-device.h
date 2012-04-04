@@ -7,6 +7,7 @@
 
 #ifndef TOS_NET_DEVICE_H_
 #define TOS_NET_DEVICE_H_
+#include <string>
 
 #include "ns3/nstime.h"
 #include "ns3/simulator.h"
@@ -21,7 +22,7 @@
 #include "ns3/ns3includes.h"
 #include "ns3-to-tos-proxy_auto.h"
 #include "calls-to-ns3.h"
-#include <string>
+
 #include "RF230-radio-model.h"
 
 namespace ns3 {
@@ -49,6 +50,7 @@ public:
    * \param phy the phy layer to use.
    */
   void SetPhy (Ptr<WifiPhy> phy);
+  void TransmitData(void);
 
   void setNs3ToTos(Ns3ToTosProxy * nstos);
   /**
@@ -86,6 +88,7 @@ public:
 	error_t DeviceSend(void * msg);
 	//callback
 	void DeviceSendDone(uint8_t error);
+	void SendDone(uint8_t error);
 	void DeviceCancel(message_t* msg);
   //implementation of BareReceive
 	//callback

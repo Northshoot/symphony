@@ -56,15 +56,14 @@ implementation
 	}
 	
 	extern int radioStateDone() @C() @spontaneous(){
-        printf("\t radio state done\n");
-        
+        printf("\t radio state done\n");        
 		signal SplitControl.startDone(SUCCESS);
 		return 0;
 		
 	}	
 	command error_t SplitControl.start(){
-		printf("\t SplitControl.start()\n");
-		return call SubState.turnOn();
+		post SplitControlStartDone();
+		return 0;
 	}
 
 	command error_t SplitControl.stop(){
