@@ -58,6 +58,7 @@ NS_OBJECT_ENSURE_REGISTERED (TosNetDevice);
 TosNetDevice::TosNetDevice() :
 		m_configComplete(false) {
 	NS_LOG_FUNCTION_NOARGS ();
+	m_state = RADIO_STATE_OFF;
 }
 
 TypeId
@@ -141,7 +142,7 @@ TosNetDevice::SetNode(Ptr<Node> node) {
 
 error_t
 TosNetDevice::DeviceTurnOff() {
-	m_state = RADIO_STATE_OFF;
+  m_state = RADIO_STATE_OFF;
 	return SUCCESS;
 }
 
@@ -174,14 +175,16 @@ TosNetDevice::DeviceGetChannel() {
 
 error_t
 TosNetDevice::DeviceSend(void* msg) {
-  if(m_state != RADIO_STATE_ON && !m_busy){
-    NS_LOG_FUNCTION("send busy");
-	  return EBUSY;
-	} else {
+  std::cout<< "\tDeviceSend "<< m_state << " " << RADIO_STATE_ON<< " " << m_busy<<"\n";
+  if(m_state == RADIO_STATE_ON && !m_busy){
+	  std::cout<< "\t\tTosNetDevice::DeviceSend"<<"\n";
     memcpy((void *)&m_tx_msg, (void *)msg, sizeof(message_t));
     m_state = RADIO_STATE_TX;
     m_sendEvent = Simulator::Schedule(m_txParams->GetRadioTxDelay(), &TosNetDevice::TransmitData, this);
     return SUCCESS;
+    } else {
+      NS_LOG_FUNCTION("send busy");
+      return EBUSY;
     }
 	return FAIL;
 }
@@ -205,6 +208,7 @@ TosNetDevice::TransmitData(void)
 void
 TosNetDevice::radioStartDone()
 {
+  std::cout<< "\tradioStartDone "<< m_state << " " << RADIO_STATE_ON<< " " << m_busy<<"\n";
   Simulator::Remove(m_startUpEvent);
   m_state = RADIO_STATE_ON;
   m_ns3totos->radioStartDone(SUCCESS);
@@ -216,6 +220,7 @@ TosNetDevice::DoStart(void)
   m_tos_mac->Start();
   m_phy->Start();
   NetDevice::DoStart();
+  std::cout<< "\tDoStart "<< m_state << " " << RADIO_STATE_ON<< " " << m_busy<<"\n";
   m_startUpEvent = Simulator::Schedule(m_txParams->GetStartUpTime(), &TosNetDevice::radioStartDone, this);
 }
 Ptr<Packet>

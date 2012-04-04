@@ -62,7 +62,7 @@ implementation
 		
 	}	
 	command error_t SplitControl.start(){
-		post SplitControlStartDone();
+		call SubState.turnOn();
 		return 0;
 	}
 
@@ -156,7 +156,7 @@ implementation
 	}
 
 	tasklet_async event void SubState.done(){
-		
+		post SplitControlStartDone();
 	}
 /*----------------- Receive -----------------*/
 

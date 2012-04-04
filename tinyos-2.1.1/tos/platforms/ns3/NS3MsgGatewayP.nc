@@ -56,7 +56,7 @@ implementation{
     }
     
     extern int radioStartDone()@C() @spontaneous(){
-    	printf("radioStartDone\n");
+    	signal State.done();    	
     	return 0;
     }
     
