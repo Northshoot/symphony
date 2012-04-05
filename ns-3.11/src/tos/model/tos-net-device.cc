@@ -175,12 +175,12 @@ TosNetDevice::DeviceGetChannel() {
 
 error_t
 TosNetDevice::DeviceSend(void* msg) {
-  std::cout<< "\tDeviceSend "<< m_state << " " << RADIO_STATE_ON<< " " << m_busy<<"\n";
-  if(m_state == RADIO_STATE_ON && !m_busy){
-	  std::cout<< "\t\tTosNetDevice::DeviceSend"<<"\n";
+   if(m_state == RADIO_STATE_ON && !m_busy){
     memcpy((void *)&m_tx_msg, (void *)msg, sizeof(message_t));
     m_state = RADIO_STATE_TX;
-    m_sendEvent = Simulator::Schedule(m_txParams->GetRadioTxDelay(), &TosNetDevice::TransmitData, this);
+    m_busy=true;
+    TransmitData();
+
     return SUCCESS;
     } else {
       NS_LOG_FUNCTION("send busy");
@@ -193,6 +193,8 @@ void
 TosNetDevice::TransmitData(void)
 {
   NS_LOG_FUNCTION_NOARGS();
+  //printf("\t\t\t\tNS3 SENDING\n");
+  //printTosPacket((char*)&m_tx_msg);
   Ptr<Packet> pkt = TosToNsPacket((message_t*)&m_tx_msg);
   WifiMacHeader hdr;
   hdr.SetTypeData();
@@ -201,14 +203,14 @@ TosNetDevice::TransmitData(void)
   // hdr.SetAddr3 (GetBssid ());
   hdr.SetDsNotFrom();
   hdr.SetDsNotTo();
-
+  pkt->AddHeader(hdr);
   m_tos_mac->TransmitData(pkt->Copy(), &hdr);
+
 }
 
 void
 TosNetDevice::radioStartDone()
 {
-  std::cout<< "\tradioStartDone "<< m_state << " " << RADIO_STATE_ON<< " " << m_busy<<"\n";
   Simulator::Remove(m_startUpEvent);
   m_state = RADIO_STATE_ON;
   m_ns3totos->radioStartDone(SUCCESS);
@@ -220,7 +222,6 @@ TosNetDevice::DoStart(void)
   m_tos_mac->Start();
   m_phy->Start();
   NetDevice::DoStart();
-  std::cout<< "\tDoStart "<< m_state << " " << RADIO_STATE_ON<< " " << m_busy<<"\n";
   m_startUpEvent = Simulator::Schedule(m_txParams->GetStartUpTime(), &TosNetDevice::radioStartDone, this);
 }
 Ptr<Packet>
@@ -237,19 +238,20 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	packet->RemoveHeader(hdrr);
 	packet->CopyData(reinterpret_cast< uint8_t*>(msg), sizeof(message_t));
 //	NS_LOG_FUNCTION_NOARGS();
-	//printTosPacket((char *) msg);
+
 	memcpy((void *)&m_rx_msg, (void *)msg, sizeof(message_t));
+	//printTosPacket((char *) &m_rx_msg);
 	return &m_rx_msg;
 }
 void
 TosNetDevice::SendDone(uint8_t error){
+  m_sendEvent = Simulator::Schedule(m_txParams->GetRadioTxDelay(), &TosNetDevice::DeviceSendDone, this, 0);
+}
+void TosNetDevice::DeviceSendDone(uint8_t error) {
   m_state = RADIO_STATE_ON;
   m_busy = false;
   Simulator::Remove(m_sendEvent);
   m_ns3totos->sendSendDone(error);
-}
-void TosNetDevice::DeviceSendDone(uint8_t error) {
- m_sendEvent = Simulator::Schedule (m_txParams->GetRadioTxDelay(), &TosNetDevice::SendDone, this, error);
 }
 
 void TosNetDevice::DeviceCancel(message_t* msg) {

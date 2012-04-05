@@ -169,7 +169,7 @@ implementation
 //		call AMPacket.isForMe(msg) 
 //			? signal Receive.receive[id](msg, payload, len)
 //			: signal Snoop.receive[id](msg, payload, len);
-		
+
 		return msg;
 	}
 

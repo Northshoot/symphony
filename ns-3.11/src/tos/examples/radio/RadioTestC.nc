@@ -21,7 +21,7 @@ module RadioTestC @safe() {
 	}
 }
 implementation {
-
+    void task send();
 	message_t packet;
 
 	bool locked;
@@ -33,28 +33,9 @@ implementation {
 	}
 
 	event void AMControl.startDone(error_t err) {
-		printf("\tApp: AMControl.startDone(error_t err) \n");
 		if (err == SUCCESS) {
 		  if  (TOS_NODE_ID == 1){
-			counter++;
-			//dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
-			if (locked) {
-				printf("App: AMControl.startDone(error_t err) LOCKED \n");
-			}
-			else {
-				radio_count_msg_t* rcm = (radio_count_msg_t*)call Packet.getPayload(&packet, sizeof(radio_count_msg_t));
-				if (rcm == NULL) {
-					return;
-				}
-				rcm->counter =counter;
-				printf("AMControl.startDone: about to send\n");
-				if (call AMSend.send(AM_BROADCAST_ADDR, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
-					//dbg("RadioCountToLedsC", "RadioCountToLedsC: packet sent.\n", counter);	
-					//locked = TRUE;
-				}
-			}
-			//call MilliTimer.startPeriodic(500); 
-			
+            post send();			
 		  }
 		}else {
 			call AMControl.start();
@@ -92,8 +73,8 @@ implementation {
 			void* payload, uint8_t len) {
 				
 	    atomic counter = ((radio_count_msg_t*)payload)->counter;
-		printf("# %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
-		call MilliTimer.startOneShot(1000);
+		printf("\t\t# %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
+		//call MilliTimer.startOneShot(1000);
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
 		else {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;
@@ -106,9 +87,8 @@ implementation {
 	event void AMSend.sendDone(message_t* bufPtr, error_t error) {
 		if (&packet == bufPtr) {
 			locked = FALSE;
-			printf("AMSend.sendDone\n");
 		}
-		printf("AMSend.sendDone\n");
+		post send();
 		//call MilliTimer.startOneShot(1000);
 	}
 

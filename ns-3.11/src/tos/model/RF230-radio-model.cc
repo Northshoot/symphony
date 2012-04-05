@@ -15,8 +15,8 @@ RF230RadioModel::RF230RadioModel()
   m_channelSwith  = ns3::MicroSeconds(10);
   m_edDelay       = ns3::MicroSeconds(10);
   m_rxDelay       = ns3::MicroSeconds(10);
-  m_startUp       = ns3::MicroSeconds(500);
-  m_txDelay       = ns3::MicroSeconds(100);
+  m_startUp       = ns3::MicroSeconds(1500);
+  m_txDelay       = ns3::MilliSeconds(1500);
   m_wakeUp        = ns3::MicroSeconds(200);
   m_enableACK     = false;
 

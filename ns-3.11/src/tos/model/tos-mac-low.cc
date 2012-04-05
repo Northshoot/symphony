@@ -109,13 +109,13 @@ TosMacLow::TosMacLow ()
 {
   NS_LOG_FUNCTION (this);
   //we change datarate to fit zigbee phy
-  m_wifiMode= WifiModeFactory::CreateWifiMode ("DsssRate1Mbps",
-                                       WIFI_MOD_CLASS_DSSS,
-                                       true,
-                                       22000000, 250000,
-                                       WIFI_CODE_RATE_UNDEFINED,
-                                       2);
-
+//  m_wifiMode= WifiModeFactory::CreateWifiMode ("DsssRate1Mbps",
+//                                       WIFI_MOD_CLASS_DSSS,
+//                                       true,
+//                                       22000000, 250000,
+//                                       WIFI_CODE_RATE_UNDEFINED,
+//                                       2);
+  m_wifiMode = WifiPhy::GetDsssRate1Mbps();
 }
 
 TosMacLow::~TosMacLow ()
@@ -304,11 +304,11 @@ TosMacLow::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPre
    */
   WifiMacHeader hdr;
   packet->RemoveHeader (hdr);
+  WifiMacTrailer fcs;
+  packet->RemoveTrailer(fcs);
   //TODO: inmplement snr convertion
 //  SnrTag tag;
 //  packet->RemovePacketTag (tag);
-  NS_LOG_DEBUG ("duration/id=" << hdr.GetDuration ());
-
   m_rxCallback (packet,&hdr);
   return;
 }
