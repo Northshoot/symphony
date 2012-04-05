@@ -68,7 +68,6 @@ implementation{
 //		printf("\t\t\t\t SENDING\n");
 //		printTosPacket((char*)msg);
 		a=gatewayRadio(proxy, RADIO_SEND,-1,-1,(void *)msg, (void *) msg);
-		post sendDone();
 		return 0;
 	
 	}

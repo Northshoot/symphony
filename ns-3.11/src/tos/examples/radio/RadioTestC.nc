@@ -48,7 +48,7 @@ implementation {
  
  	void task send(){
  				counter++;
-		dbg("RadioCountToLedsC", "RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
+		printf("RadioCountToLedsC: timer fired, counter is %hu.\n", counter);
 		if (locked) {
 			return;
 		}
@@ -66,7 +66,7 @@ implementation {
 		}
  	}
 	event void MilliTimer.fired() {
-		post send();
+		//post send();
 	}
 
 	event message_t* Receive.receive(message_t* bufPtr, 
@@ -88,6 +88,7 @@ implementation {
 		if (&packet == bufPtr) {
 			locked = FALSE;
 		}
+		printf("SENDDONE\n");
 		post send();
 		//call MilliTimer.startOneShot(1000);
 	}

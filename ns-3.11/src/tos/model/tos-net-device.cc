@@ -246,10 +246,12 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 void
 TosNetDevice::SendDone(uint8_t error){
   m_sendEvent = Simulator::Schedule(m_txParams->GetRadioTxDelay(), &TosNetDevice::DeviceSendDone, this, 0);
+  std::cout<<"\t\tBEFORE: " <<Now().GetMilliSeconds()<<" tx delay " << m_txParams->GetRadioTxDelay()<<"\n";
 }
 void TosNetDevice::DeviceSendDone(uint8_t error) {
   m_state = RADIO_STATE_ON;
   m_busy = false;
+  std::cout<<"\t\tAFTER: " <<Now().GetMilliSeconds()<<"\n";
   Simulator::Remove(m_sendEvent);
   m_ns3totos->sendSendDone(error);
 }
@@ -315,7 +317,7 @@ void TosNetDevice::CompleteConfig(void) {
 	{ return; }
 	  m_tos_mac->SetPhy(m_phy);
 	  m_tos_mac->SetRxCallback (MakeCallback (&TosNetDevice::ForwardUp, this));
-	  m_tos_mac->SetTxCallback(MakeCallback(&TosNetDevice::DeviceSendDone, this));
+	  m_tos_mac->SetTxCallback(MakeCallback(&TosNetDevice::SendDone, this));
 //	  m_tos_mac->ReceiveError (MakeCallback (&TosWifiNetDevice::LinkUp, this));
 //	  m_tos_mac->ReceiveOk (MakeCallback (&TosWifiNetDevice::LinkDown, this));
 	  m_startUpTime = MicroSeconds(700);

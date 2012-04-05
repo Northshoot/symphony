@@ -73,7 +73,7 @@ int main(void)
 
 
 
-    ns3::Simulator::Stop(ns3::Seconds(10.0));
+    ns3::Simulator::Stop(ns3::Seconds(1.0));
     ns3::Simulator::Run();
     ns3::Simulator::Destroy ();
 
