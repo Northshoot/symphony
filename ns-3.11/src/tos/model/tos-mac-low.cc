@@ -26,6 +26,8 @@
 
 #include "ns3/assert.h"
 #include "ns3/simulator.h"
+#include "ns3/event-id.h"
+#include "ns3/nstime.h"
 #include "ns3/tag.h"
 #include "ns3/log.h"
 #include "ns3/double.h"
@@ -35,16 +37,10 @@
 #include "ns3/wifi-mode.h"
 #include "ns3/wifi-preamble.h"
 #include "ns3/wifi-phy.h"
-#include "ns3/wifi-remote-station-manager.h"
-#include "ns3/ctrl-headers.h"
 #include "ns3/mgt-headers.h"
-#include "ns3/block-ack-agreement.h"
 #include "ns3/mac48-address.h"
 #include "ns3/callback.h"
-#include "ns3/event-id.h"
 #include "ns3/packet.h"
-#include "ns3/nstime.h"
-#include "ns3/block-ack-cache.h"
 #include "ns3/wifi-mac-trailer.h"
 
 #include "tos-mac-low.h"
@@ -246,23 +242,24 @@ void
 TosMacLow::StartDataTxTimers (void)
 {
 //  WifiMode dataTxMode = GetDataTxMode ();
-//  //TODO: WIFI_PREAMBLE_LONG need to be fixed for specific radio device
+////  //TODO: WIFI_PREAMBLE_LONG need to be fixed for specific radio device
 //  Time txDuration = m_phy->CalculateTxDuration (GetSize (m_currentPacket, &m_currentHdr), dataTxMode, WIFI_PREAMBLE_LONG);
 //  Time delay = txDuration ;//+ GetSifs (); need to add physical delay
-
-  //m_sendDataEvent = Simulator::Schedule (MilliSeconds(10), &TosMacLow::SendDataPacket, this);
+//
+//  m_sendDataEvent = Simulator::Schedule (delay, &TosMacLow::Test, this,1);
 
   SendDataPacket();
 
 }
 void TosMacLow::Test(int a) {
-  std::cout<<"\t\t\t TosMacLow::Test " << m_sendDataEvent.IsRunning() << std::endl;
+  std::cout<<"\n\n\t\t\t TosMacLow::Test " << m_sendDataEvent.IsRunning() << std::endl;
+  m_sendDataEvent.Cancel ();
   SendDataPacket();
 }
 void
 TosMacLow::SendDataPacket (void)
 {
-  printf("\t\t\t transmiting mac\n");
+  std::cout<<"\n\n\t\t\t TosMacLow::Test " << m_sendDataEvent.IsRunning() << std::endl;
   ForwardDown (m_currentPacket, &m_currentHdr, GetDataTxMode ());
 }
 

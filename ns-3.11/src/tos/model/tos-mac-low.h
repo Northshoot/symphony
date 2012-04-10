@@ -190,7 +190,9 @@ public:
   void SetRadioModel(RF230RadioModel * model);
   void SendDataPacket (void);
   void Test(int a);
+
 private:
+  EventId m_sendLowEvent;
   void CancelAllEvents (void);
 
   uint32_t GetSize (Ptr<const Packet> packet, const WifiMacHeader *hdr) const;
