@@ -54,6 +54,48 @@ namespace ns3 {
 
 NS_OBJECT_ENSURE_REGISTERED (TosNetDevice);
 
+class PhyTosListener : public ns3::WifiPhyListener
+{
+public:
+  PhyTosListener (ns3::TosNetDevice *device)
+    : m_device (device)
+  {
+  }
+  virtual ~PhyTosListener ()
+  {
+  }
+  virtual void NotifyRxStart (Time duration)
+  {
+    std::cout<<" \tNotifyRxStart"<<std::endl;
+  }
+  virtual void NotifyRxEndOk (void)
+  {
+    std::cout<<" \tNotifyRxEndOk"<<std::endl;
+
+  }
+  virtual void NotifyRxEndError (void)
+  {
+    std::cout<<" \tNotifyRxEndError"<<std::endl;
+  }
+  virtual void NotifyTxStart (Time duration)
+  {
+    m_device->SendDone(0);
+    std::cout<<" \tNotifyTxStart "<< duration.GetMicroSeconds()<< std::endl;
+  }
+  virtual void NotifyMaybeCcaBusyStart (Time duration)
+  {
+
+    std::cout<<" \tNotifyMaybeCcaBusyStart "<<duration.GetMicroSeconds()<<std::endl;
+  }
+  virtual void NotifySwitchingStart (Time duration)
+  {
+    std::cout<<" \tNotifySwitchingStart"<<duration.GetMicroSeconds()<<std::endl;
+    //m_macLow->NotifySwitchingStartNow (duration);
+  }
+private:
+  ns3::TosNetDevice *m_device;
+};
+
 
 TosNetDevice::TosNetDevice() :
 		m_configComplete(false) {
@@ -180,7 +222,6 @@ TosNetDevice::DeviceSend(void* msg) {
     m_state = RADIO_STATE_TX;
     m_busy=true;
     TransmitData();
-
     return SUCCESS;
     } else {
       NS_LOG_FUNCTION("send busy");
@@ -246,12 +287,11 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 void
 TosNetDevice::SendDone(uint8_t error){
   m_sendEvent = Simulator::Schedule(m_txParams->GetRadioTxDelay(), &TosNetDevice::DeviceSendDone, this, 0);
-  std::cout<<"\t\tBEFORE: " <<Now().GetMilliSeconds()<<" tx delay " << m_txParams->GetRadioTxDelay()<<"\n";
 }
+
 void TosNetDevice::DeviceSendDone(uint8_t error) {
   m_state = RADIO_STATE_ON;
   m_busy = false;
-  std::cout<<"\t\tAFTER: " <<Now().GetMilliSeconds()<<"\n";
   Simulator::Remove(m_sendEvent);
   m_ns3totos->sendSendDone(error);
 }
@@ -274,7 +314,8 @@ void TosNetDevice::DoDispose(void) {
 	m_phy->Dispose();
 	m_tos_mac=0;
 	m_phy=0;
-
+	delete m_phyListener;
+	m_phyListener=0;
 	NetDevice::DoDispose ();
 }
 
@@ -320,7 +361,8 @@ void TosNetDevice::CompleteConfig(void) {
 	  m_tos_mac->SetTxCallback(MakeCallback(&TosNetDevice::SendDone, this));
 //	  m_tos_mac->ReceiveError (MakeCallback (&TosWifiNetDevice::LinkUp, this));
 //	  m_tos_mac->ReceiveOk (MakeCallback (&TosWifiNetDevice::LinkDown, this));
-	  m_startUpTime = MicroSeconds(700);
+	  m_phyListener = new PhyTosListener (this);
+	  m_phy->RegisterListener(m_phyListener);
 	  m_configComplete = true;
 	  m_busy = false;
 }

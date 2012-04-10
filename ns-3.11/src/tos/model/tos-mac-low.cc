@@ -60,49 +60,6 @@ NS_LOG_COMPONENT_DEFINE ("TosMacLow");
 
 namespace ns3 {
 
-class PhyTosMacLowListener : public ns3::WifiPhyListener
-{
-public:
-	PhyTosMacLowListener (ns3::TosMacLow *macLow)
-    : m_macLow (macLow)
-  {
-  }
-  virtual ~PhyTosMacLowListener ()
-  {
-  }
-  virtual void NotifyRxStart (Time duration)
-  {
-    std::cout<<" \tNotifyRxStart"<<std::endl;
-  }
-  virtual void NotifyRxEndOk (void)
-  {
-    std::cout<<" \tNotifyRxEndOk"<<std::endl;
-
-  }
-  virtual void NotifyRxEndError (void)
-  {
-    std::cout<<" \tNotifyRxEndError"<<std::endl;
-  }
-  virtual void NotifyTxStart (Time duration)
-  {
-    m_macLow->m_txCallback(0);
-    std::cout<<" \tNotifyTxStart "<< duration.GetMicroSeconds()<< std::endl;
-  }
-  virtual void NotifyMaybeCcaBusyStart (Time duration)
-  {
-
-    std::cout<<" \tNotifyMaybeCcaBusyStart "<<duration.GetMicroSeconds()<<std::endl;
-  }
-  virtual void NotifySwitchingStart (Time duration)
-  {
-    std::cout<<" \tNotifySwitchingStart"<<duration.GetMicroSeconds()<<std::endl;
-    m_macLow->NotifySwitchingStartNow (duration);
-  }
-private:
-  ns3::TosMacLow *m_macLow;
-};
-
-
 TosMacLow::TosMacLow ()
   : m_currentPacket (0),
     m_listener (0)
@@ -123,17 +80,16 @@ TosMacLow::~TosMacLow ()
   NS_LOG_FUNCTION (this);
 }
 
-void
-TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
-{
-  m_phyMacLowListener = new PhyTosMacLowListener (this);
-  phy->RegisterListener (m_phyMacLowListener);
-}
-
+//void
+//TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
+//{
+//  phy->RegisterListener (m_listener);
+//}
+//
 void
 TosMacLow::DoStart(void)
 {
-  SetupPhyMacLowListener(m_phy);
+  Object::DoStart();
 }
 
 void
@@ -142,9 +98,7 @@ TosMacLow::DoDispose (void)
   NS_LOG_FUNCTION (this);
   m_sendDataEvent.Cancel ();
   m_phy = 0;
-
-  delete m_phyMacLowListener;
-  m_phyMacLowListener = 0;
+  Object::DoDispose();
 }
 
 void
@@ -170,14 +124,9 @@ TosMacLow::CancelAllEvents (void)
 void
 TosMacLow::SetPhy (Ptr<WifiPhy> phy)
 {
-	NS_LOG_DEBUG(this<< " before PHY: " << m_phy);
   m_phy = phy;
-  m_phy_listner = new PhyTosMacLowListener(this);
-  m_phy->RegisterListener(m_phy_listner);
   m_phy->SetReceiveOkCallback (MakeCallback (&TosMacLow::ReceiveOk, this));
   m_phy->SetReceiveErrorCallback (MakeCallback (&TosMacLow::ReceiveError, this));
-  NS_LOG_DEBUG(this<< " after PHY: " << m_phy);
-  SetupPhyMacLowListener (phy);
 }
 
 
@@ -190,7 +139,6 @@ TosMacLow::SetAddress (Mac48Address ad)
 Mac48Address
 TosMacLow::GetAddress (void) const
 {
-	NS_LOG_FUNCTION(this << " mac: "<< m_self);
   return m_self;
 }
 
@@ -208,70 +156,21 @@ TosMacLow::SetTxCallback (Callback<void,uint8_t> callback){
 void
 TosMacLow::TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr){
 	  NS_LOG_FUNCTION (this << packet << hdr );
-	  //here we just save data
-
 	  m_currentPacket = packet->Copy();
 	  m_currentHdr = *hdr;
-	  //Need DataMode
-//	  WifiMode dataTxMode = GetDataTxMode ();
-//	  m_currentHdr.SetDuration (Seconds (0.0002));
-//
-//	  m_currentPacket->AddHeader (m_currentHdr);
-//
-//	  WifiMacTrailer fcs;
-//	  m_currentPacket->AddTrailer (fcs);
-	  StartDataTxTimers ();
-
-	  WifiMode dataTxMode = GetDataTxMode ();
 	  //TODO: need implementation for time delay
 	  Time duration = Seconds (0.0);
-
 	  m_currentHdr.SetDuration (duration);
 
 	  m_currentPacket->AddHeader (m_currentHdr);
 	  WifiMacTrailer fcs;
 	  m_currentPacket->AddTrailer (fcs);
 
-	  ForwardDown (m_currentPacket, &m_currentHdr, dataTxMode);
-	  m_currentPacket = 0;
-
-	  NS_ASSERT (m_phy->IsStateTx ());
+	  NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
+	                ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
+	  StartDataTxTimers();
 }
-void
-TosMacLow::StartTransmission (Ptr<const Packet> packet,
-        const WifiMacHeader* hdr,
-        RF230RadioModel * params,
-        TosMacLowTransmissionListener *listener)
-{
-  //NS_LOG_FUNCTION (this << packet << hdr << params << listener);
-  /* m_currentPacket is not NULL because someone started
-   * a transmission and was interrupted before one of:
-   *   - ctsTimeout
-   *   - sendDataAfterCTS
-   * expired. This means that one of these timers is still
-   * running. They are all cancelled below anyway by the
-   * call to CancelAllEvents (because of at least one
-   * of these two timer) which will trigger a call to the
-   * previous listener's cancel method.
-   *
-   * This typically happens because the high-priority
-   * QapScheduler has taken access to the channel from
-   * one of the Edca of the QAP.
-   */
-  m_currentPacket = packet->Copy ();
-  m_currentHdr = *hdr;
-  CancelAllEvents ();
-  m_listener = listener;
-  m_txParams = params;
 
-  //NS_ASSERT (m_phy->IsStateIdle ());
-
-  NS_LOG_DEBUG ("startTx size=" << GetSize (m_currentPacket, &m_currentHdr) <<
-                ", to=" << m_currentHdr.GetAddr1 () << ", listener=" << m_listener);
-
-  /* When this method completes, we have taken ownership of the medium. */
-  NS_ASSERT (m_phy->IsStateTx ());
-}
 
 //TODO: not clear here for virtualization what to do?
 void
@@ -281,16 +180,6 @@ TosMacLow::ReceiveError (Ptr<const Packet> packet, double rxSnr)
   NS_LOG_DEBUG ("rx failed ");
 
   return;
-}
-
-void
-TosMacLow::NotifySwitchingStartNow (Time duration)
-{
-  NS_LOG_DEBUG ("switching channel. Cancelling MAC pending events");
-  CancelAllEvents ();
-  //TODO: notify if packet drop if there is one
-  m_currentPacket = 0;
-  m_listener = 0;
 }
 
 void
@@ -356,19 +245,25 @@ TosMacLow::ForwardDown (Ptr<const Packet> packet, const WifiMacHeader* hdr,
 void
 TosMacLow::StartDataTxTimers (void)
 {
-  WifiMode dataTxMode = GetDataTxMode ();
-  //TODO: WIFI_PREAMBLE_LONG need to be fixed for specific radio device
-  Time txDuration = m_phy->CalculateTxDuration (GetSize (m_currentPacket, &m_currentHdr), dataTxMode, WIFI_PREAMBLE_LONG);
-  Time delay = txDuration ;//+ GetSifs ();
-  //NS_ASSERT (m_waitSifsEvent.IsExpired ());
-  m_sendDataEvent = Simulator::Schedule (delay, &TosMacLow::SendDataPacket, this);
+//  WifiMode dataTxMode = GetDataTxMode ();
+//  //TODO: WIFI_PREAMBLE_LONG need to be fixed for specific radio device
+//  Time txDuration = m_phy->CalculateTxDuration (GetSize (m_currentPacket, &m_currentHdr), dataTxMode, WIFI_PREAMBLE_LONG);
+//  Time delay = txDuration ;//+ GetSifs (); need to add physical delay
+
+  //m_sendDataEvent = Simulator::Schedule (MilliSeconds(10), &TosMacLow::SendDataPacket, this);
+
+  SendDataPacket();
 
 }
-
+void TosMacLow::Test(int a) {
+  std::cout<<"\t\t\t TosMacLow::Test " << m_sendDataEvent.IsRunning() << std::endl;
+  SendDataPacket();
+}
 void
 TosMacLow::SendDataPacket (void)
 {
-  NS_LOG_FUNCTION (this<<"NOT IMPLEMENTED");
+  printf("\t\t\t transmiting mac\n");
+  ForwardDown (m_currentPacket, &m_currentHdr, GetDataTxMode ());
 }
 
 WifiMode

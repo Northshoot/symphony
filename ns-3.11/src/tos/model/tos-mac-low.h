@@ -151,10 +151,6 @@ public:
                                      const RF230RadioModel& params) const;
 
   void TransmitData(Ptr<const Packet> packet, const WifiMacHeader* hdr);
-  void StartTransmission (Ptr<const Packet> packet,
-          const WifiMacHeader* hdr,
-          RF230RadioModel * params,
-          TosMacLowTransmissionListener *listener);
 
   void SetAddress (Mac48Address ad);
 
@@ -169,19 +165,6 @@ public:
    */
   void SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callback);
   void SetTxCallback (Callback<void,uint8_t> callback);
-
-  /**
-   * \param packet to send (does not include the 802.11 MAC header and checksum)
-   * \param hdr header associated to the packet to send.
-   * \param parameters transmission parameters of packet.
-   *
-   * This transmission time includes the time required for
-   * the next packet transmission if one was selected.
-   */
-//  Time CalculateTransmissionTime (Ptr<const Packet> packet,
-//                                  const WifiMacHeader* hdr,
-//                                  const MacLowTransmissionParameters& parameters) const;
-
 
 
   /**
@@ -202,18 +185,11 @@ public:
    * the MAC layer that a packet was unsuccessfully received.
    */
   void ReceiveError (Ptr<const Packet> packet, double rxSnr);
-  /**
-   * \param duration switching delay duration.
-   *
-   * This method is typically invoked by the PhyMacLowListener to notify
-   * the MAC layer that a channel switching occured. When a channel switching
-   * occurs, pending MAC transmissions (RTS, CTS, DATA and ACK) are cancelled.
-   */
-  void NotifySwitchingStartNow (Time duration);
+
 
   void SetRadioModel(RF230RadioModel * model);
-
-  MacLowTxCallback m_txCallback;
+  void SendDataPacket (void);
+  void Test(int a);
 private:
   void CancelAllEvents (void);
 
@@ -228,20 +204,20 @@ private:
   void MaybeCancelPrevious (void);
 
 
-  void SendDataPacket (void);
+
   void SendCurrentTxPacket (void);
   void StartDataTxTimers (void);
   virtual void DoDispose (void);
 
 
 
-  void SetupPhyMacLowListener (Ptr<WifiPhy> phy);
+  //void SetupPhyMacLowListener (Ptr<WifiPhy> phy);
 
   RF230RadioModel * m_txParams;
-  class PhyTosMacLowListener *m_phy_listner;
+  //class PhyTosMacLowListener *m_phy_listner;
   Ptr<WifiPhy> m_phy;
   MacLowRxCallback m_rxCallback;
-  //MacLowTxCallback m_txCallback;
+  MacLowTxCallback m_txCallback;
   EventId m_sendDataEvent;
 
   WifiMode m_wifiMode;

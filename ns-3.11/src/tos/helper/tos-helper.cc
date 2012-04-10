@@ -89,8 +89,6 @@ TosHelper::EnableLogComponents(void)
 	  LogComponentEnable ("WifiPhyStateHelper", LOG_LEVEL_ALL);
 	  LogComponentEnable ("WifiPhy", LOG_LEVEL_ALL);
 
-	  LogComponentEnable ("Packet", LOG_LEVEL_ALL);
-
 
 	  LogComponentEnable ("TosMacLow", LOG_LEVEL_ALL);
 	  LogComponentEnable ("TosHelper", LOG_LEVEL_ALL);

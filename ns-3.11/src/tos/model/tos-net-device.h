@@ -33,6 +33,7 @@ class Channel;
 class WifiChannel;
 class WifiPhy;
 class TosMacLow;
+class PhyTosListener;
 
 class TosNetDevice: public NetDevice {
 public:
@@ -87,7 +88,7 @@ public:
   //implementation of RadioSend
 	error_t DeviceSend(void * msg);
 	//callback
-	void DeviceSendDone(uint8_t error);
+
 	void SendDone(uint8_t error);
 	void DeviceCancel(message_t* msg);
   //implementation of BareReceive
@@ -96,9 +97,7 @@ public:
 	//callback
 	message_t* DeviceReceive(message_t* msg);
 
-	Ptr<Packet> TosToNsPacket(message_t *msg);
 
-	message_t* NsToTosPacket(Ptr<Packet> pkt, const WifiMacHeader * hdr);
 
 	void SetRadioModel(RF230RadioModel * model);
 
@@ -129,9 +128,18 @@ public:
 	  virtual bool SupportsSendFrom (void) const;
 
 private:
+	/**
+	 * Internal functions for setting timers according the device model
+	 */
+	  void DeviceSendDone(uint8_t error);
+	  Ptr<Packet> TosToNsPacket(message_t *msg);
+
+	  message_t* NsToTosPacket(Ptr<Packet> pkt, const WifiMacHeader * hdr);
+
   // This value conforms to the 802.11 specification
   static const uint16_t MAX_MSDU_SIZE = 2304;
   Ns3ToTosRxCallback m_ns2totosRx;
+  PhyTosListener * m_phyListener;
   virtual void DoDispose (void);
   virtual void DoStart (void);
 
