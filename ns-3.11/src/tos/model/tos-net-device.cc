@@ -328,7 +328,11 @@ TosNetDevice::GetCurrentMsg(){
 void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	message_t * msg = NsToTosPacket(packet, hdr);
+	if(m_state != RADIO_STATE_TX) {
 	m_ns3totos->receiveMessage((void*) msg);
+	} else {
+	  NS_LOG_FUNCTION("sender recieved");
+	}
 }
 
 void TosNetDevice::Setup(void) {

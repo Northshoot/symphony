@@ -34,7 +34,7 @@ implementation {
 
 	event void AMControl.startDone(error_t err) {
 		if (err == SUCCESS) {
-		  if  (TOS_NODE_ID == 1){
+		  if  (TOS_NODE_ID == 1 || TOS_NODE_ID == 2){
             post send();			
 		  }
 		}else {

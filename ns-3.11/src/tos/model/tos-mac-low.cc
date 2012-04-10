@@ -251,15 +251,10 @@ TosMacLow::StartDataTxTimers (void)
   SendDataPacket();
 
 }
-void TosMacLow::Test(int a) {
-  std::cout<<"\n\n\t\t\t TosMacLow::Test " << m_sendDataEvent.IsRunning() << std::endl;
-  m_sendDataEvent.Cancel ();
-  SendDataPacket();
-}
+
 void
 TosMacLow::SendDataPacket (void)
 {
-  std::cout<<"\n\n\t\t\t TosMacLow::Test " << m_sendDataEvent.IsRunning() << std::endl;
   ForwardDown (m_currentPacket, &m_currentHdr, GetDataTxMode ());
 }
 

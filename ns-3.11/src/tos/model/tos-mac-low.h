@@ -139,6 +139,7 @@ class TosMacLow : public Object
 {
 public:
   typedef Callback<void, Ptr<Packet>, const WifiMacHeader*> MacLowRxCallback;
+  typedef Callback<void, Ptr<Packet>, const WifiMacHeader*> MacLowRxErrorCallback;
   typedef Callback<void, uint8_t> MacLowTxCallback;
   TosMacLow ();
   virtual ~TosMacLow ();
@@ -189,7 +190,7 @@ public:
 
   void SetRadioModel(RF230RadioModel * model);
   void SendDataPacket (void);
-  void Test(int a);
+
 
 private:
   EventId m_sendLowEvent;
@@ -213,12 +214,11 @@ private:
 
 
 
-  //void SetupPhyMacLowListener (Ptr<WifiPhy> phy);
-
   RF230RadioModel * m_txParams;
-  //class PhyTosMacLowListener *m_phy_listner;
+
   Ptr<WifiPhy> m_phy;
   MacLowRxCallback m_rxCallback;
+  MacLowRxErrorCallback m_rxErrorCallback;
   MacLowTxCallback m_txCallback;
   EventId m_sendDataEvent;
 
