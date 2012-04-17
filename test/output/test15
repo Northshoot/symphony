@@ -1,0 +1,9 @@
+libtest15 constructor
+enter main
+error looking up function_f in RTLD_DEFAULT
+error looking up function_f in main
+error looking up function_f in RTLD_DEFAULT
+dlsym is not performing lookups according to local scope
+dlvsym works
+leave main
+libtest15 destructor

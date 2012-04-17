@@ -1,0 +1,12 @@
+libtest2 constructor
+enter main
+dlopen libf.so completed
+dlopen libe.so completed
+dlclose libf.so completed
+dlclose libe.so completed
+dlopen libe.so completed
+dlopen libf.so completed
+dlclose libe.so completed
+dlclose libf.so completed
+leave main
+libtest2 destructor

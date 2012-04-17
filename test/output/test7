@@ -1,0 +1,5 @@
+libtest7 constructor
+enter main
+dlopen libg.so completed
+leave main
+libtest7 destructor

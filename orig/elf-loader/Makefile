@@ -1,6 +1,6 @@
 SRCDIR= $(abspath $(dir $(firstword $(MAKEFILE_LIST))))/
 BLDDIR= $(PWD)/
-DEBUG=-DDPRINTF_DEBUG_ENABLE
+#DEBUG=-DDPRINTF_DEBUG_ENABLE
 DEBUG+=-DMALLOC_DEBUG_ENABLE
 #OPT=-O2
 LDSO_SONAME=ldso
@@ -22,7 +22,7 @@ LDSO_FILE=/lib/ld-linux.so.2
 LIBDL_FILE=/lib/libdl.so.2
 else ifeq ($(ARCH),x86_64/)
 LDSO_FILE=/lib64/ld-linux-x86-64.so.2
-LIBDL_FILE=/lib/x86_64-linux-gnu/libdl.so.2
+LIBDL_FILE=/lib64/libdl.so.2
 endif
 
 all: ldso libvdl.so elfedit internal-tests display-relocs
@@ -34,14 +34,14 @@ install: all
 
 test: FORCE internal-tests
 	mkdir -p test;
-	$(MAKE) -C test -f $(SRCDIR)test/Makefile
-	$(MAKE) -C test -f $(SRCDIR)test/Makefile run
+	$(MAKE) -C test -f $(SRCDIR)/test/Makefile
+	$(MAKE) -C test -f $(SRCDIR)/test/Makefile run
 	./internal-tests
 
 test-valgrind: FORCE
 	mkdir -p test
-	$(MAKE) -C test -f $(SRCDIR)test/Makefile
-	$(MAKE) -C test -f $(SRCDIR)test/Makefile run-valgrind
+	$(MAKE) -C test -f $(SRCDIR)/test/Makefile
+	$(MAKE) -C test -f $(SRCDIR)/test/Makefile run-valgrind
 
 FORCE:
 
@@ -106,7 +106,7 @@ libvdl.so: libvdl.o ldso libdl.version
 	$(CC) $(LDFLAGS) ldso -nostdlib -shared -Wl,--version-script=libdl.version -o $@ $<
 
 elfedit: elfedit.o
-internal-tests: LDFLAGS+=-pthread #bad lib discription to use lpthread
+internal-tests: LDFLAGS+=-lpthread
 TEST_SOURCE = \
 internal-tests.cc \
 internal-test-alloc.cc \

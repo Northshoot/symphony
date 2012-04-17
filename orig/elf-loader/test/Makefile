@@ -3,7 +3,7 @@ BLDDIR= $(PWD)/
 VPATH=$(SRCDIR)
 CFLAGS=-g3 -Wall -Werror
 CXXFLAGS=$(CFLAGS)
-LDFLAGS=-Wl,--warn-unresolved-symbols -L. -ldl
+LDFLAGS=-Wl,--warn-unresolved-symbols -L.
 LINKER=$(CC)
 MACHINE_MAKEFILE=Makefile.$(shell uname -p)
 
@@ -27,21 +27,21 @@ test%-ldso: test%
 	@cp $^ $@
 	@../elfedit $@ ../ldso
 run-valgrind-test%: test%-ldso FORCE
-	@-LD_LIBRARY_PATH=.:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu ./run-valgrind.py ./$<; \
+	@-LD_LIBRARY_PATH=.:../ ./run-valgrind.py ./$<; \
 		if test $$? -eq 0; then 						\
 			echo "PASS $@"; 						\
 		else 									\
-			echo "FAIL $@ -- LD_LIBRARY_PATH=.:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu ./run-valgrind.py ./$<"; \
+			echo "FAIL $@ -- LD_LIBRARY_PATH=.:../ ./run-valgrind.py ./$<"; \
 		fi
 run-test%: test%-ldso $(OUTPUT_DIR) FORCE
 	@-mkdir -p $(OUTPUT_DIR) 2>/dev/null
 	@-$(TEST_PRE_COMMAND)
-	@-LD_LIBRARY_PATH=.:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu  ./$< > $(OUTPUT_DIR)/test$*  || true;
+	@-LD_LIBRARY_PATH=.:../ ./$< > $(OUTPUT_DIR)/test$* 2>/dev/null || true;
 	@-diff -q $(OUTPUT_DIR)/test$* $(SRCDIR)$(OUTPUT_DIR)/test$*.ref > /dev/null; \
 		if test $$? -eq 0; then 				\
 			echo "PASS $@"; 				\
 		else 							\
-			echo "FAIL $@  -- LD_LIBRARY_PATH=.:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu  ./$<"; 	\
+			echo "FAIL $@  -- LD_LIBRARY_PATH=.:../ ./$<"; 	\
 		fi
 $(OUTPUT_DIR):
 	mkdir -p $@ 2>/dev/null
@@ -61,20 +61,20 @@ lib%.o: lib%.c
 lib%.o: lib%.cc
 	$(CXX) $(CXXFLAGS) -fpic -c -o $@ $<
 lib%.so:lib%.o
-	$(LINKER) -shared -o $@ $^ $(LDFLAGS)
+	$(LINKER) $(LDFLAGS) -shared -o $@ $^
 
 test%.o: test%.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 test%.o: test%.cc
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 test%: test%.o
-	$(LINKER) -o $@ $< $(LDFLAGS)
+	$(LINKER) $(LDFLAGS) -ldl -o $@ $<
 
 test7.o: CFLAGS+=-Wno-unused-but-set-variable
 
 circular-dep:
-	$(CC) $(LDFLAGS) -shared -ln -o libo.so libo.o 
-	$(CC) $(LDFLAGS) -shared -lo -o libn.so libn.o 
+	$(CC) $(LDFLAGS) -shared -ldl -ln -o libo.so libo.o
+	$(CC) $(LDFLAGS) -shared -ldl -lo -o libn.so libn.o
 
 liba.so: LDFLAGS+=-lb
 libb.so: LDFLAGS+=-ld -le
@@ -92,11 +92,11 @@ lb22.so: lb22.o
 	$(CC) $(LDFLAGS) -shared -o $@ $^
 test0: LDFLAGS+=-la
 test0_1: LDFLAGS+=-lb -la
-test8_5: LDFLAGS+=-pthread
-test9: LDFLAGS+=-pthread
-test10: LDFLAGS+=-pthread
+test8_5: LDFLAGS+=-lpthread
+test9: LDFLAGS+=-lpthread
+test10: LDFLAGS+=-lpthread
 test11:
-test12: LDFLAGS+=-pthread
+test12: LDFLAGS+=-lpthread
 test13: LDFLAGS+=-lf
 test14: LDFLAGS+=-ln
 test16: LINKER=$(CXX)

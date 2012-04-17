@@ -606,6 +606,7 @@ vdl_file_map_single (struct VdlContext *context,
       goto error;
     }
   // check that the header size is correct
+
   if (header.e_ehsize != sizeof (header))
     {
       VDL_LOG_ERROR ("header size invalid, %d!=%d\n", header.e_ehsize, sizeof(header));

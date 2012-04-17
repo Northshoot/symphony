@@ -134,8 +134,8 @@ def search_debug_file():
                     '/usr/lib/debug/ld-linux-x86-64.so.2',
                     '/usr/lib/debug/lib/ld-linux.so.2.debug',
                     '/usr/lib/debug/ld-linux.so.2',
-                    # for ubuntu 0910. braindead
-                    '/usr/lib/debug/lib/ld-2.10.1.so'
+                    # for ubuntu 1110. braindead
+                    '/usr/lib/debug/lib/x86_64-linux-gnu/ld-2.13.so',
                     ]
     for file in files_to_try:
         if os.path.isfile (file):
@@ -213,9 +213,9 @@ def main(argv):
 
     data = debug.get_typedef_member_offset ('tcbhead_t', 'stack_guard')
     if data is None:
-        sys.exit (1)
+        sys.exit (1)    
     config.write ('#define CONFIG_TCB_STACK_GUARD ' + str(data.data) + '\n')
-
+    
 if __name__ == "__main__":
     main(sys.argv[1:])
 

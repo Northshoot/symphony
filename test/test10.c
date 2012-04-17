@@ -27,7 +27,14 @@ static void *thread (void*ctx)
 static void
 test_one (void)
 {
-  void *handle = dlopen ("libi.so", RTLD_LAZY);
+  void *handle ;//= dlopen ("libi.so", RTLD_LAZY);
+      handle = dlopen ("/home/lauril/dev/elfloader_lr/test/libi.so", RTLD_LAZY);//dlmopen(LM_ID_NEWLM,"/home/lauril/dev/elfloader_lr/test/liba.so", RTLD_LAZY);
+      //handler[i] = dlopen("/home/lauril/dev/elfloader_lr/test/liba.so", RTLD_LAZY);
+      if(!handle){
+        printf ("Cannot open library one: %s\n",dlerror());
+      } else {
+        printf("open one \n");
+      }
 
   g_get_i = (int *(*) (void)) dlsym (handle, "get_i");
   int *i = g_get_i ();
@@ -42,8 +49,12 @@ test_one (void)
 
   sem_wait (&g_wait_a);
   dlclose (handle);
-  handle = dlopen ("libi.so", RTLD_LAZY);
-
+  handle = dlopen ("/home/lauril/dev/elfloader_lr/test/libi.so", RTLD_LAZY);
+  if(!handle){
+    printf ("Cannot open library two: %s\n",dlerror());
+  } else {
+    printf("open second\n");
+  }
   g_get_i = (int *(*) (void)) dlsym (handle, "get_i");
   i = g_get_i ();
   printf ("main i=%d\n", *i);

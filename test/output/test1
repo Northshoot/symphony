@@ -1,0 +1,6 @@
+libtest1 constructor
+enter main
+dlopen completed
+dladdr ok file= ¢r«Å+, symbol=(null)
+leave main
+libtest1 destructor
