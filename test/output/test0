@@ -1,4 +1,0 @@
-libtest0 constructor
-enter main
-leave main
-libtest0 destructor
