@@ -5,15 +5,15 @@
  *      Author: laurynas
  */
 
-
+/***
+ * Simple symphony usage example
+ */
 #include <stdio.h>
 #include <unistd.h>
 #include <iostream>
 #include <sys/time.h>
 
 #include "ns3/core-module.h"
-//#include "tosns-simulator-impl.h"
-
 #include "ns3/tos-module.h"
 #include "ns3/core-module.h"
 #include "ns3/mobility-module.h"
@@ -28,9 +28,7 @@ using namespace ns3;
 
 int main(void)
 {
-	  //set real time mode
-//  ns3::GlobalValue::Bind("SimulatorImplementationType", ns3::StringValue(
-//	      "ns3::RealtimeSimulatorImpl"));
+
 
 
 	TosNodeContainer c("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml");
@@ -43,7 +41,7 @@ int main(void)
 //	      wifi.EnableLogComponents ();  // Turn on all Wifi logging
 //	    }
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
-	  wifi.EnableLogComponents ();
+	  //wifi.EnableLogComponents ();
 	 //LogComponentEnableAll(LOG_ALL);
 	  YansTosPhyHelper wifiPhy =  YansTosPhyHelper::Default ();
 	  // This is one parameter that matters when using FixedRssLossModel
@@ -56,7 +54,7 @@ int main(void)
 	  wifiChannel.SetPropagationDelay ("ns3::ConstantSpeedPropagationDelayModel");
 	  // The below FixedRssLossModel will cause the rss to be fixed regardless
 	  // of the distance between the two stations, and the transmit power
-	  wifiChannel.AddPropagationLoss ("ns3::FixedRssLossModel","Rss",DoubleValue (-95));
+	  wifiChannel.AddPropagationLoss ("ns3::FixedRssLossModel","Rss",DoubleValue (-80));
 	  wifiPhy.SetChannel (wifiChannel.Create ());
 
 	  TosNetDeviceContainer devices = wifi.Install (wifiPhy,  c);
@@ -74,7 +72,7 @@ int main(void)
 
 
 
-    ns3::Simulator::Stop(ns3::Seconds(1.0));
+    ns3::Simulator::Stop(ns3::Seconds(100.0));
     ns3::Simulator::Run();
     ns3::Simulator::Destroy ();
 

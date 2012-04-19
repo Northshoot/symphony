@@ -34,10 +34,6 @@ using namespace ns3;
 
 int main(void)
 {
-	  //set real time mode
-//  ns3::GlobalValue::Bind("SimulatorImplementationType", ns3::StringValue(
-//	      "ns3::RealtimeSimulatorImpl"));
-
 
 	TosNodeContainer nodes("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml");
 	nodes.Create(3);
