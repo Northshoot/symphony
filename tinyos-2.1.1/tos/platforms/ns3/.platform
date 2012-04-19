@@ -1,12 +1,4 @@
-#
-# FILE: null/.platform
-# 
-# A do-nothing platform. A good target for mig when using external types.
-#
-# $Id: .platform,v 1.6 2009/11/14 06:51:21 razvanm Exp $
-#
 push( @includes, qw(
-
   %T/platforms/ns3/system
   %T/platforms/ns3/timers
   %T/platforms/ns3/sim
@@ -17,7 +9,6 @@ push( @includes, qw(
 ) );
 
 @opts = qw(
-
   -fnesc-target=pc
   -fnesc-scheduler=TinySchedulerC,TinySchedulerC.TaskBasic,TaskBasic,TaskBasic,runTask,postTask
 

@@ -12,12 +12,16 @@
  * Dummy implementation to support the null platform.
  */
 
-module PlatformC {
+configuration PlatformC 
+{
   provides interface Init;
+  uses interface Init as SubInit;
 }
-implementation {
-  command error_t Init.init() {
 
-    return SUCCESS;
-  }
+implementation {
+	components PlatformP, LedsC;
+	
+    Init = PlatformP.Init;
+    SubInit = PlatformP.SubInit;
+
 }

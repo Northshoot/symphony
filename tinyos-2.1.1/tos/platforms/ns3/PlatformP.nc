@@ -35,25 +35,31 @@
  */
 
 /**
- * Mulle platform-specific LED interface.
+ * ns3 platform initialization code.
  *
- * @author Henrik Makitaavola <henrik.makitaavola@gmail.com>
+ * @author Laurynas Riliskis <laurynas.riliskis@ltu.se>
  */
-configuration PlatformLedsC
+
+
+
+module PlatformP
 {
-  provides interface GeneralIO as Led0;
-  provides interface GeneralIO as Led1;
-  provides interface GeneralIO as Led2;
-  uses interface Init;
+  provides interface Init;
+  uses interface Init as SubInit;
+
 }
+
 implementation
 {
-  components HplNs3GeneralIOC as IO;
-  components PlatformP;
+  command error_t Init.init()
+  {
+    error_t ok = SUCCESS;
+    // Sub components initialization.
+    ok = ecombine(ok, call SubInit.init());
 
-  Init = PlatformP.SubInit;
+    return SUCCESS;
+  }
 
-  Led0 = IO.PortP00;  // Pin P3_6 = Red LED
-  Led1 = IO.PortP01;  // Pin P3_7 = Green LED
-  Led2 = IO.PortP02;  // External LED, supplied by user.
+
+
 }
