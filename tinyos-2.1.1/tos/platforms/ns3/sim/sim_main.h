@@ -26,7 +26,6 @@ int setProxy(void * con) @C() @spontaneous() {
          } else {
              printf("FROM toslib: ops! no proxy\n");
          }
-
          return id_this_lib;
      }
 #ifdef __cplusplus

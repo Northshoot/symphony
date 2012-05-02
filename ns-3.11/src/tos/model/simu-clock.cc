@@ -106,7 +106,8 @@ SimuClock::addTime(PRECISION p, Time tm_1, uint64_t tm_2){
 	}
 	return t;
 }
-Time SimuClock::getTime(PRECISION p, double crystal){
+Time
+SimuClock::getTime(PRECISION p, double crystal){
 	NS_ASSERT_MSG(crystal != 0, "Cannot multiply with zero");
 	Time t;
 	//std::cout<<"SimuClock::getTime " <<p<<std::endl;

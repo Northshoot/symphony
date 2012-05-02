@@ -102,15 +102,13 @@ void TosNode::ShutDownNode(Time ttl)
 	m_shutdown_event = Simulator::Schedule(m_shutDownTime, &TosNode::DoDispose, this);
 }
 
-void TosNode::BootBooted(void)
+void
+TosNode::BootBooted(void)
 {
 	simuclock->Start();
 	NS_LOG_FUNCTION(this << " " <<m_id << " " << simuclock->getTimeNow() << " ms" );
 	//tickTime(100);
-	//cout<<"booted node id " << node_id <<" at " <<Simulator::Now().GetMilliSeconds() <<endl;
 	nstotos->sim_main_start_mote(m_id);
-	//GetDevice(0)->Start();
-	//Simulator::RunOneEvent();
 	Simulator::Remove(m_boot_event);
 }
 
@@ -208,6 +206,9 @@ TosNode::AddDevice(Ptr<TosNetDevice> device)
 //    	                                  &TosNetDevice::Start, device);
 	  tostons->setDevice(device);
 	  device->setNs3ToTos(nstotos);
+    device->SetDeviceSendDoneCallback(MakeCallback(&Ns3ToTosProxy::sendSendDone,nstotos));
+    device->SetRadioStartDoneCallback(MakeCallback(&Ns3ToTosProxy::radioStartDone,nstotos));
+    device->SetReceiveCallback(MakeCallback(&Ns3ToTosProxy::receiveMessage,nstotos));
 	  return index;
 
 }

@@ -23,6 +23,8 @@ module RadioTestC @safe() {
 implementation {
     void task send();
 	message_t packet;
+	message_t packet1;
+	message_t packet2;
     uint8_t dest=0;
 	bool locked;
 	uint16_t counter = 0;

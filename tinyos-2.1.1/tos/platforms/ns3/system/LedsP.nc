@@ -47,9 +47,10 @@
  * @author Laurynas Riliskis <laurynas.riliskis@ltu.se>
  */
 #include <stdint.h>
+
+#include "sim/logprinter.h"
  
-#define DBVIRTGLED(n,nn) \
-  printf("LedsC::LEDS: Led" #n " %s.\n", nn);
+
   
 module LedsP @safe() {
   provides {
@@ -72,7 +73,7 @@ implementation {
 
 
   async command void Leds.led0On() {
-    DBVIRTGLED(0, "on");
+    DBVIRTGLED( 0, "on");
   }
 
   async command void Leds.led0Off() {

@@ -254,7 +254,7 @@ TosNetDevice::radioStartDone()
 {
   Simulator::Remove(m_startUpEvent);
   m_state = RADIO_STATE_ON;
-  m_ns3totos->radioStartDone(SUCCESS);
+  c_ns2tosStartDone(SUCCESS);
 }
 void
 TosNetDevice::DoStart(void)
@@ -293,7 +293,7 @@ void TosNetDevice::DeviceSendDone(uint8_t error) {
   m_state = RADIO_STATE_ON;
   m_busy = false;
   Simulator::Remove(m_sendEvent);
-  m_ns3totos->sendSendDone(error);
+  c_ns2tosSendDone(error);
 }
 
 void TosNetDevice::DeviceCancel(message_t* msg) {
@@ -329,9 +329,9 @@ void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	message_t * msg = NsToTosPacket(packet, hdr);
 	if(m_state != RADIO_STATE_TX) {
-	m_ns3totos->receiveMessage((void*) msg);
+	  c_ns2tosRx((void*) msg);
 	} else {
-	  NS_LOG_FUNCTION("sender recieved");
+	  NS_LOG_FUNCTION("RX in RADIO_STATE_TX");
 	}
 }
 
@@ -347,6 +347,19 @@ bool
 TosNetDevice::Send(Ptr<Packet> packet, const Address& dest) {
 	NS_LOG_FUNCTION(this << "NOT implemented");
 	return false;
+}
+
+void
+TosNetDevice::SetRadioStartDoneCallback(RadioStartDoneCallback c){
+  c_ns2tosStartDone =c;
+}
+void
+TosNetDevice::SetDeviceSendDoneCallback(DeviceSendDoneCallback c){
+  c_ns2tosSendDone=c;
+}
+void
+TosNetDevice::SetReceiveMessageCallback(ReceiveMessageCallback c){
+  c_ns2tosRx =c;
 }
 
 void

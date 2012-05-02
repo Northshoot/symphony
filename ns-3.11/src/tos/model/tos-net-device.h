@@ -37,7 +37,11 @@ class PhyTosListener;
 
 class TosNetDevice: public NetDevice {
 public:
-	typedef Callback<void, message_t *> Ns3ToTosRxCallback;
+
+	typedef Callback<void,uint8_t> RadioStartDoneCallback;
+	typedef Callback<void, uint8_t> DeviceSendDoneCallback;
+	typedef Callback<void, void *> ReceiveMessageCallback;
+
 	static TypeId GetTypeId (void);	
 
 	TosNetDevice();
@@ -97,6 +101,10 @@ public:
 	//callback
 	message_t* DeviceReceive(message_t* msg);
 
+	//set callbacks
+	void SetRadioStartDoneCallback(RadioStartDoneCallback c);
+	void SetDeviceSendDoneCallback(DeviceSendDoneCallback c);
+	void SetReceiveMessageCallback(ReceiveMessageCallback c);
 
 
 	void SetRadioModel(RF230RadioModel * model);
@@ -138,7 +146,11 @@ private:
 
   // This value conforms to the 802.11 specification
   static const uint16_t MAX_MSDU_SIZE = 2304;
-  Ns3ToTosRxCallback m_ns2totosRx;
+
+  RadioStartDoneCallback c_ns2tosStartDone;
+  DeviceSendDoneCallback c_ns2tosSendDone;
+  ReceiveMessageCallback c_ns2tosRx;
+
   PhyTosListener * m_phyListener;
   virtual void DoDispose (void);
   virtual void DoStart (void);

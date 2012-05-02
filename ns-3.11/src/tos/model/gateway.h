@@ -7,7 +7,10 @@
 
 #ifndef GATEWAY_H_
 #define GATEWAY_H_
+#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
 #include "tos-to-ns3-proxy.h"
 #include "ns3includes.h"
 #include "ns3/log.h"
@@ -67,4 +70,25 @@ extern int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hd
 
 }
 
+extern void gatewayLogg(void *obj, const char* func, int line_num,const char* msg){
+//  char string[]={"this$is$a$string"};
+//
+//  char searchchar = '$';
+//  char replacechar = ':';
+//  const char *valueptr; // will store pointer retrieved from strchr
+//
+//  valueptr = strchr(string, searchchar);
+//  if(valueptr != NULL) // Check for NULL
+//       *valueptr = replacechar;
+//
+//  // Loop until end of string
+//  while (valueptr !=NULL) {
+//      valueptr = strchr(valueptr + 1, searchchar);
+//      if(valueptr != NULL) // Check for NULL
+//           *valueptr = replacechar;
+//  }
+
+  printf("%s::%d - %s\n", func, line_num, msg);
+
+}
 #endif /* GATEWAY_H_ */

@@ -62,7 +62,7 @@ int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
 
 int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);
-
+void gatewayLogg(void *obj, const char* func, int line_num,const char* msg);
 
 #ifdef __cplusplus
 }

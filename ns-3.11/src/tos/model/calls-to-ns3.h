@@ -30,4 +30,5 @@ typedef enum {
 	RADIO_STATE_TX,
 	RADIO_STATE_RX
 } RadioState;
+
 #endif /* CALLS_TO_NS3_H_ */
