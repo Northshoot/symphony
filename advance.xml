@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<symphony>
+  <model name="radio">
+   <callback return="int" params="1" param1="void *" time="60" name ="receiveMessage"/>
+   <callback return="int" params="1" param1="void *" time="60" name ="startRadioDone"/>
+   <callback return="int" params="1" param1="void *" time="60" name ="2"/>
+   <call return="int" params="1" param1="void *" time="60" name ="3"/>
+   <property units="kb" size="28" name="packet"/>
+   <call time="60" name="startRadio"/>
+   <call time="80" name="swithChannel"/>
+  </model>
+  
+  <model name="rom">
+   <property units="Kb" size="514" initial="220" name="heap"/>
+  </model>  
+  <model name="flash">
+   <property units="Kb" size="2000" initial="120" name="size"/>
+   <call time="50" name ="startFlash"/>
+   <call time="10" params="1" param1="void *" name="write"/>
+   <callback return="void *" params="1" param1="int" time="20" name ="2"/>
+  </model>  
+</symphony>

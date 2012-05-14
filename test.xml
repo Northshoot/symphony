@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<root>
+   <ApplicationSettings
+           option_a = "10"
+           option_b = "24"
+           >
+   </ApplicationSettings>
+      <ApplicationSettings
+           option_a = "100"
+           option_b = "240"
+           >
+   </ApplicationSettings>
+   <OtherStuff
+           option_x = "500"
+           >
+   </OtherStuff>
+</root>
