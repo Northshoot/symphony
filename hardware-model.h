@@ -1,72 +1,61 @@
-/*
- * hardware-model.h
- *
- *  Created on: May 4, 2012
- *      Author: lauril
- */
-
-#ifndef HARDWARE_MODEL_H_
-#define HARDWARE_MODEL_H_
+#ifndef SYM_RADIO_MODEL_H
+#define SYM_RADIO_MODEL_H
 
 #include <stdint.h>
 #include <string>
+#include <google/dense_hash_map>
+#include "model-element.h"
+#include "model-vocabulary.h"
+
+using google::dense_hash_map;
+
 class HardwareModel
 {
 public:
-
+  HardwareModel();
+  HardwareModel(std::string name);
   virtual
   ~HardwareModel();
 
-  /**
-   * returns the name of the model
-   */
-  virtual std::string
-  getModelName() const =0;
+  ModelElement
+  getElement(ModelVocabulary::ElementType et, std::string name);
+  void
+  addElement(ModelVocabulary::ElementType type, std::string elemenName,
+      std::string name, std::string value);
+
+  void
+  printModel(void);
+
+private:
+  typedef dense_hash_map<std::string, ModelElement *> UniqueElement;
+  typedef std::vector< UniqueElement> ElementCollection;
+
+  ModelElement
+  createNewElement(std::string name);
+  void
+  Construct();
+  void
+  printKeyVal(dense_hash_map<std::string, std::string> map);
+  //hash map for holding model elements
+  //
+  UniqueElement m_properties;
+  UniqueElement m_calls;
+
+  ///key is model name
+  //<property units="Kb" size="514" initial="220" name="heap"/>
+  //in example case "heap"
 
   /**
-   * setters and getters for the model
+   * Element Collection holds all possible elelent's
+   * Accessor is by type m_elemets[PROPERTY]
+   * The returned map accessor is by name of the element
+   * element["start"]
+   * In its turn, each unique element has attributes
+   * defined in vocabulary, however
+   * TODO: there is no safe guard, so the attributes need to exis uppon they
+   * access.
    */
-  virtual void
-  addModelProperty(std::string key, std::string value) =0;
-  virtual std::string
-  getModelProperty(std::string key) =0;
-  virtual uint32_t
-  getSizeOfProperty() =0;
-
-  virtual std::string
-  getModelCall(std::string key) =0;
-  virtual void
-  addModelCall(std::string key, std::string value) =0;
-  virtual uint32_t
-  getSizeOfCall() =0;
-
-  virtual std::string
-  getModelCallBack(std::string key) =0;
-  virtual void
-  addModelCallBack(std::string key, std::string value) =0;
-  virtual uint32_t
-  getSizeOfCallBack()=0;
-
-  virtual std::string
-  getModelFormat(std::string key) =0;
-  virtual void
-  addModelFormat(std::string key, std::string value) =0;
-  virtual uint32_t
-  getSizeOfFormat() =0;
-
-  virtual std::string
-  getModelSource(std::string key) =0;
-  virtual void
-  addModelSource(std::string key, std::string value) =0;
-  virtual uint32_t
-  getSizeOfSource() =0;
-  
-  /**
-   * pretty model print
-   */
-  virtual void
-  printModel()  = 0;
-
+  ElementCollection m_elemets;
+  std::string m_name;
 };
-
-#endif /* HARDWARE_MODEL_H_ */
+#endif //SYM_RADIO_MODEL_H

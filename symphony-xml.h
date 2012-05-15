@@ -26,7 +26,7 @@
 #include <vector>
 #include <map>
 #include <utility>
-#include "radio-model.h"
+
 #include "hardware-model.h"
 
 enum
@@ -46,12 +46,12 @@ public:
   void
   readConfigFile(std::string&) throw (std::runtime_error);
 
-  RadioModel
+  HardwareModel
   getRadioModel(std::string name);
 
 private:
-  typedef void
-  (RadioModel::*ELEMENT_ADD)(std::string key, std::string value);
+//  typedef void
+//  (HardwareModel::*ELEMENT_ADD)(ModelVocabulary::ElementType type, std::string name, std::string value);
   inline std::string
   getString(const XMLCh* const toHandle);
   inline std::string
@@ -64,7 +64,7 @@ private:
    */
   void
   createModelElement(xercesc::DOMNodeList* nodeList,
-      std::vector<std::string> vacabulary, RadioModel& model, ELEMENT_ADD addFunction);
+      ModelVocabulary::ElementType type, HardwareModel& model);
   xercesc::XercesDOMParser *m_ConfigFileParser;
   bool m_init;
   // Internal class use only. Hold Xerces data in UTF-16 SMLCh type.
@@ -81,11 +81,7 @@ private:
   XMLCh* TAG_format;
   XMLCh* TAG_source;
   std::vector<std::string> tos_functions;
-  std::vector<std::string> property_vocabulary;
-  std::vector<std::string> call_vocabulary;
-  std::vector<std::string> callback_vocabulary;
-  std::vector<std::string> format_vocabulary;
-  std::vector<std::string> source_vocabulary;
+
   std::map<std::string, xercesc::DOMElement*> m_modelMap;
 
 };

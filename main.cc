@@ -10,7 +10,7 @@
 #include <errno.h>
 #include <stdexcept>
 #include "symphony-xml.h"
-#include "radio-model.h"
+#include "hardware-model.h"
 
 using namespace std;
 
@@ -22,9 +22,9 @@ int main()
 	   SymphonyXML sym;
 	   sym.readConfigFile(configFile);
 	   vector<string> str_v = sym.getTosFunctions();
-	   RadioModel  model_r = sym.getRadioModel("radio");
-	   cout << "model name: " <<model_r.getModelName() << endl;
-	   model_r.printModel();
+	   HardwareModel  radioModel = sym.getRadioModel("radio");
+	   //cout << "model name: " <<radioModel.getModelName() << endl;
+	   radioModel.printModel();
 
 
 } catch (...) {

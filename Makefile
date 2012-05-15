@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -g -Wall -pedantic
 LDFLAGS=-lxerces-c
-SOURCES=main.cc symphony-xml.cc radio-model.cc hardware-model.cc
+SOURCES=main.cc symphony-xml.cc hardware-model.cc model-element.cc model-vocabulary.cc
 OBJECTS=$(SOURCES:.cc=.o)
 EXECUTABLE=symxml
 RMOBJ=rm *.o

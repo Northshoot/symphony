@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
+#include "model-vocabulary.h"
 
 #include "symphony-xml.h"
 
@@ -98,24 +99,32 @@ SymphonyXML::readConfigFile(string & configFile) throw (std::runtime_error)
 
 void
 SymphonyXML::createModelElement(DOMNodeList* nodeList,
-    std::vector<std::string> vacabulary, RadioModel& model,ELEMENT_ADD addFunction)
+     ModelVocabulary::ElementType type, HardwareModel& model)
 {
   const XMLSize_t nodeCount = nodeList->getLength();
+  std::vector<std::string> vacabulary = ModelVocabulary::getInstance().getVocabulary(type);
   std::vector<std::string>::iterator it;
+  //now we iterate over all ModelVocabulary::ElementType attributes
+  //which are defined in the vocabulary
+  //if attribute is not set "EMPTY" is added
   for (XMLSize_t ix = 0; ix < nodeCount; ++ix)
     {
       DOMNode* currentNode = nodeList->item(ix);
       DOMElement* curElement = dynamic_cast<xercesc::DOMElement*>(currentNode);
+      //Extract name, it is common for all elements
+      //TODO: possible to extract generic model and derivate it and further make parsing there
+      std::string name = getAttributeValue(curElement, "name");
+      //Iterate over the vocabulary
       for (it = vacabulary.begin(); it != vacabulary.end();
           it++)
         {
           if (hasAttribute(currentNode, *it))
             {
-              (model.*addFunction)(*it, getAttributeValue(curElement, *it));
+              model.addElement(type, name, *it, getAttributeValue(curElement, *it));
             }
           else
             {
-              (model.*addFunction)(*it, "EMPTY");
+              model.addElement(type,name,*it, "EMPTY");
             }
         }
 
@@ -123,33 +132,34 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
 
 }
 
-RadioModel
+HardwareModel
 SymphonyXML::getRadioModel(std::string name)
 {
   DOMElement* currentElement = m_modelMap[name];
-  RadioModel model(name);
-  ELEMENT_ADD  add;
+  HardwareModel model(name);
+
+
   //get property
   DOMNodeList* nodeList ;
   nodeList = currentElement->getElementsByTagName(TAG_property);
-  add=&RadioModel::addModelProperty;
-  createModelElement(nodeList, property_vocabulary, model,add);
+
+  createModelElement(nodeList, ModelVocabulary::PROPERTY, model);
   //  //get call
   nodeList = currentElement->getElementsByTagName(TAG_call);
-  add=&RadioModel::addModelCall;
-  createModelElement(nodeList, call_vocabulary, model, add);
+
+  createModelElement(nodeList, ModelVocabulary::CALL, model);
     //get callback
   nodeList = currentElement->getElementsByTagName(TAG_callback);
-  add=&RadioModel::addModelCallBack;
-  createModelElement(nodeList, callback_vocabulary, model, add);
+
+  createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
     //get format
   nodeList = currentElement->getElementsByTagName(TAG_format);
-  add=&RadioModel::addModelFormat;
-  createModelElement(nodeList, format_vocabulary, model, add);
+
+  createModelElement(nodeList, ModelVocabulary::FORMAT, model);
     //get source
   nodeList = currentElement->getElementsByTagName(TAG_source);
-  add=&RadioModel::addModelSource;
-  createModelElement(nodeList, source_vocabulary, model, add);
+
+  createModelElement(nodeList, ModelVocabulary::SOURCE, model);
 
 
   return model;
@@ -244,24 +254,7 @@ SymphonyXML::SymphonyXML()
 
   m_ConfigFileParser = new XercesDOMParser;
 
-  //Definition of vocabulary
-  property_vocabulary.push_back("units");
-  property_vocabulary.push_back("size");
-  property_vocabulary.push_back("name");
-  property_vocabulary.push_back("initial");
 
-  call_vocabulary.push_back("name");
-  call_vocabulary.push_back("time");
-
-  callback_vocabulary.push_back("return");
-  callback_vocabulary.push_back("time");
-  callback_vocabulary.push_back("name");
-  callback_vocabulary.push_back("param");
-
-  format_vocabulary.push_back("regexp");
-
-  source_vocabulary.push_back("type");
-  source_vocabulary.push_back("uri");
 
 }
 
