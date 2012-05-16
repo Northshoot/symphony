@@ -21,7 +21,9 @@
 
 class ModelElement
 {
+
 public:
+
   ModelElement();
   virtual
   ~ModelElement();
@@ -63,8 +65,9 @@ public:
   getTime() const;
   void
   setTime(std::string time);
-  
 
+  void
+  printElemet();
   private:
   /***
    * Hardware models element class
@@ -76,7 +79,7 @@ public:
   std::vector<std::string> m_params;
   std::string m_return;
   std::string m_units;
-  std::string time;
+  std::string m_time;
   uint64_t m_initial;
   std::vector<std::string> m_vocabulary;
   

@@ -4,7 +4,7 @@
  *      Author: Laurynas Riliskis
  *      e-mail: laurynas.riliskis@ltu.se
  */
-
+#include <iostream>
 #include "model-element.h"
 #include "model-vocabulary.h"
 
@@ -93,7 +93,7 @@ ModelElement::setUnits(std::string units)
 std::string
 ModelElement::getTime() const
 {
-  return time;
+  return m_time;
 }
 
 std::string
@@ -111,7 +111,23 @@ ModelElement::getNParams()
 void
 ModelElement::setTime(std::string time)
 {
-  this->time = time;
+  this->m_time = time;
 }
 
+void
+ModelElement::printElemet()
+{
+  std::cout<<"[name:"
+      <<getName() <<"|"
+      <<"type:"<<getType()<<"|"
+      <<"units:"<<getUnits() <<"|"
+      <<"initial:"<< getInitial() <<"|"
+      <<"units:"<< getReturn()<<"|"
+      <<"params:";
+  for(int i=0;i<getNParams();i++)
+    {
+      std::cout<<getParam(i)<<",";
+    }
+      std::cout <<"]";
+}
 

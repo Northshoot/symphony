@@ -17,12 +17,11 @@ void
 HardwareModel::Construct()
 {
 
-  //m_elements.set_empty_key(ModelVocabulary::UNDEFINED);
-//  m_property.set_empty_key(m_name);
-//  m_call.set_empty_key(m_name);
-//  m_callback.set_empty_key(m_name);
-//  m_format.set_empty_key(m_name);
-//  m_source.set_empty_key(m_name);
+  m_properties.set_empty_key("UNDEFINED");
+  m_calls.set_empty_key("UNDEFINED");
+  m_callbacks.set_empty_key("UNDEFINED");
+  m_formats.set_empty_key("UNDEFINED");
+  m_sources.set_empty_key("UNDEFINED");
 
 }
 
@@ -33,17 +32,22 @@ HardwareModel::addElement(ModelVocabulary::ElementType type,
   UniqueElement::iterator it;
   switch (type) {
     case ModelVocabulary::PROPERTY:
-      std::cout<<"PROPERTY";
+      std::cout<<"PROPERTY ";
       //if such element exists we add stuff!
-      if(it == m_properties.find(elemenName) && it != m_properties.end()){
-          std::cout<<" found " << elemenName<<std::endl;
+      if((it= m_properties.find(elemenName)) != m_properties.end()){
+          std::cout<<" found " << (it->second)->getName()<<std::endl;
       } else {
           //create element and add
           m_properties[elemenName]= new ModelElement();
-          //it = m_properties.find(elemenName);
-//          ModelElement * el = (ModelElement * )it->second;
-//          el->setName(elemenName);
-//          std::cout<<" Element created " << el->getName()<<std::endl;
+          it = m_properties.find(elemenName);
+          ModelElement * el = (ModelElement * )it->second;
+          el->setName(elemenName);
+
+          std::cout<<" Element created ";
+          el->printElemet();
+          std::cout<<std::endl;
+
+          std::cout<< "*********"<<std::endl;
       }
       break;
     case ModelVocabulary::CALL:
@@ -65,7 +69,7 @@ HardwareModel::addElement(ModelVocabulary::ElementType type,
       std::cout<<" SHOULD NOT END HERE! MODEL ERROR"<<std::endl;
       break;
   }
-  std::cout<< "element name: " << elemenName << " " << name << ":" << value << std::endl;
+  //std::cout<< "element name: " << elemenName << " " << name << ":" << value << std::endl;
 }
 
 ModelElement
@@ -78,8 +82,19 @@ HardwareModel::createNewElement(std::string name)
 void
 HardwareModel::printModel()
 {
-
+  UniqueElement::iterator it;
+  std::cout <<"Property Element: "<<std::endl;
 }
+
+void
+HardwareModel::printKeyVal(UniqueElement hash)
+{
+  UniqueElement::iterator it;
+  for(it=hash.begin(); it!=hash.end(); it++){
+      std::cout<<it->first<<" - " << (it->second)<<std::endl;
+  }
+}
+
 HardwareModel::~HardwareModel()
 {
 }

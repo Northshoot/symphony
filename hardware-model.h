@@ -28,33 +28,32 @@ public:
 
 private:
   typedef dense_hash_map<std::string, ModelElement *> UniqueElement;
-  typedef std::vector< UniqueElement> ElementCollection;
+  typedef std::vector< UniqueElement > ElementCollection;
 
   ModelElement
   createNewElement(std::string name);
   void
   Construct();
   void
-  printKeyVal(dense_hash_map<std::string, std::string> map);
+  printKeyVal(UniqueElement map);
   //hash map for holding model elements
   //
-  UniqueElement m_properties;
-  UniqueElement m_calls;
+
 
   ///key is model name
   //<property units="Kb" size="514" initial="220" name="heap"/>
   //in example case "heap"
 
   /**
-   * Element Collection holds all possible elelent's
-   * Accessor is by type m_elemets[PROPERTY]
-   * The returned map accessor is by name of the element
-   * element["start"]
-   * In its turn, each unique element has attributes
-   * defined in vocabulary, however
-   * TODO: there is no safe guard, so the attributes need to exis uppon they
-   * access.
+   * UniqueElement's are stored by name in hash map
+   * Element is described by @ModelElement class
+   * TODO: create ElementHelper for storing elements.
    */
+  UniqueElement m_properties;
+  UniqueElement m_callbacks;
+  UniqueElement m_calls;
+  UniqueElement m_formats;
+  UniqueElement m_sources;
   ElementCollection m_elemets;
   std::string m_name;
 };
