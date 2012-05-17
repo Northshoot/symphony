@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-c -g -Wall -pedantic
+CFLAGS=-c -ggdb -Wall -pedantic
 LDFLAGS=-lxerces-c
 SOURCES=main.cc symphony-xml.cc hardware-model.cc model-element.cc model-vocabulary.cc
 OBJECTS=$(SOURCES:.cc=.o)

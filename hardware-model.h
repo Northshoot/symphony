@@ -19,6 +19,8 @@ public:
 
   ModelElement
   getElement(ModelVocabulary::ElementType et, std::string name);
+
+
   void
   addElement(ModelVocabulary::ElementType type, std::string elemenName,
       std::string name, std::string value);
@@ -27,15 +29,17 @@ public:
   printModel(void);
 
 private:
-  typedef dense_hash_map<std::string, ModelElement *> UniqueElement;
+  typedef dense_hash_map<std::string, ModelElement > UniqueElement;
   typedef std::vector< UniqueElement > ElementCollection;
 
-  ModelElement
-  createNewElement(std::string name);
+
   void
   Construct();
   void
   printKeyVal(UniqueElement map);
+  void
+  getOrCreateElement(ModelVocabulary::ElementType type,std::string elemenName,
+      UniqueElement unique, ModelElement el);
   //hash map for holding model elements
   //
 

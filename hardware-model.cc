@@ -26,41 +26,53 @@ HardwareModel::Construct()
 }
 
 void
+HardwareModel::getOrCreateElement(ModelVocabulary::ElementType type,
+    std::string elemenName, UniqueElement unique, ModelElement el)
+{
+  UniqueElement::iterator it;
+  //if such element exists we add stuff!
+  if ((it = unique.find(elemenName)) != unique.end())
+    {
+      el = unique[elemenName];
+    }
+  else
+    {
+      //create element and add
+      el.setName(elemenName);
+      el.setType(type);
+      unique[elemenName]=el;
+    }
+
+}
+
+void
 HardwareModel::addElement(ModelVocabulary::ElementType type,
     std::string elemenName, std::string name, std::string value)
 {
-  UniqueElement::iterator it;
+
+  ModelElement el;
   switch (type) {
     case ModelVocabulary::PROPERTY:
-      std::cout<<"PROPERTY ";
+      //        std::cout<<"PROPERTY ";
       //if such element exists we add stuff!
-      if((it= m_properties.find(elemenName)) != m_properties.end()){
-          std::cout<<" found " << (it->second)->getName()<<std::endl;
-      } else {
-          //create element and add
-          m_properties[elemenName]= new ModelElement();
-          it = m_properties.find(elemenName);
-          ModelElement * el = (ModelElement * )it->second;
-          el->setName(elemenName);
+    getOrCreateElement(type, elemenName, m_properties, el);
 
-          std::cout<<" Element created ";
-          el->printElemet();
-          std::cout<<std::endl;
-
-          std::cout<< "*********"<<std::endl;
-      }
       break;
     case ModelVocabulary::CALL:
-      std::cout<<"CALL" <<std::endl;
+      //        std::cout<<"CALL" <<std::endl;
+      getOrCreateElement(type, elemenName, m_calls, el);
       break;
     case ModelVocabulary::CALLBACK:
-      std::cout<<"CALLBACK" <<std::endl;
+//      std::cout<<"CALLBACK" <<std::endl;
+      getOrCreateElement(type, elemenName, m_callbacks, el);
       break;
     case ModelVocabulary::FORMAT:
-      std::cout<<"FORMAT" <<std::endl;
+      //        std::cout<<"FORMAT" <<std::endl;
+      getOrCreateElement(type, elemenName, m_formats, el);
       break;
     case ModelVocabulary::SOURCE:
-      std::cout<<"FORMAT" <<std::endl;
+//      std::cout<<"FORMAT" <<std::endl;
+      getOrCreateElement(type, elemenName, m_sources, el);
       break;
     case ModelVocabulary::UNDEFINED:
       std::cout<<" SHOULD NOT END HERE! UNDEFINED MODEL"<<std::endl;
@@ -69,32 +81,40 @@ HardwareModel::addElement(ModelVocabulary::ElementType type,
       std::cout<<" SHOULD NOT END HERE! MODEL ERROR"<<std::endl;
       break;
   }
-  //std::cout<< "element name: " << elemenName << " " << name << ":" << value << std::endl;
+
+  el.addAttribute(name, value);
+
+
 }
 
-ModelElement
-HardwareModel::createNewElement(std::string name)
-{
-  ModelElement me;
-  me.setName(name);
-  return me;
-}
+
 void
 HardwareModel::printModel()
 {
   UniqueElement::iterator it;
-  std::cout <<"Property Element: "<<std::endl;
+  std::cout <<"Model: "<< m_name<<std::endl;
+  printKeyVal(m_properties);
+  printKeyVal(m_callbacks);
+  printKeyVal(m_calls);
+  printKeyVal(m_formats);
+  printKeyVal(m_sources);
+
+
 }
 
 void
 HardwareModel::printKeyVal(UniqueElement hash)
 {
   UniqueElement::iterator it;
+  std::cout<<"elements: "<< hash.size()<< std::endl;
   for(it=hash.begin(); it!=hash.end(); it++){
-      std::cout<<it->first<<" - " << (it->second)<<std::endl;
+      std::cout<<it->first<<" - ";
+      (it->second).printElemet();
+        std::cout<< "************"<<std::endl;
   }
 }
 
 HardwareModel::~HardwareModel()
 {
+  std::cout<<"Killing HW model"<<std::endl;
 }

@@ -24,6 +24,7 @@ int main()
 	   vector<string> str_v = sym.getTosFunctions();
 	   HardwareModel  radioModel = sym.getRadioModel("radio");
 	   //cout << "model name: " <<radioModel.getModelName() << endl;
+	   cout<<"about to print"<<endl;
 	   radioModel.printModel();
 
 
