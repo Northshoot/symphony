@@ -25,9 +25,9 @@ class ModelElement
 public:
 
   ModelElement();
-  ModelElement(ModelElement& ref);
-  ModelElement(const ModelElement& ref);
-  ModelElement & operator=(const ModelElement & rhs) throw() ;
+//  ModelElement(ModelElement& ref);
+//  ModelElement(const ModelElement& ref);
+//  ModelElement & operator=(const ModelElement & rhs) throw() ;
   virtual
   ~ModelElement();
   uint64_t
@@ -102,6 +102,7 @@ public:
   uint64_t m_initial;
   uint64_t m_size;
   std::vector<std::string> m_vocabulary;
+  bool m_init;
   
 };
 

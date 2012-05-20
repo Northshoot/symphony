@@ -16,7 +16,7 @@ using namespace std;
 
 int main()
 {
-   string configFile="advance.xml"; // stat file. Get ambiguous segfault otherwise.
+   string configFile="simple.xml"; // stat file. Get ambiguous segfault otherwise.
 
    try {
 	   SymphonyXML sym;

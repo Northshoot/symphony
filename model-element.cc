@@ -12,74 +12,85 @@
 #include "model-vocabulary.h"
 #include <boost/lexical_cast.hpp>
 
-ModelElement &
-ModelElement::operator=(const ModelElement & rhs) throw ()
-{
-  this->m_name = rhs.m_name;
-  this->m_initial = rhs.m_initial;
-  this->m_params = rhs.m_params;
-  this->m_regexp = rhs.m_regexp;
-  this->m_return = rhs.m_return;
-  this->m_size = rhs.m_size;
-  this->m_time = rhs.m_time;
-  this->m_type = rhs.m_type;
-  this->m_units = rhs.m_units;
-  this->m_vocabulary = rhs.m_vocabulary;
-  return *this;
-}
+//ModelElement &
+//ModelElement::operator=(const ModelElement & rhs) throw ()
+//{
+//  //std::cout<<"ModelElement::operator="<<this<<"this.name: "<< this->m_name<<"rhs.name: " <<rhs.m_name<<std::endl;
+//  this->m_name = rhs.m_name;
+//  this->m_initial = rhs.m_initial;
+//  this->m_params = rhs.m_params;
+//  this->m_regexp = rhs.m_regexp;
+//  this->m_return = rhs.m_return;
+//  this->m_size = rhs.m_size;
+//  this->m_time = rhs.m_time;
+//  this->m_type = rhs.m_type;
+//  this->m_units = rhs.m_units;
+//  this->m_vocabulary = rhs.m_vocabulary;
+//  std::cout<<"ModelElement::operator= "<<std::endl;
+//      this->printElemet();
+//     std::cout<<"*************"<<std::endl;
+//
+//  return *this;
+//}
 
 ModelElement::ModelElement()
 {
   Construct();
 }
-ModelElement::ModelElement(ModelElement& rhs)
-{
-  this->m_name = rhs.m_name;
-  this->m_initial = rhs.m_initial;
-  this->m_params = rhs.m_params;
-  this->m_regexp = rhs.m_regexp;
-  this->m_return = rhs.m_return;
-  this->m_size = rhs.m_size;
-  this->m_time = rhs.m_time;
-  this->m_type = rhs.m_type;
-  this->m_units = rhs.m_units;
-  this->m_vocabulary = rhs.m_vocabulary;
-}
-ModelElement::ModelElement(const ModelElement& rhs)
-{
-  m_name = rhs.m_name;
-  m_initial = rhs.m_initial;
-  m_params = rhs.m_params;
-  m_regexp = rhs.m_regexp;
-  m_return = rhs.m_return;
-  m_size = rhs.m_size;
-  m_time = rhs.m_time;
-  m_type = rhs.m_type;
-  m_units = rhs.m_units;
-  m_vocabulary = rhs.m_vocabulary;
-}
+//ModelElement::ModelElement(ModelElement& rhs)
+//{
+//  //std::cout<<"(ModelElement& rhs)"<<this<<"this.name: "<< this->m_name<<"rhs.name: " <<rhs.m_name<<std::endl;
+//  this->m_name = rhs.m_name;
+//  this->m_initial = rhs.m_initial;
+//  this->m_params = rhs.m_params;
+//  this->m_regexp = rhs.m_regexp;
+//  this->m_return = rhs.m_return;
+//  this->m_size = rhs.m_size;
+//  this->m_time = rhs.m_time;
+//  this->m_type = rhs.m_type;
+//  this->m_units = rhs.m_units;
+//  this->m_vocabulary = rhs.m_vocabulary;
+//  std::cout<<"(ModelElement& rhs) "<<this<<" this.name: "<< this->m_name<<" rhs.name: " <<rhs.m_name<<std::endl;
+//}
+//ModelElement::ModelElement(const ModelElement& rhs)
+//{
+//  //std::cout<<"(const ModelElement& rhs)"<<this<<"this.name: "<< this->m_name<<"rhs.name: " <<rhs.m_name<<std::endl;
+//  this->m_name = rhs.m_name;
+//  this->m_initial = rhs.m_initial;
+//  this->m_params = rhs.m_params;
+//  this->m_regexp = rhs.m_regexp;
+//  this->m_return = rhs.m_return;
+//  this->m_size = rhs.m_size;
+//  this->m_time = rhs.m_time;
+//  this->m_type = rhs.m_type;
+//  this-> m_units = rhs.m_units;
+//  this->m_vocabulary = rhs.m_vocabulary;
+//  std::cout<<"(ModelElement& rhs) "<<this<<" this.name: "<< this->m_name<<" rhs.name: " <<rhs.m_name<<std::endl;
+//}
 
 void
 ModelElement::Construct()
 {
-  m_name = "NOT SET";
+  if(!m_init)
+    m_init=true;
 }
 ModelElement::~ModelElement()
 {
-//  std::cout <<"OOOOOOOOOOOPS! KILLING" << m_name <<std::endl;
+ std::cout <<"OOOOOOOOOOOPS! KILLING" << this<<" name " <<m_name <<std::endl;
 }
 
 void
 ModelElement::addAttribute(std::string name, std::string value)
 {
   if (strcmp(value.c_str(), "EMPTY") != 0)
+    std::cout<<name<<" "<<value<<std::endl;
     {
       if (strcmp(name.c_str(), "units") == 0)
         {
           setUnits(value);
 
         }
-      else if (strcmp(name.c_str(), "size") != 0)
+      else if (strcmp(name.c_str(), "size") == 0)
         {
 
           uint64_t t = strtoul(value.c_str(), NULL, 0);
@@ -91,8 +102,9 @@ ModelElement::addAttribute(std::string name, std::string value)
             {
               setSize(t);
             }
+          std::cout<<"getting size " << getSize()<< std::endl;
         }
-      else if (strcmp(name.c_str(), "initial") != 0)
+      else if (strcmp(name.c_str(), "initial") == 0)
         {
           uint64_t t = strtoul(value.c_str(), NULL, 0);
           if (errno)
@@ -105,27 +117,29 @@ ModelElement::addAttribute(std::string name, std::string value)
             }
 
         }
-      else if (strcmp(name.c_str(), "name") != 0)
+      else if (strcmp(name.c_str(), "name") == 0)
         {
           setName(value);
         }
-      else if (strcmp(name.c_str(), "time") != 0)
+      else if (strcmp(name.c_str(), "time") == 0)
         {
           setTime(value);
         }
-      else if (strcmp(name.c_str(), "return") != 0)
+      else if (strcmp(name.c_str(), "return") == 0)
         {
+          std::cout << "RETURN  "<< value << std::endl;
           setReturn(value);
         }
-      else if (strcmp(name.c_str(), "regexp") != 0)
+      else if (strcmp(name.c_str(), "regexp") == 0)
         {
           setRegexp(value);
         }
-      else if (strcmp(name.c_str(), "param") != 0)
+      else if (strcmp(name.c_str(), "param") >48)
         {
-          setParams(value);
+          std::cout << "params adding " << value << std::endl;
+          m_params.push_back(value);
         }
-      else if (strcmp(name.c_str(), "uri") != 0)
+      else if (strcmp(name.c_str(), "uri") == 0)
         {
           setUri(value);
         }
@@ -168,6 +182,7 @@ ModelElement::getParams() const
 void
 ModelElement::setParams(std::string param)
 {
+
   m_params.push_back(param);
 }
 
@@ -235,11 +250,11 @@ ModelElement::setTime(std::string time)
 void
 ModelElement::printElemet()
 {
-  std::cout << "element - [name:" << getName() << "|" << "type:" << getType()
+  std::cout << "element - [name:" << this->getName() << "|" << "type:" << getType()
       << "|" << "units:" << getUnits() << "|" << "initial:" << getInitial()
-      << "|" << "size:" << getSize() << "|" << "time:" << getTime() << "|"
+      << "|" << "size:" << this->getSize() << "|" << "time:" << getTime() << "|"
       << "regexp:" << getRegexp() << "|" << "uri:" << getUri() << "|"
-      << "return:" << getReturn() << "|" << "params:";
+      << "return:" << m_return<< "|" << "params::" << getNParams()<<":";
   for (int i = 0; i < getNParams(); i++)
     {
       std::cout << getParam(i) << ",";
@@ -262,6 +277,7 @@ ModelElement::setRegexp(std::string regexp)
 uint64_t
 ModelElement::getSize() const
 {
+  std::cout<<"SIZE: " << m_size<<std::endl;
   return m_size;
 }
 

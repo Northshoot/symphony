@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include "model-vocabulary.h"
+#include "model-element.h"
 
 #include "symphony-xml.h"
 
@@ -107,6 +108,7 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
   //now we iterate over all ModelVocabulary::ElementType attributes
   //which are defined in the vocabulary
   //if attribute is not set "EMPTY" is added
+  model.init(type, modeCout);
   for (XMLSize_t ix = 0; ix < nodeCount; ++ix)
     {
       DOMNode* currentNode = nodeList->item(ix);
@@ -127,8 +129,25 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
               model.addElement(type,name,*it, "EMPTY");
             }
         }
+      if(type == ModelVocabulary::CALL || type == ModelVocabulary::CALLBACK)
+        {
+          std::string paramsString = getAttributeValue(curElement, "params");
+          int params = atoi(paramsString.c_str());
+          std::cout << "params: " << params<<" ";
+          for (int i =1; i<= params;i++)
+            {
+              std::stringstream sstm;
+              sstm << "param" << i;
+              string result = sstm.str();
+              std::cout<< "i: " << i << " " <<result<<"=name:"<<name;
+              std::cout<<" " <<getAttributeValue(curElement, result) <<std::endl;
+              model.addElement(type, name, result, getAttributeValue(curElement, result));
+
+            }
+        }
 
     }
+
 
 }
 

@@ -26,10 +26,12 @@ public:
       std::string name, std::string value);
 
   void
+  init(ModelVocabulary::ElementType type, unsigned int num);
+  void
   printModel(void);
 
 private:
-  typedef dense_hash_map<std::string, ModelElement > UniqueElement;
+  typedef dense_hash_map<std::string, ModelElement> UniqueElement;
   typedef std::vector< UniqueElement > ElementCollection;
 
 
@@ -37,9 +39,9 @@ private:
   Construct();
   void
   printKeyVal(UniqueElement map);
-  void
+  inline ModelElement
   getOrCreateElement(ModelVocabulary::ElementType type,std::string elemenName,
-      UniqueElement unique, ModelElement el);
+      UniqueElement unique);
   //hash map for holding model elements
   //
 
@@ -54,7 +56,7 @@ private:
    * TODO: create ElementHelper for storing elements.
    */
   UniqueElement m_properties;
-  UniqueElement m_callbacks;
+  std::map<std::string, ModelElement*> m_callbacks;
   UniqueElement m_calls;
   UniqueElement m_formats;
   UniqueElement m_sources;

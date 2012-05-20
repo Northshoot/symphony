@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<symphony>
+  <model name="radio">
+   <callback return="int" params="2" param1="int" param2="float" time="60" name ="receiveMessage"/>
+
+  </model>
+  
+</symphony>

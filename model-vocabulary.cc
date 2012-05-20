@@ -40,12 +40,14 @@ ModelVocabulary::Constuct()
 
   call_vocabulary.push_back("name");
   call_vocabulary.push_back("time");
+  call_vocabulary.push_back("return");
+  //callback_vocabulary.push_back("params");
   element_vocabularies[ModelVocabulary::CALL]=call_vocabulary;
 
   callback_vocabulary.push_back("return");
   callback_vocabulary.push_back("time");
 //  callback_vocabulary.push_back("name");
-  callback_vocabulary.push_back("param");
+  //callback_vocabulary.push_back("params");
   element_vocabularies[ModelVocabulary::CALLBACK]=callback_vocabulary;
 
   format_vocabulary.push_back("regexp");
