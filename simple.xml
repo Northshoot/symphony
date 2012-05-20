@@ -2,7 +2,7 @@
 <symphony>
   <model name="radio">
    <callback return="int" params="2" param1="int" param2="float" time="60" name ="receiveMessage"/>
-
+<callback return="int" params="1" param1="int" time="20" name ="send"/>
   </model>
   
 </symphony>

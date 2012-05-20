@@ -3,64 +3,47 @@
 
 #include <stdint.h>
 #include <string>
-#include <google/dense_hash_map>
 #include "model-element.h"
 #include "model-vocabulary.h"
 
-using google::dense_hash_map;
-
+typedef std::map<std::string, ModelElement * > UniqueElement;
 class HardwareModel
 {
 public:
   HardwareModel();
   HardwareModel(std::string name);
+
   virtual
   ~HardwareModel();
 
-  ModelElement
+  ModelElement *
   getElement(ModelVocabulary::ElementType et, std::string name);
 
+  void
+  setName(std::string name);
 
   void
-  addElement(ModelVocabulary::ElementType type, std::string elemenName,
+  addElementAttribute(ModelVocabulary::ElementType type, std::string elemenName,
       std::string name, std::string value);
 
   void
-  init(ModelVocabulary::ElementType type, unsigned int num);
+  addElement(ModelVocabulary::ElementType type,std::string elemenName );
+
+
   void
   printModel(void);
 
 private:
-  typedef dense_hash_map<std::string, ModelElement> UniqueElement;
-  typedef std::vector< UniqueElement > ElementCollection;
+  void printUniqueElement(UniqueElement elem);
+  inline UniqueElement& getUniqueElement(ModelVocabulary::ElementType type);
+  inline void deleteElements(UniqueElement elem);
 
-
-  void
-  Construct();
-  void
-  printKeyVal(UniqueElement map);
-  inline ModelElement
-  getOrCreateElement(ModelVocabulary::ElementType type,std::string elemenName,
-      UniqueElement unique);
-  //hash map for holding model elements
-  //
-
-
-  ///key is model name
-  //<property units="Kb" size="514" initial="220" name="heap"/>
-  //in example case "heap"
-
-  /**
-   * UniqueElement's are stored by name in hash map
-   * Element is described by @ModelElement class
-   * TODO: create ElementHelper for storing elements.
-   */
   UniqueElement m_properties;
-  std::map<std::string, ModelElement*> m_callbacks;
+  UniqueElement m_callbacks;
   UniqueElement m_calls;
   UniqueElement m_formats;
   UniqueElement m_sources;
-  ElementCollection m_elemets;
+  UniqueElement m_undefined;
   std::string m_name;
 };
 #endif //SYM_RADIO_MODEL_H

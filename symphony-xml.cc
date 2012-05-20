@@ -108,7 +108,7 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
   //now we iterate over all ModelVocabulary::ElementType attributes
   //which are defined in the vocabulary
   //if attribute is not set "EMPTY" is added
-  model.init(type, modeCout);
+
   for (XMLSize_t ix = 0; ix < nodeCount; ++ix)
     {
       DOMNode* currentNode = nodeList->item(ix);
@@ -116,33 +116,30 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
       //Extract name, it is common for all elements
       //TODO: possible to extract generic model and derivate it and further make parsing there
       std::string name = getAttributeValue(curElement, "name");
+      model.addElement(type,name);
       //Iterate over the vocabulary
       for (it = vacabulary.begin(); it != vacabulary.end();
           it++)
         {
           if (hasAttribute(currentNode, *it))
             {
-              model.addElement(type, name, *it, getAttributeValue(curElement, *it));
+              model.addElementAttribute(type, name, *it, getAttributeValue(curElement, *it));
             }
           else
             {
-              model.addElement(type,name,*it, "EMPTY");
+              model.addElementAttribute(type,name,*it, "EMPTY");
             }
         }
       if(type == ModelVocabulary::CALL || type == ModelVocabulary::CALLBACK)
         {
           std::string paramsString = getAttributeValue(curElement, "params");
           int params = atoi(paramsString.c_str());
-          std::cout << "params: " << params<<" ";
           for (int i =1; i<= params;i++)
             {
               std::stringstream sstm;
               sstm << "param" << i;
               string result = sstm.str();
-              std::cout<< "i: " << i << " " <<result<<"=name:"<<name;
-              std::cout<<" " <<getAttributeValue(curElement, result) <<std::endl;
-              model.addElement(type, name, result, getAttributeValue(curElement, result));
-
+              model.addElementAttribute(type, name, result, getAttributeValue(curElement, result));
             }
         }
 
