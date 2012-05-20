@@ -24,44 +24,66 @@
 #include <algorithm>
 #include <stdexcept>
 #include <vector>
+#include <map>
+#include <utility>
 
-enum {
-   ERROR_ARGS = 1,
-   ERROR_XERCES_INIT,
-   ERROR_PARSE,
-   ERROR_EMPTY_DOCUMENT
+#include "hardware-model.h"
+
+enum
+{
+  ERROR_ARGS = 1, ERROR_XERCES_INIT, ERROR_PARSE, ERROR_EMPTY_DOCUMENT
 };
 
-
-
-class SymphonyXML {
+class SymphonyXML
+{
 public:
 
-	SymphonyXML();
-	virtual ~SymphonyXML();
-	std::vector<std::string>  getTosFunctions() throw( std::runtime_error );
-	void readConfigFile(std::string&) throw(std::runtime_error);
+  SymphonyXML();
+  virtual
+  ~SymphonyXML();
+  std::vector<std::string>
+  getTosFunctions() throw (std::runtime_error);
+  void
+  readConfigFile(std::string&) throw (std::runtime_error);
 
+  HardwareModel
+  getRadioModel(std::string name);
 
 private:
+//  typedef void
+//  (HardwareModel::*ELEMENT_ADD)(ModelVocabulary::ElementType type, std::string name, std::string value);
+  inline std::string
+  getString(const XMLCh* const toHandle);
+  inline std::string
+  getAttributeValue(xercesc::DOMElement* node, std::string name);
+  inline bool
+  hasAttribute(xercesc::DOMNode* node, std::string name);
+  /**
+   * creates property for model
+   *
+   */
+  void
+  createModelElement(xercesc::DOMNodeList* nodeList,
+      ModelVocabulary::ElementType type, HardwareModel& model);
+  xercesc::XercesDOMParser *m_ConfigFileParser;
+  bool m_init;
+  // Internal class use only. Hold Xerces data in UTF-16 SMLCh type.
 
-	   inline std::string getString(const XMLCh* const toHandle) ;
-	   xercesc::XercesDOMParser *m_ConfigFileParser;
-	   char* m_OptionA;
-	   char* m_OptionB;
-	   bool m_init;
-	   // Internal class use only. Hold Xerces data in UTF-16 SMLCh type.
+  xercesc::DOMDocument* xmlDoc;
+  xercesc::DOMElement* elementRoot;
 
-	   xercesc::DOMDocument* xmlDoc;
-	   xercesc::DOMElement* elementRoot;
+  XMLCh* TAG_root;
+  XMLCh* TAG_empty;
+  XMLCh* TAG_model;
+  XMLCh* TAG_property;
+  XMLCh* TAG_callback;
+  XMLCh* TAG_call;
+  XMLCh* TAG_format;
+  XMLCh* TAG_source;
+  std::vector<std::string> tos_functions;
 
-	   XMLCh* TAG_root;
+  std::map<std::string, xercesc::DOMElement*> m_modelMap;
 
-	   XMLCh* TAG_tos_externals;
-	   XMLCh* TAG_sensors;
-	   std::vector<std::string> tos_functions;
-	   XMLCh* ATTR_OptionA;
-	   XMLCh* ATTR_OptionB;
 };
 #endif /* SYMPHONY_XML_H_ */
 
