@@ -58,7 +58,7 @@ def build(bld):
 				  'helper/tos-net-device-container.h',
 				  'helper/tos-mobility-helper.h',
                   'model/RF230-radio-model.h',
-                  'model/tos-radio-model.h'
+                  'model/tos-radio-model.h',
                   'model/model-vocabulary.h',
                   'model/model-element.h',
                   'model/hardware-model.h',
