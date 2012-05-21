@@ -280,7 +280,7 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	packet->CopyData(reinterpret_cast< uint8_t*>(msg), sizeof(message_t));
 //	NS_LOG_FUNCTION_NOARGS();
 
-	memcpy((void *)&m_rx_msg, (void *)msg, sizeof(message_t));
+	memcpy((void *)&m_rx_msg, (const void *)msg, sizeof(message_t));
 	//printTosPacket((char *) &m_rx_msg);
 	return &m_rx_msg;
 }
@@ -350,15 +350,15 @@ TosNetDevice::Send(Ptr<Packet> packet, const Address& dest) {
 }
 
 void
-TosNetDevice::SetRadioStartDoneCallback(RadioStartDoneCallback c){
+TosNetDevice::SetRadioStartDoneCallback(Callback<void,int> c){
   c_ns2tosStartDone =c;
 }
 void
-TosNetDevice::SetDeviceSendDoneCallback(DeviceSendDoneCallback c){
+TosNetDevice::SetDeviceSendDoneCallback(Callback<int,int> c){
   c_ns2tosSendDone=c;
 }
 void
-TosNetDevice::SetReceiveMessageCallback(ReceiveMessageCallback c){
+TosNetDevice::SetReceiveMessageCallback(Callback<int, void *> c){
   c_ns2tosRx =c;
 }
 
@@ -431,7 +431,7 @@ TosNetDevice::setNs3ToTos(Ns3ToTosProxy * nstos){
 }
 
 void
-TosNetDevice::SetRadioModel(RF230RadioModel * model){
+TosNetDevice::SetRadioModel(HardwareModel * model){
   m_txParams = model;
 }
 bool

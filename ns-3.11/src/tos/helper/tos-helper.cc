@@ -54,15 +54,11 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	      NS_LOG_DEBUG(node);
 	      Ptr<TosNetDevice> device = CreateObject<TosNetDevice> ();
 	      Ptr<TosMacLow> mac = new TosMacLow();
-	      RF230RadioModel * radio_model= new RF230RadioModel();
 	      Ptr<WifiPhy> phy = phyHelper.Create (node, device);
 	      mac->SetAddress (Mac48Address::Allocate ());
-	      mac->SetRadioModel(radio_model);
 	      phy->ConfigureStandard (m_standard);
 	      device->SetNode(node);
 	      device->SetPhy (phy);
-	      device->SetRadioModel(radio_model);
-	      //device->SetTosNodeContainer(c);
 	      device->SetMac (mac);
 	      node->AddDevice (device);
 	      devices.Add (device);

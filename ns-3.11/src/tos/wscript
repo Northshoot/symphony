@@ -28,14 +28,14 @@ def build(bld):
     			  'helper/yans-tos-helper.cc',
     			  'helper/tos-net-device-container.cc',
     			  'helper/tos-mobility-helper.cc',
-    			  'helper/symphony-xml.cc',
-                  'model/tos-node.cc',
+    			  'model/tos-node.cc',
                   'model/simu-clock.cc',
                   'model/RF230-radio-model.cc',
                   'model/tos-radio-model.cc',
                   'model/model-vocabulary.cc',
                   'model/model-element.cc',
                   'model/hardware-model.cc',
+                  'helper/symphony-xml.cc',
     	        ]
 
 

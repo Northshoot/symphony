@@ -27,7 +27,7 @@
 #include <map>
 #include <utility>
 
-#include "hardware-model.h"
+#include "ns3/hardware-model.h"
 
 enum
 {

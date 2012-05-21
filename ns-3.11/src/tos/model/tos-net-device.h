@@ -23,7 +23,7 @@
 #include "ns3-to-tos-proxy_auto.h"
 #include "calls-to-ns3.h"
 
-#include "RF230-radio-model.h"
+#include "hardware-model.h"
 
 namespace ns3 {
 
@@ -38,9 +38,9 @@ class PhyTosListener;
 class TosNetDevice: public NetDevice {
 public:
 
-	typedef Callback<void,uint8_t> RadioStartDoneCallback;
-	typedef Callback<void, uint8_t> DeviceSendDoneCallback;
-	typedef Callback<void, void *> ReceiveMessageCallback;
+	typedef Callback<void,int> RadioStartDoneCallback;
+	typedef Callback<int, int> DeviceSendDoneCallback;
+	typedef Callback<int, void *> ReceiveMessageCallback;
 
 	static TypeId GetTypeId (void);	
 
@@ -102,12 +102,12 @@ public:
 	message_t* DeviceReceive(message_t* msg);
 
 	//set callbacks
-	void SetRadioStartDoneCallback(RadioStartDoneCallback c);
-	void SetDeviceSendDoneCallback(DeviceSendDoneCallback c);
-	void SetReceiveMessageCallback(ReceiveMessageCallback c);
+	void SetRadioStartDoneCallback(Callback<void,int> c);
+	void SetDeviceSendDoneCallback(Callback<int,int> c);
+	void SetReceiveMessageCallback(Callback<int, void *> c);
 
 
-	void SetRadioModel(RF230RadioModel * model);
+	void SetRadioModel(HardwareModel * model);
 
 	  // inherited from NetDevice base class.
 	  virtual void SetIfIndex (const uint32_t index);
@@ -171,7 +171,7 @@ private:
   EventId       m_startUpEvent;
   EventId       m_sendEvent;
 
-  RF230RadioModel * m_txParams;
+  HardwareModel * m_txParams;
 
 
 

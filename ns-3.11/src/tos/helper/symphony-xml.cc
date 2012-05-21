@@ -15,8 +15,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
-#include "model-vocabulary.h"
-#include "model-element.h"
+#include "ns3/model-vocabulary.h"
+#include "ns3/model-element.h"
 
 #include "symphony-xml.h"
 

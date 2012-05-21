@@ -41,6 +41,14 @@ TosNetDeviceContainer::TosNetDeviceContainer (const TosNetDeviceContainer &a, co
   Add (b);
 }
 
+void
+TosNetDeviceContainer::InstallHardwareModels(HardwareModel * hw)
+{
+  for(unsigned int i =0;i<m_devices.size();i++)
+    {
+      m_devices[i]->SetRadioModel(hw);
+    }
+}
 
 TosNetDeviceContainer::Iterator
 TosNetDeviceContainer::Begin (void) const
