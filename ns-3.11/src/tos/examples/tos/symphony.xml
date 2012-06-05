@@ -1,18 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <symphony>
-  <tos_externals>
-  	<function return="int" params="1" param1="int">sendSendDone</function>
-  	<function return="void" params="1" param1="int">radioStartDone</function>
-  	<function return="int" params="1" param1="int">setUniqueID</function>
-  	<function return="void" params="1" param1="int">sim_main_start_mote</function>
-  	<function return="int" params="1" param1="long">setProxy</function>
-  	<function return="int" params="1" param1="uint32_t">tickFired</function>
-  	<function return="int" params="0">radioStateDone</function>
-  	<function return="int" params="1" param1="void *">receiveMessage</function>
-  	<function return="int" params="1" param1="uint32_t">runNextEventExternal</function>
-  </tos_externals>
-  <sensors>
-  	<netdevice> param
-  	</netdevice>
-  	</sensors>
+  <model name="radio">
+  	<callback return="int" params="1" param1="int">sendSendDone</callback>
+  	<callback return="void" params="1" param1="int">radioStartDone</callback>
+  	<callback return="int" params="1" param1="int">setUniqueID</callback>
+  	<callback return="void" params="1" param1="int">sim_main_start_mote</callback>
+  	<callback return="int" params="1" param1="long">setProxy</callback>
+  	<callback return="int" params="1" param1="uint32_t">tickFired</callback>
+  	<callback return="int" params="0">radioStateDone</callback>
+  	<callback return="int" params="1" param1="void *">receiveMessage</callback>
+  	<callback return="int" params="1" param1="uint32_t">runNextEventExternal</callback>
+  	
+   <property units="kb" size="28" name="packet"/>
+   <property units="Mb" size="280" initial="220" name="buffer"/>
+   <call time="60" name="startRadio"/>
+   <call time="80" name="swithChannel"/>
+  </model>
+  <model name="rom">
+   <property units="Kb" size="514" initial="220" name="heap"/>
+  </model>  
+  <model name="flash">
+   <property units="Kb" size="2000" initial="120" name="size"/>
+   <call time="50" name ="startFlash"/>
+   <call time="10" params="1" param1="void *" name="write"/>
+   <callback return="void *" params="1" param1="int" time="20">initFlash</callback>
+  </model>  
 </symphony>

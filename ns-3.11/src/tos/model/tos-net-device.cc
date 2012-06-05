@@ -263,7 +263,8 @@ TosNetDevice::DoStart(void)
   m_tos_mac->Start();
   m_phy->Start();
   NetDevice::DoStart();
-  m_startUpEvent = Simulator::Schedule(m_txParams->GetStartUpTime(), &TosNetDevice::radioStartDone, this);
+  //TODO: delay needs to be fixed
+  //m_startUpEvent = Simulator::Schedule(m_txParams->getElement(), &TosNetDevice::radioStartDone, this);
 }
 Ptr<Packet>
 TosNetDevice::TosToNsPacket(message_t* msg) {
@@ -286,7 +287,9 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 }
 void
 TosNetDevice::SendDone(uint8_t error){
-  m_sendEvent = Simulator::Schedule(m_txParams->GetRadioTxDelay(), &TosNetDevice::DeviceSendDone, this, 0);
+  //TODO: need real model implementation
+  //m_txParams->GetRadioTxDelay()
+  m_sendEvent = Simulator::Schedule(ns3::MicroSeconds(100), &TosNetDevice::DeviceSendDone, this, 0);
 }
 
 void TosNetDevice::DeviceSendDone(uint8_t error) {

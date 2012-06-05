@@ -20,6 +20,7 @@
 
 #include "tos-net-device-container.h"
 #include "ns3/names.h"
+#include "ns3/tos-net-device.h"
 
 namespace ns3 {
 

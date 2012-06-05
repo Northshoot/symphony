@@ -7,6 +7,7 @@ from subprocess import call
 
 from xml.etree import ElementTree as ET
 
+
 class Ns3ToTosProxyGenerator:
     """
     Generates Ns3ToTosProxyGenerator.cc and Ns3ToTosProxyGenerator.h files
@@ -34,13 +35,18 @@ class Ns3ToTosProxyGenerator:
     #we first check if there is a need to create new file
     def checkLastModified(self):
         print os.getcwd()
-        xml_file_time = os.path.getmtime(self.xml_file)
-        cpp_file_time = os.path.getmtime(self.cpp_name)
-        #if cpp is older -> we need to build it
+        try:
+            xml_file_time = os.path.getmtime(self.xml_file)
+            cpp_file_time = os.path.getmtime(self.cpp_name)
+        except Exception, int:
+            cpp_file_time = -1
+            print "no proxy file"
+            #if cpp is older -> we need to build it
         if cpp_file_time < xml_file_time :
-            self.header = open(self.cwd + self.header_name,'w')
-            self.cpp  = open(self.cwd + self.cpp_name,'w')
+            self.header = open(self.cwd + self.header_name,'w+')
+            self.cpp  = open(self.cwd + self.cpp_name,'w+')
             self.createProxy()
+
         
     #everything needs to be performed in order otherwise you will get bogus output
     def createProxy(self):
@@ -83,11 +89,16 @@ private:
         self.header.close()
     
     def makeFunctionsPrototypes(self):
-        for e in self.tree.iter("function"):
+
+        for e in self.tree.iter("callback"):
+            print e.attrib['return']
             try:
                 params = int(e.attrib['params'])
                 function = []
-                t_def = 'typedef ' + e.attrib['return']+ '(*tos'+e.text+')('# int (*tosfunc)(int);
+                try:
+                    t_def = 'typedef ' + str(e.attrib['return'])+ '(*tos'+e.text+')('# int (*tosfunc)(int);
+                except Exception, inst:
+                    print "atr %s text %s errno %s" % (e.attrib['return'], e.text, inst)
                 function.append(e.attrib['return']) #num 0
                 function.append(params) #num 1
                 function.append(e.text) #num 2 function name
