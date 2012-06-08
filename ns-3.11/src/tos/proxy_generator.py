@@ -81,6 +81,7 @@ class Ns3ToTosProxyGenerator:
             header += '\t\t' + f[self.val_return] + ' ' + f[self.val_func_proto] + ';\n'
         header+="""
     ~Ns3ToTosProxy();
+    void * getFunction(std::string name);
 private:
     dense_hash_map<std::string, void *> m_tos_functions;
 """            
@@ -91,7 +92,6 @@ private:
     def makeFunctionsPrototypes(self):
 
         for e in self.tree.iter("callback"):
-            print e.attrib['return']
             try:
                 params = int(e.attrib['params'])
                 function = []
@@ -137,8 +137,10 @@ private:
                            if p is not params:
                                cpp += ' , '
             cpp += ');'
-            cpp += '\n}\n'
             
+            cpp += '\n}\n'
+        cpp+="""void* \nNs3ToTosProxy::getFunction(std::string name){
+\treturn (void *)m_tos_functions[name]; \n}"""
         cpp += self.text.getCppEnd()
         self.cpp.write(cpp)
         self.cpp.close()

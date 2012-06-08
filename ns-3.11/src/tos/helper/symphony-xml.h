@@ -42,11 +42,11 @@ public:
   virtual
   ~SymphonyXML();
   std::vector<std::string>
-  getTosFunctions() throw (std::runtime_error);
+  getTosFunctions() ;
   void
   readConfigFile(std::string&) throw (std::runtime_error);
 
-  HardwareModel
+  HardwareModel*
   getRadioModel(std::string name);
 
 private:
@@ -64,9 +64,13 @@ private:
    */
   void
   createModelElement(xercesc::DOMNodeList* nodeList,
-      ModelVocabulary::ElementType type, HardwareModel& model);
+      ModelVocabulary::ElementType type, HardwareModel* model);
   xercesc::XercesDOMParser *m_ConfigFileParser;
   bool m_init;
+  void addCallback(std::string);
+  void initModelMap() throw (std::runtime_error);
+  void createModels();
+  HardwareModel createHwModel(xercesc::DOMElement* currentElement, std::string name);
   // Internal class use only. Hold Xerces data in UTF-16 SMLCh type.
 
   xercesc::DOMDocument* xmlDoc;
@@ -81,6 +85,7 @@ private:
   XMLCh* TAG_format;
   XMLCh* TAG_source;
   std::vector<std::string> tos_functions;
+  std::map<std::string, HardwareModel*> m_models;
 
   std::map<std::string, xercesc::DOMElement*> m_modelMap;
 

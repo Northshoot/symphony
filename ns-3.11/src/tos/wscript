@@ -14,9 +14,9 @@ def build(bld):
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
     #obj.env.append_value('CXXFLAGS', '-I/home/lauril/dev/symphony/tinyos-2.1.1/tos/types') 
     obj.env.append_value('CCFLAGS','-std=gnu++0x')
-    #obj.env.append_value('CXXFLAGS','-lxerces-c')
-    obj.env.append_value('LINKFLAGS','-ldl')
-    obj.env.append_value('LINKFLAGS','-lxerces-c')
+    obj.env.append_value('LINKFLAGS','-L/usr/lib/')
+    obj.env.append_value('LINKFLAGS','-ldl') 
+    obj.env.append_value('LINKFLAGS','-libxerces-c-3.1')
     obj.source = ['model/tos-to-ns3-proxy.cc',
     			  #'model/tiny-bridge.cc',
     			  'model/ns3-to-tos-proxy_auto.cc',
@@ -57,6 +57,7 @@ def build(bld):
 				  'helper/yans-tos-helper.h',
 				  'helper/tos-net-device-container.h',
 				  'helper/tos-mobility-helper.h',
+                  'helper/symphony-xml.h',
                   'model/RF230-radio-model.h',
                   'model/tos-radio-model.h',
                   'model/model-vocabulary.h',

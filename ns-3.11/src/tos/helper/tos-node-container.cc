@@ -99,7 +99,7 @@ void
 TosNodeContainer::Create (uint32_t n)
 {
   NS_ASSERT(m_xml_set);
-  SymphonyXML sym;
+
   sym.readConfigFile(m_xml_file);
   std::vector<std::string> tos = sym.getTosFunctions();
   for (uint32_t i = 0; i < n; i++)

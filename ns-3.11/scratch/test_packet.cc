@@ -96,9 +96,9 @@ void withHeader(){
 
 int main(void)
 {
-	withoutheader();
-	cout << "\n\nNow lets repeat with header...\\"<<endl;
-	withHeader();
+//	withoutheader();
+//	cout << "\n\nNow lets repeat with header...\\"<<endl;
+//	withHeader();
 
 	return 0;
 }

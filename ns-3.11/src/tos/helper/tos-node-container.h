@@ -24,6 +24,7 @@
 #include <vector>
 #include "ns3/tos-node.h"
 #include "ns3/node-container.h"
+#include "symphony-xml.h"
 
 
 namespace ns3 {
@@ -292,6 +293,7 @@ public:
 private:
   std::string m_xml_file;
   bool m_xml_set;
+  SymphonyXML sym;
   std::vector<Ptr<TosNode> > m_TosNode;
 };
 

@@ -20,7 +20,7 @@
 
 #include "symphony-xml.h"
 
-using namespace xercesc;
+
 using namespace std;
 
 // trim from start
@@ -71,7 +71,7 @@ SymphonyXML::readConfigFile(string & configFile) throw (std::runtime_error)
     throw(std::runtime_error("File can not be read\n"));
   // Configure DOM parser.
 
-  m_ConfigFileParser->setValidationScheme(XercesDOMParser::Val_Never);
+  m_ConfigFileParser->setValidationScheme(xercesc::XercesDOMParser::Val_Never);
 
   m_ConfigFileParser->setDoNamespaces(false);
   m_ConfigFileParser->setDoSchema(false);
@@ -87,20 +87,25 @@ SymphonyXML::readConfigFile(string & configFile) throw (std::runtime_error)
       elementRoot = xmlDoc->getDocumentElement();
       if (!elementRoot)
         throw(std::runtime_error("empty XML document"));
+
       m_init = true;
+
+      initModelMap();
+      createModels();
+
     }
   catch (xercesc::XMLException& e)
     {
       char* message = xercesc::XMLString::transcode(e.getMessage());
       ostringstream errBuf;
       errBuf << "Error parsing file: " << message << flush;
-      XMLString::release(&message);
+      xercesc::XMLString::release(&message);
     }
 }
 
 void
-SymphonyXML::createModelElement(DOMNodeList* nodeList,
-     ModelVocabulary::ElementType type, HardwareModel& model)
+SymphonyXML::createModelElement(xercesc::DOMNodeList* nodeList,
+     ModelVocabulary::ElementType type, HardwareModel* model)
 {
   const XMLSize_t nodeCount = nodeList->getLength();
   std::vector<std::string> vacabulary = ModelVocabulary::getInstance().getVocabulary(type);
@@ -111,23 +116,23 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
 
   for (XMLSize_t ix = 0; ix < nodeCount; ++ix)
     {
-      DOMNode* currentNode = nodeList->item(ix);
-      DOMElement* curElement = dynamic_cast<xercesc::DOMElement*>(currentNode);
+      xercesc::DOMNode* currentNode = nodeList->item(ix);
+      xercesc::DOMElement* curElement = dynamic_cast<xercesc::DOMElement*>(currentNode);
       //Extract name, it is common for all elements
       //TODO: possible to extract generic model and derivate it and further make parsing there
       std::string name = getAttributeValue(curElement, "name");
-      model.addElement(type,name);
+      model->addElement(type,name);
       //Iterate over the vocabulary
       for (it = vacabulary.begin(); it != vacabulary.end();
           it++)
         {
           if (hasAttribute(currentNode, *it))
             {
-              model.addElementAttribute(type, name, *it, getAttributeValue(curElement, *it));
+              model->addElementAttribute(type, name, *it, getAttributeValue(curElement, *it));
             }
           else
             {
-              model.addElementAttribute(type,name,*it, "EMPTY");
+              model->addElementAttribute(type,name,*it, "EMPTY");
             }
         }
       if(type == ModelVocabulary::CALL || type == ModelVocabulary::CALLBACK)
@@ -139,8 +144,11 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
               std::stringstream sstm;
               sstm << "param" << i;
               string result = sstm.str();
-              model.addElementAttribute(type, name, result, getAttributeValue(curElement, result));
+              model->addElementAttribute(type, name, result, getAttributeValue(curElement, result));
             }
+          if(type ==  ModelVocabulary::CALLBACK){
+              addCallback(name);
+          }
         }
 
     }
@@ -148,47 +156,114 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
 
 }
 
-HardwareModel
-SymphonyXML::getRadioModel(std::string name)
+void
+SymphonyXML::createModels()
 {
-  DOMElement* currentElement = m_modelMap[name];
+  std::map<std::string, xercesc::DOMElement*>::iterator mapIter;
+
+  for(mapIter = m_modelMap.begin(); mapIter != m_modelMap.end();
+      mapIter++){
+      HardwareModel* model = new HardwareModel;
+      model->setName(mapIter->first);
+      xercesc::DOMElement* currentElement = mapIter->second;
+      //get property
+      xercesc::DOMNodeList* nodeList ;
+      nodeList = currentElement->getElementsByTagName(TAG_property);
+
+      createModelElement(nodeList, ModelVocabulary::PROPERTY, model);
+      //  //get call
+      nodeList = currentElement->getElementsByTagName(TAG_call);
+
+      createModelElement(nodeList, ModelVocabulary::CALL, model);
+        //get callback
+      nodeList = currentElement->getElementsByTagName(TAG_callback);
+
+      createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
+        //get format
+      nodeList = currentElement->getElementsByTagName(TAG_format);
+
+      createModelElement(nodeList, ModelVocabulary::FORMAT, model);
+        //get source
+      nodeList = currentElement->getElementsByTagName(TAG_source);
+
+      createModelElement(nodeList, ModelVocabulary::SOURCE, model);
+      m_models[mapIter->first]=model;
+
+  }
+}
+HardwareModel
+SymphonyXML::createHwModel(xercesc::DOMElement* currentElement, std::string name){
   HardwareModel model(name);
-
-
   //get property
-  DOMNodeList* nodeList ;
+  xercesc::DOMNodeList* nodeList ;
   nodeList = currentElement->getElementsByTagName(TAG_property);
 
-  createModelElement(nodeList, ModelVocabulary::PROPERTY, model);
+  createModelElement(nodeList, ModelVocabulary::PROPERTY, &model);
   //  //get call
   nodeList = currentElement->getElementsByTagName(TAG_call);
 
-  createModelElement(nodeList, ModelVocabulary::CALL, model);
-    //get callback
-  nodeList = currentElement->getElementsByTagName(TAG_callback);
+//  createModelElement(nodeList, ModelVocabulary::CALL, model);
+//    //get callback
+//  nodeList = currentElement->getElementsByTagName(TAG_callback);
+//
+//  createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
+//    //get format
+//  nodeList = currentElement->getElementsByTagName(TAG_format);
+//
+//  createModelElement(nodeList, ModelVocabulary::FORMAT, model);
+//    //get source
+//  nodeList = currentElement->getElementsByTagName(TAG_source);
+//
+//  createModelElement(nodeList, ModelVocabulary::SOURCE, model);
 
-  createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
-    //get format
-  nodeList = currentElement->getElementsByTagName(TAG_format);
+   return model;
 
-  createModelElement(nodeList, ModelVocabulary::FORMAT, model);
-    //get source
-  nodeList = currentElement->getElementsByTagName(TAG_source);
-
-  createModelElement(nodeList, ModelVocabulary::SOURCE, model);
-
-
-  return model;
 }
 
+HardwareModel*
+SymphonyXML::getRadioModel(std::string name)
+{
+//  DOMElement* currentElement = m_modelMap[name];
+//  HardwareModel model(name);
+//
+//
+//  //get property
+//  DOMNodeList* nodeList ;
+//  nodeList = currentElement->getElementsByTagName(TAG_property);
+//
+//  createModelElement(nodeList, ModelVocabulary::PROPERTY, model);
+//  //  //get call
+//  nodeList = currentElement->getElementsByTagName(TAG_call);
+//
+//  createModelElement(nodeList, ModelVocabulary::CALL, model);
+//    //get callback
+//  nodeList = currentElement->getElementsByTagName(TAG_callback);
+//
+//  createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
+//    //get format
+//  nodeList = currentElement->getElementsByTagName(TAG_format);
+//
+//  createModelElement(nodeList, ModelVocabulary::FORMAT, model);
+//    //get source
+//  nodeList = currentElement->getElementsByTagName(TAG_source);
+//
+//  createModelElement(nodeList, ModelVocabulary::SOURCE, model);
+
+
+  return m_models[name];
+}
 std::vector<std::string>
-SymphonyXML::getTosFunctions() throw (std::runtime_error)
+SymphonyXML::getTosFunctions() {
+  return tos_functions;
+}
+void
+SymphonyXML::initModelMap() throw (std::runtime_error)
 {
   if (!m_init)
     throw(std::runtime_error("XML is not initialized"));
   try
     {
-      DOMNodeList* modelList = elementRoot->getElementsByTagName(TAG_model);
+      xercesc:: DOMNodeList* modelList = elementRoot->getElementsByTagName(TAG_model);
 
       const XMLSize_t modelCount = modelList->getLength();
       cout << "# number of models: " << modelCount << endl;
@@ -196,19 +271,21 @@ SymphonyXML::getTosFunctions() throw (std::runtime_error)
       //we loop through all models
       for (XMLSize_t xx = 0; xx < modelCount; ++xx)
         {
-          DOMNode* currentNode = modelList->item(xx);
+          xercesc::DOMNode* currentNode = modelList->item(xx);
           if (currentNode->getNodeType() && // true is not NULL
-              currentNode->getNodeType() == DOMNode::ELEMENT_NODE) // is element
+              currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE) // is element
             {
-              DOMElement* currentElement =
+              xercesc::DOMElement* currentElement =
                   dynamic_cast<xercesc::DOMElement*>(currentNode);
               string modelName = getString(
-                  currentElement->getAttribute(XMLString::transcode("name")));
+                  currentElement->getAttribute(xercesc::XMLString::transcode("name")));
               //save models to the map
               m_modelMap[modelName] = currentElement;
 
             }
         }
+
+
 
     }
   catch (xercesc::XMLException& e)
@@ -216,28 +293,33 @@ SymphonyXML::getTosFunctions() throw (std::runtime_error)
       char* message = xercesc::XMLString::transcode(e.getMessage());
       ostringstream errBuf;
       errBuf << "Error parsing file: " << message << flush;
-      XMLString::release(&message);
+      xercesc::XMLString::release(&message);
     }
 
-  return tos_functions;
+
+}
+
+void
+SymphonyXML::addCallback(std::string func){
+  tos_functions.push_back(func);
 }
 
 inline bool
-SymphonyXML::hasAttribute(DOMNode* node, std::string name)
+SymphonyXML::hasAttribute(xercesc::DOMNode* node, std::string name)
 {
   return dynamic_cast<xercesc::DOMElement*>(node)->hasAttribute(
-      XMLString::transcode(name.c_str()));
+      xercesc::XMLString::transcode(name.c_str()));
 }
 
 inline string
 SymphonyXML::getAttributeValue(xercesc::DOMElement* node, std::string name)
 {
-  return getString((node)->getAttribute(XMLString::transcode(name.c_str())));
+  return getString((node)->getAttribute(xercesc::XMLString::transcode(name.c_str())));
 }
 inline string
 SymphonyXML::getString(const XMLCh* const toHandle)
 {
-  string ret = XMLString::transcode(toHandle);
+  string ret = xercesc::XMLString::transcode(toHandle);
   return trim(ret);
 
 }
@@ -246,29 +328,30 @@ SymphonyXML::SymphonyXML()
 
   try
     {
-      XMLPlatformUtils::Initialize(); // Initialize Xerces infrastructure
+      xercesc::XMLPlatformUtils::Initialize(); // Initialize Xerces infrastructure
     }
-  catch (XMLException& e)
+  catch (xercesc::XMLException& e)
     {
-      char* message = XMLString::transcode(e.getMessage());
+      char* message = xercesc::XMLString::transcode(e.getMessage());
       cerr << "XML toolkit initialization error: " << message << endl;
-      XMLString::release(&message);
+      xercesc::XMLString::release(&message);
       // throw exception here to return ERROR_XERCES_INIT
     }
 
   // Tags and attributes used in XML file.
   // Can't call transcode till after Xerces Initialize()
-  TAG_root = XMLString::transcode("root");
-  TAG_model = XMLString::transcode("model");
-  TAG_property = XMLString::transcode("property");
-  TAG_call = XMLString::transcode("call");
-  TAG_callback = XMLString::transcode("callback");
-  TAG_format = XMLString::transcode("format");
-  TAG_source = XMLString::transcode("source");
+  TAG_root = xercesc::XMLString::transcode("root");
+  TAG_model = xercesc::XMLString::transcode("model");
+  TAG_property = xercesc::XMLString::transcode("property");
+  TAG_call = xercesc::XMLString::transcode("call");
+  TAG_callback = xercesc::XMLString::transcode("callback");
+  TAG_format = xercesc::XMLString::transcode("format");
+  TAG_source = xercesc::XMLString::transcode("source");
 
-  TAG_empty = XMLString::transcode("empty");
+  TAG_empty = xercesc::XMLString::transcode("empty");
 
-  m_ConfigFileParser = new XercesDOMParser;
+  m_ConfigFileParser = new xercesc::XercesDOMParser();
+
 
 
 
@@ -277,37 +360,35 @@ SymphonyXML::SymphonyXML()
 SymphonyXML::~SymphonyXML()
 {
   // Free memory
+  std::map<std::string, HardwareModel*>::iterator iterHw;
 
+  m_modelMap.clear();
+  //delete all pointer
+  for(iterHw = m_models.begin(); iterHw != m_models.end();
+      iterHw++){
+      delete(iterHw->second);
+  }
+  m_models.clear();
   delete m_ConfigFileParser;
   try
     {
-      XMLString::release(&TAG_root);
-      XMLString::release(&TAG_model);
-      XMLString::release(&TAG_property);
-      XMLString::release(&TAG_call);
-      XMLString::release(&TAG_callback);
-      XMLString::release(&TAG_format);
-      XMLString::release(&TAG_source);
-      XMLString::release(&TAG_empty);
-
-    }
-  catch (...)
-    {
-      cerr << "Unknown exception encountered in TagNamesdtor" << endl;
-    }
-
-  // Terminate Xerces
-
-  try
-    {
-      XMLPlatformUtils::Terminate(); // Terminate after release of memory
+      xercesc::XMLString::release(&TAG_root);
+      xercesc::XMLString::release(&TAG_model);
+      xercesc::XMLString::release(&TAG_property);
+      xercesc::XMLString::release(&TAG_call);
+      xercesc::XMLString::release(&TAG_callback);
+      xercesc::XMLString::release(&TAG_format);
+      xercesc::XMLString::release(&TAG_source);
+      xercesc::XMLString::release(&TAG_empty);
+      xercesc::XMLPlatformUtils::Terminate(); // Terminate after release of memory
     }
   catch (xercesc::XMLException& e)
     {
       char* message = xercesc::XMLString::transcode(e.getMessage());
 
       cerr << "XML tolkit teardown error: " << message << endl;
-      XMLString::release(&message);
+      xercesc::XMLString::release(&message);
     }
+
 }
 

@@ -32,17 +32,17 @@ int main(void)
 //	      "ns3::RealtimeSimulatorImpl"));
 
 
-	TosNodeContainer c("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml");
-	c.Create(2);
-
-
-
-
-
-
-    ns3::Simulator::Stop(ns3::Seconds(10.0));
-    ns3::Simulator::Run();
-    ns3::Simulator::Destroy ();
+//	TosNodeContainer c("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml");
+//	c.Create(2);
+//
+//
+//
+//
+//
+//
+//    ns3::Simulator::Stop(ns3::Seconds(10.0));
+//    ns3::Simulator::Run();
+//    ns3::Simulator::Destroy ();
 
 
 	return 0;
