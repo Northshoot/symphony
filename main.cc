@@ -21,12 +21,12 @@ int main()
    try {
 	   SymphonyXML sym;
 	   sym.readConfigFile(configFile);
-	   vector<string> str_v = sym.getTosFunctions();
-	   HardwareModel  radioModel = sym.getRadioModel("radio");
+
+	   HardwareModel*  radioModel = sym.getRadioModel("radio");
 	   //cout << "model name: " <<radioModel.getModelName() << endl;
 	   cout<<"about to print"<<endl;
-	   radioModel.printModel();
-
+	   radioModel->printModel();
+	   vector<string> str_v = sym.getTosFunctions();
 
 } catch (...) {
 	cerr << "Unknown exception encountered when creating Symphony" << endl;

@@ -87,7 +87,12 @@ SymphonyXML::readConfigFile(string & configFile) throw (std::runtime_error)
       elementRoot = xmlDoc->getDocumentElement();
       if (!elementRoot)
         throw(std::runtime_error("empty XML document"));
+
       m_init = true;
+
+      initModelMap();
+      createModels();
+
     }
   catch (xercesc::XMLException& e)
     {
@@ -100,7 +105,7 @@ SymphonyXML::readConfigFile(string & configFile) throw (std::runtime_error)
 
 void
 SymphonyXML::createModelElement(DOMNodeList* nodeList,
-     ModelVocabulary::ElementType type, HardwareModel& model)
+     ModelVocabulary::ElementType type, HardwareModel* model)
 {
   const XMLSize_t nodeCount = nodeList->getLength();
   std::vector<std::string> vacabulary = ModelVocabulary::getInstance().getVocabulary(type);
@@ -116,18 +121,18 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
       //Extract name, it is common for all elements
       //TODO: possible to extract generic model and derivate it and further make parsing there
       std::string name = getAttributeValue(curElement, "name");
-      model.addElement(type,name);
+      model->addElement(type,name);
       //Iterate over the vocabulary
       for (it = vacabulary.begin(); it != vacabulary.end();
           it++)
         {
           if (hasAttribute(currentNode, *it))
             {
-              model.addElementAttribute(type, name, *it, getAttributeValue(curElement, *it));
+              model->addElementAttribute(type, name, *it, getAttributeValue(curElement, *it));
             }
           else
             {
-              model.addElementAttribute(type,name,*it, "EMPTY");
+              model->addElementAttribute(type,name,*it, "EMPTY");
             }
         }
       if(type == ModelVocabulary::CALL || type == ModelVocabulary::CALLBACK)
@@ -139,8 +144,11 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
               std::stringstream sstm;
               sstm << "param" << i;
               string result = sstm.str();
-              model.addElementAttribute(type, name, result, getAttributeValue(curElement, result));
+              model->addElementAttribute(type, name, result, getAttributeValue(curElement, result));
             }
+          if(type ==  ModelVocabulary::CALLBACK){
+              addCallback(name);
+          }
         }
 
     }
@@ -148,41 +156,108 @@ SymphonyXML::createModelElement(DOMNodeList* nodeList,
 
 }
 
-HardwareModel
-SymphonyXML::getRadioModel(std::string name)
+void
+SymphonyXML::createModels()
 {
-  DOMElement* currentElement = m_modelMap[name];
+  std::map<std::string, xercesc::DOMElement*>::iterator mapIter;
+
+  for(mapIter = m_modelMap.begin(); mapIter != m_modelMap.end();
+      mapIter++){
+      HardwareModel* model = new HardwareModel;
+      model->setName(mapIter->first);
+      DOMElement* currentElement = mapIter->second;
+      //get property
+      DOMNodeList* nodeList ;
+      nodeList = currentElement->getElementsByTagName(TAG_property);
+
+      createModelElement(nodeList, ModelVocabulary::PROPERTY, model);
+      //  //get call
+      nodeList = currentElement->getElementsByTagName(TAG_call);
+
+      createModelElement(nodeList, ModelVocabulary::CALL, model);
+        //get callback
+      nodeList = currentElement->getElementsByTagName(TAG_callback);
+
+      createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
+        //get format
+      nodeList = currentElement->getElementsByTagName(TAG_format);
+
+      createModelElement(nodeList, ModelVocabulary::FORMAT, model);
+        //get source
+      nodeList = currentElement->getElementsByTagName(TAG_source);
+
+      createModelElement(nodeList, ModelVocabulary::SOURCE, model);
+      m_models[mapIter->first]=model;
+
+  }
+}
+HardwareModel
+SymphonyXML::createHwModel(DOMElement* currentElement, std::string name){
   HardwareModel model(name);
-
-
   //get property
   DOMNodeList* nodeList ;
   nodeList = currentElement->getElementsByTagName(TAG_property);
 
-  createModelElement(nodeList, ModelVocabulary::PROPERTY, model);
+  createModelElement(nodeList, ModelVocabulary::PROPERTY, &model);
   //  //get call
   nodeList = currentElement->getElementsByTagName(TAG_call);
 
-  createModelElement(nodeList, ModelVocabulary::CALL, model);
-    //get callback
-  nodeList = currentElement->getElementsByTagName(TAG_callback);
+//  createModelElement(nodeList, ModelVocabulary::CALL, model);
+//    //get callback
+//  nodeList = currentElement->getElementsByTagName(TAG_callback);
+//
+//  createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
+//    //get format
+//  nodeList = currentElement->getElementsByTagName(TAG_format);
+//
+//  createModelElement(nodeList, ModelVocabulary::FORMAT, model);
+//    //get source
+//  nodeList = currentElement->getElementsByTagName(TAG_source);
+//
+//  createModelElement(nodeList, ModelVocabulary::SOURCE, model);
 
-  createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
-    //get format
-  nodeList = currentElement->getElementsByTagName(TAG_format);
+   return model;
 
-  createModelElement(nodeList, ModelVocabulary::FORMAT, model);
-    //get source
-  nodeList = currentElement->getElementsByTagName(TAG_source);
-
-  createModelElement(nodeList, ModelVocabulary::SOURCE, model);
-
-
-  return model;
 }
 
+HardwareModel*
+SymphonyXML::getRadioModel(std::string name)
+{
+//  DOMElement* currentElement = m_modelMap[name];
+//  HardwareModel model(name);
+//
+//
+//  //get property
+//  DOMNodeList* nodeList ;
+//  nodeList = currentElement->getElementsByTagName(TAG_property);
+//
+//  createModelElement(nodeList, ModelVocabulary::PROPERTY, model);
+//  //  //get call
+//  nodeList = currentElement->getElementsByTagName(TAG_call);
+//
+//  createModelElement(nodeList, ModelVocabulary::CALL, model);
+//    //get callback
+//  nodeList = currentElement->getElementsByTagName(TAG_callback);
+//
+//  createModelElement(nodeList, ModelVocabulary::CALLBACK, model);
+//    //get format
+//  nodeList = currentElement->getElementsByTagName(TAG_format);
+//
+//  createModelElement(nodeList, ModelVocabulary::FORMAT, model);
+//    //get source
+//  nodeList = currentElement->getElementsByTagName(TAG_source);
+//
+//  createModelElement(nodeList, ModelVocabulary::SOURCE, model);
+
+
+  return m_models[name];
+}
 std::vector<std::string>
-SymphonyXML::getTosFunctions() throw (std::runtime_error)
+SymphonyXML::getTosFunctions() {
+  return tos_functions;
+}
+void
+SymphonyXML::initModelMap() throw (std::runtime_error)
 {
   if (!m_init)
     throw(std::runtime_error("XML is not initialized"));
@@ -210,6 +285,8 @@ SymphonyXML::getTosFunctions() throw (std::runtime_error)
             }
         }
 
+
+
     }
   catch (xercesc::XMLException& e)
     {
@@ -219,7 +296,12 @@ SymphonyXML::getTosFunctions() throw (std::runtime_error)
       XMLString::release(&message);
     }
 
-  return tos_functions;
+
+}
+
+void
+SymphonyXML::addCallback(std::string func){
+  tos_functions.push_back(func);
 }
 
 inline bool
@@ -272,6 +354,7 @@ SymphonyXML::SymphonyXML()
 
 
 
+
 }
 
 SymphonyXML::~SymphonyXML()
@@ -309,5 +392,14 @@ SymphonyXML::~SymphonyXML()
       cerr << "XML tolkit teardown error: " << message << endl;
       XMLString::release(&message);
     }
+  std::map<std::string, HardwareModel*>::iterator iterHw;
+
+  m_modelMap.clear();
+  //delete all pointer
+  for(iterHw = m_models.begin(); iterHw != m_models.end();
+      iterHw++){
+      delete(iterHw->second);
+  }
+  m_models.clear();
 }
 

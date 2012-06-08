@@ -8,6 +8,13 @@ HardwareModel::HardwareModel()
 HardwareModel::HardwareModel(std::string name)
 {
   m_name=name;
+  Constuct();
+}
+
+void
+HardwareModel::Constuct()
+{
+  init = true;
 }
 
 HardwareModel::~HardwareModel()
@@ -17,7 +24,6 @@ HardwareModel::~HardwareModel()
   deleteElements(m_calls);
   deleteElements(m_formats);
   deleteElements(m_sources);
-
 
   std::cout<<"HardwareModel::~HardwareModel()"<<std::endl;
 }

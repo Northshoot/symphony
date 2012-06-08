@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -ggdb -Wall -pedantic
-LDFLAGS=-lxerces-c
+LDFLAGS=-libxerces-c
 SOURCES=main.cc symphony-xml.cc hardware-model.cc model-element.cc model-vocabulary.cc
 OBJECTS=$(SOURCES:.cc=.o)
 EXECUTABLE=symxml

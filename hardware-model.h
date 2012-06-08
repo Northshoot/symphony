@@ -37,6 +37,8 @@ private:
   void printUniqueElement(UniqueElement elem);
   inline UniqueElement& getUniqueElement(ModelVocabulary::ElementType type);
   inline void deleteElements(UniqueElement elem);
+  void Constuct();
+  bool init;
 
   UniqueElement m_properties;
   UniqueElement m_callbacks;
