@@ -156,7 +156,7 @@ namespace ns3
   void
   SimuClock::DoDispose(void)
   {
-    std::cout << "DoDispose " << count << std::endl;
+    //std::cout << "DoDispose " << count << std::endl;
     //std::cout<<"DoDispose "<< tick_event.IsRunning() << std::endl;
   }
 } //ns3 namespace

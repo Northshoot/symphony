@@ -3,20 +3,24 @@
 
 #include <stdint.h>
 #include <string>
+
+#include "ns3/ptr.h"
 #include "model-element.h"
 #include "model-vocabulary.h"
 
-typedef std::map<std::string, ModelElement * > UniqueElement;
-class HardwareModel
+namespace ns3 {
+typedef std::map<std::string, Ptr<ModelElement> > UniqueElement;
+
+class HardwareModel : public Object
 {
 public:
+  static TypeId GetTypeId (void);
   HardwareModel();
   HardwareModel(std::string name);
 
-  virtual
-  ~HardwareModel();
+  virtual  ~HardwareModel();
 
-  ModelElement *
+  Ptr<ModelElement>
   getElement(ModelVocabulary::ElementType et, std::string name);
 
   void
@@ -32,11 +36,20 @@ public:
 
   void
   printModel(void);
+protected:
+    /**
+     * The dispose method. Subclasses must override this method
+     * and must chain up to it by calling Node::DoDispose at the
+     * end of their own DoDispose method.
+     */
 
+  virtual void DoDispose (void);
 private:
   void printUniqueElement(UniqueElement elem);
   inline UniqueElement& getUniqueElement(ModelVocabulary::ElementType type);
   inline void deleteElements(UniqueElement elem);
+  void Constuct();
+  bool init;
 
   UniqueElement m_properties;
   UniqueElement m_callbacks;
@@ -46,4 +59,5 @@ private:
   UniqueElement m_undefined;
   std::string m_name;
 };
+}
 #endif //SYM_RADIO_MODEL_H

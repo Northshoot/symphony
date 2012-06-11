@@ -24,8 +24,6 @@
 #include <vector>
 #include "ns3/tos-node.h"
 #include "ns3/node-container.h"
-#include "symphony-xml.h"
-
 
 namespace ns3 {
 
@@ -48,12 +46,6 @@ public:
    */
   TosNodeContainer ();
 
-  /**
-   * Create a TosNodeContainer with tos configuration described in fileName
-   *
-   * \param fileName The absolut file name to be loaded.
-   */
-  TosNodeContainer(std::string fileName);
 
   /**
    * Create a TosNodeContainer with exactly one TosNode which has been previously
@@ -290,10 +282,10 @@ public:
    */
   static TosNodeContainer GetGlobal (void);
 
+
+
 private:
-  std::string m_xml_file;
-  bool m_xml_set;
-  SymphonyXML sym;
+
   std::vector<Ptr<TosNode> > m_TosNode;
 };
 

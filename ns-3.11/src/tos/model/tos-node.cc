@@ -62,14 +62,12 @@ namespace ns3
 
   TosNode::TosNode(uint32_t node_id, Time bootTime)
   {
-    std::vector<std::string> ex;
-    TosNode(node_id, bootTime, "./libtos.so", ex);
+
+    TosNode(node_id, bootTime, "./libtos.so");
   }
 
-  TosNode::TosNode(uint32_t node_id, Time bootTime, const char *lib,
-      std::vector<std::string> externs) :
-      m_id(node_id), m_bootTime(bootTime), m_libname(lib), m_tos_functions(
-          externs)
+  TosNode::TosNode(uint32_t node_id, Time bootTime, const char *lib) :
+      m_id(node_id), m_bootTime(bootTime), m_libname(lib)
   {
     Construct();
   }
@@ -80,7 +78,14 @@ namespace ns3
     m_id = TosNodeList::Add(this);
     nstotos = new Ns3ToTosProxy(); //ns3 to tos
     tostons = new TosToNs3Proxy(); //tos to ns3
+    m_init=false;
     NS_LOG_FUNCTION_NOARGS();
+  }
+
+  void
+  TosNode::SetCallback(std::vector<std::string> tosExternals){
+    m_tos_functions=tosExternals;
+    m_init=true;
   }
 
   uint32_t
@@ -164,6 +169,7 @@ namespace ns3
   TosNode::DoStart()
   {
     //open instance of the library  LM_ID_NEWLM
+    NS_ASSERT(m_init);
     callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
     simuclock = new SimuClock(NANOSECOND, NONE, callBackFromClock);
     tostons->simu_clock = simuclock;
@@ -252,6 +258,7 @@ namespace ns3
       }
     else
       {
+        std::cerr << "got func " << func_name << '\n';
         return tmp;
       }
   }

@@ -17,7 +17,7 @@
 #include "ns3/tos-net-device.h"
 #include "tos-node-container.h"
 #include "tos-net-device-container.h"
-
+#include "symphony-xml.h"
 namespace ns3
 {
 
@@ -80,9 +80,13 @@ namespace ns3
     static void
     EnableLogComponentsAll(LogLevel level);
 
+    void SetNodeModel(std::string file);
 
   private:
-
+    std::vector<std::string> m_tosExternals;
+    Ptr<HardwareModel> m_radioModel;
+    std::string m_xmlFile;
+    SymphonyXML sym;
     enum WifiPhyStandard m_standard;
 
   };

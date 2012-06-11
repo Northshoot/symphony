@@ -1,6 +1,19 @@
 #include <iostream>
+#include "ns3/object.h"
+
 #include "hardware-model.h"
 
+namespace ns3
+{
+  NS_OBJECT_ENSURE_REGISTERED(HardwareModel);
+
+  TypeId
+  HardwareModel::GetTypeId(void)
+  {
+    static TypeId tid = TypeId("ns3::HardwareModel").SetParent<Object>();
+
+    return tid;
+  }
 HardwareModel::HardwareModel()
 {
 }
@@ -8,29 +21,31 @@ HardwareModel::HardwareModel()
 HardwareModel::HardwareModel(std::string name)
 {
   m_name=name;
+  Constuct();
+}
+
+void
+HardwareModel::Constuct()
+{
+  init = true;
 }
 
 HardwareModel::~HardwareModel()
 {
-  deleteElements(m_properties);
-  deleteElements(m_callbacks);
-  deleteElements(m_calls);
-  deleteElements(m_formats);
-  deleteElements(m_sources);
 
-
-  std::cout<<"HardwareModel::~HardwareModel()"<<std::endl;
+  DoDispose();
+  //std::cout<<"HardwareModel::~HardwareModel()"<<std::endl;
 }
 inline void
 HardwareModel::deleteElements(UniqueElement elem){
-    for(UniqueElement::iterator it=elem.begin();it!=elem.end();++it)
-    {
-        delete((*it).second);
-    }
+//    for(UniqueElement::iterator it=elem.begin();it!=elem.end();++it)
+//    {
+//        delete((*it).second);
+//    }
     elem.clear();
 }
 
-ModelElement *
+Ptr<ModelElement>
 HardwareModel::getElement(ModelVocabulary::ElementType type, std::string name)
 {
   return getUniqueElement(type)[name];
@@ -105,3 +120,13 @@ HardwareModel::getUniqueElement(ModelVocabulary::ElementType type)
   }
 }
 
+void
+HardwareModel::DoDispose(void)
+{
+  deleteElements(m_properties);
+  deleteElements(m_callbacks);
+  deleteElements(m_calls);
+  deleteElements(m_formats);
+  deleteElements(m_sources);
+}
+}

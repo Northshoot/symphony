@@ -194,7 +194,6 @@ public:
    */
   void Add (std::string deviceName);
 
-  void InstallHardwareModels(HardwareModel *hw) ;
 
 private:
   std::vector<Ptr<TosNetDevice> > m_devices;

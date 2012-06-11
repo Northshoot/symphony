@@ -16,14 +16,16 @@
 #include <string>
 #include <stdint.h> 
 #include <vector>
+
+#include "ns3/object.h"
 #include "model-vocabulary.h"
 
-
-class ModelElement
+namespace ns3 {
+class ModelElement : public Object
 {
 
 public:
-
+  static TypeId GetTypeId (void);
   ModelElement();
   ModelElement(std::string name);
 
@@ -37,11 +39,19 @@ public:
   printElement();
   virtual
   ~ModelElement();
+protected:
+    /**
+     * The dispose method. Subclasses must override this method
+     * and must chain up to it by calling Node::DoDispose at the
+     * end of their own DoDispose method.
+     */
+
+  virtual void DoDispose (void);
 private:
   typedef std::map<std::string, std::string> Attribute;
   std::string m_name;
   Attribute attribute;
   
 };
-
+}
 #endif /* MODEL_ELEMENT_H_ */

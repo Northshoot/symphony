@@ -20,6 +20,7 @@
 
 #include "tos-net-device-container.h"
 #include "tos-helper.h"
+#include "symphony-xml.h"
 #include "ns3/tos-net-device.h"
 #include "ns3/tos-mac-low.h"
 #include "ns3/RF230-radio-model.h"
@@ -30,8 +31,18 @@ namespace ns3 {
 TosPhyHelper::~TosPhyHelper() {}
 
 TosHelper::TosHelper():
-		m_standard (WIFI_PHY_STANDARD_80211a) { }
+		m_standard (WIFI_PHY_STANDARD_80211a) {
 
+
+}
+void
+TosHelper::SetNodeModel(std::string file)
+{
+  std::string m_xmlFile=file;
+  sym.readConfigFile(m_xmlFile);
+  m_tosExternals = sym.getExternalFunctions();
+  m_radioModel = sym.getModel("radio");
+}
 TosHelper::~TosHelper() {
 	// TODO Auto-generated destructor stub
 }
@@ -61,6 +72,8 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	      device->SetPhy (phy);
 	      device->SetMac (mac);
 	      node->AddDevice (device);
+	      node->SetCallback(m_tosExternals);
+	      device->SetRadioModel(m_radioModel);
 	      devices.Add (device);
 	      NS_LOG_DEBUG ("node=" << node << ", mob=" << node->GetObject<MobilityModel> ());
 	    }

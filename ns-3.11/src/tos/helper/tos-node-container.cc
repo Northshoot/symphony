@@ -25,7 +25,6 @@
 #include "ns3/names.h"
 #include "ns3/nstime.h"
 
-#include "symphony-xml.h"
 
 namespace ns3 {
 
@@ -33,9 +32,6 @@ TosNodeContainer::TosNodeContainer ()
 {
 }
 
-TosNodeContainer::TosNodeContainer( std::string filename): m_xml_file(filename){
-	m_xml_set = true;
-}
 
 TosNodeContainer::TosNodeContainer (Ptr<TosNode> TosNode)
 {
@@ -98,13 +94,9 @@ TosNodeContainer::Get (uint32_t i) const
 void 
 TosNodeContainer::Create (uint32_t n)
 {
-  NS_ASSERT(m_xml_set);
-
-  sym.readConfigFile(m_xml_file);
-  std::vector<std::string> tos = sym.getTosFunctions();
   for (uint32_t i = 0; i < n; i++)
     {
-      m_TosNode.push_back (CreateObject<TosNode> (i ,MilliSeconds(0),"./libtos.so", tos));
+      m_TosNode.push_back (CreateObject<TosNode> (i ,MilliSeconds(0),"./libtos.so"));
     }
 }
 void 

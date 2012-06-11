@@ -137,7 +137,7 @@ namespace ns3
     SetReceiveMessageCallback(Callback<int, void *> c);
 
     void
-    SetRadioModel(HardwareModel * model);
+    SetRadioModel(Ptr<HardwareModel>  model);
 
     // inherited from NetDevice base class.
     virtual void
@@ -238,7 +238,7 @@ namespace ns3
     //TODO:
     //the model needs to be implemented with accesors
     //default model need to be added in case inserted is not working (?)
-    HardwareModel * m_txParams;
+    Ptr<HardwareModel>  m_txParams;
 
     //inherited from NetDevice
     Ptr<Node> m_node;

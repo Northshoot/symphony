@@ -8,11 +8,21 @@
 #include <stdio.h>
 #include <string>
 
+#include "ns3/object.h"
 #include "model-element.h"
 #include "model-vocabulary.h"
 
+namespace ns3
+{
+  NS_OBJECT_ENSURE_REGISTERED(ModelElement);
 
+  TypeId
+  ModelElement::GetTypeId(void)
+  {
+    static TypeId tid = TypeId("ns3::ModelElement").SetParent<Object>();
 
+    return tid;
+  }
 
 ModelElement::ModelElement()
 {
@@ -60,5 +70,14 @@ ModelElement::printElement()
 
 ModelElement::~ModelElement()
 {
-  std::cout<< "ModelElement::~ModelElement()"<<std::endl;
+  DoDispose();
+  //std::cout<< "ModelElement::~ModelElement()"<<std::endl;
+}
+
+void
+ModelElement::DoDispose(void)
+{
+  //std::cout << "DoDispose " << count << std::endl;
+  //std::cout<<"DoDispose "<< tick_event.IsRunning() << std::endl;
+}
 }

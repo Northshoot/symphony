@@ -434,7 +434,7 @@ TosNetDevice::setNs3ToTos(Ns3ToTosProxy * nstos){
 }
 
 void
-TosNetDevice::SetRadioModel(HardwareModel * model){
+TosNetDevice::SetRadioModel(Ptr<HardwareModel> model){
   m_txParams = model;
 }
 bool
