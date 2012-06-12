@@ -2,7 +2,7 @@
 <symphony>
   <model name="radio">
   	<callback return="int" params="1" param1="int">sendSendDone</callback>
-  	<callback return="void" params="1" param1="int">radioStartDone</callback>
+  	<callback return="void" params="1" param1="int" time="500" units="ms">radioStartDone</callback>
   	<callback return="int" params="1" param1="int">setUniqueID</callback>
   	<callback return="void" params="1" param1="int">sim_main_start_mote</callback>
   	<callback return="int" params="1" param1="long">setProxy</callback>
@@ -16,13 +16,5 @@
    <call time="60" name="startRadio"/>
    <call time="80" name="swithChannel"/>
   </model>
-  <model name="rom">
-   <property units="Kb" size="514" initial="220" name="heap"/>
-  </model>  
-  <model name="flash">
-   <property units="Kb" size="2000" initial="120" name="size"/>
-   <call time="50" name ="startFlash"/>
-   <call time="10" params="1" param1="void *" name="write"/>
-   <callback return="void *" params="1" param1="int" time="20">initFlash</callback>
-  </model>  
+
 </symphony>

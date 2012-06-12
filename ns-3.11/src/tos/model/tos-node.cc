@@ -251,14 +251,12 @@ namespace ns3
     void * tmp = dlsym(handler, func_name);
     if ((error = dlerror()) != NULL)
       {
-        std::cerr << "func " << tmp << '\n';
-        std::cerr << "Cannot get function: " << func_name << " " << error
-            << '\n';
-        exit(1);
+        std::stringstream sstm;
+        sstm << "Cannot get function: " << error;
+        NS_ASSERT_MSG(false, sstm.str());
       }
     else
       {
-        std::cerr << "got func " << func_name << '\n';
         return tmp;
       }
   }

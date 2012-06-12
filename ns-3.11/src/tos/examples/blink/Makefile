@@ -83,9 +83,7 @@ all:
 clean:
 	rm -rf $(OUT) *.o app.c
 	
-run:
-	make
-	-exec " ./"$(OUT)
+
 	
 
 

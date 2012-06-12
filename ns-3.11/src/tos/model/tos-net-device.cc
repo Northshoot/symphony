@@ -27,7 +27,9 @@
 #include "tos-mac-low.h"
 #include "tos-packet.h"
 #include "calls-to-ns3.h"
-
+#include "hardware-model.h"
+#include "model-element.h"
+#include "model-vocabulary.h"
 
 void
 printTosPacket( char *buf){
@@ -264,6 +266,7 @@ TosNetDevice::DoStart(void)
   m_phy->Start();
   NetDevice::DoStart();
   //TODO: delay needs to be fixed
+  NS_LOG_DEBUG( m_txParams->getElement(ModelVocabulary::CALLBACK,"sendDone"));
   //m_startUpEvent = Simulator::Schedule(m_txParams->getElement(), &TosNetDevice::radioStartDone, this);
 }
 Ptr<Packet>

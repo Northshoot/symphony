@@ -35,13 +35,14 @@ int main(void)
 	c.Create(2);
 
 	TosHelper wifi;
-	wifi.SetNodeModel("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml");
+
 //	  if (verbose)
 //	    {
 //	      wifi.EnableLogComponents ();  // Turn on all Wifi logging
 //	    }
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
 	  wifi.EnableLogComponents ();
+	  wifi.SetNodeModel("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml");
 	 //LogComponentEnableAll(LOG_ALL);
 	  YansTosPhyHelper wifiPhy =  YansTosPhyHelper::Default ();
 	  // This is one parameter that matters when using FixedRssLossModel
