@@ -48,6 +48,7 @@ ModelVocabulary::Constuct()
   callback_vocabulary.push_back("time");
 //  callback_vocabulary.push_back("name");
   callback_vocabulary.push_back("params");
+
   element_vocabularies[ModelVocabulary::CALLBACK]=callback_vocabulary;
 
   format_vocabulary.push_back("regexp");

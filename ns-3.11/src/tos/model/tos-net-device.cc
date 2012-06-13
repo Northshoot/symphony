@@ -266,7 +266,10 @@ TosNetDevice::DoStart(void)
   m_phy->Start();
   NetDevice::DoStart();
   //TODO: delay needs to be fixed
-  NS_LOG_DEBUG( m_txParams->getElement(ModelVocabulary::CALLBACK,"sendDone"));
+ // m_txParams->printModel();
+  NS_LOG_DEBUG("**************************");
+  m_txParams->printModel();
+  NS_LOG_DEBUG(m_txParams->getElement(ModelVocabulary::CALLBACK,"sendDone")->getAttributeValue("time"));
   //m_startUpEvent = Simulator::Schedule(m_txParams->getElement(), &TosNetDevice::radioStartDone, this);
 }
 Ptr<Packet>

@@ -149,6 +149,7 @@ SymphonyXML::createModelElement(xercesc::DOMNodeList* nodeList,
             }
           if (type == ModelVocabulary::CALLBACK)
             {
+              std::cout<<"# CALLBACKS: "<<nodeCount<<std::endl;
               addCallback(getString(curElement->getTextContent()));
             }
         }
@@ -189,6 +190,7 @@ SymphonyXML::createModels()
 
       createModelElement(nodeList, ModelVocabulary::SOURCE, model);
       m_models[mapIter->first] = model;
+      model->printModel();
      }
 }
 //HardwareModel
