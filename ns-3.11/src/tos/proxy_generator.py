@@ -35,18 +35,22 @@ class Ns3ToTosProxyGenerator:
     #we first check if there is a need to create new file
     def checkLastModified(self):
         print os.getcwd()
-        try:
-            xml_file_time = os.path.getmtime(self.xml_file)
-            cpp_file_time = os.path.getmtime(self.cpp_name)
-        except Exception, int:
-            cpp_file_time = -1
-            print "no proxy file"
+        if(os.path.isfile(self.cpp_name)):            
+            try:
+                xml_file_time = os.path.getmtime(self.xml_file)
+                cpp_file_time = os.path.getmtime(self.cpp_name)
+            except Exception, int:
+                cpp_file_time = -1
+                print "no proxy file"
             #if cpp is older -> we need to build it
-        if cpp_file_time < xml_file_time :
-            self.header = open(self.cwd + self.header_name,'w+')
-            self.cpp  = open(self.cwd + self.cpp_name,'w+')
+            if cpp_file_time < xml_file_time :
+                self.header = open(self.cwd + self.header_name,'w+')
+                self.cpp  = open(self.cwd + self.cpp_name,'w+')
+                self.createProxy()
+        else:
+            self.header = open(self.cwd + self.header_name,'w')
+            self.cpp  = open(self.cwd + self.cpp_name,'w')
             self.createProxy()
-
         
     #everything needs to be performed in order otherwise you will get bogus output
     def createProxy(self):
@@ -76,17 +80,17 @@ class Ns3ToTosProxyGenerator:
         return
     
     def generateHeader(self):
-        header =  self.text.getHeaderStart()
+        header_ =  self.text.getHeaderStart()
         for f in self.functions:
-            header += '\t\t' + f[self.val_return] + ' ' + f[self.val_func_proto] + ';\n'
-        header+="""
+            header_ += '\t\t' + f[self.val_return] + ' ' + f[self.val_func_proto] + ';\n'
+        header_+="""
     ~Ns3ToTosProxy();
     void * getFunction(std::string name);
 private:
     dense_hash_map<std::string, void *> m_tos_functions;
 """            
-        header += self.text.getHeaderClose()
-        self.header.write(header)
+        header_ += self.text.getHeaderClose()
+        self.header.write(header_)
         self.header.close()
     
     def makeFunctionsPrototypes(self):
@@ -95,14 +99,15 @@ private:
             try:
                 params = int(e.attrib['params'])
                 function = []
+                funk_name = e.attrib['name']
                 try:
-                    t_def = 'typedef ' + str(e.attrib['return'])+ '(*tos'+e.text+')('# int (*tosfunc)(int);
+                    t_def = 'typedef ' + str(e.attrib['return'])+ '(*tos'+funk_name+')('# int (*tosfunc)(int);
                 except Exception, inst:
-                    print "atr %s text %s errno %s" % (e.attrib['return'], e.text, inst)
+                    print "atr %s text %s errno %s" % (e.attrib['return'], funk_name, inst)
                 function.append(e.attrib['return']) #num 0
                 function.append(params) #num 1
-                function.append(e.text) #num 2 function name
-                f_name = e.text + '('
+                function.append(funk_name) #num 2 function name
+                f_name = funk_name + '('
                 for p in range(1,params+1):
                     f_n =  e.attrib['param'+str(p)]
                     t_def = t_def + f_n
