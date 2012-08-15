@@ -221,7 +221,7 @@ namespace ns3
     tostons->setDevice(device);
     device->setNs3ToTos(nstotos);
     device->SetDeviceSendDoneCallback(
-        MakeCallback(&Ns3ToTosProxy::sendSendDone, nstotos));
+        MakeCallback(&Ns3ToTosProxy::sendDone, nstotos));
     device->SetRadioStartDoneCallback(
         MakeCallback(&Ns3ToTosProxy::radioStartDone, nstotos));
     device->SetReceiveMessageCallback(
@@ -248,17 +248,22 @@ namespace ns3
   TosNode::getFunc(const char* func_name)
   {
     char *error = NULL;
+    int len = strlen(func_name);
+    char * name;
+    name = new char[len+1];
+    strcpy( name, func_name );
     void * tmp = dlsym(handler, func_name);
     if ((error = dlerror()) != NULL)
       {
         std::stringstream sstm;
-        sstm << "Cannot get function: " << error;
+        sstm << "Cannot get function: " << name << "\n" << error;
         NS_ASSERT_MSG(false, sstm.str());
       }
     else
       {
         return tmp;
       }
+      return NULL;
   }
 
 }

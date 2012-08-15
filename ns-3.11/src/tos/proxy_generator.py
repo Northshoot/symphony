@@ -94,13 +94,14 @@ private:
         self.header.close()
     
     def makeFunctionsPrototypes(self):
-
+        print self.tree.iter("callback")
         for e in self.tree.iter("callback"):
             try:
                 params = int(e.attrib['params'])
                 function = []
-                funk_name = e.attrib['name']
+                
                 try:
+                    funk_name = e.attrib['name']
                     t_def = 'typedef ' + str(e.attrib['return'])+ '(*tos'+funk_name+')('# int (*tosfunc)(int);
                 except Exception, inst:
                     print "atr %s text %s errno %s" % (e.attrib['return'], funk_name, inst)
