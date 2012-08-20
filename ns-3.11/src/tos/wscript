@@ -14,7 +14,7 @@ def build(bld):
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
     #obj.env.append_value('CXXFLAGS', '-I/home/lauril/dev/symphony/tinyos-2.1.1/tos/types') 
     obj.env.append_value('CCFLAGS','-std=gnu++0x')
-    obj.env.append_value('CCFLAGS','-I/usr/include/xercesc')
+
     obj.env.append_value('LINKFLAGS','-ldl') 
     
     obj.source = ['model/tos-to-ns3-proxy.cc',
