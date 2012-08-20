@@ -1,0 +1,219 @@
+LibToTosProxy called: 0 time 0
+	FROM toslib: gateway(proxy,0,id_this_lib): 0
+FROM toslib: sim_main_start_mote
+Scheduler.init()
+App: booted 0
+AMControl.startDone: TOS_NODE_ID == 0
+void task send() TOS_NODE_ID::0 - COUNTER::1
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 705 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::2
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 1208 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::3
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 1710 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::4
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 2213 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::5
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 2716 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::6
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 3219 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::7
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 3722 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::8
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 4225 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::9
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 4728 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::10
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 5231 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::11
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 5734 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::12
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 6237 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::13
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 6740 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::14
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 7243 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::15
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 7746 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::16
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 8249 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::17
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 8751 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::18
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 9254 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::19
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+event void AMSend.sendDone 0
+event void MilliTimer.fired() 9757 Node 0
+void task send() TOS_NODE_ID::0 - COUNTER::20
+				 SENDING
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+ 	NotifyTxStart 944
+ 	NotifyRxStart 944
+ 	NotifyRxEndOk
+LibToTosProxy called: 0 time 0
+	FROM toslib: gateway(proxy,0,id_this_lib): 0
+FROM toslib: sim_main_start_mote
+Scheduler.init()
+App: booted 1
+AMControl.startDone: TOS_NODE_ID == 1
+		# 1 RadioTest event message_t* Receive.receive 1
+		# 1 RadioTest event message_t* Receive.receive 2
+		# 1 RadioTest event message_t* Receive.receive 3
+		# 1 RadioTest event message_t* Receive.receive 4
+		# 1 RadioTest event message_t* Receive.receive 5
+		# 1 RadioTest event message_t* Receive.receive 6
+		# 1 RadioTest event message_t* Receive.receive 7
+		# 1 RadioTest event message_t* Receive.receive 8
+		# 1 RadioTest event message_t* Receive.receive 9
+		# 1 RadioTest event message_t* Receive.receive 10
+		# 1 RadioTest event message_t* Receive.receive 11
+		# 1 RadioTest event message_t* Receive.receive 12
+		# 1 RadioTest event message_t* Receive.receive 13
+		# 1 RadioTest event message_t* Receive.receive 14
+		# 1 RadioTest event message_t* Receive.receive 15
+		# 1 RadioTest event message_t* Receive.receive 16
+		# 1 RadioTest event message_t* Receive.receive 17
+		# 1 RadioTest event message_t* Receive.receive 18
+		# 1 RadioTest event message_t* Receive.receive 19
+		# 1 RadioTest event message_t* Receive.receive 20
+event void AMSend.sendDone 0
+Generated and successfully compiled proxy!
+
+Modules built:
+bridge                    config-store              core                     
+internet                  mobility                  mpi                      
+network                   propagation               tos                      
+wifi                     
+

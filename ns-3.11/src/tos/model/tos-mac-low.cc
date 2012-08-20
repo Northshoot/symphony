@@ -174,7 +174,7 @@ TosMacLow::ReceiveError (Ptr<const Packet> packet, double rxSnr)
 {
   NS_LOG_FUNCTION (this << packet << rxSnr);
   NS_LOG_DEBUG ("rx failed ");
-
+  std::cerr<<"TosMacLow::ReceiveError "<<std::endl;
   return;
 }
 
@@ -182,6 +182,7 @@ void
 TosMacLow::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPreamble preamble)
 {
   NS_LOG_FUNCTION (this << packet << rxSnr << txMode << preamble);
+  std::cerr<<"TosMacLow::ReceiveOk "<<std::endl;
   /* A packet is received from the PHY.
    * When we have handled this packet,
    * we handle any packet present in the

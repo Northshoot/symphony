@@ -38,10 +38,6 @@ HardwareModel::~HardwareModel()
 }
 inline void
 HardwareModel::deleteElements(UniqueElement elem){
-//    for(UniqueElement::iterator it=elem.begin();it!=elem.end();++it)
-//    {
-//        delete((*it).second);
-//    }
     elem.clear();
 }
 

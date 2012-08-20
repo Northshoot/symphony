@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <memory>
-
+#include "boost/lexical_cast.hpp"
 #include "ns3/nstime.h"
 #include "ns3/simulator.h"
 #include "ns3/event-id.h"
@@ -68,7 +68,7 @@ public:
   }
   virtual void NotifyRxStart (Time duration)
   {
-    std::cout<<" \tNotifyRxStart"<<std::endl;
+    std::cout<<" \tNotifyRxStart "<< duration.GetMicroSeconds()<<std::endl;
   }
   virtual void NotifyRxEndOk (void)
   {
@@ -81,7 +81,7 @@ public:
   }
   virtual void NotifyTxStart (Time duration)
   {
-    m_device->SendDone(0);
+    m_device->DeviceSendDone(0);
     std::cout<<" \tNotifyTxStart "<< duration.GetMicroSeconds()<< std::endl;
   }
   virtual void NotifyMaybeCcaBusyStart (Time duration)
@@ -219,10 +219,16 @@ TosNetDevice::DeviceGetChannel() {
 
 error_t
 TosNetDevice::DeviceSend(void* msg) {
+  std::cerr <<"TosNetDevice::DeviceSend(void* msg) "<<(!m_busy)<<std::endl;
+  NS_ASSERT(m_state == RADIO_STATE_ON && !m_busy);
    if(m_state == RADIO_STATE_ON && !m_busy){
     memcpy((void *)&m_tx_msg, (void *)msg, sizeof(message_t));
     m_state = RADIO_STATE_TX;
     m_busy=true;
+//    uint64_t t = boost::lexical_cast<uint64_t>(m_txParams->getElement(ModelVocabulary::CALL,"DeviceSend")->getAttributeValue("time"));
+//    NS_LOG_FUNCTION(t);
+//    Time run_time=MilliSeconds(20);
+//    m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::TransmitData, this);
     TransmitData();
     return SUCCESS;
     } else {
@@ -236,7 +242,7 @@ void
 TosNetDevice::TransmitData(void)
 {
   NS_LOG_FUNCTION_NOARGS();
-  //printf("\t\t\t\tNS3 SENDING\n");
+  printf("\t\t\t\tNS3 SENDING\n");
   //printTosPacket((char*)&m_tx_msg);
   Ptr<Packet> pkt = TosToNsPacket((message_t*)&m_tx_msg);
   WifiMacHeader hdr;
@@ -257,6 +263,7 @@ TosNetDevice::radioStartDone()
   Simulator::Remove(m_startUpEvent);
   m_state = RADIO_STATE_ON;
   c_ns2tosStartDone(SUCCESS);
+  NS_LOG_FUNCTION_NOARGS ();
 }
 void
 TosNetDevice::DoStart(void)
@@ -265,12 +272,10 @@ TosNetDevice::DoStart(void)
   m_tos_mac->Start();
   m_phy->Start();
   NetDevice::DoStart();
-  //TODO: delay needs to be fixed
- // m_txParams->printModel();
-  NS_LOG_DEBUG("**************************");
-  m_txParams->printModel();
-  NS_LOG_DEBUG(m_txParams->getElement(ModelVocabulary::CALLBACK,"sendDone")->getAttributeValue("time"));
-  //m_startUpEvent = Simulator::Schedule(m_txParams->getElement(), &TosNetDevice::radioStartDone, this);
+  //m_txParams->printModel();
+  uint64_t t = boost::lexical_cast<uint64_t>(m_txParams->getElement(ModelVocabulary::CALL,"radioStart")->getAttributeValue("time"));
+  Time run_time=MilliSeconds(t);
+  m_startUpEvent = Simulator::Schedule(run_time, &TosNetDevice::radioStartDone, this);
 }
 Ptr<Packet>
 TosNetDevice::TosToNsPacket(message_t* msg) {
@@ -285,7 +290,7 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	message_t * msg  = (message_t*) malloc(sizeof(message_t));
 	packet->RemoveHeader(hdrr);
 	packet->CopyData(reinterpret_cast< uint8_t*>(msg), sizeof(message_t));
-//	NS_LOG_FUNCTION_NOARGS();
+	NS_LOG_FUNCTION_NOARGS();
 
 	memcpy((void *)&m_rx_msg, (const void *)msg, sizeof(message_t));
 	//printTosPacket((char *) &m_rx_msg);
@@ -293,15 +298,17 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 }
 void
 TosNetDevice::SendDone(uint8_t error){
-  //TODO: need real model implementation
-  //m_txParams->GetRadioTxDelay()
-  m_sendEvent = Simulator::Schedule(ns3::MicroSeconds(100), &TosNetDevice::DeviceSendDone, this, 0);
+  //uint64_t t = boost::lexical_cast<uint64_t>(m_txParams->getElement(ModelVocabulary::CALLBACK,"sendDone")->getAttributeValue("time"));
+  Time run_time=MicroSeconds(10);
+  m_sendEvent = Simulator::Schedule(ns3::MicroSeconds(run_time), &TosNetDevice::DeviceSendDone, this, 0);
+
 }
 
 void TosNetDevice::DeviceSendDone(uint8_t error) {
   m_state = RADIO_STATE_ON;
+  NS_LOG_FUNCTION("DEVICE_SEND_DONE");
   m_busy = false;
-  Simulator::Remove(m_sendEvent);
+  //Simulator::Remove(m_sendEvent);
   c_ns2tosSendDone(error);
 }
 
@@ -317,6 +324,7 @@ message_t* TosNetDevice::DeviceReceive(message_t* msg) {
 }
 
 void TosNetDevice::DoDispose(void) {
+    std::cerr<<"TosNetDevice::DoDispose(void) " <<std::endl;
 	NS_LOG_FUNCTION_NOARGS ();
 	m_node=0;
 	m_tos_mac->Dispose();
@@ -336,11 +344,12 @@ TosNetDevice::GetCurrentMsg(){
 
 void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
+
 	message_t * msg = NsToTosPacket(packet, hdr);
 	if(m_state != RADIO_STATE_TX) {
 	  c_ns2tosRx((void*) msg);
 	} else {
-	  NS_LOG_FUNCTION("RX in RADIO_STATE_TX");
+	  NS_LOG_FUNCTION("RX in RADIO_STATE_TX"<<m_node->GetId());
 	}
 }
 

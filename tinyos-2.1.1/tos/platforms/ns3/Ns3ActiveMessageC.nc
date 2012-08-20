@@ -57,7 +57,7 @@ implementation
 	
 	extern int radioStateDone() @C() @spontaneous(){
         printf("\t radio state done\n");        
-		signal SplitControl.startDone(SUCCESS);
+		post SplitControlStartDone();
 		return 0;
 		
 	}	

@@ -138,10 +138,11 @@ namespace ns3
   void
   TosNode::DoDispose(void)
   {
+    std::cerr<<"TosNode::DoDispose(void)"<<std::endl;
     /**
      * Check and remove shutdown event
      */
-    cout << "TosNode::DoDispose(void)" << endl;
+    cerr << "TosNode::DoDispose(void)" << endl;
     if (m_shutdown_event.IsRunning())
       {
         m_shutdown_event.Cancel();
@@ -190,6 +191,7 @@ namespace ns3
         for (uint32_t i = 0; i < m_tos_functions.size(); i++)
           {
             string f = m_tos_functions.at(i);
+            //NS_LOG_FUNCTION(this<<"adding function " << f);
             nstotos->addFunction(f, getFunc(f.c_str()));
           }
 

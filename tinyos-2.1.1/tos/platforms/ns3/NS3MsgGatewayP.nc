@@ -35,7 +35,7 @@ implementation{
 	message_t* msg_in;
 	error_t error_in = 0;
 	
-	task void sendDone(){
+	task void sendDoneTask(){
 		signal Send.sendDone(msg_out,error_out);
 	}
 	
@@ -50,9 +50,9 @@ implementation{
 		return 0;
 	}
 	
-    extern int sendSendDone(void * msg, error_t err)@C() @spontaneous(){
+    extern int sendDone(void * msg, error_t err)@C() @spontaneous(){
     	error_out = err;
-    	post sendDone();   
+    	post sendDoneTask();   
     	return 0; 	
     }
     
@@ -65,7 +65,7 @@ implementation{
 //gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);	
 	command error_t Send.send(message_t* msg){
 		msg_out = msg;		
-//		printf("\t\t\t\t SENDING\n");
+		printf("\t\t\t\t SENDING\n");
 //		printTosPacket((char*)msg);
 		a=gatewayRadio(proxy, RADIO_SEND,-1,-1,(void *)msg, (void *) msg);
 		return 0;

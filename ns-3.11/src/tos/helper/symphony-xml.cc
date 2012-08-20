@@ -145,12 +145,13 @@ SymphonyXML::createModelElement(xercesc::DOMNodeList* nodeList,
               std::string result = sstm.str();
               model->addElementAttribute(type, name, result,
                   getAttributeValue(curElement, result));
-              //std::cout<<"name: " << name <<" result::: "<<result <<std::endl;
+              //std::cout << "name: " << name << " result::: " << result
+                  //<< std::endl;
             }
           if (type == ModelVocabulary::CALLBACK)
             {
-              std::cout<<"# CALLBACKS: "<<nodeCount<<std::endl;
-              addCallback(getString(curElement->getTextContent()));
+              //std::cout<<"# CALLBACKS: "<<nodeCount<<std::endl;
+              addCallback(name);
             }
         }
 
@@ -190,8 +191,8 @@ SymphonyXML::createModels()
 
       createModelElement(nodeList, ModelVocabulary::SOURCE, model);
       m_models[mapIter->first] = model;
-      model->printModel();
-     }
+      //model->printModel();
+    }
 }
 //HardwareModel
 //SymphonyXML::createHwModel(xercesc::DOMElement* currentElement,
@@ -232,13 +233,7 @@ SymphonyXML::getModel(std::string name)
 std::vector<std::string>
 SymphonyXML::getExternalFunctions()
 {
-//  std::vector<std::string>::iterator it;
-//  std::cout << "about to print" << std::endl;
-//
-//  for (it = tos_functions.begin(); it != tos_functions.end(); it++)
-//    {
-//      std::cout << *it << std::endl;
-//    }
+
   return tos_functions;
 }
 void
@@ -284,7 +279,7 @@ SymphonyXML::initModelMap() throw (std::runtime_error)
 void
 SymphonyXML::addCallback(std::string func)
 {
-  //std::cout<<"SymphonyXML::addCallback::: " <<func<<std::endl;
+  //std::cout << "SymphonyXML::addCallback::: " << func << std::endl;
   tos_functions.push_back(func);
 }
 
@@ -345,11 +340,7 @@ SymphonyXML::~SymphonyXML()
   std::map<std::string, ns3::Ptr<ns3::HardwareModel> >::iterator iterHw;
 
   m_modelMap.clear();
-  //delete all pointer
-//  for (iterHw = m_models.begin(); iterHw != m_models.end(); iterHw++)
-//    {
-//      delete (iterHw->second);
-//    }
+
   m_models.clear();
   delete m_ConfigFileParser;
   try

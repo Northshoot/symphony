@@ -81,12 +81,10 @@ int main(void)
 
 
    //Set run-time for the simulation
-    ns3::Simulator::Stop(ns3::Seconds(100.0));
+    ns3::Simulator::Stop(ns3::Seconds(100));
     //Run simulation
     ns3::Simulator::Run();
    //Clean up all objects
     ns3::Simulator::Destroy ();
-
-
-	return 0;
+    return 0;
 }

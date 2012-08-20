@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <symphony>
   <model name="radio">
-  	<callback return="int" params="1" param1="int" name="sendDone"/>
+  	<callback return="int" params="1" param1="int" time="5" name="sendDone"/>
   	<callback return="void" params="1" param1="int" time="500" units="ms" name="radioStartDone"/>
   	<callback return="int" params="1" param1="int" name="setUniqueID"/>
   	<callback return="void" params="1" param1="int" name="sim_main_start_mote"/>
@@ -13,8 +13,10 @@
   	
    <property units="kb" size="28" name="packet"/>
    <property units="Mb" size="280" initial="220" name="buffer"/>
-   <call time="60" name="startRadio"/>
+   
+   <call unit="ms" time="200" name="radioStart"/>
    <call time="80" name="swithChannel"/>
+   <call units="ms" time="60" name="DeviceSend"/>
   </model>
 
 </symphony>

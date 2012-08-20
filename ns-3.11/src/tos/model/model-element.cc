@@ -78,6 +78,6 @@ void
 ModelElement::DoDispose(void)
 {
   //std::cout << "DoDispose " << count << std::endl;
-  //std::cout<<"DoDispose "<< tick_event.IsRunning() << std::endl;
+  attribute.clear();
 }
 }

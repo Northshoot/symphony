@@ -189,13 +189,14 @@ namespace ns3
     SetPromiscReceiveCallback(PromiscReceiveCallback cb);
     virtual bool
     SupportsSendFrom(void) const;
+    void
+        DeviceSendDone(uint8_t error);
 
   private:
     /**
      * Internal functions for setting timers according the device model
      */
-    void
-    DeviceSendDone(uint8_t error);
+
     Ptr<Packet>
     TosToNsPacket(message_t *msg);
 

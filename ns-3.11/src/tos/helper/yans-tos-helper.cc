@@ -36,8 +36,8 @@
 #include "yans-tos-helper.h"
 
 NS_LOG_COMPONENT_DEFINE ("YansTosPhyHelper");
-#undef NS_LOG_APPEND_CONTEXT
-#define NS_LOG_APPEND_CONTEXT std::clog << "[YTH = ] "
+//#undef NS_LOG_APPEND_CONTEXT
+//#define NS_LOG_APPEND_CONTEXT std::clog << "[YTH = ] "
 
 namespace ns3 {
 

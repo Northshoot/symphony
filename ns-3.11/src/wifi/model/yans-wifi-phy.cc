@@ -463,12 +463,15 @@ YansWifiPhy::StartReceivePacket (Ptr<Packet> packet,
           NS_LOG_DEBUG ("sync to signal (power=" << rxPowerW << "W)");
           // sync to signal
           m_state->SwitchToRx (rxDuration);
+          NS_LOG_DEBUG ("Switched State//RX_EVENT:"<<(m_endRxEvent.IsExpired () ? "true" :"false"));
           NS_ASSERT (m_endRxEvent.IsExpired ());
           NotifyRxBegin (packet);
           m_interference.NotifyRxStart ();
+          NS_LOG_DEBUG("RX_Packet size " << packet->GetSize() << rxDuration);
           m_endRxEvent = Simulator::Schedule (rxDuration, &YansWifiPhy::EndReceive, this,
                                               packet,
                                               event);
+
         }
       else
         {
