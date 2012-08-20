@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005,2006,2007 INRIA
  *
@@ -368,9 +368,6 @@ WifiRemoteStationManager::GetDataMode (Mac48Address address, const WifiMacHeader
       bool found;
       found = ConstCast<Packet> (packet)->PeekPacketTag (tag);
       NS_ASSERT (found);
-      // cast found to void, to suppress 'found' set but not used
-      // compiler warning
-      (void) found;
       return tag.GetDataMode ();
     }
   return DoGetDataMode (Lookup (address, header), fullPacketSize);
@@ -386,9 +383,6 @@ WifiRemoteStationManager::GetRtsMode (Mac48Address address, const WifiMacHeader 
       bool found;
       found = ConstCast<Packet> (packet)->PeekPacketTag (tag);
       NS_ASSERT (found);
-      // cast found to void, to suppress 'found' set but not used
-      // compiler warning
-      (void) found;
       return tag.GetRtsMode ();
     }
   return DoGetRtsMode (Lookup (address, header));

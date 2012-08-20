@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -68,6 +68,7 @@ public:
   virtual enum SocketType GetSocketType (void) const;
   virtual Ptr<Node> GetNode (void) const;
   virtual int Bind (void);
+  virtual int Bind6 (void);
   virtual int Bind (const Address &address);
   virtual int Close (void);
   virtual int ShutdownSend (void);
@@ -125,12 +126,15 @@ private:
   virtual Time GetDelAckTimeout (void) const;
   virtual void SetDelAckMaxCount (uint32_t count);
   virtual uint32_t GetDelAckMaxCount (void) const;
+  virtual void SetTcpNoDelay (bool noDelay);
+  virtual bool GetTcpNoDelay (void) const;
   virtual void SetPersistTimeout (Time timeout);
   virtual Time GetPersistTimeout (void) const;
 
   enum Socket::SocketErrno GetNativeNs3Errno (int err) const;
   uint32_t m_delAckMaxCount;
   Time m_delAckTimeout;
+  bool m_noDelay;
 
   Ipv4EndPoint *m_endPoint;
   Ptr<Node> m_node;
@@ -180,6 +184,6 @@ private:
   uint32_t m_rcvBufSize;   // maximum receive socket buffer size
 };
 
-} //namespace ns3
+} // namespace ns3
 
 #endif /* NSC_TCP_SOCKET_IMPL_H */

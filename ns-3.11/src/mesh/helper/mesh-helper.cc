@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2008,2009 IITP RAS
  *
@@ -207,5 +207,34 @@ MeshHelper::ResetStats (const ns3::Ptr<ns3::NetDevice>& device)
   NS_ASSERT (mp != 0);
   m_stack->ResetStats (mp);
 }
-} //namespace ns3
+int64_t
+MeshHelper::AssignStreams (NetDeviceContainer c, int64_t stream)
+{
+  int64_t currentStream = stream;
+  Ptr<NetDevice> netDevice;
+  for (NetDeviceContainer::Iterator i = c.Begin (); i != c.End (); ++i)
+    {
+      netDevice = (*i);
+      Ptr<MeshPointDevice> mpd = DynamicCast<MeshPointDevice> (netDevice);
+      Ptr<WifiNetDevice> wifi;
+      Ptr<MeshWifiInterfaceMac> mac;
+      if (mpd)
+        {
+          // To access, we need the underlying WifiNetDevices
+          std::vector<Ptr<NetDevice> > ifaces = mpd->GetInterfaces ();
+          for (std::vector<Ptr<NetDevice> >::iterator i = ifaces.begin (); i != ifaces.end (); i++)
+            {
+              wifi = DynamicCast<WifiNetDevice> (*i);
+              mac = DynamicCast<MeshWifiInterfaceMac> (wifi->GetMac ());
+              if (mac)
+                {
+                  currentStream += mac->AssignStreams (currentStream);
+                }
+            }
+        }
+    }
+  return (currentStream - stream);
+}
+
+} // namespace ns3
 

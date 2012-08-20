@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2010 Adrian Sai-wah Tam
  *
@@ -74,6 +74,7 @@ protected:
   TracedValue<uint32_t>  m_cWnd;         //< Congestion window
   uint32_t               m_ssThresh;     //< Slow Start Threshold
   uint32_t               m_initialCWnd;  //< Initial cWnd value
+  uint32_t               m_retxThresh;   //< Fast Retransmit threshold
 };
 
 } // namespace ns3

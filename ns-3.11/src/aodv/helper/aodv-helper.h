@@ -17,8 +17,9 @@
  *
  * Authors: Pavel Boyko <boyko@iitp.ru>, written after OlsrHelper by Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  */
-#ifndef AODVHELPER_H_
-#define AODVHELPER_H_
+
+#ifndef AODV_HELPER_H
+#define AODV_HELPER_H
 
 #include "ns3/object-factory.h"
 #include "ns3/node.h"
@@ -61,10 +62,23 @@ public:
    * This method controls the attributes of ns3::aodv::RoutingProtocol
    */
   void Set (std::string name, const AttributeValue &value);
+  /**
+   * Assign a fixed random variable stream number to the random variables
+   * used by this model.  Return the number of streams (possibly zero) that
+   * have been assigned.  The Install() method of the InternetStackHelper
+   * should have previously been called by the user.
+   *
+   * \param stream first stream index to use
+   * \param c NodeContainer of the set of nodes for which AODV
+   *          should be modified to use a fixed stream
+   * \return the number of stream indices assigned by this helper
+   */
+  int64_t AssignStreams (NodeContainer c, int64_t stream);
 
 private:
   ObjectFactory m_agentFactory;
 };
 
 }
-#endif /* AODVHELPER_H_ */
+
+#endif /* AODV_HELPER_H */

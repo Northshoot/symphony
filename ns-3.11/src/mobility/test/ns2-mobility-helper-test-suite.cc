@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2007 INRIA
  *               2009,2010 Contributors
@@ -93,6 +93,7 @@ public:
    * Create new test case. To make it useful SetTrace () and AddReferencePoint () must be called
    *
    * \param name        Short description
+   * \param timeLimit   Test time limit
    * \param nodes       Number of nodes used in the test trace, 1 by default
    */
   Ns2MobilityHelperTest (std::string const & name, Time timeLimit, uint32_t nodes = 1)
@@ -106,7 +107,7 @@ public:
   virtual ~Ns2MobilityHelperTest ()
   {
   }
-  /// Set NS-2 trace to read as single large string (don't forget to add \n and quote ")
+  /// Set NS-2 trace to read as single large string (don't forget to add \\n and quote \"'s)
   void SetTrace (std::string const & trace)
   {
     m_trace = trace;
@@ -140,7 +141,7 @@ private:
   /// Dump NS-2 trace to tmp file
   bool WriteTrace ()
   {
-    m_traceFile = GetTempDir () + "Ns2MobilityHelperTest.tcl";
+    m_traceFile = CreateTempDirFilename ("Ns2MobilityHelperTest.tcl");
     std::ofstream of (m_traceFile.c_str ());
     NS_TEST_ASSERT_MSG_EQ_RETURNS_BOOL (of.is_open (), true, "Need to write tmp. file");
     of << m_trace;
@@ -176,7 +177,7 @@ private:
 
         m_nextRefPoint++;
       }
-    return GetErrorStatus ();
+    return IsStatusFailure ();
   }
   /// Listen for course change events
   void CourseChange (std::string context, Ptr<const MobilityModel> mobility)
@@ -201,6 +202,19 @@ private:
     NS_TEST_EXPECT_MSG_EQ (pos, ref.pos, "Position mismatch at time " << time.GetSeconds () << " s for node " << id);
     NS_TEST_EXPECT_MSG_EQ (vel, ref.vel, "Velocity mismatch at time " << time.GetSeconds () << " s for node " << id);
   }
+
+  void DoSetup ()
+  {
+    CreateNodes ();
+  }
+
+  void DoTeardown ()
+  {
+    Names::Clear ();
+    std::remove (m_traceFile.c_str ());
+    Simulator::Destroy ();
+  }
+
   /// Go
   void DoRun ()
   {
@@ -211,7 +225,6 @@ private:
       {
         return;
       }
-    CreateNodes ();
     Ns2MobilityHelper mobility (m_traceFile);
     mobility.Install ();
     if (CheckInitialPositions ())
@@ -222,9 +235,6 @@ private:
                      MakeCallback (&Ns2MobilityHelperTest::CourseChange, this));
     Simulator::Stop (m_timeLimit);
     Simulator::Run ();
-    Names::Clear ();
-    std::remove (m_traceFile.c_str ());
-    Simulator::Destroy ();
   }
 };
 
@@ -234,6 +244,8 @@ class Ns2MobilityHelperTestSuite : public TestSuite
 public:
   Ns2MobilityHelperTestSuite () : TestSuite ("mobility-ns2-trace-helper", UNIT)
   {
+    SetDataDir (NS_TEST_SOURCEDIR);
+
     // to be used as temporary variable for test cases.
     // Note that test suite takes care of deleting all test cases.
     Ns2MobilityHelperTest * t (0);
@@ -287,6 +299,30 @@ public:
     t->AddReferencePoint ("0", 4, Vector (0, 5, 0), Vector (0, 0, 0));
     t->AddReferencePoint ("0", 4, Vector (0, 5, 0), Vector (0, -5, 0));
     t->AddReferencePoint ("0", 5, Vector (0, 0, 0), Vector (0,  0, 0));
+    AddTestCase (t);
+
+    // Copy of previous test case but with the initial positions at
+    // the end of the trace rather than at the beginning.
+    //
+    // Several set and setdest. Arguments are interpreted as x, y, speed by default
+    t = new Ns2MobilityHelperTest ("square setdest (initial positions at end)", Seconds (6));
+    t->SetTrace ("$ns_ at 1.0 \"$node_(0) setdest 15  10  5\"\n"
+                 "$ns_ at 2.0 \"$node_(0) setdest 15  15  5\"\n"
+                 "$ns_ at 3.0 \"$node_(0) setdest 10  15  5\"\n"
+                 "$ns_ at 4.0 \"$node_(0) setdest 10  10  5\"\n"
+                 "$node_(0) set X_ 10.0\n"
+                 "$node_(0) set Y_ 10.0\n"
+                 );
+    //                     id  t  position         velocity
+    t->AddReferencePoint ("0", 0, Vector (10, 10, 0), Vector (0,  0, 0));
+    t->AddReferencePoint ("0", 1, Vector (10, 10, 0), Vector (5,  0, 0));
+    t->AddReferencePoint ("0", 2, Vector (15, 10, 0), Vector (0,  0, 0));
+    t->AddReferencePoint ("0", 2, Vector (15, 10, 0), Vector (0,  5, 0));
+    t->AddReferencePoint ("0", 3, Vector (15, 15, 0), Vector (0,  0, 0));
+    t->AddReferencePoint ("0", 3, Vector (15, 15, 0), Vector (-5, 0, 0));
+    t->AddReferencePoint ("0", 4, Vector (10, 15, 0), Vector (0, 0, 0));
+    t->AddReferencePoint ("0", 4, Vector (10, 15, 0), Vector (0, -5, 0));
+    t->AddReferencePoint ("0", 5, Vector (10, 10, 0), Vector (0,  0, 0));
     AddTestCase (t);
 
     // Scheduled set position
@@ -409,6 +445,36 @@ public:
     t->AddReferencePoint ("0", 4, Vector (0, 100, 0), Vector (0, -100, 0));
     t->AddReferencePoint ("0", 5, Vector (0, 0, 0), Vector (0,  0, 0));
     AddTestCase (t);
+    t = new Ns2MobilityHelperTest ("Bug 1219 testcase", Seconds (16));
+    t->SetTrace ("$node_(0) set X_ 0.0\n"
+                 "$node_(0) set Y_ 0.0\n"
+                 "$ns_ at 1.0 \"$node_(0) setdest 0  10       1\"\n"
+                 "$ns_ at 6.0 \"$node_(0) setdest 0  -10       1\"\n"
+                 );
+    //                     id  t  position         velocity
+    t->AddReferencePoint ("0", 0, Vector (0, 0, 0), Vector (0,  0, 0));
+    t->AddReferencePoint ("0", 1, Vector (0, 0, 0), Vector (0,  1, 0));
+    t->AddReferencePoint ("0", 6, Vector (0, 5, 0), Vector (0,  -1, 0));
+    t->AddReferencePoint ("0", 16, Vector (0, -10, 0), Vector (0, 0, 0));
+    AddTestCase (t);
+    t = new Ns2MobilityHelperTest ("Bug 1059 testcase", Seconds (16));
+    t->SetTrace ("$node_(0) set X_ 10.0\r\n"
+                 "$node_(0) set Y_ 0.0\r\n"
+                 );
+    //                     id  t  position         velocity
+    t->AddReferencePoint ("0", 0, Vector (10, 0, 0), Vector (0,  0, 0));
+    AddTestCase (t);
+    t = new Ns2MobilityHelperTest ("Bug 1301 testcase", Seconds (16));
+    t->SetTrace ("$node_(0) set X_ 10.0\n"
+                 "$node_(0) set Y_ 0.0\n"
+                 "$ns_ at 1.0 \"$node_(0) setdest 10  0       1\"\n"
+                 );
+    //                     id  t  position         velocity
+    // Moving to the current position must change nothing. No NaN
+    // speed must be.
+    t->AddReferencePoint ("0", 0, Vector (10, 0, 0), Vector (0,  0, 0));
+    AddTestCase (t);
+
 
   }
 } g_ns2TransmobilityHelperTestSuite;

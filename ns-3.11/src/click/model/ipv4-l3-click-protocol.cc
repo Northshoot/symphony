@@ -33,7 +33,7 @@
 
 #include "ns3/ipv4-raw-socket-impl.h"
 #include "ns3/arp-l3-protocol.h"
-#include "ns3/ipv4-l4-protocol.h"
+#include "ns3/ip-l4-protocol.h"
 #include "ns3/icmpv4-l4-protocol.h"
 #include "ns3/loopback-net-device.h"
 
@@ -575,34 +575,21 @@ void
 Ipv4L3ClickProtocol::SetPromisc (uint32_t i)
 {
   NS_ASSERT (i <= m_node->GetNDevices ());
-  if (i > m_promiscDeviceList.size ())
-    {
-      m_promiscDeviceList.resize (i);
-    }
-  std::vector<bool>::iterator it = m_promiscDeviceList.begin ();
-  std::advance (it, i);
-  m_promiscDeviceList.insert (it, true);
+  Ptr<NetDevice> netdev = GetNetDevice (i);
+  NS_ASSERT (netdev);
+  Ptr<Node> node = GetObject<Node> ();
+  NS_ASSERT (node);
+  node->RegisterProtocolHandler (MakeCallback (&Ipv4L3ClickProtocol::Receive, this),
+                                 0, netdev,true);
 }
 
 uint32_t
 Ipv4L3ClickProtocol::AddInterface (Ptr<NetDevice> device)
 {
   NS_LOG_FUNCTION (this << &device);
-
   Ptr<Node> node = GetObject<Node> ();
-  NS_LOG_DEBUG ("Size:" << m_promiscDeviceList.size () << " Interface index" << device->GetIfIndex ());
-  if (m_promiscDeviceList.size () > 0
-      && (m_promiscDeviceList.size () >= device->GetIfIndex ())
-      && (m_promiscDeviceList[device->GetIfIndex ()]))
-    {
-      node->RegisterProtocolHandler (MakeCallback (&Ipv4L3ClickProtocol::Receive, this),
-                                     0, device,true);
-    }
-  else
-    {
-      node->RegisterProtocolHandler (MakeCallback (&Ipv4L3ClickProtocol::Receive, this),
-                                     Ipv4L3ClickProtocol::PROT_NUMBER, device);
-    }
+  node->RegisterProtocolHandler (MakeCallback (&Ipv4L3ClickProtocol::Receive, this),
+                                 Ipv4L3ClickProtocol::PROT_NUMBER, device);
   node->RegisterProtocolHandler (MakeCallback (&Ipv4L3ClickProtocol::Receive, this),
                                  ArpL3Protocol::PROT_NUMBER, device);
 
@@ -692,6 +679,22 @@ Ipv4L3ClickProtocol::Send (Ptr<Packet> packet,
 }
 
 void
+Ipv4L3ClickProtocol::SendWithHeader (Ptr<Packet> packet,
+                                     Ipv4Header ipHeader,
+                                     Ptr<Ipv4Route> route)
+{
+  NS_LOG_FUNCTION (this << packet << ipHeader << route);
+
+  Ptr<Ipv4ClickRouting> click = DynamicCast<Ipv4ClickRouting> (m_routingProtocol);
+  if (Node::ChecksumEnabled ())
+    {
+      ipHeader.EnableChecksum ();
+    }
+  packet->AddHeader (ipHeader);
+  click->Send (packet->Copy (), ipHeader.GetSource (), ipHeader.GetDestination ());
+}
+
+void
 Ipv4L3ClickProtocol::SendDown (Ptr<Packet> p, int ifid)
 {
   // Called by Ipv4ClickRouting.
@@ -729,6 +732,48 @@ Ipv4L3ClickProtocol::Receive ( Ptr<NetDevice> device, Ptr<const Packet> p, uint1
                                const Address &to, NetDevice::PacketType packetType)
 {
   NS_LOG_FUNCTION (this << device << p << from << to);
+
+  // Forward packet to raw sockets, if any
+  if (protocol == Ipv4L3ClickProtocol::PROT_NUMBER && m_sockets.size () > 0)
+    {
+      Ptr<Packet> packetForRawSocket = p->Copy ();
+      uint32_t interface = 0;
+      Ptr<Ipv4Interface> ipv4Interface;
+      for (Ipv4InterfaceList::const_iterator i = m_interfaces.begin ();
+           i != m_interfaces.end ();
+           i++, interface++)
+        {
+          ipv4Interface = *i;
+          if (ipv4Interface->GetDevice () == device)
+            {
+              if (ipv4Interface->IsUp ())
+                {
+                  break;
+                }
+              else
+                {
+                  NS_LOG_LOGIC ("Dropping received packet -- interface is down");
+                  return;
+                }
+            }
+        }
+
+      Ipv4Header ipHeader;
+      if (Node::ChecksumEnabled ())
+        {
+          ipHeader.EnableChecksum ();
+        }
+      packetForRawSocket->RemoveHeader (ipHeader);
+
+
+      for (SocketList::iterator i = m_sockets.begin (); i != m_sockets.end (); ++i)
+        {
+          NS_LOG_LOGIC ("Forwarding to raw socket");
+          Ptr<Ipv4RawSocketImpl> socket = *i;
+          socket->ForwardUp (packetForRawSocket, ipHeader, ipv4Interface);
+        }
+    }
+
   Ptr<Packet> packet = p->Copy ();
 
   // Add an ethernet frame. This allows
@@ -751,23 +796,23 @@ Ipv4L3ClickProtocol::LocalDeliver (Ptr<const Packet> packet, Ipv4Header const&ip
 
   m_localDeliverTrace (ip, packet, iif);
 
-  Ptr<Ipv4L4Protocol> protocol = GetProtocol (ip.GetProtocol ());
+  Ptr<IpL4Protocol> protocol = GetProtocol (ip.GetProtocol ());
   if (protocol != 0)
     {
       // we need to make a copy in the unlikely event we hit the
       // RX_ENDPOINT_UNREACH codepath
       Ptr<Packet> copy = p->Copy ();
-      enum Ipv4L4Protocol::RxStatus status =
+      enum IpL4Protocol::RxStatus status =
         protocol->Receive (p, ip, GetInterface (iif));
       switch (status)
         {
-        case Ipv4L4Protocol::RX_OK:
+        case IpL4Protocol::RX_OK:
         // fall through
-        case Ipv4L4Protocol::RX_ENDPOINT_CLOSED:
+        case IpL4Protocol::RX_ENDPOINT_CLOSED:
         // fall through
-        case Ipv4L4Protocol::RX_CSUM_FAILED:
+        case IpL4Protocol::RX_CSUM_FAILED:
           break;
-        case Ipv4L4Protocol::RX_ENDPOINT_UNREACH:
+        case IpL4Protocol::RX_ENDPOINT_UNREACH:
           if (ip.GetDestination ().IsBroadcast () == true
               || ip.GetDestination ().IsMulticast () == true)
             {
@@ -795,7 +840,7 @@ Ipv4L3ClickProtocol::LocalDeliver (Ptr<const Packet> packet, Ipv4Header const&ip
 Ptr<Icmpv4L4Protocol>
 Ipv4L3ClickProtocol::GetIcmp (void) const
 {
-  Ptr<Ipv4L4Protocol> prot = GetProtocol (Icmpv4L4Protocol::GetStaticProtocolNumber ());
+  Ptr<IpL4Protocol> prot = GetProtocol (Icmpv4L4Protocol::GetStaticProtocolNumber ());
   if (prot != 0)
     {
       return prot->GetObject<Icmpv4L4Protocol> ();
@@ -807,12 +852,12 @@ Ipv4L3ClickProtocol::GetIcmp (void) const
 }
 
 void
-Ipv4L3ClickProtocol::Insert (Ptr<Ipv4L4Protocol> protocol)
+Ipv4L3ClickProtocol::Insert (Ptr<IpL4Protocol> protocol)
 {
   m_protocols.push_back (protocol);
 }
 
-Ptr<Ipv4L4Protocol>
+Ptr<IpL4Protocol>
 Ipv4L3ClickProtocol::GetProtocol (int protocolNumber) const
 {
   for (L4List_t::const_iterator i = m_protocols.begin (); i != m_protocols.end (); ++i)

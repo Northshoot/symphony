@@ -1,4 +1,4 @@
-/* -*- Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -463,8 +463,8 @@ NamesPriv::Find (std::string path)
   NameNode *node = &m_root;
 
   //
-  // The string <remaining> is now composed entirely of path segments in the
-  // /Names name space and we have eaten the leading slash. e.g., 
+  // The string <remaining> is now composed entirely of path segments in
+  // the /Names name space and we have eaten the leading slash. e.g., 
   // remaining = "ClientNode/eth0"
   //
   // The start of the search is always at the root of the name space.
@@ -682,4 +682,4 @@ Names::FindInternal (Ptr<Object> context, std::string name)
   return NamesPriv::Get ()->Find (context, name);
 }
 
-} //namespace ns3
+} // namespace ns3

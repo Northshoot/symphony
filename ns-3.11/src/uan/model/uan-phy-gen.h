@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -19,14 +19,15 @@
  *         Andrea Sacco <andrea.sacco85@gmail.com>
  */
 
-#ifndef UANPHYGEN_H
-#define UANPHYGEN_H
+#ifndef UAN_PHY_GEN_H
+#define UAN_PHY_GEN_H
 
 
 #include "uan-phy.h"
 #include "ns3/traced-callback.h"
 #include "ns3/nstime.h"
 #include "ns3/device-energy-model.h"
+#include "ns3/random-variable-stream.h"
 #include <list>
 
 namespace ns3 {
@@ -203,6 +204,18 @@ public:
   virtual Ptr<Packet> GetPacketRx (void) const;
   virtual void Clear (void);
 
+  virtual void SetSleepMode (bool sleep);
+
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  int64_t AssignStreams (int64_t stream);
+
 private:
   typedef std::list<UanPhyListener *> ListenerList;
 
@@ -234,11 +247,13 @@ private:
   bool m_cleared;
   bool m_disabled;
 
+  /// Provides uniform random variables.
+  Ptr<UniformRandomVariable> m_pg;
+
   DeviceEnergyModel::ChangeStateCallback m_energyCallback;
   TracedCallback<Ptr<const Packet>, double, UanTxMode > m_rxOkLogger;
   TracedCallback<Ptr<const Packet>, double, UanTxMode > m_rxErrLogger;
   TracedCallback<Ptr<const Packet>, double, UanTxMode > m_txLogger;
-
 
   double CalculateSinrDb (Ptr<Packet> pkt, Time arrTime, double rxPowerDb, UanTxMode mode, UanPdp pdp);
   double GetInterferenceDb (Ptr<Packet> pkt);
@@ -261,4 +276,4 @@ protected:
 
 } // namespace ns3
 
-#endif // UANPHYGEN_H
+#endif /* UAN_PHY_GEN_H */

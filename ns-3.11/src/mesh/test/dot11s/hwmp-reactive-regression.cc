@@ -20,7 +20,8 @@
 
 #include "ns3/mesh-helper.h"
 #include "ns3/simulator.h"
-#include "ns3/random-variable.h"
+#include "ns3/random-variable-stream.h"
+#include "ns3/rng-seed-manager.h"
 #include "ns3/mobility-helper.h"
 #include "ns3/double.h"
 #include "ns3/uinteger.h"
@@ -31,12 +32,11 @@
 #include "ns3/abort.h"
 #include "ns3/udp-echo-helper.h"
 #include "ns3/mobility-model.h"
+#include "ns3/pcap-test.h"
 #include <sstream>
 
 #include "hwmp-reactive-regression.h"
 
-/// Set to true to rewrite reference traces, leave false to run regression test
-const bool WRITE_VECTORS = false;
 /// Unique PCAP file name prefix
 const char * const PREFIX = "hwmp-reactive-regression-test";
 
@@ -52,7 +52,8 @@ HwmpReactiveRegressionTest::~HwmpReactiveRegressionTest ()
 void
 HwmpReactiveRegressionTest::DoRun ()
 {
-  SeedManager::SetSeed (12345);
+  RngSeedManager::SetSeed (12345);
+  RngSeedManager::SetRun (7);
   CreateNodes ();
   CreateDevices ();
   InstallApplications ();
@@ -61,7 +62,7 @@ HwmpReactiveRegressionTest::DoRun ()
   Simulator::Run ();
   Simulator::Destroy ();
 
-  if (!WRITE_VECTORS) CheckResults ();
+  CheckResults ();
   delete m_nodes, m_nodes = 0;
 }
 void
@@ -112,6 +113,10 @@ HwmpReactiveRegressionTest::CreateDevices ()
   mesh.SetMacType ("RandomStart", TimeValue (Seconds (0.1)));
   mesh.SetNumberOfInterfaces (1);
   NetDeviceContainer meshDevices = mesh.Install (wifiPhy, *m_nodes);
+  // Six nodes, one device per node, 3 streams per mac
+  int64_t streamsUsed = mesh.AssignStreams (meshDevices, 0);
+  NS_TEST_EXPECT_MSG_EQ (streamsUsed, (6*3), "Stream assignment unexpected value");
+
   // 3. setup TCP/IP
   InternetStackHelper internetStack;
   internetStack.Install (*m_nodes);
@@ -119,9 +124,7 @@ HwmpReactiveRegressionTest::CreateDevices ()
   address.SetBase ("10.1.1.0", "255.255.255.0");
   m_interfaces = address.Assign (meshDevices);
   // 4. write PCAP if needed
-  std::string prefix = (WRITE_VECTORS ? NS_TEST_SOURCEDIR : std::string (GetTempDir ())) + PREFIX;
-  wifiPhy.EnablePcapAll (prefix);
-
+  wifiPhy.EnablePcapAll (CreateTempDirFilename (PREFIX));
 }
 
 void
@@ -129,15 +132,7 @@ HwmpReactiveRegressionTest::CheckResults ()
 {
   for (int i = 0; i < 6; ++i)
     {
-      std::ostringstream os1, os2;
-      // File naming conventions are hard-coded here.
-      os1 << NS_TEST_SOURCEDIR << PREFIX << "-" << i << "-1.pcap";
-      os2 << GetTempDir () << PREFIX << "-" << i << "-1.pcap";
-
-      uint32_t sec (0), usec (0);
-      bool diff = PcapFile::Diff (os1.str (), os2.str (), sec, usec); // TODO support default PcapWriter snap length here
-      NS_TEST_EXPECT_MSG_EQ (diff, false, "PCAP traces " << os1.str () << " and " << os2.str ()
-                                                         << " differ starting from " << sec << " s " << usec << " us");
+      NS_PCAP_TEST_EXPECT_EQ (PREFIX << "-" << i << "-1.pcap");
     }
 }
 

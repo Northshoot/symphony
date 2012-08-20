@@ -42,7 +42,7 @@ class Ipv4Route;
 class Node;
 class Socket;
 class Ipv4RawSocketImpl;
-class Ipv4L4Protocol;
+class IpL4Protocol;
 class Icmpv4L4Protocol;
 
 /**
@@ -82,7 +82,7 @@ public:
    * a working L4 Protocol and returned from this method.
    * The caller does not get ownership of the returned pointer.
    */
-  void Insert (Ptr<Ipv4L4Protocol> protocol);
+  void Insert (Ptr<IpL4Protocol> protocol);
 
   /**
    * \param protocolNumber number of protocol to lookup
@@ -91,9 +91,8 @@ public:
    *
    * This method is typically called by lower layers
    * to forward packets up the stack to the right protocol.
-   * It is also called from NodeImpl::GetUdp for example.
    */
-  Ptr<Ipv4L4Protocol> GetProtocol (int protocolNumber) const;
+  Ptr<IpL4Protocol> GetProtocol (int protocolNumber) const;
 
   /**
    * \param ttl default ttl to use
@@ -115,6 +114,16 @@ public:
    */
   void Send (Ptr<Packet> packet, Ipv4Address source,
              Ipv4Address destination, uint8_t protocol, Ptr<Ipv4Route> route);
+
+  /**
+   * \param packet packet to send
+   * \param ipHeader IP Header
+   * \param route route entry
+   *
+   * Higher-level layers call this method to send a packet with IPv4 Header
+   * (Intend to be used with IpHeaderInclude attribute.)
+   */
+  void SendWithHeader (Ptr<Packet> packet, Ipv4Header ipHeader, Ptr<Ipv4Route> route);
 
   /**
    * \param packet packet to send down the stack
@@ -242,7 +251,7 @@ private:
 
   typedef std::vector<Ptr<Ipv4Interface> > Ipv4InterfaceList;
   typedef std::list<Ptr<Ipv4RawSocketImpl> > SocketList;
-  typedef std::list<Ptr<Ipv4L4Protocol> > L4List_t;
+  typedef std::list<Ptr<IpL4Protocol> > L4List_t;
 
   Ptr<Ipv4RoutingProtocol> m_routingProtocol;
   bool m_ipForward;
@@ -262,9 +271,9 @@ private:
 
   std::vector<bool> m_promiscDeviceList;
 
-#endif // NS3_CLICK
+#endif /* NS3_CLICK */
 };
 
 } // namespace ns3
 
-#endif // IPV4_L3_CLICK_ROUTING_H
+#endif /* IPV4_L3_CLICK_ROUTING_H */

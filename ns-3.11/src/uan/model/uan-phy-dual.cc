@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -661,6 +661,13 @@ UanPhyDual::GetPacketRx (void) const
 {
   NS_FATAL_ERROR ("GetPacketRx not valid for UanPhyDual.  Must specify GetPhy1PacketRx or GetPhy2PacketRx");
   return Create<Packet> ();
+}
+
+int64_t
+UanPhyDual::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  return 0;
 }
 
 }

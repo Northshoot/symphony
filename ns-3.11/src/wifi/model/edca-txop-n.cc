@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2006, 2009 INRIA
  * Copyright (c) 2009 MIRKO BANCHI
@@ -1104,6 +1104,15 @@ EdcaTxopN::SendDelbaFrame (Mac48Address addr, uint8_t tid, bool byOriginator)
 
   PushFront (packet, hdr);
 }
+
+int64_t
+EdcaTxopN::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  m_rng->AssignStreams (stream);
+  return 1;
+}
+
 void
 EdcaTxopN::DoStart ()
 {
@@ -1111,4 +1120,4 @@ EdcaTxopN::DoStart ()
   m_dcf->StartBackoffNow (m_rng->GetNext (0, m_dcf->GetCw ()));
   ns3::Dcf::DoStart ();
 }
-} //namespace ns3
+} // namespace ns3

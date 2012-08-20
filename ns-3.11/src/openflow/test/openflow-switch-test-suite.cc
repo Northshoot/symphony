@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2011 Blake Hurd
  *
@@ -18,9 +18,6 @@
  *
  * Author: Blake Hurd  <naimorai@gmail.com>
  */
-
-
-#ifdef NS3_OPENFLOW
 
 // An essential include is test.h
 #include "ns3/test.h"
@@ -188,6 +185,5 @@ SwitchTestSuite::SwitchTestSuite () : TestSuite ("openflow", UNIT)
 }
 
 // Do not forget to allocate an instance of this TestSuite
-SwitchTestSuite switchTestSuite;
+static SwitchTestSuite switchTestSuite;
 
-#endif // NS3_OPENFLOW

@@ -22,7 +22,9 @@
 
 #include "ns3/mesh-helper.h"
 #include "ns3/simulator.h"
-#include "ns3/random-variable.h"
+#include "ns3/random-variable-stream.h"
+#include "ns3/rng-seed-manager.h"
+#include "ns3/string.h"
 #include "ns3/mobility-helper.h"
 #include "ns3/double.h"
 #include "ns3/uinteger.h"
@@ -43,10 +45,8 @@
 #include "ns3/inet-socket-address.h"
 #include "ns3/data-rate.h"
 #include "ns3/packet-sink-helper.h"
+#include "ns3/pcap-test.h"
 #include <sstream>
-
-/// Set to true to rewrite reference traces, leave false to run regression tests
-const bool WRITE_VECTORS = false;
 
 namespace ns3 {
 namespace aodv {
@@ -55,7 +55,7 @@ namespace aodv {
 // UdpChainTest
 //-----------------------------------------------------------------------------
 Bug772ChainTest::Bug772ChainTest (const char * const prefix, const char * const proto, Time t, uint32_t size) : 
-  TestCase ("Bug 772 UDP/TCP chain regression test"),
+  TestCase ("Bug 772 UDP and TCP chain regression test"),
   m_nodes (0),
   m_prefix (prefix),
   m_proto (proto),
@@ -73,7 +73,8 @@ Bug772ChainTest::~Bug772ChainTest ()
 void
 Bug772ChainTest::DoRun ()
 {
-  SeedManager::SetSeed (12345);
+  RngSeedManager::SetSeed (12345);
+  RngSeedManager::SetRun (7);
 
   CreateNodes ();
   CreateDevices ();
@@ -82,7 +83,7 @@ Bug772ChainTest::DoRun ()
   Simulator::Run ();
   Simulator::Destroy ();
 
-  if (!WRITE_VECTORS) CheckResults ();
+  CheckResults ();
 
   delete m_nodes, m_nodes = 0;
 }
@@ -124,6 +125,8 @@ Bug772ChainTest::CreateDevices ()
   InternetStackHelper internetStack;
   internetStack.SetRoutingHelper (aodv);
   internetStack.Install (*m_nodes);
+  int64_t streamsUsed = aodv.AssignStreams (*m_nodes, 0);
+  NS_TEST_EXPECT_MSG_EQ (streamsUsed, m_size, "Should have assigned streams");
   Ipv4AddressHelper address;
   address.SetBase ("10.1.1.0", "255.255.255.0");
   Ipv4InterfaceContainer interfaces = address.Assign (devices);
@@ -131,8 +134,8 @@ Bug772ChainTest::CreateDevices ()
   // 3. Setup UDP source and sink
   uint16_t port = 9; // Discard port (RFC 863)
   OnOffHelper onoff (m_proto, Address (InetSocketAddress (interfaces.GetAddress (m_size-1), port)));
-  onoff.SetAttribute ("OnTime", RandomVariableValue (ConstantVariable (1)));
-  onoff.SetAttribute ("OffTime", RandomVariableValue (ConstantVariable (0)));
+  onoff.SetAttribute ("OnTime", StringValue ("ns3::ConstantRandomVariable[Constant=1.0]"));
+  onoff.SetAttribute ("OffTime", StringValue ("ns3::ConstantRandomVariable[Constant=0.0]"));
   onoff.SetAttribute ("DataRate", DataRateValue (DataRate (64000)));
   onoff.SetAttribute ("PacketSize", UintegerValue (1200));
   ApplicationContainer app = onoff.Install (m_nodes->Get (0));
@@ -143,9 +146,8 @@ Bug772ChainTest::CreateDevices ()
   app.Start (Seconds (0.0));
 
   // 4. write PCAP on the first and last nodes only
-  std::string prefix = (WRITE_VECTORS ? NS_TEST_SOURCEDIR : GetTempDir ()) + m_prefix;
-  wifiPhy.EnablePcap (prefix, devices.Get (0));
-  wifiPhy.EnablePcap (prefix, devices.Get (m_size-1));
+  wifiPhy.EnablePcap (CreateTempDirFilename (m_prefix), devices.Get (0));
+  wifiPhy.EnablePcap (CreateTempDirFilename (m_prefix), devices.Get (m_size-1));
 }
 
 void
@@ -153,15 +155,7 @@ Bug772ChainTest::CheckResults ()
 {
   for (uint32_t i = 0; i < m_size; i += (m_size - 1) /*first and last nodes only*/)
     {
-      std::ostringstream os1, os2;
-      // File naming conventions are hard-coded here.
-      os1 << NS_TEST_SOURCEDIR << m_prefix << "-" << i << "-0.pcap";
-      os2 << GetTempDir () << m_prefix << "-" << i << "-0.pcap";
-
-      uint32_t sec (0), usec (0);
-      bool diff = PcapFile::Diff (os1.str (), os2.str (), sec, usec);
-      NS_TEST_EXPECT_MSG_EQ (diff, false, "PCAP traces " << os1.str () << " and " << os2.str ()
-                                                         << " differ starting from " << sec << " s " << usec << " us");
+      NS_PCAP_TEST_EXPECT_EQ(m_prefix << "-" << i << "-0.pcap");
     }
 }
 

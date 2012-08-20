@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005 INRIA
  *
@@ -40,6 +40,9 @@ Ipv4EndPoint::~Ipv4EndPoint ()
     {
       m_destroyCallback ();
     }
+  m_rxCallback.Nullify ();
+  m_icmpCallback.Nullify ();
+  m_destroyCallback.Nullify ();
 }
 
 Ipv4Address 
@@ -144,4 +147,4 @@ Ipv4EndPoint::DoForwardIcmp (Ipv4Address icmpSource, uint8_t icmpTtl,
   m_icmpCallback (icmpSource,icmpTtl,icmpType,icmpCode,icmpInfo);
 }
 
-}; // namespace ns3
+} // namespace ns3

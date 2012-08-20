@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -64,6 +64,10 @@ public:
    */
   void StartRx (Ptr<const Packet> p, Ptr<const SpectrumValue> rxPsd);
 
+  /**
+   * notify that the PHY has aborted RX
+   */
+  void AbortRx ();
 
   /**
    * notify that the RX attempt has ended. The receiving PHY must call

@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2008,2009 IITP RAS
  *
@@ -29,7 +29,7 @@
 #include "ns3/wifi-net-device.h"
 #include "ns3/mesh-point-device.h"
 #include "ns3/mesh-wifi-interface-mac.h"
-#include "ns3/random-variable.h"
+#include "ns3/random-variable-stream.h"
 #include "airtime-metric.h"
 #include "ie-dot11s-preq.h"
 #include "ie-dot11s-prep.h"
@@ -192,16 +192,22 @@ HwmpProtocol::HwmpProtocol () :
   m_rfFlag (false)
 {
   NS_LOG_FUNCTION_NOARGS ();
-
-  if (m_isRoot)
-    {
-      SetRoot ();
-    }
+  m_coefficient = CreateObject<UniformRandomVariable> ();
 }
 
 HwmpProtocol::~HwmpProtocol ()
 {
   NS_LOG_FUNCTION_NOARGS ();
+}
+
+void
+HwmpProtocol::DoStart ()
+{
+  m_coefficient->SetAttribute ("Max", DoubleValue (m_randomStart.GetSeconds ()));
+  if (m_isRoot)
+    {
+      SetRoot ();
+    }
 }
 
 void
@@ -565,18 +571,19 @@ HwmpProtocol::ReceivePrep (IePrep prep, Mac48Address from, uint32_t interface, M
   std::map<Mac48Address, std::pair<uint32_t, uint32_t> >::const_iterator i = m_hwmpSeqnoMetricDatabase.find (
       prep.GetOriginatorAddress ());
   bool freshInfo (true);
+  uint32_t sequence = prep.GetDestinationSeqNumber ();
   if (i != m_hwmpSeqnoMetricDatabase.end ())
     {
-      if ((int32_t)(i->second.first - prep.GetOriginatorSeqNumber ()) > 0)
+      if ((int32_t)(i->second.first - sequence) > 0)
         {
           return;
         }
-      if (i->second.first == prep.GetOriginatorSeqNumber ())
+      if (i->second.first == sequence)
         {
           freshInfo = false;
         }
     }
-  m_hwmpSeqnoMetricDatabase[prep.GetOriginatorAddress ()] = std::make_pair (prep.GetOriginatorSeqNumber (), prep.GetMetric ());
+  m_hwmpSeqnoMetricDatabase[prep.GetOriginatorAddress ()] = std::make_pair (sequence, prep.GetMetric ());
   //update routing info
   //Now add a path to destination and add precursor to source
   NS_LOG_DEBUG ("I am " << GetAddress () << ", received prep from " << prep.GetOriginatorAddress () << ", receiver was:" << from);
@@ -597,7 +604,7 @@ HwmpProtocol::ReceivePrep (IePrep prep, Mac48Address from, uint32_t interface, M
         interface,
         prep.GetMetric (),
         MicroSeconds (prep.GetLifetime () * 1024),
-        prep.GetOriginatorSeqNumber ());
+        sequence);
       m_rtable->AddPrecursor (prep.GetDestinationAddress (), interface, from,
                               MicroSeconds (prep.GetLifetime () * 1024));
       if (result.retransmitter != Mac48Address::GetBroadcast ())
@@ -618,7 +625,7 @@ HwmpProtocol::ReceivePrep (IePrep prep, Mac48Address from, uint32_t interface, M
         interface,
         metric,
         MicroSeconds (prep.GetLifetime () * 1024),
-        prep.GetOriginatorSeqNumber ());
+        sequence);
       ReactivePathResolved (fromMp);
     }
   if (prep.GetDestinationAddress () == GetAddress ())
@@ -1016,8 +1023,7 @@ HwmpProtocol::RetryPathDiscovery (Mac48Address dst, uint8_t numOfRetry)
 void
 HwmpProtocol::SetRoot ()
 {
-  UniformVariable coefficient (0.0, m_randomStart.GetSeconds ());
-  Time randomStart = Seconds (coefficient.GetValue ());
+  Time randomStart = Seconds (m_coefficient->GetValue ());
   m_proactivePreqTimer = Simulator::Schedule (randomStart, &HwmpProtocol::SendProactivePreq, this);
   NS_LOG_DEBUG ("ROOT IS: " << m_address);
   m_isRoot = true;
@@ -1162,11 +1168,20 @@ HwmpProtocol::ResetStats ()
       plugin->second->ResetStats ();
     }
 }
+
+int64_t
+HwmpProtocol::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  m_coefficient->SetStream (stream);
+  return 1;
+}
+
 HwmpProtocol::QueuedPacket::QueuedPacket () :
   pkt (0),
   protocol (0),
   inInterface (0)
 {
 }
-} //namespace dot11s
-} //namespace ns3
+} // namespace dot11s
+} // namespace ns3

@@ -67,7 +67,8 @@ References
 ==========
 
 * Eddie Kohler, Robert Morris, Benjie Chen, John Jannotti, and M. Frans Kaashoek. The click modular router. ACM Transactions on Computer Systems 18(3), August 2000, pages 263-297.
-* Neufeld, Michael and Jain, Ashish and Grunwald, Dirk. Nsclick: bridging network simulation and deployment. MSWiM '02: Proceedings of the 5th ACM international workshop on Modeling analysis and simulation of wireless and mobile systems, 2002, Atlanta, Georgia, USA. http://doi.acm.org/10.1145/570758.570772
+* Lalith Suresh P., and Ruben Merz. Ns-3-click: click modular router integration for ns-3. In Proc. of 3rd International ICST Workshop on NS-3 (WNS3), Barcelona, Spain. March, 2011.
+* Michael Neufeld, Ashish Jain, and Dirk Grunwald. Nsclick: bridging network simulation and deployment. MSWiM '02: Proceedings of the 5th ACM international workshop on Modeling analysis and simulation of wireless and mobile systems, 2002, Atlanta, Georgia, USA. http://doi.acm.org/10.1145/570758.570772
 
 Usage
 *****
@@ -75,7 +76,7 @@ Usage
 Building Click
 ==============
 
-The first step is to build Click. At the top of your Click source directory::
+The first step is to fetch (http://read.cs.ucla.edu/click/download) and build Click. At the top of your Click source directory::
 
   $: ./configure --enable-userlevel --disable-linuxmodule --enable-nsclick --enable-wifi
   $: make
@@ -87,6 +88,12 @@ Once Click has been built successfully, change into the ns-3 directory and
 configure ns-3 with Click Integration support::
 
   $: ./waf configure --enable-examples --enable-tests --with-nsclick=/path/to/click/source
+
+Hint:  If you have click installed one directory above ns-3 (such as in the
+ns-3-allinone directory), and the name of the directory is 'click' (or
+a symbolic link to the directory is named 'click'), then the --with-nsclick
+specifier is not necessary; the ns-3 build system will successfully find
+the directory.
 
 If it says 'enabled' beside 'NS-3 Click Integration Support', then you're good to go. Note: If running modular ns-3, the minimum set of modules required to run all ns-3-click examples is wifi, csma and config-store.
 
@@ -118,7 +125,7 @@ From any point within a Click graph, you may use the Print (http://read.cs.ucla.
    -> ToDump(out_arpquery,PER_NODE 1)
    -> ethout;
 
-...will print the contents of packets that flow out of the ArpQuerier, then generate a pcap trace file which will have a suffix 'out_arpquery', for each node using the Click file, before pushing packets onto 'ethout'.
+and ...will print the contents of packets that flow out of the ArpQuerier, then generate a pcap trace file which will have a suffix 'out_arpquery', for each node using the Click file, before pushing packets onto 'ethout'.
 
 Helper
 ======

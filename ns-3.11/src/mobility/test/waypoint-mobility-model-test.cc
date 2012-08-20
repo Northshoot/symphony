@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 Phillip Sitbon
  *
@@ -47,9 +47,18 @@ private:
   bool lazyNotify;
 private:
   virtual void DoRun (void);
+  virtual void DoTeardown (void);
   void ForceUpdates (void);
   void CourseChangeCallback (std::string path, Ptr<const MobilityModel> model);
 };
+
+void
+WaypointMobilityModelNotifyTest::DoTeardown (void)
+{
+  mobilityStack.clear();
+  waypoints.clear();
+}
+
 void
 WaypointMobilityModelNotifyTest::DoRun (void)
 {

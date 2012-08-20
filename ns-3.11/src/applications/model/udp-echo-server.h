@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef __UDP_ECHO_SERVER_H__
-#define __UDP_ECHO_SERVER_H__
+#ifndef UDP_ECHO_SERVER_H
+#define UDP_ECHO_SERVER_H
 
 #include "ns3/application.h"
 #include "ns3/event-id.h"
@@ -59,10 +59,11 @@ private:
 
   uint16_t m_port;
   Ptr<Socket> m_socket;
+  Ptr<Socket> m_socket6;
   Address m_local;
 };
 
 } // namespace ns3
 
-#endif // __UDP_ECHO_SERVER_H__
+#endif /* UDP_ECHO_SERVER_H */
 

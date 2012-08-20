@@ -19,8 +19,8 @@
  *                              <amine.ismail@udcast.com>
  */
 
-#ifndef COST231_PROPAGATION_LOSS_MODEL_H_
-#define COST231_PROPAGATION_LOSS_MODEL_H_
+#ifndef COST231_PROPAGATION_LOSS_MODEL_H
+#define COST231_PROPAGATION_LOSS_MODEL_H
 
 #include "ns3/nstime.h"
 #include "ns3/propagation-loss-model.h"
@@ -79,6 +79,7 @@ public:
   void SetShadowing (double shadowing);
 private:
   virtual double DoCalcRxPower (double txPowerDbm, Ptr<MobilityModel> a, Ptr<MobilityModel> b) const;
+  virtual int64_t DoAssignStreams (int64_t stream);
   double m_BSAntennaHeight; // in meter
   double m_SSAntennaHeight; // in meter
   double C;
@@ -92,4 +93,4 @@ private:
 
 }
 
-#endif /* COST231PROPAGATIONMODEL_H_ */
+#endif /* COST231PROPAGATIONMODEL_H */

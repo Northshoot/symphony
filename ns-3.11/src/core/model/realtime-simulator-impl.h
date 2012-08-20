@@ -20,15 +20,16 @@
 #define REALTIME_SIMULATOR_IMPL_H
 
 #include "simulator-impl.h"
+#include "system-thread.h"
 
 #include "scheduler.h"
 #include "synchronizer.h"
 #include "event-impl.h"
 
-#include "ns3/ptr.h"
-#include "ns3/assert.h"
-#include "ns3/log.h"
-#include "ns3/system-mutex.h"
+#include "ptr.h"
+#include "assert.h"
+#include "log.h"
+#include "system-mutex.h"
 
 #include <list>
 
@@ -53,7 +54,6 @@ public:
 
   virtual void Destroy ();
   virtual bool IsFinished (void) const;
-  virtual Time Next (void) const;
   virtual void Stop (void);
   virtual void Stop (Time const &time);
   virtual EventId Schedule (Time const &time, EventImpl *event);
@@ -64,7 +64,6 @@ public:
   virtual void Cancel (const EventId &ev);
   virtual bool IsExpired (const EventId &ev) const;
   virtual void Run (void);
-  virtual void RunOneEvent (void);
   virtual Time Now (void) const;
   virtual Time GetDelayLeft (const EventId &id) const;
   virtual Time GetMaximumSimulationTime (void) const;
@@ -87,9 +86,8 @@ public:
 private:
   bool Running (void) const;
   bool Realtime (void) const;
-
-  void ProcessOneEvent (void);
   uint64_t NextTs (void) const;
+  void ProcessOneEvent (void);
   virtual void DoDispose (void);
 
   typedef std::list<EventId> DestroyEvents;
@@ -118,6 +116,8 @@ private:
    * The maximum allowable drift from real-time in SYNC_HARD_LIMIT mode.
    */
   Time m_hardLimit;
+
+  SystemThread::ThreadId m_main;
 };
 
 } // namespace ns3

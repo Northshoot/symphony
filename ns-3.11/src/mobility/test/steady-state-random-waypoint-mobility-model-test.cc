@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 IITP RAS
  *
@@ -24,6 +24,7 @@
 #include "ns3/test.h"
 #include "ns3/config.h"
 #include "ns3/steady-state-random-waypoint-mobility-model.h"
+#include "ns3/rng-seed-manager.h"
 
 namespace ns3 {
 
@@ -39,8 +40,15 @@ private:
   double count;
 private:
   virtual void DoRun (void);
+  virtual void DoTeardown (void);
   void DistribCompare ();
 };
+
+void
+SteadyStateRandomWaypointTest::DoTeardown (void)
+{
+  mobilityStack.clear();
+}
 
 void
 SteadyStateRandomWaypointTest::DoRun (void)

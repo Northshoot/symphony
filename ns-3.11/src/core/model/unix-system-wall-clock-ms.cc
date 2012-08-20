@@ -21,6 +21,7 @@
 #include "system-wall-clock-ms.h"
 #include "abort.h"
 #include <sys/times.h>
+#include <unistd.h>
 
 namespace ns3 {
 
@@ -159,4 +160,4 @@ SystemWallClockMs::GetElapsedSystem (void) const
   return m_priv->GetElapsedSystem ();
 }
 
-}; // namespace ns3
+} // namespace ns3

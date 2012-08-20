@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2010 Network Security Lab, University of Washington, Seattle.
  *
@@ -229,7 +229,7 @@ private:
   virtual double DoGetCurrentA (void) const;
 
   /**
-   * \param currentState New state the radio device is currently in.
+   * \param state New state the radio device is currently in.
    *
    * Sets current state. This function is private so that only the energy model
    * can change its own state.

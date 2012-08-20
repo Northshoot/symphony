@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2007 Emmanuelle Laprise, INRIA
  *
@@ -110,6 +110,12 @@ PacketSocket::Bind (void)
   address.SetProtocol (0);
   address.SetAllDevices ();
   return DoBind (address);
+}
+
+int
+PacketSocket::Bind6 (void)
+{
+  return(Bind());
 }
 
 int
@@ -356,7 +362,7 @@ PacketSocket::SendTo (Ptr<Packet> p, uint32_t flags, const Address &address)
     }
   else
     {
-      return 0;
+      return p->GetSize ();
     }
 }
 
@@ -441,9 +447,6 @@ PacketSocket::RecvFrom (uint32_t maxSize, uint32_t flags, Address &fromAddress)
       bool found;
       found = packet->PeekPacketTag (tag);
       NS_ASSERT (found);
-      //cast found to void, to suppress 'found' set but not used compiler warning
-      //in optimized builds
-      (void) found;
       fromAddress = tag.GetAddress ();
     }
   return packet;
@@ -488,4 +491,4 @@ PacketSocket::GetAllowBroadcast () const
   return false;
 }
 
-} //namespace ns3
+} // namespace ns3

@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
 * Copyright (c) 2010 Andrea Sacco
 *
@@ -64,6 +64,7 @@ public:
 private:
   /**
    * \param device Pointer to the NetDevice to install DeviceEnergyModel.
+   * \param source Pointer to EnergySource installed on node.
    *
    * Implements DeviceEnergyModel::Install.
    */

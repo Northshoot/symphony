@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef __UDP_SERVER_H__
-#define __UDP_SERVER_H__
+#ifndef UDP_SERVER_H
+#define UDP_SERVER_H
 
 #include "ns3/application.h"
 #include "ns3/event-id.h"
@@ -84,6 +84,7 @@ private:
 
   uint16_t m_port;
   Ptr<Socket> m_socket;
+  Ptr<Socket> m_socket6;
   Address m_local;
   uint32_t m_received;
   PacketLossCounter m_lossCounter;
@@ -91,4 +92,4 @@ private:
 
 } // namespace ns3
 
-#endif // __UDP_SERVER_H__
+#endif /* UDP_SERVER_H */

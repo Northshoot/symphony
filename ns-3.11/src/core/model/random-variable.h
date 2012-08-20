@@ -19,8 +19,8 @@
 // Author: Hadi Arbabi<marbabi@cs.odu.edu>
 //
 
-#ifndef __random_variable_h
-#define __random_variable_h
+#ifndef NS3_RANDOM_VARIABLE_H
+#define NS3_RANDOM_VARIABLE_H
 
 #include <vector>
 #include <algorithm>
@@ -29,6 +29,7 @@
 #include <ostream>
 #include "attribute.h"
 #include "attribute-helper.h"
+#include "rng-seed-manager.h"
 
 /**
  * \ingroup core
@@ -39,69 +40,6 @@
 namespace ns3 {
 
 class RandomVariableBase;
-
-class SeedManager
-{
-public:
-  /**
-   * \brief set the seed
-   * it will duplicate the seed value 6 times
-   * \code
-   * SeedManger::SetSeed(15);
-   * UniformVariable x(2,3);     //these will give the same output everytime
-   * ExponentialVariable y(120); //as long as the seed stays the same
-   * \endcode
-   * \param seed
-   *
-   * Note, while the underlying RNG takes six integer values as a seed;
-   * it is sufficient to set these all to the same integer, so we provide
-   * a simpler interface here that just takes one integer.
-   */
-  static void SetSeed (uint32_t seed);
-
-  /**
-   * \brief Get the seed value
-   * \return the seed value
-   *
-   * Note:  returns the first of the six seed values used in the underlying RNG
-   */
-  static uint32_t GetSeed ();
-
-  /**
-   * \brief Set the run number of simulation
-   *
-   * \code
-   * SeedManager::SetSeed(12);
-   * int N = atol(argv[1]); //read in run number from command line
-   * SeedManager::SetRun(N);
-   * UniformVariable x(0,10);
-   * ExponentialVariable y(2902);
-   * \endcode
-   * In this example, N could successivly be equal to 1,2,3, etc. and the user
-   * would continue to get independent runs out of the single simulation.  For
-   * this simple example, the following might work:
-   * \code
-   * ./simulation 0
-   * ...Results for run 0:...
-   *
-   * ./simulation 1
-   * ...Results for run 1:...
-   * \endcode
-   */
-  static void SetRun (uint32_t run);
-  /**
-   * \returns the current run number
-   * @sa SetRun
-   */
-  static uint32_t GetRun (void);
-
-  /**
-   * \brief Check if seed value is valid if wanted to be used as seed
-   * \return true if valid and false if invalid
-   */
-  static bool CheckSeed (uint32_t seed);
-};
-
 
 /**
  * \brief The basic RNG for NS-3.
@@ -133,7 +71,7 @@ public:
 
   /**
    * \brief Returns a random integer integer from the underlying distribution
-   * \return  Integer cast of ::GetValue()
+   * \return  Integer cast of RandomVariable::GetValue
    */
   uint32_t GetInteger (void) const;
 
@@ -158,9 +96,8 @@ protected:
  * The low end of the range is always included and the high end
  * of the range is always excluded.
  * \code
- * UniformVariable x(0,10);
- * x.GetValue();  //will always return numbers [0,10)
- * UniformVariable::GetSingleValue(100,1000); //returns a value [100,1000)
+ * UniformVariable x (0,10);
+ * x.GetValue ();  //will always return numbers [0,10)
  * \endcode
  */
 class UniformVariable : public RandomVariable
@@ -296,9 +233,7 @@ public:
  *
  * \code
  * ExponentialVariable x(3.14);
- * x.GetValue();  //will always return with mean 3.14
- * ExponentialVariable::GetSingleValue(20.1); //returns with mean 20.1
- * ExponentialVariable::GetSingleValue(108); //returns with mean 108
+ * x.GetValue ();  //will always return with mean 3.14
  * \endcode
  *
  */
@@ -348,10 +283,8 @@ public:
  * with the equation \f$ x_m = mean \frac{k-1}{k},  k > 1\f$.
  *
  * \code
- * ParetoVariable x(3.14);
- * x.GetValue();  //will always return with mean 3.14
- * ParetoVariable::GetSingleValue(20.1); //returns with mean 20.1
- * ParetoVariable::GetSingleValue(108); //returns with mean 108
+ * ParetoVariable x (3.14);
+ * x.GetValue ();  //will always return with mean 3.14
  * \endcode
  */
 class ParetoVariable : public RandomVariable
@@ -576,7 +509,7 @@ public:
    * \brief Constructor
    *
    * Creates a generator that returns successive elements of the d array
-   * on successive calls to ::Value().  Note that the d pointer is copied
+   * on successive calls to RandomVariable::GetValue.  Note that the d pointer is copied
    * for use by the generator (shallow-copy), not its contents, so the
    * contents of the array d points to have to remain unchanged for the use
    * of DeterministicVariable to be meaningful.
@@ -603,10 +536,10 @@ public:
  * where \f$ mean = e^{\mu+\frac{\sigma^2}{2}} \f$ and
  * \f$ variance = (e^{\sigma^2}-1)e^{2\mu+\sigma^2}\f$
  *
- * The \f$ \mu \f$ and \f$ \sigma \f$ parameters can be calculated from the mean
- * and standard deviation with the following equations:
- * \f$ \mu = ln(mean) - \frac{1}{2}ln\left(1+\frac{stddev}{mean^2}\right)\f$, and,
- * \f$ \sigma = \sqrt{ln\left(1+\frac{stddev}{mean^2}\right)}\f$
+ * The \f$ \mu \f$ and \f$ \sigma \f$ parameters can be calculated if instead
+ * the mean and variance are known with the following equations:
+ * \f$ \mu = ln(mean) - \frac{1}{2}ln\left(1+\frac{variance}{mean^2}\right)\f$, and,
+ * \f$ \sigma = \sqrt{ln\left(1+\frac{variance}{mean^2}\right)}\f$
  */
 class LogNormalVariable : public RandomVariable
 {
@@ -817,5 +750,4 @@ ATTRIBUTE_ACCESSOR_DEFINE (RandomVariable);
 
 } // namespace ns3
 
-
-#endif
+#endif /* NS3_RANDOM_VARIABLE_H */

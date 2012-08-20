@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -732,4 +732,12 @@ UanMacRcGw::FindOptA (void)
   NS_LOG_DEBUG (Simulator::Now ().GetSeconds () << " GW: Found optimum a = " << a);
   return a;
 }
+
+int64_t
+UanMacRcGw::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  return 0;
+}
+
 } // namespace ns3

@@ -1,10 +1,9 @@
 /*
  * Copyright (c) 2008 University of Washington
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation;
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -12,15 +11,14 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Author: Leonard Tracy <lentracy@u.washington.edu>
- *
- *
  */
 
-#ifndef UANHELPER_H_
-#define UANHELPER_H_
+#ifndef UAN_HELPER_H
+#define UAN_HELPER_H
 
 #include <string>
 #include "ns3/attribute.h"
@@ -190,8 +188,8 @@ public:
 
   NetDeviceContainer Install (NodeContainer c) const;
   /**
-   * \param channel a channel to use
    * \param c a set of nodes
+   * \param channel a channel to use
    *
    * For each of the input nodes, a new ns3::UanNetDevice is attached
    * to the shared input channel. Each ns3::UanNetDevice is also
@@ -204,6 +202,7 @@ public:
 
   /**
    * \param node a node where to install the uan components
+   * \param channel a channel to use
    *
    * Create a default uan stack with:
    * - default channel, ideal propagation and default noise model
@@ -215,6 +214,20 @@ public:
    * UanNetDevice and then added to the node.
    */
   Ptr<UanNetDevice> Install (Ptr<Node> node, Ptr<UanChannel> channel) const;
+
+  /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model. Return the number of streams (possibly zero) that
+  * have been assigned. The Install() method should have previously been
+  * called by the user.
+  *
+  * \param c NetDeviceContainer of the set of net devices for which the 
+  *          UanNetDevice should be modified to use a fixed stream
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this helper
+  */
+  int64_t AssignStreams (NetDeviceContainer c, int64_t stream);
+
 private:
   ObjectFactory m_device;
   ObjectFactory m_mac;
@@ -226,4 +239,4 @@ private:
 
 } // end namespace ns3
 
-#endif /* UANHELPER_H_ */
+#endif /* UAN_HELPER_H */

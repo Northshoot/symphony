@@ -26,6 +26,7 @@
 #include "ns3/config.h"
 #include "ns3/simulator.h"
 #include "ns3/names.h"
+#include "ns3/string.h"
 #include <iostream>
 
 namespace ns3 {
@@ -36,8 +37,8 @@ TosMobilityHelper::TosMobilityHelper ()
 {
 
   m_position = CreateObjectWithAttributes<RandomRectanglePositionAllocator> 
-      ("X", RandomVariableValue (ConstantVariable (0.0)),
-      "Y", RandomVariableValue (ConstantVariable (0.0)));
+      ("X", StringValue ("ns3::ConstantRandomVariable[Constant=0.0]"),
+      "Y", StringValue ("ns3::ConstantRandomVariable[Constant=0.0]"));
   m_mobility.SetTypeId ("ns3::ConstantPositionMobilityModel");
 }
 TosMobilityHelper::~TosMobilityHelper ()
@@ -246,6 +247,22 @@ TosMobilityHelper::EnableAsciiAll (std::ostream &os)
 {
   EnableAscii (os, TosNodeContainer::GetGlobal ());
 }
-
+int64_t
+TosMobilityHelper::AssignStreams (TosNodeContainer c, int64_t stream)
+{
+  int64_t currentStream = stream;
+  Ptr<TosNode> node;
+  Ptr<MobilityModel> mobility;
+  for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
+    {
+      node = (*i);
+      mobility = node->GetObject<MobilityModel> ();
+      if (mobility)
+        {
+          currentStream += mobility->AssignStreams (currentStream);
+        }
+    }
+  return (currentStream - stream);
+}
 
 } // namespace ns3

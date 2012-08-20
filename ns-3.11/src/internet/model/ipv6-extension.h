@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2007-2009 Strasbourg University
  *
@@ -31,12 +31,12 @@
 #include "ns3/ipv6-header.h"
 #include "ns3/buffer.h"
 #include "ns3/packet.h"
+#include "ns3/random-variable-stream.h"
 #include "ns3/ipv6-address.h"
 #include "ns3/traced-callback.h"
 
 
-namespace ns3
-{
+namespace ns3 {
 
 /**
  * \class Ipv6Extension
@@ -52,6 +52,11 @@ public:
    * \return type identificator
    */
   static TypeId GetTypeId ();
+
+  /**
+   * \brief Constructor.
+   */
+  Ipv6Extension ();
 
   /**
    * \brief Destructor.
@@ -105,11 +110,26 @@ public:
    */
   virtual uint8_t ProcessOptions (Ptr<Packet>& packet, uint8_t offset, uint8_t length, Ipv6Header const& ipv6Header, Ipv6Address dst, uint8_t *nextHeader, bool& isDropped);
 
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  int64_t AssignStreams (int64_t stream);
+
 protected:
   /**
    * \brief Drop trace callback.
    */
   TracedCallback<Ptr<const Packet> > m_dropTrace;
+
+  /**
+   * \brief Provides uniform random variables.
+   */
+  Ptr<UniformRandomVariable> m_uvar;
 
 private:
   /**
@@ -309,7 +329,7 @@ public:
 
     /**
      * \brief If all fragments have been added.
-     * \returns true if the packet is entire 
+     * \returns true if the packet is entire
      */
     bool IsEntire () const;
 
@@ -318,6 +338,22 @@ public:
      * \return the entire packet
      */
     Ptr<Packet> GetPacket () const;
+
+    /**
+     * \brief Get the packet parts so far received.
+     * \return the partial packet
+     */
+    Ptr<Packet> GetPartialPacket () const;
+
+    /**
+     * \brief Set the Timeout EventId.
+     */
+    void SetTimeoutEventId (EventId event);
+
+    /**
+     * \brief Cancel the timeout event
+     */
+    void CancelTimeout ();
 
 private:
     /**
@@ -328,7 +364,7 @@ private:
     /**
      * \brief The current fragments.
      */
-    std::list<std::pair<Ptr<Packet>, uint16_t> > m_fragments;
+    std::list<std::pair<Ptr<Packet>, uint16_t> > m_packetFragments;
 
     /**
      * \brief The unfragmentable part.
@@ -336,10 +372,34 @@ private:
     Ptr<Packet> m_unfragmentable;
 
     /**
-     * \brief Number of references.
+     * \brief Timeout handler event
      */
-    mutable uint32_t m_refCount;
+    EventId m_timeoutEventId;
   };
+
+  /**
+   * \brief Process the timeout for packet fragments
+   * \param key representing the packet fragments
+   * \param ipHeader the IP header of the original packet
+   * \param iif Input Interface
+   */
+  void HandleFragmentsTimeout (std::pair<Ipv6Address, uint32_t> key, Ipv6Header & ipHeader);
+
+  /**
+   * \brief Get the packet parts so far received.
+   * \return the partial packet
+   */
+  Ptr<Packet> GetPartialPacket () const;
+
+  /**
+   * \brief Set the Timeout EventId.
+   */
+  void SetTimeoutEventId (EventId event);
+
+  /**
+   * \brief Cancel the timeout event
+   */
+  void CancelTimeout ();
 
   typedef std::map<std::pair<Ipv6Address, uint32_t>, Ptr<Fragments> > MapFragments_t;
 

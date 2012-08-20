@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005,2006 INRIA
  *
@@ -356,6 +356,7 @@ void
 WifiNetDevice::SetPromiscReceiveCallback (PromiscReceiveCallback cb)
 {
   m_promiscRx = cb;
+  m_mac->SetPromisc();
 }
 
 bool

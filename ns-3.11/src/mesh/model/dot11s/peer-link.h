@@ -19,8 +19,8 @@
  *          Aleksey Kovalenko <kovalenko@iitp.ru>
  */
 
-#ifndef PEERLLINK_H_
-#define PEERLLINK_H_
+#ifndef PEER_LINK_H
+#define PEER_LINK_H
 
 #include "ns3/nstime.h"
 #include "ns3/object.h"
@@ -30,8 +30,10 @@
 #include "ns3/ie-dot11s-beacon-timing.h"
 #include "ns3/ie-dot11s-peer-management.h"
 #include "ns3/ie-dot11s-configuration.h"
+
 namespace ns3 {
 namespace dot11s {
+
 class PeerManagementProtocolMac;
 /**
  * \ingroup dot11s
@@ -200,14 +202,14 @@ private:
   PeerLink& operator= (const PeerLink &);
   PeerLink (const PeerLink &);
 
-  ///The number of interface I am associated with
+  /// The number of interface I am associated with
   uint32_t m_interface;
   /// pointer to MAC plugin, which is responsible for peer management
   Ptr<PeerManagementProtocolMac> m_macPlugin;
   /// Peer address
   Mac48Address m_peerAddress;
   /// Mesh point address, equal to peer address in case of single
-  //interface mesh point
+  /// interface mesh point
   Mac48Address m_peerMeshPointAddress;
   /// My ID of this link
   uint16_t m_localLinkId;
@@ -251,11 +253,12 @@ private:
   EventId  m_beaconLossTimer;
   uint16_t m_maxBeaconLoss;
   uint16_t m_maxPacketFail;
-  //\}
+  // \}
   /// How to report my status change
   SignalStatusCallback m_linkStatusCallback;
 };
 
 } // namespace dot11s
-} //namespace ns3
-#endif /* PEERLLINK_H_ */
+} // namespace ns3
+
+#endif /* PEER_LINK_H */

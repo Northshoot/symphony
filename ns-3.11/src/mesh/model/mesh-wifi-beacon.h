@@ -18,8 +18,8 @@
  * Author: Pavel Boyko <boyko@iitp.ru>
  */
 
-#ifndef MESHWIFIBEACON_H_
-#define MESHWIFIBEACON_H_
+#ifndef MESH_WIFI_BEACON_H
+#define MESH_WIFI_BEACON_H
 
 #include "ns3/object.h"
 #include "ns3/packet.h"
@@ -58,7 +58,7 @@ public:
    * \param mpAddress is mesh point address
    */
   WifiMacHeader CreateHeader (Mac48Address address, Mac48Address mpAddress);
-  ///Returns a beacon interval of wifi beacon
+  /// Returns a beacon interval of wifi beacon
   Time GetBeaconInterval () const;
   /// Create frame = { beacon header + all information elements sorted by ElementId () }
   Ptr<Packet> CreatePacket ();
@@ -72,5 +72,4 @@ private:
 
 }
 
-
-#endif /* MESHWIFIBEACON_H_ */
+#endif /* MESH_WIFI_BEACON_H */

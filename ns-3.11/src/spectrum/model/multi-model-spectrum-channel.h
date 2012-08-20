@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -88,10 +88,11 @@ public:
   static TypeId GetTypeId (void);
 
   // inherited from SpectrumChannel
+  virtual void AddPropagationLossModel (Ptr<PropagationLossModel> loss);
   virtual void AddSpectrumPropagationLossModel (Ptr<SpectrumPropagationLossModel> loss);
   virtual void SetPropagationDelayModel (Ptr<PropagationDelayModel> delay);
   virtual void AddRx (Ptr<SpectrumPhy> phy);
-  virtual void StartTx (Ptr<PacketBurst> p, Ptr <SpectrumValue> txPsd, SpectrumType st, Time duration, Ptr<SpectrumPhy> sender);
+  virtual void StartTx (Ptr<SpectrumSignalParameters> params);
 
 
   // inherited from Channel
@@ -134,12 +135,10 @@ private:
   /**
    * used internally to reschedule transmission after the propagation delay
    *
-   * @param p
-   * @param rxPowerSpectrum
-   * @param duration
+   * @param params
    * @param receiver
    */
-  virtual void StartRx (Ptr<PacketBurst> p, Ptr <SpectrumValue> rxPowerSpectrum, SpectrumType st, Time duration, Ptr<SpectrumPhy> receiver);
+  virtual void StartRx (Ptr<SpectrumSignalParameters> params, Ptr<SpectrumPhy> receiver);
 
 
 
@@ -147,15 +146,19 @@ private:
    * propagation delay model to be used with this channel
    *
    */
-  Ptr<PropagationDelayModel> m_PropagationDelay;
-
+  Ptr<PropagationDelayModel> m_propagationDelay;
 
   /**
-   * propagation loss model to be used with this channel
+    * single-frequency propagation loss model to be used with this channel
+    *
+    */
+  Ptr<PropagationLossModel> m_propagationLoss;
+
+  /**
+   * frequency-dependent propagation loss model to be used with this channel
    *
    */
-  Ptr<SpectrumPropagationLossModel> m_PropagationLoss;
-
+  Ptr<SpectrumPropagationLossModel> m_spectrumPropagationLoss;
 
 
   /**
@@ -180,6 +183,11 @@ private:
    *
    */
   std::vector<Ptr<SpectrumPhy> > m_phyVector;
+
+
+  double m_maxLossDb;
+
+  TracedCallback<Ptr<SpectrumPhy>, Ptr<SpectrumPhy>, double > m_pathLossTrace;
 };
 
 

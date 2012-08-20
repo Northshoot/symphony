@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2007 Emmanuelle Laprise, INRIA
  *
@@ -89,6 +89,7 @@ public:
   virtual enum SocketType GetSocketType (void) const;
   virtual Ptr<Node> GetNode (void) const;
   virtual int Bind (void);
+  virtual int Bind6 (void);
   virtual int Bind (const Address & address);
   virtual int Close (void);
   virtual int ShutdownSend (void);
@@ -140,7 +141,7 @@ private:
 
 };
 
-} //namespace ns3
+} // namespace ns3
 
 #endif /* PACKET_SOCKET_H */
 

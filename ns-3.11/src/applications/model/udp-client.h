@@ -20,8 +20,8 @@
  *
  */
 
-#ifndef __UDP_CLIENT_H__
-#define __UDP_CLIENT_H__
+#ifndef UDP_CLIENT_H
+#define UDP_CLIENT_H
 
 #include "ns3/application.h"
 #include "ns3/event-id.h"
@@ -56,6 +56,8 @@ public:
    * \param port remote port
    */
   void SetRemote (Ipv4Address ip, uint16_t port);
+  void SetRemote (Ipv6Address ip, uint16_t port);
+  void SetRemote (Address ip, uint16_t port);
 
 protected:
   virtual void DoDispose (void);
@@ -74,7 +76,7 @@ private:
 
   uint32_t m_sent;
   Ptr<Socket> m_socket;
-  Ipv4Address m_peerAddress;
+  Address m_peerAddress;
   uint16_t m_peerPort;
   EventId m_sendEvent;
 
@@ -82,4 +84,4 @@ private:
 
 } // namespace ns3
 
-#endif // __UDP_CLIENT_H__
+#endif /* UDP_CLIENT_H */

@@ -18,8 +18,6 @@
  * Authors: George F. Riley<riley@ece.gatech.edu>
  *          Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  */
-#include <iostream>
-
 #include "node.h"
 #include "node-list.h"
 #include "net-device.h"
@@ -34,7 +32,6 @@
 #include "ns3/boolean.h"
 #include "ns3/simulator.h"
 
-using namespace std;
 NS_LOG_COMPONENT_DEFINE ("Node");
 
 namespace ns3 {
@@ -157,6 +154,7 @@ Node::GetNApplications (void) const
 void 
 Node::DoDispose ()
 {
+  m_deviceAdditionListeners.clear ();
   m_handlers.clear ();
   for (std::vector<Ptr<NetDevice> >::iterator i = m_devices.begin ();
        i != m_devices.end (); i++)
@@ -194,10 +192,6 @@ Node::DoStart (void)
 
   Object::DoStart ();
 }
-
-void 
-Node::NotifyDeviceAdded (Ptr<NetDevice> device)
-{}
 
 void
 Node::RegisterProtocolHandler (ProtocolHandler handler, 
@@ -301,5 +295,40 @@ Node::ReceiveFromDevice (Ptr<NetDevice> device, Ptr<const Packet> packet, uint16
     }
   return found;
 }
+void 
+Node::RegisterDeviceAdditionListener (DeviceAdditionListener listener)
+{
+  m_deviceAdditionListeners.push_back (listener);
+  // and, then, notify the new listener about all existing devices.
+  for (std::vector<Ptr<NetDevice> >::const_iterator i = m_devices.begin ();
+       i != m_devices.end (); ++i)
+    {
+      listener (*i);
+    }
+}
+void 
+Node::UnregisterDeviceAdditionListener (DeviceAdditionListener listener)
+{
+  for (DeviceAdditionListenerList::iterator i = m_deviceAdditionListeners.begin ();
+       i != m_deviceAdditionListeners.end (); i++)
+    {
+      if ((*i).IsEqual (listener))
+        {
+          m_deviceAdditionListeners.erase (i);
+          break;
+         }
+    }
+}
+ 
+void 
+Node::NotifyDeviceAdded (Ptr<NetDevice> device)
+{
+  for (DeviceAdditionListenerList::iterator i = m_deviceAdditionListeners.begin ();
+       i != m_deviceAdditionListeners.end (); i++)
+    {
+      (*i) (device);
+    }  
+}
+ 
 
-} //namespace ns3
+} // namespace ns3

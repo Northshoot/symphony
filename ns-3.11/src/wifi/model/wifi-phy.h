@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005,2006 INRIA
  *
@@ -55,7 +55,7 @@ public:
    * whole packet. It means that we will report a BUSY status until
    * one of the following happens:
    *   - NotifyRxEndOk
-   *   - NotifyExEndError
+   *   - NotifyRxEndError
    *   - NotifyTxStart
    */
   virtual void NotifyRxStart (Time duration) = 0;
@@ -252,11 +252,9 @@ public:
    */
   static WifiMode GetPlcpHeaderMode (WifiMode payloadMode, WifiPreamble preamble);
 
-  /** 
-   * 
-   * 
+  /**
    * \param payloadMode the WifiMode use for the transmission of the payload
-   * \param preamble the type of preamble 
+   * \param preamble the type of preamble
    * 
    * \return the duration of the PLCP header in microseconds
    */
@@ -271,8 +269,8 @@ public:
   static uint32_t GetPlcpPreambleDurationMicroSeconds (WifiMode payloadMode, WifiPreamble preamble);
 
   /** 
+   * \param size the number of bytes in the packet to send
    * \param payloadMode the WifiMode use for the transmission of the payload
-   * \param preamble the type of preamble 
    * 
    * \return the duration of the payload in microseconds
    */
@@ -415,7 +413,7 @@ public:
 
   /**
    *
-   * Public method used to fire a PromiscSniffer trace for a wifi packet being received.  Implemented for encapsulation
+   * Public method used to fire a MonitorSniffer trace for a wifi packet being received.  Implemented for encapsulation
    * purposes.
    *
    * @param packet the packet being received
@@ -433,12 +431,12 @@ public:
    * @param signalDbm signal power in dBm
    * @param noiseDbm  noise power in dBm
    */
-  void NotifyPromiscSniffRx (Ptr<const Packet> packet, uint16_t channelFreqMhz, uint16_t channelNumber, uint32_t rate, bool isShortPreamble,
+  void NotifyMonitorSniffRx (Ptr<const Packet> packet, uint16_t channelFreqMhz, uint16_t channelNumber, uint32_t rate, bool isShortPreamble,
                              double signalDbm, double noiseDbm);
 
   /**
    *
-   * Public method used to fire a PromiscSniffer trace for a wifi packet being transmitted.  Implemented for encapsulation
+   * Public method used to fire a MonitorSniffer trace for a wifi packet being transmitted.  Implemented for encapsulation
    * purposes.
    *
    * @param packet the packet being transmitted
@@ -449,7 +447,17 @@ public:
    * units used both for the radiotap and for the prism header)
    * @param isShortPreamble true if short preamble is used, false otherwise
    */
-  void NotifyPromiscSniffTx (Ptr<const Packet> packet, uint16_t channelFreqMhz, uint16_t channelNumber, uint32_t rate, bool isShortPreamble);
+  void NotifyMonitorSniffTx (Ptr<const Packet> packet, uint16_t channelFreqMhz, uint16_t channelNumber, uint32_t rate, bool isShortPreamble);
+
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  virtual int64_t AssignStreams (int64_t stream) = 0;
 
 
 private:
@@ -510,7 +518,7 @@ private:
    *
    * \see class CallBackTraceSource
    */
-  TracedCallback<Ptr<const Packet>, uint16_t, uint16_t, uint32_t, bool, double, double> m_phyPromiscSniffRxTrace;
+  TracedCallback<Ptr<const Packet>, uint16_t, uint16_t, uint32_t, bool, double, double> m_phyMonitorSniffRxTrace;
 
   /**
    * A trace source that emulates a wifi device in monitor mode
@@ -522,7 +530,7 @@ private:
    *
    * \see class CallBackTraceSource
    */
-  TracedCallback<Ptr<const Packet>, uint16_t, uint16_t, uint32_t, bool> m_phyPromiscSniffTxTrace;
+  TracedCallback<Ptr<const Packet>, uint16_t, uint16_t, uint32_t, bool> m_phyMonitorSniffTxTrace;
 
 };
 

@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2010 Adrian Sai-wah Tam
  *
@@ -69,7 +69,9 @@ protected:
   uint32_t               m_ssThresh;     //< Slow Start Threshold
   uint32_t               m_initialCWnd;  //< Initial cWnd value
   SequenceNumber32       m_recover;      //< Previous highest Tx seqnum for fast recovery
+  uint32_t               m_retxThresh;   //< Fast Retransmit threshold
   bool                   m_inFastRec;    //< currently in fast recovery
+  bool                   m_limitedTx;    //< perform limited transmit
 };
 
 } // namespace ns3

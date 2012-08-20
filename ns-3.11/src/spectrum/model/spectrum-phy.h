@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -24,16 +24,17 @@
 
 #include <ns3/object.h>
 #include <ns3/nstime.h>
-#include <ns3/spectrum-type.h>
 
 namespace ns3 {
 
 class PacketBurst;
 class SpectrumChannel;
 class MobilityModel;
+class AntennaModel;
 class SpectrumValue;
 class SpectrumModel;
 class NetDevice;
+struct SpectrumSignalParameters;
 
 /**
  * \ingroup spectrum
@@ -45,6 +46,7 @@ class SpectrumPhy  : public Object
 {
 
 public:
+  SpectrumPhy ();
   virtual ~SpectrumPhy ();
 
   static TypeId GetTypeId (void);
@@ -54,29 +56,28 @@ public:
    *
    * @param d the NetDevice instance
    */
-  virtual void SetDevice (Ptr<Object> d) = 0;
+  virtual void SetDevice (Ptr<NetDevice> d) = 0;
 
   /**
    * get the associated NetDevice instance
    *
    * @return a Ptr to the associated NetDevice instance
    */
-  virtual Ptr<Object> GetDevice () = 0;
+  virtual Ptr<NetDevice> GetDevice () = 0;
 
   /**
    * Set the mobility model associated with this device.
    *
    * @param m the mobility model
    */
-  virtual void SetMobility (Ptr<Object> m) = 0;
+  virtual void SetMobility (Ptr<MobilityModel> m) = 0;
 
   /**
    * get the associated MobilityModel instance
    *
-   * @return a Ptr to the associated NetDevice instance
+   * @return a Ptr to the associated MobilityModel instance
    */
-  virtual Ptr<Object> GetMobility () = 0;
-
+  virtual Ptr<MobilityModel> GetMobility () = 0;
 
   /**
    * Set the channel attached to this device.
@@ -94,17 +95,22 @@ public:
   virtual Ptr<const SpectrumModel> GetRxSpectrumModel () const = 0;
 
   /**
-   * Notify the SpectrumPhy instance of an incoming waveform
+   * get the AntennaModel used by the NetDevice for reception
    *
-   * @param p the PacketBurst associated with the incoming waveform
-   * @param rxPsd the Power Spectral Density of the incoming
-   * waveform. The units of the PSD are the same specified for SpectrumChannel::StartTx().
-   * @param st spectrum type
-   * @param duration the duration of the incoming waveform
+   * @return a Ptr to the AntennaModel used by the NetDevice for reception
    */
-  virtual void StartRx (Ptr<PacketBurst> p, Ptr <const SpectrumValue> rxPsd, SpectrumType st, Time duration) = 0;
+  virtual Ptr<AntennaModel> GetRxAntenna () = 0;
 
+  /**
+   * Notify the SpectrumPhy instance of an incoming signal
+   *
+   * @param params the parameters of the signals being received
+   */
+  virtual void StartRx (Ptr<SpectrumSignalParameters> params) = 0;
 
+private:
+  SpectrumPhy (SpectrumPhy const &);
+  SpectrumPhy& operator= (SpectrumPhy const &);
 };
 
 

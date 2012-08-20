@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005,2006 INRIA
  *
@@ -24,7 +24,6 @@
 #include "wifi-preamble.h"
 #include "ns3/simulator.h"
 #include "ns3/packet.h"
-#include "ns3/random-variable.h"
 #include "ns3/assert.h"
 #include "ns3/log.h"
 #include "ns3/double.h"
@@ -74,12 +73,12 @@ WifiPhy::GetTypeId (void)
     .AddTraceSource ("PhyRxDrop",
                      "Trace source indicating a packet has been dropped by the device during reception",
                      MakeTraceSourceAccessor (&WifiPhy::m_phyRxDropTrace))
-    .AddTraceSource ("PromiscSnifferRx",
+    .AddTraceSource ("MonitorSnifferRx",
                      "Trace source simulating a wifi device in monitor mode sniffing all received frames",
-                     MakeTraceSourceAccessor (&WifiPhy::m_phyPromiscSniffRxTrace))
-    .AddTraceSource ("PromiscSnifferTx",
+                     MakeTraceSourceAccessor (&WifiPhy::m_phyMonitorSniffRxTrace))
+    .AddTraceSource ("MonitorSnifferTx",
                      "Trace source simulating the capability of a wifi device in monitor mode to sniff all frames being transmitted",
-                     MakeTraceSourceAccessor (&WifiPhy::m_phyPromiscSniffTxTrace))
+                     MakeTraceSourceAccessor (&WifiPhy::m_phyMonitorSniffTxTrace))
   ;
   return tid;
 }
@@ -338,15 +337,15 @@ WifiPhy::NotifyRxDrop (Ptr<const Packet> packet)
 }
 
 void
-WifiPhy::NotifyPromiscSniffRx (Ptr<const Packet> packet, uint16_t channelFreqMhz, uint16_t channelNumber, uint32_t rate, bool isShortPreamble, double signalDbm, double noiseDbm)
+WifiPhy::NotifyMonitorSniffRx (Ptr<const Packet> packet, uint16_t channelFreqMhz, uint16_t channelNumber, uint32_t rate, bool isShortPreamble, double signalDbm, double noiseDbm)
 {
-  m_phyPromiscSniffRxTrace (packet, channelFreqMhz, channelNumber, rate, isShortPreamble, signalDbm, noiseDbm);
+  m_phyMonitorSniffRxTrace (packet, channelFreqMhz, channelNumber, rate, isShortPreamble, signalDbm, noiseDbm);
 }
 
 void
-WifiPhy::NotifyPromiscSniffTx (Ptr<const Packet> packet, uint16_t channelFreqMhz, uint16_t channelNumber, uint32_t rate, bool isShortPreamble)
+WifiPhy::NotifyMonitorSniffTx (Ptr<const Packet> packet, uint16_t channelFreqMhz, uint16_t channelNumber, uint32_t rate, bool isShortPreamble)
 {
-  m_phyPromiscSniffTxTrace (packet, channelFreqMhz, channelNumber, rate, isShortPreamble);
+  m_phyMonitorSniffTxTrace (packet, channelFreqMhz, channelNumber, rate, isShortPreamble);
 }
 
 

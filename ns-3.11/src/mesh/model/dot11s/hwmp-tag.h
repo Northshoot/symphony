@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2008,2009 IITP RAS
  *
@@ -34,7 +34,7 @@ namespace dot11s {
  * \brief Hwmp tag implements interaction between HWMP
  * protocol and MeshWifiMac
  *
- * \details Hwmp tag keeps the following:
+ * Hwmp tag keeps the following:
  * 1. When packet is passed from Hwmp to 11sMAC:
  *  - retransmitter address,
  *  - TTL value,
@@ -72,6 +72,6 @@ private:
   uint32_t m_metric;
   uint32_t m_seqno;
 };
-} //namespace dot11s
-} //namespace ns3
+} // namespace dot11s
+} // namespace ns3
 #endif

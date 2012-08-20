@@ -24,7 +24,6 @@
 
 #include "ns3/mesh-helper.h"
 #include "ns3/simulator.h"
-#include "ns3/random-variable.h"
 #include "ns3/mobility-helper.h"
 #include "ns3/double.h"
 #include "ns3/uinteger.h"
@@ -41,10 +40,9 @@
 #include "ns3/v4ping-helper.h"
 #include "ns3/nqos-wifi-mac-helper.h"
 #include "ns3/config.h"
+#include "ns3/pcap-test.h"
+#include "ns3/rng-seed-manager.h"
 #include <sstream>
-
-/// Set to true to rewrite reference traces, leave false to run regression tests
-const bool WRITE_VECTORS = false;
 
 namespace ns3 {
 namespace aodv {
@@ -56,6 +54,7 @@ class AodvRegressionTestSuite : public TestSuite
 public:
   AodvRegressionTestSuite () : TestSuite ("routing-aodv-regression", SYSTEM) 
   {
+    SetDataDir (NS_TEST_SOURCEDIR);
     // General RREQ-RREP-RRER test case
     AddTestCase (new ChainRegressionTest ("aodv-chain-regression-test"));
     // Bug 606 test case, should crash if bug is not fixed
@@ -92,7 +91,8 @@ ChainRegressionTest::~ChainRegressionTest ()
 void
 ChainRegressionTest::DoRun ()
 {
-  SeedManager::SetSeed (12345);
+  RngSeedManager::SetSeed (12345);
+  RngSeedManager::SetRun (7);
   Config::SetDefault ("ns3::ArpCache::AliveTimeout", TimeValue (m_arpAliveTimeout));
 
   CreateNodes ();
@@ -107,7 +107,7 @@ ChainRegressionTest::DoRun ()
   Simulator::Run ();
   Simulator::Destroy ();
 
-  if (!WRITE_VECTORS) CheckResults ();
+  CheckResults ();
 
   delete m_nodes, m_nodes = 0;
 }
@@ -149,6 +149,9 @@ ChainRegressionTest::CreateDevices ()
   InternetStackHelper internetStack;
   internetStack.SetRoutingHelper (aodv);
   internetStack.Install (*m_nodes);
+  int64_t streamsUsed = aodv.AssignStreams (*m_nodes, 0);
+  NS_TEST_EXPECT_MSG_EQ (streamsUsed, m_size, "Should have assigned streams");
+
   Ipv4AddressHelper address;
   address.SetBase ("10.1.1.0", "255.255.255.0");
   Ipv4InterfaceContainer interfaces = address.Assign (devices);
@@ -161,8 +164,7 @@ ChainRegressionTest::CreateDevices ()
   p.Stop (m_time);
 
   // 4. write PCAP
-  std::string prefix = (WRITE_VECTORS ? NS_TEST_SOURCEDIR : GetTempDir ()) + m_prefix;
-  wifiPhy.EnablePcapAll (prefix);
+  wifiPhy.EnablePcapAll (CreateTempDirFilename (m_prefix));
 }
 
 void
@@ -170,15 +172,7 @@ ChainRegressionTest::CheckResults ()
 {
   for (uint32_t i = 0; i < m_size; ++i)
     {
-      std::ostringstream os1, os2;
-      // File naming conventions are hard-coded here.
-      os1 << NS_TEST_SOURCEDIR << m_prefix << "-" << i << "-0.pcap";
-      os2 << GetTempDir () << m_prefix << "-" << i << "-0.pcap";
-
-      uint32_t sec (0), usec (0);
-      bool diff = PcapFile::Diff (os1.str (), os2.str (), sec, usec);
-      NS_TEST_EXPECT_MSG_EQ (diff, false, "PCAP traces " << os1.str () << " and " << os2.str ()
-                                                         << " differ starting from " << sec << " s " << usec << " us");
+      NS_PCAP_TEST_EXPECT_EQ (m_prefix << "-" << i << "-0.pcap");
     }
 }
 

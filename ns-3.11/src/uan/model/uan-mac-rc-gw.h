@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -18,8 +18,8 @@
  * Author: Leonard Tracy <lentracy@gmail.com>
  */
 
-#ifndef UANMACRCGW_H
-#define UANMACRCGW_H
+#ifndef UAN_MAC_RC_GW_H
+#define UAN_MAC_RC_GW_H
 
 #include "uan-mac.h"
 #include "uan-address.h"
@@ -73,6 +73,16 @@ public:
   virtual void AttachPhy (Ptr<UanPhy> phy);
   virtual Address GetBroadcast (void) const;
   virtual void Clear (void);
+
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  int64_t AssignStreams (int64_t stream);
 
 private:
   enum State {
@@ -164,4 +174,4 @@ bool operator < (UanAddress &a, UanAddress &b);
 
 }
 
-#endif // UANMACRCGW_H
+#endif /* UAN_MAC_RC_GW_H */

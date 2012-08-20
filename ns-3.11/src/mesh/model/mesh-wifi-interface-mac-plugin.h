@@ -18,8 +18,8 @@
  * Author: Pavel Boyko <boyko@iitp.ru>
  */
 
-#ifndef MESHWIFIINTERFACEMACPLUGIN_H_
-#define MESHWIFIINTERFACEMACPLUGIN_H_
+#ifndef MESH_WIFI_INTERFACE_MAC_PLUGIN_H
+#define MESH_WIFI_INTERFACE_MAC_PLUGIN_H
 
 #include "ns3/wifi-mac-header.h"
 #include "ns3/packet.h"
@@ -65,7 +65,18 @@ public:
    * TODO define when MAC call this
    */
   virtual void UpdateBeacon (MeshWifiBeacon & beacon) const = 0;
+  /**
+   * Assign a fixed random variable stream number to the random variables
+   * used by this model.  Return the number of streams (possibly zero) that
+   * have been assigned.
+   *
+   * \param stream first stream index to use
+   * \return the number of stream indices assigned by this model
+   */
+  virtual int64_t AssignStreams (int64_t stream) = 0;
+
 };
 
 } // namespace ns3
-#endif /* MESHWIFIINTERFACEMACPLUGIN_H_ */
+
+#endif /* MESH_WIFI_INTERFACE_MAC_PLUGIN_H */

@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef __UDP_ECHO_CLIENT_H__
-#define __UDP_ECHO_CLIENT_H__
+#ifndef UDP_ECHO_CLIENT_H
+#define UDP_ECHO_CLIENT_H
 
 #include "ns3/application.h"
 #include "ns3/event-id.h"
@@ -49,7 +49,9 @@ public:
    * \param ip destination ipv4 address
    * \param port destination port
    */
+  void SetRemote (Address ip, uint16_t port);
   void SetRemote (Ipv4Address ip, uint16_t port);
+  void SetRemote (Ipv6Address ip, uint16_t port);
 
   /**
    * Set the data size of the packet (the number of bytes that are sent as data
@@ -142,7 +144,7 @@ private:
 
   uint32_t m_sent;
   Ptr<Socket> m_socket;
-  Ipv4Address m_peerAddress;
+  Address m_peerAddress;
   uint16_t m_peerPort;
   EventId m_sendEvent;
   /// Callbacks for tracing the packet Tx events
@@ -151,5 +153,4 @@ private:
 
 } // namespace ns3
 
-#endif // __UDP_ECHO_CLIENT_H__
-
+#endif /* UDP_ECHO_CLIENT_H */

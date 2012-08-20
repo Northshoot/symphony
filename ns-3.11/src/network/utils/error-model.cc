@@ -15,7 +15,40 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Tom Henderson <tomhend@u.washington.edu>
+ *
+ * This file incorporates work covered by the following copyright and  
+ * permission notice:  
+ *
+ * Copyright (c) 1997 Regents of the University of California.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the University nor of the Laboratory may be used
+ *    to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * Contributed by the Daedalus Research Group, UC Berkeley
+ * (http://daedalus.cs.berkeley.edu)
+ *
  * This code has been ported from ns-2 (queue/errmodel.{cc,h}
  */
 
@@ -30,6 +63,8 @@
 #include "ns3/boolean.h"
 #include "ns3/enum.h"
 #include "ns3/double.h"
+#include "ns3/string.h"
+#include "ns3/pointer.h"
 
 NS_LOG_COMPONENT_DEFINE ("ErrorModel");
 
@@ -111,19 +146,19 @@ TypeId RateErrorModel::GetTypeId (void)
     .SetParent<ErrorModel> ()
     .AddConstructor<RateErrorModel> ()
     .AddAttribute ("ErrorUnit", "The error unit",
-                   EnumValue (EU_BYTE),
+                   EnumValue (ERROR_UNIT_BYTE),
                    MakeEnumAccessor (&RateErrorModel::m_unit),
-                   MakeEnumChecker (EU_BYTE, "EU_BYTE",
-                                    EU_PKT, "EU_PKT",
-                                    EU_BIT, "EU_BIT"))
+                   MakeEnumChecker (ERROR_UNIT_BIT, "ERROR_UNIT_BIT",
+                                    ERROR_UNIT_BYTE, "ERROR_UNIT_BYTE",
+                                    ERROR_UNIT_PACKET, "ERROR_UNIT_PACKET"))
     .AddAttribute ("ErrorRate", "The error rate.",
                    DoubleValue (0.0),
                    MakeDoubleAccessor (&RateErrorModel::m_rate),
                    MakeDoubleChecker<double> ())
     .AddAttribute ("RanVar", "The decision variable attached to this error model.",
-                   RandomVariableValue (UniformVariable (0.0, 1.0)),
-                   MakeRandomVariableAccessor (&RateErrorModel::m_ranvar),
-                   MakeRandomVariableChecker ())
+                   StringValue ("ns3::UniformRandomVariable[Min=0.0|Max=1.0]"),
+                   MakePointerAccessor (&RateErrorModel::m_ranvar),
+                   MakePointerChecker<RandomVariableStream> ())
   ;
   return tid;
 }
@@ -139,7 +174,7 @@ RateErrorModel::~RateErrorModel ()
   NS_LOG_FUNCTION_NOARGS ();
 }
 
-enum ErrorUnit 
+RateErrorModel::ErrorUnit
 RateErrorModel::GetUnit (void) const 
 { 
   NS_LOG_FUNCTION_NOARGS ();
@@ -168,10 +203,17 @@ RateErrorModel::SetRate (double rate)
 }
 
 void 
-RateErrorModel::SetRandomVariable (const RandomVariable &ranvar)
+RateErrorModel::SetRandomVariable (Ptr<RandomVariableStream> ranvar)
 {
   NS_LOG_FUNCTION_NOARGS ();
   m_ranvar = ranvar;
+}
+
+int64_t 
+RateErrorModel::AssignStreams (int64_t stream)
+{
+  m_ranvar->SetStream (stream);
+  return 1;
 }
 
 bool 
@@ -184,11 +226,11 @@ RateErrorModel::DoCorrupt (Ptr<Packet> p)
     }
   switch (m_unit) 
     {
-    case EU_PKT:
+    case ERROR_UNIT_PACKET:
       return DoCorruptPkt (p);
-    case EU_BYTE:
+    case ERROR_UNIT_BYTE:
       return DoCorruptByte (p);
-    case EU_BIT:
+    case ERROR_UNIT_BIT:
       return DoCorruptBit (p);
     default:
       NS_ASSERT_MSG (false, "m_unit not supported yet");
@@ -201,7 +243,7 @@ bool
 RateErrorModel::DoCorruptPkt (Ptr<Packet> p)
 {
   NS_LOG_FUNCTION_NOARGS ();
-  return (m_ranvar.GetValue () < m_rate);
+  return (m_ranvar->GetValue () < m_rate);
 }
 
 bool
@@ -210,7 +252,7 @@ RateErrorModel::DoCorruptByte (Ptr<Packet> p)
   NS_LOG_FUNCTION_NOARGS ();
   // compute pkt error rate, assume uniformly distributed byte error
   double per = 1 - pow (1.0 - m_rate, p->GetSize ());
-  return (m_ranvar.GetValue () < per);
+  return (m_ranvar->GetValue () < per);
 }
 
 bool
@@ -219,7 +261,7 @@ RateErrorModel::DoCorruptBit (Ptr<Packet> p)
   NS_LOG_FUNCTION_NOARGS ();
   // compute pkt error rate, assume uniformly distributed bit error
   double per = 1 - pow (1.0 - m_rate, (8 * p->GetSize ()) );
-  return (m_ranvar.GetValue () < per);
+  return (m_ranvar->GetValue () < per);
 }
 
 void 
@@ -367,4 +409,4 @@ ReceiveListErrorModel::DoReset (void)
 }
 
 
-} //namespace ns3
+} // namespace ns3

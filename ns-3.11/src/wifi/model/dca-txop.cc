@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005 INRIA
  *
@@ -240,6 +240,14 @@ DcaTxop::Queue (Ptr<const Packet> packet, const WifiMacHeader &hdr)
                                      packet, fullPacketSize);
   m_queue->Enqueue (packet, hdr);
   StartAccessIfNeeded ();
+}
+
+int64_t
+DcaTxop::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  m_rng->AssignStreams (stream);
+  return 1;
 }
 
 void

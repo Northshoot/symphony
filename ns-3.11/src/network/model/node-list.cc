@@ -1,4 +1,4 @@
-/* -*- Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2007 INRIA
  *
@@ -29,7 +29,7 @@
 
 namespace ns3 {
 
-NS_LOG_COMPONENT_DEFINE ("NodeListPriv");
+NS_LOG_COMPONENT_DEFINE ("NodeList");
 
 /**
  * \brief private implementation detail of the NodeList API.
@@ -188,4 +188,4 @@ NodeList::GetNNodes (void)
   return NodeListPriv::Get ()->GetNNodes ();
 }
 
-} //namespace ns3
+} // namespace ns3

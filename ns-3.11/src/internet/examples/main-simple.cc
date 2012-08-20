@@ -25,7 +25,7 @@ static void
 SocketPrinter (Ptr<Socket> socket)
 {
   Ptr<Packet> packet;
-  while (packet = socket->Recv ())
+  while ((packet = socket->Recv ()))
     { 
       std::cout << "at=" << Simulator::Now ().GetSeconds () << "s, rx bytes=" << packet->GetSize () << std::endl;
     }
@@ -41,15 +41,13 @@ void
 RunSimulation (void)
 {
   NodeContainer c;
-  c.Create (1000000000000);
+  c.Create (1);
 
   InternetStackHelper internet;
   internet.Install (c);
 
 
   TypeId tid = TypeId::LookupByName ("ns3::UdpSocketFactory");
-  std::vector<Ptr<Socket>> socketC;
-
   Ptr<Socket> sink = Socket::CreateSocket (c.Get (0), tid);
   InetSocketAddress local = InetSocketAddress (Ipv4Address::GetAny (), 80);
   sink->Bind (local);
@@ -63,7 +61,7 @@ RunSimulation (void)
 
 
   Simulator::Run ();
-  std::cout << "# nodes " <<c.GetN()<<std::endl;
+
   Simulator::Destroy ();
 }
 

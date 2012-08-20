@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2006,2007 INRIA
  *
@@ -83,10 +83,33 @@ MobilityModel::GetDistanceFrom (Ptr<const MobilityModel> other) const
   return CalculateDistance (position, oPosition);
 }
 
+double
+MobilityModel::GetRelativeSpeed (Ptr<const MobilityModel> other) const
+{
+  double x = GetVelocity().x - other->GetVelocity().x;
+  double y = GetVelocity().y - other->GetVelocity().y;
+  double z = GetVelocity().z - other->GetVelocity().z;
+  return sqrt( (x*x) + (y*y) + (z*z) );
+}
+
 void
 MobilityModel::NotifyCourseChange (void) const
 {
   m_courseChangeTrace (this);
 }
+
+int64_t
+MobilityModel::AssignStreams (int64_t start)
+{
+  return DoAssignStreams (start);
+}
+
+// Default implementation does nothing
+int64_t
+MobilityModel::DoAssignStreams (int64_t start)
+{
+  return 0;
+}
+
 
 } // namespace ns3

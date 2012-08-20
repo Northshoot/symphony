@@ -70,8 +70,8 @@ def main(argv):
     onOffHelper = ns.applications.OnOffHelper("ns3::UdpSocketFactory",
                                   ns.network.Address(ns.network.InetSocketAddress(ns.network.Ipv4Address("10.0.0.1"), port)))
     onOffHelper.SetAttribute("DataRate", ns.network.DataRateValue(ns.network.DataRate("100kbps")))
-    onOffHelper.SetAttribute("OnTime", ns.core.RandomVariableValue(ns.core.ConstantVariable(1)))
-    onOffHelper.SetAttribute("OffTime", ns.core.RandomVariableValue(ns.core.ConstantVariable(0)))
+    onOffHelper.SetAttribute("OnTime", ns.core.StringValue ("ns3::ConstantRandomVariable[Constant=1]"))
+    onOffHelper.SetAttribute("OffTime", ns.core.StringValue ("ns3::ConstantRandomVariable[Constant=0]"))
 
     addresses = []
     nodes = []
@@ -108,6 +108,7 @@ def main(argv):
     flowmon_helper = ns.flow_monitor.FlowMonitorHelper()
     #flowmon_helper.SetMonitorAttribute("StartTime", ns.core.TimeValue(ns.core.Seconds(31)))
     monitor = flowmon_helper.InstallAll()
+    monitor = flowmon_helper.GetMonitor()
     monitor.SetAttribute("DelayBinWidth", ns.core.DoubleValue(0.001))
     monitor.SetAttribute("JitterBinWidth", ns.core.DoubleValue(0.001))
     monitor.SetAttribute("PacketSizeBinWidth", ns.core.DoubleValue(20))

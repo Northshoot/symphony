@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2010 Hajime Tazaki
  * 
@@ -44,6 +44,8 @@
 #include <string>
 #include <limits>
 #include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 namespace ns3 {
 
 static void
@@ -112,9 +114,6 @@ void Ipv4RawSocketImplTest::ReceivePkt (Ptr<Socket> socket)
   NS_ASSERT (m_receivedPacket->GetSize () == 2);
   m_receivedPacket = socket->Recv (std::numeric_limits<uint32_t>::max (), 0);
   NS_ASSERT (availableData == m_receivedPacket->GetSize ());
-  //cast availableData to void, to suppress 'availableData' set but not used
-  //compiler warning
-  (void) availableData;
 }
 
 void Ipv4RawSocketImplTest::ReceivePkt2 (Ptr<Socket> socket)
@@ -125,9 +124,6 @@ void Ipv4RawSocketImplTest::ReceivePkt2 (Ptr<Socket> socket)
   NS_ASSERT (m_receivedPacket2->GetSize () == 2);
   m_receivedPacket2 = socket->Recv (std::numeric_limits<uint32_t>::max (), 0);
   NS_ASSERT (availableData == m_receivedPacket2->GetSize ());
-  //cast availableData to void, to suppress 'availableData' set but not used
-  //compiler warning
-  (void) availableData;
 }
 
 void
@@ -327,4 +323,4 @@ public:
   }
 } g_ipv4rawTestSuite;
 
-}; // namespace ns3
+} // namespace ns3

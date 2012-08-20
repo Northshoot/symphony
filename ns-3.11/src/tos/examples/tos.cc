@@ -46,7 +46,7 @@ int main(void)
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
 	  wifi.EnableLogComponents ();
 	  //Set node model
-	  wifi.SetNodeModel("/home/lauril/dev/symphony/ns-3.11/build/debug/symphony.xml");
+	  wifi.SetNodeModel("/home/lauril/dev/symphony/ns-3.11/build/symphony.xml");
 	 //LogComponentEnableAll(LOG_ALL);
 	  //Create physical layer
 	  YansTosPhyHelper wifiPhy =  YansTosPhyHelper::Default ();

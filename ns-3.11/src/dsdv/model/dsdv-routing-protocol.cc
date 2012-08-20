@@ -32,7 +32,6 @@
 
 #include "dsdv-routing-protocol.h"
 #include "ns3/log.h"
-#include "ns3/random-variable.h"
 #include "ns3/inet-socket-address.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/udp-socket-factory.h"
@@ -47,13 +46,13 @@ namespace ns3 {
 namespace dsdv {
 NS_OBJECT_ENSURE_REGISTERED (RoutingProtocol);
 
-// / UDP Port for DSDV control traffic
+/// UDP Port for DSDV control traffic
 const uint32_t RoutingProtocol::DSDV_PORT = 269;
 
-// / Tag used by DSDV implementation
+/// Tag used by DSDV implementation
 struct DeferredRouteOutputTag : public Tag
 {
-  // / Positive if output device is fixed in RouteOutput
+  /// Positive if output device is fixed in RouteOutput
   int32_t oif;
 
   DeferredRouteOutputTag (int32_t o = -1)
@@ -188,12 +187,21 @@ RoutingProtocol::GetEnableRAFlag () const
   return EnableRouteAggregation;
 }
 
+int64_t
+RoutingProtocol::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  m_uniformRandomVariable->SetStream (stream);
+  return 1;
+}
+
 RoutingProtocol::RoutingProtocol ()
   : m_routingTable (),
     m_advRoutingTable (),
     m_queue (),
     m_periodicUpdateTimer (Timer::CANCEL_ON_DESTROY)
 {
+  m_uniformRandomVariable = CreateObject<UniformRandomVariable> ();
 }
 
 RoutingProtocol::~RoutingProtocol ()
@@ -231,7 +239,7 @@ RoutingProtocol::Start ()
   m_scb = MakeCallback (&RoutingProtocol::Send,this);
   m_ecb = MakeCallback (&RoutingProtocol::Drop,this);
   m_periodicUpdateTimer.SetFunction (&RoutingProtocol::SendPeriodicUpdate,this);
-  m_periodicUpdateTimer.Schedule (MicroSeconds (UniformVariable ().GetInteger (0,1000)));
+  m_periodicUpdateTimer.Schedule (MicroSeconds (m_uniformRandomVariable->GetInteger (0,1000)));
 }
 
 Ptr<Ipv4Route>
@@ -270,7 +278,7 @@ RoutingProtocol::RouteOutput (Ptr<Packet> p,
     }
   if (!removedAddresses.empty ())
     {
-      Simulator::Schedule (MicroSeconds (UniformVariable ().GetInteger (0,1000)),&RoutingProtocol::SendTriggeredUpdate,this);
+      Simulator::Schedule (MicroSeconds (m_uniformRandomVariable->GetInteger (0,1000)),&RoutingProtocol::SendTriggeredUpdate,this);
     }
   if (m_routingTable.LookupRoute (dst,rt))
     {
@@ -368,6 +376,12 @@ RoutingProtocol::RouteInput (Ptr<const Packet> p,
   Ipv4Address dst = header.GetDestination ();
   Ipv4Address origin = header.GetSource ();
 
+  // DSDV is not a multicast routing protocol
+  if (dst.IsMulticast ())
+    {
+      return false;
+    }
+
   // Deferred route request
   if (EnableBuffering == true && idev == m_lo)
     {
@@ -396,9 +410,18 @@ RoutingProtocol::RouteInput (Ptr<const Packet> p,
         {
           if (dst == iface.GetBroadcast () || dst.IsBroadcast ())
             {
-              NS_LOG_LOGIC ("Broadcast local delivery to " << iface.GetLocal ());
               Ptr<Packet> packet = p->Copy ();
-              lcb (p,header,iif);
+              if (lcb.IsNull () == false)
+                {
+                  NS_LOG_LOGIC ("Broadcast local delivery to " << iface.GetLocal ());
+                  lcb (p, header, iif);
+                  // Fall through to additional processing
+                }
+              else
+                {
+                  NS_LOG_ERROR ("Unable to deliver packet locally due to null callback " << p->GetUid () << " from " << origin);
+                  ecb (p, header, Socket::ERROR_NOROUTETOHOST);
+                }
               if (header.GetTtl () > 1)
                 {
                   NS_LOG_LOGIC ("Forward broadcast. TTL " << (uint16_t) header.GetTtl ());
@@ -420,8 +443,16 @@ RoutingProtocol::RouteInput (Ptr<const Packet> p,
 
   if (m_ipv4->IsDestinationAddress (dst, iif))
     {
-      NS_LOG_LOGIC ("Unicast local delivery to " << dst);
-      lcb (p, header, iif);
+      if (lcb.IsNull () == false)
+        {
+          NS_LOG_LOGIC ("Unicast local delivery to " << dst);
+          lcb (p, header, iif);
+        }
+      else
+        {
+          NS_LOG_ERROR ("Unable to deliver packet locally due to null callback " << p->GetUid () << " from " << origin);
+          ecb (p, header, Socket::ERROR_NOROUTETOHOST);
+        }
       return true;
     }
   RoutingTableEntry toDst;
@@ -731,7 +762,7 @@ RoutingProtocol::RecvDsdv (Ptr<Socket> socket)
     }
   else
     {
-      Simulator::Schedule (MicroSeconds (UniformVariable ().GetInteger (0,1000)),&RoutingProtocol::SendTriggeredUpdate,this);
+      Simulator::Schedule (MicroSeconds (m_uniformRandomVariable->GetInteger (0,1000)),&RoutingProtocol::SendTriggeredUpdate,this);
     }
 }
 
@@ -817,7 +848,7 @@ RoutingProtocol::SendPeriodicUpdate ()
   m_routingTable.Purge (removedAddresses);
   MergeTriggerPeriodicUpdates ();
   m_routingTable.GetListOfAllRoutes (allRoutes);
-  if (allRoutes.size () < 0)
+  if (allRoutes.empty ())
     {
       return;
     }
@@ -881,7 +912,7 @@ RoutingProtocol::SendPeriodicUpdate ()
       socket->SendTo (packet, 0, InetSocketAddress (destination, DSDV_PORT));
       NS_LOG_FUNCTION ("PeriodicUpdate Packet UID is : " << packet->GetUid ());
     }
-  m_periodicUpdateTimer.Schedule (m_periodicUpdateInterval + MicroSeconds (25 * UniformVariable ().GetInteger (0,1000)));
+  m_periodicUpdateTimer.Schedule (m_periodicUpdateInterval + MicroSeconds (25 * m_uniformRandomVariable->GetInteger (0,1000)));
 }
 
 void
@@ -1115,7 +1146,7 @@ RoutingProtocol::SendPacketFromQueue (Ipv4Address dst,
       ucb (route,p,header);
       if (m_queue.GetSize () != 0 && m_queue.Find (dst))
         {
-          Simulator::Schedule (MilliSeconds (UniformVariable ().GetInteger (0,100)),
+          Simulator::Schedule (MilliSeconds (m_uniformRandomVariable->GetInteger (0,100)),
                                &RoutingProtocol::SendPacketFromQueue,this,dst,route);
         }
     }

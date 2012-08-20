@@ -25,7 +25,6 @@
 #include "ns3/object-factory.h"
 #include "ns3/attribute.h"
 #include "ns3/position-allocator.h"
-
 #include "tos-node-container.h"
 
 namespace ns3 {
@@ -247,6 +246,19 @@ public:
    * stdc++ output stream.
    */
   static void EnableAsciiAll (std::ostream &os);
+  /**
+   * Assign a fixed random variable stream number to the random variables
+   * used by the mobility models (including any position allocators assigned
+   * specifically to the model) on these nodes. Return the number of 
+   * streams (possibly zero) that have been assigned. The Install() 
+   * method should have previously been called by the user.
+   *
+   * \param stream first stream index to use
+   * \param c NodeContainer of the set of nodes for which the MobilityModels
+   * should be modified to use a fixed stream
+   * \return the number of stream indices assigned by this helper
+   */
+  int64_t AssignStreams (TosNodeContainer c, int64_t stream);
 
 private:
   /**

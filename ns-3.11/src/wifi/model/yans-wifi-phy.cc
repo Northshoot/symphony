@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005,2006 INRIA
  *
@@ -26,7 +26,6 @@
 #include "error-rate-model.h"
 #include "ns3/simulator.h"
 #include "ns3/packet.h"
-#include "ns3/random-variable.h"
 #include "ns3/assert.h"
 #include "ns3/log.h"
 #include "ns3/double.h"
@@ -128,10 +127,10 @@ YansWifiPhy::GetTypeId (void)
 YansWifiPhy::YansWifiPhy ()
   :  m_channelNumber (1),
     m_endRxEvent (),
-    m_random (0.0, 1.0),
     m_channelStartingFrequency (0)
 {
   NS_LOG_FUNCTION (this);
+  m_random = CreateObject<UniformRandomVariable> ();
   m_state = CreateObject<WifiPhyStateHelper> ();
 }
 
@@ -166,10 +165,10 @@ YansWifiPhy::ConfigureStandard (enum WifiPhyStandard standard)
     case WIFI_PHY_STANDARD_80211g:
       Configure80211g ();
       break;
-    case WIFI_PHY_STANDARD_80211_10Mhz:
+    case WIFI_PHY_STANDARD_80211_10MHZ:
       Configure80211_10Mhz ();
       break;
-    case WIFI_PHY_STANDARD_80211_5Mhz:
+    case WIFI_PHY_STANDARD_80211_5MHZ:
       Configure80211_5Mhz ();
       break;
     case WIFI_PHY_STANDARD_holland:
@@ -463,15 +462,12 @@ YansWifiPhy::StartReceivePacket (Ptr<Packet> packet,
           NS_LOG_DEBUG ("sync to signal (power=" << rxPowerW << "W)");
           // sync to signal
           m_state->SwitchToRx (rxDuration);
-          NS_LOG_DEBUG ("Switched State//RX_EVENT:"<<(m_endRxEvent.IsExpired () ? "true" :"false"));
           NS_ASSERT (m_endRxEvent.IsExpired ());
           NotifyRxBegin (packet);
           m_interference.NotifyRxStart ();
-          NS_LOG_DEBUG("RX_Packet size " << packet->GetSize() << rxDuration);
           m_endRxEvent = Simulator::Schedule (rxDuration, &YansWifiPhy::EndReceive, this,
                                               packet,
                                               event);
-
         }
       else
         {
@@ -519,7 +515,7 @@ YansWifiPhy::SendPacket (Ptr<const Packet> packet, WifiMode txMode, WifiPreamble
   NotifyTxBegin (packet);
   uint32_t dataRate500KbpsUnits = txMode.GetDataRate () / 500000;
   bool isShortPreamble = (WIFI_PREAMBLE_SHORT == preamble);
-  NotifyPromiscSniffTx (packet, (uint16_t)GetChannelFrequencyMhz (), GetChannelNumber (), dataRate500KbpsUnits, isShortPreamble);
+  NotifyMonitorSniffTx (packet, (uint16_t)GetChannelFrequencyMhz (), GetChannelNumber (), dataRate500KbpsUnits, isShortPreamble);
   m_state->SwitchToTx (txDuration, packet, txMode, preamble, txPower);
   m_channel->Send (this, packet, GetPowerDbm (txPower) + m_txGainDb, txMode, preamble);
 }
@@ -783,14 +779,14 @@ YansWifiPhy::EndReceive (Ptr<Packet> packet, Ptr<InterferenceHelper::Event> even
 
   NS_LOG_DEBUG ("mode=" << (event->GetPayloadMode ().GetDataRate ()) <<
                 ", snr=" << snrPer.snr << ", per=" << snrPer.per << ", size=" << packet->GetSize ());
-  if (m_random.GetValue () > snrPer.per)
+  if (m_random->GetValue () > snrPer.per)
     {
       NotifyRxEnd (packet);
       uint32_t dataRate500KbpsUnits = event->GetPayloadMode ().GetDataRate () / 500000;
       bool isShortPreamble = (WIFI_PREAMBLE_SHORT == event->GetPreambleType ());
       double signalDbm = RatioToDb (event->GetRxPowerW ()) + 30;
       double noiseDbm = RatioToDb (event->GetRxPowerW () / snrPer.snr) - GetRxNoiseFigure () + 30;
-      NotifyPromiscSniffRx (packet, (uint16_t)GetChannelFrequencyMhz (), GetChannelNumber (), dataRate500KbpsUnits, isShortPreamble, signalDbm, noiseDbm);
+      NotifyMonitorSniffRx (packet, (uint16_t)GetChannelFrequencyMhz (), GetChannelNumber (), dataRate500KbpsUnits, isShortPreamble, signalDbm, noiseDbm);
       m_state->SwitchFromRxEndOk (packet, snrPer.snr, event->GetPayloadMode (), event->GetPreambleType ());
     }
   else
@@ -799,5 +795,13 @@ YansWifiPhy::EndReceive (Ptr<Packet> packet, Ptr<InterferenceHelper::Event> even
       NotifyRxDrop (packet);
       m_state->SwitchFromRxEndError (packet, snrPer.snr);
     }
+}
+
+int64_t
+YansWifiPhy::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  m_random->SetStream (stream);
+  return 1;
 }
 } // namespace ns3

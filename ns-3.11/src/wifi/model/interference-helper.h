@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005,2006 INRIA
  *
@@ -121,7 +121,7 @@ private:
 
   double m_noiseFigure; /**< noise figure (linear) */
   Ptr<ErrorRateModel> m_errorRateModel;
-  ///Experimental: needed for energy duration calculation
+  /// Experimental: needed for energy duration calculation
   NiChanges m_niChanges;
   double m_firstPower;
   bool m_rxing;

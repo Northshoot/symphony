@@ -55,13 +55,15 @@ main (int argc, char *argv[])
   // Default number of nodes in the star.  Overridable by command line argument.
   //
   uint32_t nSpokes = 8;
-  uint32_t animPort = 0;
-  std::string animFile;
+  std::string animFile = "star-animation.xml";
+  uint8_t useIpv6 = 0;
+  Ipv6Address ipv6AddressBase = Ipv6Address("2001::");
+  Ipv6Prefix ipv6AddressPrefix = Ipv6Prefix(64);
 
   CommandLine cmd;
   cmd.AddValue ("nSpokes", "Number of spoke nodes to place in the star", nSpokes);
-  cmd.AddValue ("animPort",      "Port Number for Remote Animation", animPort);
   cmd.AddValue ("animFile",  "File Name for Animation Output", animFile);
+  cmd.AddValue ("useIpv6",   "use Ipv6", useIpv6);
 
   cmd.Parse (argc, argv);
 
@@ -76,14 +78,29 @@ main (int argc, char *argv[])
   star.InstallStack (internet);
 
   NS_LOG_INFO ("Assign IP Addresses.");
-  star.AssignIpv4Addresses (Ipv4AddressHelper ("10.1.1.0", "255.255.255.0"));
+  if (useIpv6 == 0)
+    {
+      star.AssignIpv4Addresses (Ipv4AddressHelper ("10.1.1.0", "255.255.255.0"));
+    }
+  else
+    {
+      star.AssignIpv6Addresses (ipv6AddressBase, ipv6AddressPrefix);
+    }
 
   NS_LOG_INFO ("Create applications.");
   //
   // Create a packet sink on the star "hub" to receive packets.
   // 
   uint16_t port = 50000;
-  Address hubLocalAddress (InetSocketAddress (Ipv4Address::GetAny (), port));
+  Address hubLocalAddress;
+  if (useIpv6 == 0)
+    {
+      hubLocalAddress = InetSocketAddress (Ipv4Address::GetAny (), port);
+    }
+  else
+    {
+      hubLocalAddress = Inet6SocketAddress (Ipv6Address::GetAny (), port);
+    }
   PacketSinkHelper packetSinkHelper ("ns3::TcpSocketFactory", hubLocalAddress);
   ApplicationContainer hubApp = packetSinkHelper.Install (star.GetHub ());
   hubApp.Start (Seconds (1.0));
@@ -93,14 +110,22 @@ main (int argc, char *argv[])
   // Create OnOff applications to send TCP to the hub, one on each spoke node.
   //
   OnOffHelper onOffHelper ("ns3::TcpSocketFactory", Address ());
-  onOffHelper.SetAttribute ("OnTime", RandomVariableValue (ConstantVariable (1)));
-  onOffHelper.SetAttribute ("OffTime", RandomVariableValue (ConstantVariable (0)));
+  onOffHelper.SetAttribute ("OnTime", StringValue ("ns3::ConstantRandomVariable[Constant=1]"));
+  onOffHelper.SetAttribute ("OffTime", StringValue ("ns3::ConstantRandomVariable[Constant=0]"));
 
   ApplicationContainer spokeApps;
 
   for (uint32_t i = 0; i < star.SpokeCount (); ++i)
     {
-      AddressValue remoteAddress (InetSocketAddress (star.GetHubIpv4Address (i), port));
+      AddressValue remoteAddress;
+      if (useIpv6 == 0)
+        {
+          remoteAddress = AddressValue(InetSocketAddress (star.GetHubIpv4Address (i), port));
+        }
+      else
+        {
+          remoteAddress = AddressValue(Inet6SocketAddress (star.GetHubIpv6Address (i), port));
+        }
       onOffHelper.SetAttribute ("Remote", remoteAddress);
       spokeApps.Add (onOffHelper.Install (star.GetSpokeNode (i)));
     }
@@ -111,22 +136,16 @@ main (int argc, char *argv[])
   //
   // Turn on global static routing so we can actually be routed across the star.
   //
-  Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
+  if (useIpv6 == 0)
+    {
+      Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
+    }
 
   // Set the bounding box for animation
   star.BoundingBox (1, 1, 100, 100);
 
   // Create the animation object and configure for specified output
-  AnimationInterface anim;
-  if (animPort > 0)
-    {
-      anim.SetServerPort (animPort);
-    }
-  else if (!animFile.empty ())
-    {
-      anim.SetOutputFile (animFile);
-    }
-  anim.StartAnimation ();
+  AnimationInterface anim (animFile);
 
   NS_LOG_INFO ("Run Simulation.");
   Simulator::Run ();

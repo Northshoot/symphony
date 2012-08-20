@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2008,2009 IITP RAS
  *
@@ -28,7 +28,8 @@ namespace ns3 {
  *
  * \brief Prototype for class, which helps to install MAC-layer
  * routing stack to ns3::MeshPointDevice
- * \details You need to create a  MeshPointDevice and attach all
+ *
+ * You need to create a MeshPointDevice and attach all
  * interfaces to it, than call Install method
  */
 class MeshStack : public Object

@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2008 INRIA
  *
@@ -133,6 +133,14 @@ public:
    * \returns the bssid of the network this device belongs to.
    */
   virtual Mac48Address GetBssid (void) const = 0;
+  /**
+   * \brief Sets the interface in promiscuous mode.
+   *
+   * Enables promiscuous mode on the interface. Note that any further
+   * filtering on the incoming frame path may affect the overall
+   * behavior.
+   */
+  virtual void SetPromisc (void) = 0;
 
   /**
    * \param packet the packet to send.

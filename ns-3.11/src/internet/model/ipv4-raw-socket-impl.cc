@@ -1,5 +1,7 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 #include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
 #include "ipv4-raw-socket-impl.h"
 #include "ipv4-l3-protocol.h"
 #include "icmpv4.h"
@@ -27,7 +29,7 @@ Ipv4RawSocketImpl::GetTypeId (void)
                    MakeUintegerAccessor (&Ipv4RawSocketImpl::m_protocol),
                    MakeUintegerChecker<uint16_t> ())
     .AddAttribute ("IcmpFilter", 
-                   "Any icmp header whose type field matches a bit in this filter is dropped.",
+                   "Any icmp header whose type field matches a bit in this filter is dropped. Type must be less than 32.",
                    UintegerValue (0),
                    MakeUintegerAccessor (&Ipv4RawSocketImpl::m_icmpFilter),
                    MakeUintegerChecker<uint32_t> ())
@@ -114,6 +116,11 @@ Ipv4RawSocketImpl::Bind (void)
   return 0;
 }
 int 
+Ipv4RawSocketImpl::Bind6 (void)
+{
+  return (-1);
+}
+int 
 Ipv4RawSocketImpl::GetSockName (Address &address) const
 {
   address = InetSocketAddress (m_src, 0);
@@ -123,7 +130,7 @@ int
 Ipv4RawSocketImpl::Close (void)
 {
   NS_LOG_FUNCTION (this);
-  Ptr<Ipv4L3Protocol> ipv4 = m_node->GetObject<Ipv4L3Protocol> ();
+  Ptr<Ipv4> ipv4 = m_node->GetObject<Ipv4> ();
   if (ipv4 != 0)
     {
       ipv4->DeleteRawSocket (this);
@@ -192,7 +199,7 @@ Ipv4RawSocketImpl::SendTo (Ptr<Packet> p, uint32_t flags,
       return 0;
     }
   InetSocketAddress ad = InetSocketAddress::ConvertFrom (toAddress);
-  Ptr<Ipv4L3Protocol> ipv4 = m_node->GetObject<Ipv4L3Protocol> ();
+  Ptr<Ipv4> ipv4 = m_node->GetObject<Ipv4> ();
   Ipv4Address dst = ad.GetIpv4 ();
   Ipv4Address src = m_src;
   if (ipv4->GetRoutingProtocol ())
@@ -311,7 +318,7 @@ Ipv4RawSocketImpl::ForwardUp (Ptr<const Packet> p, Ipv4Header ipHeader, Ptr<Ipv4
     {
       Ptr<Packet> copy = p->Copy ();
       // Should check via getsockopt ()..
-      if (this->m_recvpktinfo)
+      if (IsRecvPktInfo ())
         {
           Ipv4PacketInfoTag tag;
           copy->RemovePacketTag (tag);
@@ -324,7 +331,7 @@ Ipv4RawSocketImpl::ForwardUp (Ptr<const Packet> p, Ipv4Header ipHeader, Ptr<Ipv4
           copy->PeekHeader (icmpHeader);
           uint8_t type = icmpHeader.GetType ();
           if (type < 32 &&
-              ((1 << type) & m_icmpFilter))
+              ((uint32_t(1) << type) & m_icmpFilter))
             {
               // filter out icmp packet.
               return false;

@@ -20,7 +20,7 @@
 //
 //
 //              172.16.1.0/24
-//        (1.1)  (1.2)  (1.3)  (1.4)
+//        (1.1)  (1.2)  (2.1)  (2.2)
 //
 //         eth0   eth0  eth1    eth0
 //       n0 ========= n1 ========= n2
@@ -47,11 +47,6 @@ int
 main (int argc, char *argv[])
 {
 #ifdef NS3_CLICK
-//
-// Enable logging for UdpClient and
-//
-  LogComponentEnable ("NsclickRoutingClient", LOG_LEVEL_INFO);
-  LogComponentEnable ("NsclickRoutingServer", LOG_LEVEL_INFO);
 
 //
 // Explicitly create the nodes required by the topology (shown above).

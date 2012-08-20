@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -148,6 +148,13 @@ UanMacAloha::GetBroadcast (void) const
 {
   UanAddress broadcast (255);
   return broadcast;
+}
+
+int64_t
+UanMacAloha::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  return 0;
 }
 
 }

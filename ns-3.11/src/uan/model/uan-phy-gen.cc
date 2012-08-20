@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -32,7 +32,6 @@
 #include "ns3/uan-tx-mode.h"
 #include "ns3/node.h"
 #include "ns3/uinteger.h"
-#include "ns3/random-variable.h"
 #include "ns3/energy-source-container.h"
 #include "ns3/acoustic-modem-energy-model.h"
 
@@ -357,6 +356,8 @@ UanPhyGen::UanPhyGen ()
     m_cleared (false),
     m_disabled (false)
 {
+  m_pg = CreateObject<UniformRandomVariable> ();
+
   m_energyCallback.Nullify ();
 }
 
@@ -428,7 +429,7 @@ UanPhyGen::GetTypeId (void)
 {
 
   static TypeId tid = TypeId ("ns3::UanPhyGen")
-    .SetParent<Object> ()
+    .SetParent<UanPhy> ()
     .AddConstructor<UanPhyGen> ()
     .AddAttribute ("CcaThreshold",
                    "Aggregate energy of incoming signals to move to CCA Busy state dB",
@@ -522,6 +523,11 @@ UanPhyGen::SendPacket (Ptr<Packet> pkt, uint32_t modeNum)
       NS_LOG_DEBUG ("PHY requested to TX while already Transmitting.  Dropping packet.");
       return;
     }
+  else if (m_state == SLEEP)
+    {
+      NS_LOG_DEBUG ("PHY requested to TX while sleeping.  Dropping packet.");
+      return;
+    }
 
   UanTxMode txMode = GetMode (modeNum);
 
@@ -544,6 +550,12 @@ UanPhyGen::SendPacket (Ptr<Packet> pkt, uint32_t modeNum)
 void
 UanPhyGen::TxEndEvent ()
 {
+  if (m_state == SLEEP || m_disabled == true)
+    {
+      NS_LOG_DEBUG ("Transmission ended but node sleeping or dead");
+      return;
+    }
+
   NS_ASSERT (m_state == TX);
   if (GetInterferenceDb ( (Ptr<Packet>) 0) > m_ccaThreshDb)
     {
@@ -570,12 +582,14 @@ UanPhyGen::StartRxPacket (Ptr<Packet> pkt, double rxPowerDb, UanTxMode txMode, U
   if (m_disabled)
     {
       NS_LOG_DEBUG ("Energy depleted, node cannot receive any packet. Dropping.");
+      NotifyRxDrop(pkt);    // traced source netanim
       return;
     }
 
   switch (m_state)
     {
     case TX:
+      NotifyRxDrop(pkt);    // traced source netanim
       NS_ASSERT (false);
       break;
     case RX:
@@ -584,6 +598,7 @@ UanPhyGen::StartRxPacket (Ptr<Packet> pkt, double rxPowerDb, UanTxMode txMode, U
         double newSinrDb = CalculateSinrDb (m_pktRx, m_pktRxArrTime, m_rxRecvPwrDb, m_pktRxMode, m_pktRxPdp);
         m_minRxSinrDb  =  (newSinrDb < m_minRxSinrDb) ? newSinrDb : m_minRxSinrDb;
         NS_LOG_DEBUG ("PHY " << m_mac->GetAddress () << ": Starting RX in RX mode.  SINR of pktRx = " << m_minRxSinrDb);
+        NotifyRxBegin(pkt);    // traced source netanim
       }
       break;
 
@@ -612,6 +627,7 @@ UanPhyGen::StartRxPacket (Ptr<Packet> pkt, double rxPowerDb, UanTxMode txMode, U
           {
             m_state = RX;
             UpdatePowerConsumption (RX);
+            NotifyRxBegin(pkt);    // traced source netanim
             m_rxRecvPwrDb = rxPowerDb;
             m_minRxSinrDb = newsinr;
             m_pktRx = pkt;
@@ -626,7 +642,8 @@ UanPhyGen::StartRxPacket (Ptr<Packet> pkt, double rxPowerDb, UanTxMode txMode, U
       }
       break;
     case SLEEP:
-      NS_FATAL_ERROR ("SLEEP state handling not yet implemented!");
+      NS_LOG_DEBUG ("Sleep mode. Dropping packet.");
+      NotifyRxDrop(pkt);    // traced source netanim
       break;
     }
 
@@ -646,6 +663,15 @@ UanPhyGen::RxEndEvent (Ptr<Packet> pkt, double rxPowerDb, UanTxMode txMode)
       return;
     }
 
+  if (m_disabled || m_state == SLEEP)
+    {
+      NS_LOG_DEBUG ("Sleep mode or dead. Dropping packet");
+      m_pktRx = 0;
+      NotifyRxDrop(pkt);    // traced source netanim
+      return;
+    }
+
+  NotifyRxEnd(pkt);    // traced source netanim
   if (GetInterferenceDb ( (Ptr<Packet>) 0) > m_ccaThreshDb)
     {
       m_state = CCABUSY;
@@ -657,9 +683,7 @@ UanPhyGen::RxEndEvent (Ptr<Packet> pkt, double rxPowerDb, UanTxMode txMode)
       UpdatePowerConsumption (IDLE);
     }
 
-  UniformVariable pg;
-
-  if (pg.GetValue (0, 1) > m_per->CalcPer (m_pktRx, m_minRxSinrDb, txMode))
+  if (m_pg->GetValue (0, 1) > m_per->CalcPer (m_pktRx, m_minRxSinrDb, txMode))
     {
       m_rxOkLogger (pkt, m_minRxSinrDb, txMode);
       NotifyListenersRxGood ();
@@ -811,6 +835,43 @@ UanPhyGen::SetTransducer (Ptr<UanTransducer> trans)
   m_transducer->AddPhy (this);
 }
 
+void
+UanPhyGen::SetSleepMode (bool sleep)
+{
+  if (sleep)
+    {
+      m_state = SLEEP;
+      if (!m_energyCallback.IsNull ())
+        {
+          m_energyCallback (SLEEP);
+        }
+    }
+  else if (m_state == SLEEP)
+    {
+      if (GetInterferenceDb ((Ptr<Packet>) 0) > m_ccaThreshDb)
+        {
+          m_state = CCABUSY;
+          NotifyListenersCcaStart ();
+        }
+      else
+        {
+          m_state = IDLE;
+        }
+
+      if (!m_energyCallback.IsNull ())
+        {
+          m_energyCallback (IDLE);
+        }
+    }
+}
+
+int64_t
+UanPhyGen::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  m_pg->SetStream (stream);
+  return 1;
+}
 
 void
 UanPhyGen::NotifyTransStartTx (Ptr<Packet> packet, double txPowerDb, UanTxMode txMode)

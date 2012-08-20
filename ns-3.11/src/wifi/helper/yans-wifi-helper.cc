@@ -172,7 +172,6 @@ YansWifiChannelHelper::Create (void) const
   return channel;
 }
 
-
 YansWifiPhyHelper::YansWifiPhyHelper ()
   : m_channel (0),
     m_pcapDlt (PcapHelper::DLT_IEEE802_11)
@@ -444,8 +443,8 @@ YansWifiPhyHelper::EnablePcapInternal (std::string prefix, Ptr<NetDevice> nd, bo
 
   Ptr<PcapFileWrapper> file = pcapHelper.CreateFile (filename, std::ios::out, m_pcapDlt);
 
-  phy->TraceConnectWithoutContext ("PromiscSnifferTx", MakeBoundCallback (&PcapSniffTxEvent, file));
-  phy->TraceConnectWithoutContext ("PromiscSnifferRx", MakeBoundCallback (&PcapSniffRxEvent, file));
+  phy->TraceConnectWithoutContext ("MonitorSnifferTx", MakeBoundCallback (&PcapSniffTxEvent, file));
+  phy->TraceConnectWithoutContext ("MonitorSnifferRx", MakeBoundCallback (&PcapSniffRxEvent, file));
 }
 
 void
@@ -458,7 +457,7 @@ YansWifiPhyHelper::EnableAsciiInternal (
   //
   // All of the ascii enable functions vector through here including the ones
   // that are wandering through all of devices on perhaps all of the nodes in
-  // the system.  We can only deal with devices of type CsmaNetDevice.
+  // the system.  We can only deal with devices of type WifiNetDevice.
   //
   Ptr<WifiNetDevice> device = nd->GetObject<WifiNetDevice> ();
   if (device == 0)
@@ -534,6 +533,13 @@ YansWifiPhyHelper::EnableAsciiInternal (
   oss.str ("");
   oss << "/NodeList/" << nodeid << "/DeviceList/" << deviceid << "/$ns3::WifiNetDevice/Phy/State/Tx";
   Config::Connect (oss.str (), MakeBoundCallback (&AsciiPhyTransmitSinkWithContext, stream));
+}
+
+int64_t
+YansWifiPhyHelper::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  return m_channel->AssignStreams (stream);
 }
 
 } // namespace ns3

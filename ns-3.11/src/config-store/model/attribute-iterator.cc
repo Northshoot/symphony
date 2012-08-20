@@ -20,7 +20,7 @@
 #include "ns3/config.h"
 #include "ns3/log.h"
 #include "ns3/pointer.h"
-#include "ns3/object-vector.h"
+#include "ns3/object-ptr-container.h"
 #include "ns3/string.h"
 #include <fstream>
 
@@ -109,7 +109,7 @@ AttributeIterator::DoEndVisitPointerAttribute (void)
 {
 }
 void 
-AttributeIterator::DoStartVisitArrayAttribute (Ptr<Object> object, std::string name, const ObjectVectorValue &vector)
+AttributeIterator::DoStartVisitArrayAttribute (Ptr<Object> object, std::string name, const ObjectPtrContainerValue &vector)
 {
 }
 void 
@@ -117,7 +117,7 @@ AttributeIterator::DoEndVisitArrayAttribute (void)
 {
 }
 void 
-AttributeIterator::DoStartVisitArrayItem (const ObjectVectorValue &vector, uint32_t index, Ptr<Object> item)
+AttributeIterator::DoStartVisitArrayItem (const ObjectPtrContainerValue &vector, uint32_t index, Ptr<Object> item)
 {
 }
 void 
@@ -160,7 +160,7 @@ AttributeIterator::EndVisitPointerAttribute (void)
   DoEndVisitPointerAttribute ();
 }
 void 
-AttributeIterator::StartVisitArrayAttribute (Ptr<Object> object, std::string name, const ObjectVectorValue &vector)
+AttributeIterator::StartVisitArrayAttribute (Ptr<Object> object, std::string name, const ObjectPtrContainerValue &vector)
 {
   m_currentPath.push_back (name);
   DoStartVisitArrayAttribute (object, name, vector);
@@ -173,7 +173,7 @@ AttributeIterator::EndVisitArrayAttribute (void)
 }
 
 void 
-AttributeIterator::StartVisitArrayItem (const ObjectVectorValue &vector, uint32_t index, Ptr<Object> item)
+AttributeIterator::StartVisitArrayItem (const ObjectPtrContainerValue &vector, uint32_t index, Ptr<Object> item)
 {
   std::ostringstream oss;
   oss << index;
@@ -203,17 +203,17 @@ AttributeIterator::DoIterate (Ptr<Object> object)
       NS_LOG_DEBUG ("store " << tid.GetName ());
       for (uint32_t i = 0; i < tid.GetAttributeN (); ++i)
         {
-          Ptr<const AttributeChecker> checker = tid.GetAttributeChecker (i);
-          const PointerChecker *ptrChecker = dynamic_cast<const PointerChecker *> (PeekPointer (checker));
+          struct TypeId::AttributeInformation info = tid.GetAttribute(i);
+          const PointerChecker *ptrChecker = dynamic_cast<const PointerChecker *> (PeekPointer (info.checker));
           if (ptrChecker != 0)
             {
-              NS_LOG_DEBUG ("pointer attribute " << tid.GetAttributeName (i));
+              NS_LOG_DEBUG ("pointer attribute " << info.name);
               PointerValue ptr;
-              object->GetAttribute (tid.GetAttributeName (i), ptr);
+              object->GetAttribute (info.name, ptr);
               Ptr<Object> tmp = ptr.Get<Object> ();
               if (tmp != 0)
                 {
-                  StartVisitPointerAttribute (object, tid.GetAttributeName (i),
+                  StartVisitPointerAttribute (object, info.name,
                                               tmp);
                   m_examined.push_back (object);
                   DoIterate (tmp);
@@ -222,18 +222,20 @@ AttributeIterator::DoIterate (Ptr<Object> object)
                 }
               continue;
             }
-          // attempt to cast to an object vector.
-          const ObjectVectorChecker *vectorChecker = dynamic_cast<const ObjectVectorChecker *> (PeekPointer (checker));
+          // attempt to cast to an object container
+          const ObjectPtrContainerChecker *vectorChecker = dynamic_cast<const ObjectPtrContainerChecker *> (PeekPointer (info.checker));
           if (vectorChecker != 0)
             {
-              NS_LOG_DEBUG ("vector attribute " << tid.GetAttributeName (i));
-              ObjectVectorValue vector;
-              object->GetAttribute (tid.GetAttributeName (i), vector);
-              StartVisitArrayAttribute (object, tid.GetAttributeName (i), vector);
-              for (uint32_t j = 0; j < vector.GetN (); ++j)
+              NS_LOG_DEBUG ("ObjectPtrContainer attribute " << info.name);
+              ObjectPtrContainerValue vector;
+              object->GetAttribute (info.name, vector);
+              StartVisitArrayAttribute (object, info.name, vector);
+              ObjectPtrContainerValue::Iterator it;
+              for (it = vector.Begin (); it != vector.End (); ++it)
                 {
-                  NS_LOG_DEBUG ("vector attribute item " << j);
-                  Ptr<Object> tmp = vector.Get (j);
+                  uint32_t j = (*it).first;
+                  NS_LOG_DEBUG ("ObjectPtrContainer attribute item " << j);
+                  Ptr<Object> tmp = (*it).second;
                   StartVisitArrayItem (vector, j, tmp);
                   m_examined.push_back (object);
                   DoIterate (tmp);
@@ -243,16 +245,14 @@ AttributeIterator::DoIterate (Ptr<Object> object)
               EndVisitArrayAttribute ();
               continue;
             }
-          uint32_t flags = tid.GetAttributeFlags (i);
-          Ptr<const AttributeAccessor> accessor = tid.GetAttributeAccessor (i);
-          if ((flags & TypeId::ATTR_GET) && accessor->HasGetter () && 
-              (flags & TypeId::ATTR_SET) && accessor->HasSetter ())
+          if ((info.flags & TypeId::ATTR_GET) && info.accessor->HasGetter () && 
+              (info.flags & TypeId::ATTR_SET) && info.accessor->HasSetter ())
             {
-              VisitAttribute (object, tid.GetAttributeName (i));
+              VisitAttribute (object, info.name);
             }
           else
             {
-              NS_LOG_DEBUG ("could not store " << tid.GetAttributeName (i));
+              NS_LOG_DEBUG ("could not store " << info.name);
             }
         }
     }

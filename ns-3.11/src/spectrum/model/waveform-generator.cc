@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -18,13 +18,15 @@
  * Author: Nicola Baldo <nbaldo@cttc.es>
  */
 
-#include <ns3/waveform-generator.h>
+
 #include <ns3/object-factory.h>
 #include <ns3/log.h>
 #include <ns3/simulator.h>
 #include <ns3/double.h>
 #include <ns3/packet-burst.h>
+#include <ns3/antenna-model.h>
 
+#include "waveform-generator.h"
 
 NS_LOG_COMPONENT_DEFINE ("WaveformGenerator");
 
@@ -89,14 +91,14 @@ WaveformGenerator::GetTypeId (void)
 
 
 
-Ptr<Object>
+Ptr<NetDevice>
 WaveformGenerator::GetDevice ()
 {
   return m_netDevice;
 }
 
 
-Ptr<Object>
+Ptr<MobilityModel>
 WaveformGenerator::GetMobility ()
 {
   return m_mobility;
@@ -111,14 +113,14 @@ WaveformGenerator::GetRxSpectrumModel () const
 }
 
 void
-WaveformGenerator::SetDevice (Ptr<Object> d)
+WaveformGenerator::SetDevice (Ptr<NetDevice> d)
 {
   m_netDevice = d;
 }
 
 
 void
-WaveformGenerator::SetMobility (Ptr<Object> m)
+WaveformGenerator::SetMobility (Ptr<MobilityModel> m)
 {
   m_mobility = m;
 }
@@ -134,17 +136,9 @@ WaveformGenerator::SetChannel (Ptr<SpectrumChannel> c)
 
 
 void
-WaveformGenerator::StartRx (Ptr<PacketBurst> pb, Ptr <const SpectrumValue> rxPowerSpectrum, SpectrumType st, Time duration)
+WaveformGenerator::StartRx (Ptr<SpectrumSignalParameters> params)
 {
-  NS_LOG_FUNCTION (pb << rxPowerSpectrum << duration);
-}
-
-
-SpectrumType
-WaveformGenerator::GetSpectrumType ()
-{
-  static SpectrumType st = SpectrumTypeFactory::Create ("GenericWaveform");
-  return st;
+  NS_LOG_FUNCTION (this << params);
 }
 
 void
@@ -154,7 +148,18 @@ WaveformGenerator::SetTxPowerSpectralDensity (Ptr<SpectrumValue> txPsd)
   m_txPowerSpectralDensity = txPsd;
 }
 
+Ptr<AntennaModel>
+WaveformGenerator::GetRxAntenna ()
+{
+  return m_antenna;
+}
 
+void
+WaveformGenerator::SetAntenna (Ptr<AntennaModel> a)
+{
+  NS_LOG_FUNCTION (this << a);
+  m_antenna = a;
+}
 
 void
 WaveformGenerator::SetPeriod (Time period)
@@ -188,12 +193,15 @@ WaveformGenerator::GenerateWaveform ()
 {
   NS_LOG_FUNCTION (this);
 
-  Ptr<PacketBurst> pb = Create<PacketBurst> ();
-  Time duration = Time (m_period * m_dutyCycle);
+  Ptr<SpectrumSignalParameters> txParams = Create<SpectrumSignalParameters> ();
+  txParams->duration = Time (m_period * m_dutyCycle);
+  txParams->psd = m_txPowerSpectralDensity;
+  txParams->txPhy = GetObject<SpectrumPhy> ();
+  txParams->txAntenna = m_antenna;
 
   NS_LOG_LOGIC ("generating waveform : " << *m_txPowerSpectralDensity);
   m_phyTxStartTrace (0);
-  m_channel->StartTx (pb, m_txPowerSpectralDensity, GetSpectrumType (), duration, GetObject<SpectrumPhy> ());
+  m_channel->StartTx (txParams);
 
   if (m_active)
     {

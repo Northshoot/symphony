@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -134,7 +134,7 @@ RadiotapHeader::Deserialize (Buffer::Iterator start)
 {
   NS_LOG_FUNCTION (this);
 
-  uint8_t __attribute__ ((unused)) tmp = start.ReadU8 (); // major version of radiotap header
+  uint8_t tmp = start.ReadU8 (); // major version of radiotap header
   NS_ASSERT_MSG (tmp == 0x00, "RadiotapHeader::Deserialize(): Unexpected major version");
   start.ReadU8 (); // pad field
 

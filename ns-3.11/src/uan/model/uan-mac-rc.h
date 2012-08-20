@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -18,8 +18,8 @@
  * Author: Leonard Tracy <lentracy@gmail.com>
  */
 
-#ifndef UANMACRC_H
-#define UANMACRC_H
+#ifndef UAN_MAC_RC_H
+#define UAN_MAC_RC_H
 
 #include "uan-mac.h"
 #include "uan-address.h"
@@ -28,6 +28,7 @@
 #include "ns3/trace-source-accessor.h"
 #include "ns3/traced-callback.h"
 #include "ns3/event-id.h"
+#include "ns3/random-variable-stream.h"
 
 #include <list>
 #include <utility>
@@ -153,6 +154,16 @@ public:
   virtual Address GetBroadcast (void) const;
   virtual void Clear (void);
 
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  int64_t AssignStreams (int64_t stream);
+
 private:
   enum State {
     UNASSOCIATED, GWPSENT, IDLE, RTSSENT, DATATX
@@ -208,10 +219,13 @@ private:
 
   static uint32_t m_cntrlSends;
 
+  /// Provides exponential random variables.
+  Ptr<ExponentialRandomVariable> m_ev;
+
 protected:
   void DoDispose ();
 };
 
 }
 
-#endif // UANMACRC_H
+#endif /* UAN_MAC_RC_H */

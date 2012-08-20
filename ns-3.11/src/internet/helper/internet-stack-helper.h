@@ -46,11 +46,20 @@ class Ipv6RoutingHelper;
  * change, and also the user-visible methods will not reference devices and
  * therefore the number of trace enable methods is reduced.
  *
- * Normally we eschew multiple inheritance, however, the classes 
+ * Normally we avoid multiple inheritance in ns-3, however, the classes 
  * PcapUserHelperForIpv4 and AsciiTraceUserHelperForIpv4 are
  * treated as "mixins".  A mixin is a self-contained class that
  * encapsulates a general attribute or a set of functionality that
  * may be of interest to many other classes.
+ *
+ * This class aggregates instances of these objects, by default, to each node:
+ *  - ns3::ArpL3Protocol
+ *  - ns3::Ipv4L3Protocol
+ *  - ns3::Icmpv4L4Protocol
+ *  - ns3::UdpL4Protocol
+ *  - a TCP based on the TCP factory provided
+ *  - a PacketSocketFactory
+ *  - Ipv4 routing (a list routing object and a static routing object)
  */
 class InternetStackHelper : public PcapHelperForIpv4, public PcapHelperForIpv6, 
                             public AsciiTraceHelperForIpv4, public AsciiTraceHelperForIpv6
@@ -169,6 +178,19 @@ public:
    */
   void SetIpv6StackInstall (bool enable);
 
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.  The Install() method should have previously been
+  * called by the user.
+  *
+  * \param stream first stream index to use
+  * \param c NodeContainer of the set of nodes for which the internet models
+  *          should be modified to use a fixed stream
+  * \return the number of stream indices assigned by this helper
+  */
+  int64_t AssignStreams (NodeContainer c, int64_t stream);
+
 private:
   /**
    * @brief Enable pcap output the indicated Ipv4 and interface pair.
@@ -177,6 +199,7 @@ private:
    * @param prefix Filename prefix to use for pcap files.
    * @param ipv4 Ptr to the Ipv4 interface on which you want to enable tracing.
    * @param interface Interface ID on the Ipv4 on which you want to enable tracing.
+   * @param explicitFilename Treat the prefix as an explicit filename if true
    */
   virtual void EnablePcapIpv4Internal (std::string prefix, 
                                        Ptr<Ipv4> ipv4, 
@@ -192,6 +215,7 @@ private:
    * @param prefix Filename prefix to use for ascii trace files.
    * @param ipv4 Ptr to the Ipv4 interface on which you want to enable tracing.
    * @param interface Interface ID on the Ipv4 on which you want to enable tracing.
+   * @param explicitFilename Treat the prefix as an explicit filename if true
    */
   virtual void EnableAsciiIpv4Internal (Ptr<OutputStreamWrapper> stream, 
                                         std::string prefix, 
@@ -200,12 +224,13 @@ private:
                                         bool explicitFilename);
 
   /**
-   * @brief Enable pcap output the indicated Ipv4 and interface pair.
+   * @brief Enable pcap output the indicated Ipv6 and interface pair.
    * @internal
    *
    * @param prefix Filename prefix to use for pcap files.
-   * @param ipv4 Ptr to the Ipv4 interface on which you want to enable tracing.
-   * @param interface Interface ID on the Ipv4 on which you want to enable tracing.
+   * @param ipv6 Ptr to the Ipv6 interface on which you want to enable tracing.
+   * @param interface Interface ID on the Ipv6 on which you want to enable tracing.
+   * @param explicitFilename Treat the prefix as an explicit filename if true
    */
   virtual void EnablePcapIpv6Internal (std::string prefix, 
                                        Ptr<Ipv6> ipv6, 
@@ -213,14 +238,15 @@ private:
                                        bool explicitFilename);
 
   /**
-   * @brief Enable ascii trace output on the indicated Ipv4 and interface pair.
+   * @brief Enable ascii trace output on the indicated Ipv6 and interface pair.
    * @internal
    *
    * @param stream An OutputStreamWrapper representing an existing file to use
    *               when writing trace data.
    * @param prefix Filename prefix to use for ascii trace files.
-   * @param ipv4 Ptr to the Ipv4 interface on which you want to enable tracing.
-   * @param interface Interface ID on the Ipv4 on which you want to enable tracing.
+   * @param ipv6 Ptr to the Ipv6 interface on which you want to enable tracing.
+   * @param interface Interface ID on the Ipv6 on which you want to enable tracing.
+   * @param explicitFilename Treat the prefix as an explicit filename if true
    */
   virtual void EnableAsciiIpv6Internal (Ptr<OutputStreamWrapper> stream, 
                                         std::string prefix, 

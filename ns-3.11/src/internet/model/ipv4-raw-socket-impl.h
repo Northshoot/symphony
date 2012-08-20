@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 #ifndef IPV4_RAW_SOCKET_IMPL_H
 #define IPV4_RAW_SOCKET_IMPL_H
 
@@ -27,6 +27,7 @@ public:
   virtual Ptr<Node> GetNode (void) const;
   virtual int Bind (const Address &address);
   virtual int Bind ();
+  virtual int Bind6 ();
   virtual int GetSockName (Address &address) const; 
   virtual int Close (void);
   virtual int ShutdownSend (void);

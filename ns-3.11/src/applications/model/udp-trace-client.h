@@ -19,14 +19,15 @@
  *                              <amine.ismail@udcast.com>
  */
 
-#ifndef __UDP_TRACE_CLIENT__
-#define __UDP_TRACE_CLIENT__
+#ifndef UDP_TRACE_CLIENT_H
+#define UDP_TRACE_CLIENT_H
 
 #include "ns3/application.h"
 #include "ns3/event-id.h"
 #include "ns3/ptr.h"
 #include "ns3/ipv4-address.h"
 #include <vector>
+
 namespace ns3 {
 
 class Socket;
@@ -79,7 +80,9 @@ public:
    * \param ip the destination ip address to which the stream will be sent
    * \param port the destination udp port to which the stream will be sent
    */
+  void SetRemote (Address ip, uint16_t port);
   void SetRemote (Ipv4Address ip, uint16_t port);
+  void SetRemote (Ipv6Address ip, uint16_t port);
 
   /**
    * \brief set the trace file to be used by the application
@@ -121,7 +124,7 @@ private:
   };
   uint32_t m_sent;
   Ptr<Socket> m_socket;
-  Ipv4Address m_peerAddress;
+  Address m_peerAddress;
   uint16_t m_peerPort;
   EventId m_sendEvent;
   std::vector<struct TraceEntry> m_entries;
@@ -132,4 +135,4 @@ private:
 
 } // namespace ns3
 
-#endif // __UDP_TRACE_CLIENT__
+#endif /* UDP_TRACE_CLIENT_H */

@@ -192,6 +192,19 @@ public:
    */
   NetDeviceContainer Install (const NodeContainer &c, std::string channelName) const;
 
+  /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model. Return the number of streams (possibly zero) that
+  * have been assigned. The Install() method should have previously been
+  * called by the user.
+  *
+  * \param c NetDeviceContainer of the set of net devices for which the 
+  *          CsmaNetDevice should be modified to use a fixed stream
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this helper
+  */
+  int64_t AssignStreams (NetDeviceContainer c, int64_t stream);
+
 private:
   /*
    * \internal
@@ -222,6 +235,7 @@ private:
    * \param stream The output stream object to use when logging ascii traces.
    * \param prefix Filename prefix to use for ascii trace files.
    * \param nd Net device for which you want to enable tracing.
+   * \param explicitFilename Treat the prefix as an explicit filename if true
    */
   virtual void EnableAsciiInternal (Ptr<OutputStreamWrapper> stream, 
                                     std::string prefix, 

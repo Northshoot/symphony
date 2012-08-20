@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -434,23 +434,23 @@ public:
   /**
    *
    *
-   * @param base the base
-   * @param exp  the exponent
+   * @param lhs the base
+   * @param rhs the exponent
    *
    * @return each value in base raised to the exponent
    */
-  friend SpectrumValue Pow (const SpectrumValue& base, double exp);
+  friend SpectrumValue Pow (const SpectrumValue& lhs, double rhs);
 
 
   /**
    *
    *
-   * @param base the base
-   * @param exp  the exponent
+   * @param lhs the base
+   * @param rhs the exponent
    *
    * @return the value in base raised to each value in the exponent
    */
-  friend SpectrumValue Pow (double base, const SpectrumValue& exp);
+  friend SpectrumValue Pow (double lhs, const SpectrumValue& rhs);
 
   /**
    *
@@ -479,6 +479,15 @@ public:
    * @return the logarithm in base e of all values in the argument
    */
   friend SpectrumValue Log (const SpectrumValue&  arg);
+
+  /**
+   *
+   *
+   * @param arg the argument
+   *
+   * @return the value of the integral \f$\int_F g(f) df  \f$
+   */
+  friend double Integral (const SpectrumValue&  arg);
 
   /**
    *
@@ -526,14 +535,14 @@ std::ostream& operator << (std::ostream& os, const SpectrumValue& pvf);
 double Norm (const SpectrumValue& x);
 double Sum (const SpectrumValue& x);
 double Prod (const SpectrumValue& x);
-SpectrumValue Pow (const SpectrumValue& base, double exp);
-SpectrumValue Pow (double base, const SpectrumValue& exp);
-SpectrumValue Log10 (const SpectrumValue&  arg);
-SpectrumValue Log2 (const SpectrumValue&  arg);
-SpectrumValue Log (const SpectrumValue&  arg);
+SpectrumValue Pow (const SpectrumValue& lhs, double rhs);
+SpectrumValue Pow (double lhs, const SpectrumValue& rhs);
+SpectrumValue Log10 (const SpectrumValue& arg);
+SpectrumValue Log2 (const SpectrumValue& arg);
+SpectrumValue Log (const SpectrumValue& arg);
+double Integral (const SpectrumValue& arg);
 
 
 } // namespace ns3
-
 
 #endif /* SPECTRUM_VALUE_H */

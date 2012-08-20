@@ -35,13 +35,11 @@ int main (int argc, char *argv[])
 
   uint32_t xSize = 5;
   uint32_t ySize = 5;
-  uint16_t port = 0;
-  std::string animFile;
+  std::string animFile = "grid-animation.xml";
 
   CommandLine cmd;
   cmd.AddValue ("xSize", "Number of rows of nodes", xSize);
   cmd.AddValue ("ySize", "Number of columns of nodes", ySize);
-  cmd.AddValue ("port",  "Port Number for Remote Animation", port);
   cmd.AddValue ("animFile",  "File Name for Animation Output", animFile);
 
   cmd.Parse (argc,argv);
@@ -67,10 +65,8 @@ int main (int argc, char *argv[])
 
 
   OnOffHelper clientHelper ("ns3::UdpSocketFactory", Address ());
-  clientHelper.SetAttribute 
-    ("OnTime", RandomVariableValue (ConstantVariable (1)));
-  clientHelper.SetAttribute 
-    ("OffTime", RandomVariableValue (ConstantVariable (0)));
+  clientHelper.SetAttribute ("OnTime", StringValue ("ns3::ConstantRandomVariable[Constant=1]"));
+  clientHelper.SetAttribute ("OffTime", StringValue ("ns3::ConstantRandomVariable[Constant=0]"));
   ApplicationContainer clientApps;
 
   // Create an on/off app sending packets
@@ -85,25 +81,12 @@ int main (int argc, char *argv[])
   grid.BoundingBox (1, 1, 100, 100);
 
   // Create the animation object and configure for specified output
-  AnimationInterface anim;
-  if (port > 0)
-    {
-      anim.SetServerPort (port);
-    }
-  else if (!animFile.empty ())
-    {
-      anim.SetOutputFile (animFile);
-    }
-  anim.StartAnimation ();
+  AnimationInterface anim (animFile);
 
   // Set up the actual simulation
   Ipv4GlobalRoutingHelper::PopulateRoutingTables ();
 
-  std::cout << "Running the simulation" << std::endl;
   Simulator::Run ();
-  std::cout << "Destroying the simulation" << std::endl;
   Simulator::Destroy ();
-  std::cout << "Stopping the animation" << std::endl;
-  anim.StopAnimation ();
   return 0;
 }

@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -42,6 +42,10 @@ SpectrumPhy::GetTypeId (void)
   return tid;
 }
 
+SpectrumPhy::SpectrumPhy ()
+{
+  NS_LOG_FUNCTION (this);
+}
 
 SpectrumPhy::~SpectrumPhy ()
 {

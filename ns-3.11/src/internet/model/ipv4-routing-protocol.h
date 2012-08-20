@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -63,6 +63,10 @@ public:
    * This lookup is used by transport protocols.  It does not cause any
    * packet to be forwarded, and is synchronous.  Can be used for
    * multicast or unicast.  The Linux equivalent is ip_route_output()
+   *
+   * The header input parameter may have an uninitialized value
+   * for the source address, but the destination address should always be 
+   * properly set by the caller.
    *
    * \param p packet to be routed.  Note that this method may modify the packet.
    *          Callers may also pass in a null pointer. 
@@ -142,9 +146,14 @@ public:
    */
   virtual void SetIpv4 (Ptr<Ipv4> ipv4) = 0;
 
+  /**
+   * \brief Print the Routing Table entries
+   *
+   * \param stream the ostream the Routing table is printed to
+   */
   virtual void PrintRoutingTable (Ptr<OutputStreamWrapper> stream) const = 0;
 };
 
-} //namespace ns3
+} // namespace ns3
 
 #endif /* IPV4_ROUTING_PROTOCOL_H */

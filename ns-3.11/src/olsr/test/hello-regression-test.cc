@@ -20,7 +20,8 @@
 
 #include "hello-regression-test.h"
 #include "ns3/simulator.h"
-#include "ns3/random-variable.h"
+#include "ns3/random-variable-stream.h"
+#include "ns3/rng-seed-manager.h"
 #include "ns3/double.h"
 #include "ns3/uinteger.h"
 #include "ns3/string.h"
@@ -30,9 +31,7 @@
 #include "ns3/point-to-point-helper.h"
 #include "ns3/ipv4-address-helper.h"
 #include "ns3/abort.h"
-
-/// Set to true to rewrite reference traces, leave false to run regression tests
-const bool WRITE_VECTORS = false;
+#include "ns3/pcap-test.h"
 
 namespace ns3
 {
@@ -54,14 +53,15 @@ HelloRegressionTest::~HelloRegressionTest()
 void
 HelloRegressionTest::DoRun ()
 {
-  SeedManager::SetSeed (12345);
+  RngSeedManager::SetSeed (12345);
+  RngSeedManager::SetRun (7);
   CreateNodes ();
 
   Simulator::Stop (m_time);
   Simulator::Run ();
   Simulator::Destroy ();
 
-  if (!WRITE_VECTORS) CheckResults ();
+  CheckResults ();
 }
 
 void
@@ -75,6 +75,8 @@ HelloRegressionTest::CreateNodes ()
   InternetStackHelper internet;
   internet.SetRoutingHelper (olsr);
   internet.Install (c);
+  int64_t streamsUsed = olsr.AssignStreams (c, 0);
+  NS_TEST_EXPECT_MSG_EQ (streamsUsed, 2, "Should have assigned 2 streams");
   // create p2p channel & devices
   PointToPointHelper p2p;
   p2p.SetDeviceAttribute ("DataRate", StringValue ("5Mbps"));
@@ -85,8 +87,7 @@ HelloRegressionTest::CreateNodes ()
   ipv4.SetBase ("10.1.1.0", "255.255.255.0");
   ipv4.Assign (nd);
   // setup PCAP traces
-  std::string prefix = (WRITE_VECTORS ? NS_TEST_SOURCEDIR : GetTempDir ()) + PREFIX;
-  p2p.EnablePcapAll (prefix);
+  p2p.EnablePcapAll (CreateTempDirFilename (PREFIX));
 }
 
 void
@@ -94,15 +95,7 @@ HelloRegressionTest::CheckResults ()
 {
   for (uint32_t i = 0; i < 2; ++i)
     {
-      std::ostringstream os1, os2;
-      // File naming conventions are hard-coded here.
-      os1 << NS_TEST_SOURCEDIR << PREFIX << "-" << i << "-1.pcap";
-      os2 << GetTempDir () << PREFIX << "-" << i << "-1.pcap";
-
-      uint32_t sec (0), usec (0);
-      bool diff = PcapFile::Diff (os1.str (), os2.str (), sec, usec);
-      NS_TEST_EXPECT_MSG_EQ (diff, false, "PCAP traces " << os1.str () << " and " << os2.str ()
-                                                         << " differ starting from " << sec << " s " << usec << " us");
+      NS_PCAP_TEST_EXPECT_EQ (PREFIX << "-" << i << "-1.pcap");
     }
 }
 

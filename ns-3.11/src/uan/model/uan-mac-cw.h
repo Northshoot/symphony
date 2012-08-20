@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -18,8 +18,8 @@
  * Author: Leonard Tracy <lentracy@gmail.com>
  */
 
-#ifndef UANMACCW_H
-#define UANMACCW_H
+#ifndef UAN_MAC_CW_H
+#define UAN_MAC_CW_H
 
 #include "ns3/uan-mac.h"
 #include "ns3/nstime.h"
@@ -27,7 +27,7 @@
 #include "ns3/uan-phy.h"
 #include "ns3/uan-tx-mode.h"
 #include "ns3/uan-address.h"
-
+#include "ns3/random-variable-stream.h"
 
 namespace ns3 {
 
@@ -87,6 +87,17 @@ public:
   virtual void NotifyCcaEnd (void);
   /// Function called by UanPhy object to notify of outgoing transmission start
   virtual void NotifyTxStart (Time duration);
+
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  int64_t AssignStreams (int64_t stream);
+
 private:
   typedef enum {
     IDLE, CCABUSY, RUNNING, TX
@@ -114,6 +125,9 @@ private:
 
   bool m_cleared;
 
+  /// Provides uniform random variables.
+  Ptr<UniformRandomVariable> m_rv;
+
   void PhyRxPacketGood (Ptr<Packet> packet, double sinr, UanTxMode mode);
   void PhyRxPacketError (Ptr<Packet> packet, double sinr);
   void SaveTimer (void);
@@ -126,4 +140,4 @@ protected:
 
 }
 
-#endif // UANMACCW_H
+#endif /* UAN_MAC_CW_H */

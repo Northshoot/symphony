@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -20,8 +20,8 @@
  */
 
 
-#ifndef UANPHY_H
-#define UANPHY_H
+#ifndef UAN_PHY_H
+#define UAN_PHY_H
 
 #include "ns3/object.h"
 #include "ns3/uan-mac.h"
@@ -44,6 +44,8 @@ class UanPhyCalcSinr : public Object
 {
 
 public:
+  static TypeId GetTypeId (void);
+
   /**
    * \param pkt Packet to calculate SINR for
    * \param arrTime Arrival time of pkt
@@ -86,7 +88,6 @@ public:
   {
     return 10 * log10 (kp);
   }
-
 };
 
 /**
@@ -97,6 +98,8 @@ public:
 class UanPhyPer : public Object
 {
 public:
+  static TypeId GetTypeId (void);
+
   /**
    * Calculates the prob. of packet error based on
    * SINR at the receiver and a tx mode.
@@ -163,7 +166,9 @@ public:
 class UanPhy : public Object
 {
 public:
-  // / Enum defining possible Phy states
+  static TypeId GetTypeId (void);
+
+  /// Enum defining possible Phy states
   enum State
   {
     IDLE, CCABUSY, RX, TX, SLEEP
@@ -374,8 +379,105 @@ public:
    * Clears all pointer references
    */
   virtual void Clear (void) = 0;
+
+  virtual void SetSleepMode (bool sleep) = 0;
+
+
+  /**
+   * Public method used to fire a PhyTxBegin trace.  Implemented for encapsulation
+   * purposes.
+   */
+  void NotifyTxBegin (Ptr<const Packet> packet);
+
+  /**
+   * Public method used to fire a PhyTxEnd trace.  Implemented for encapsulation
+   * purposes.
+   */
+  void NotifyTxEnd (Ptr<const Packet> packet);
+
+  /**
+   * Public method used to fire a PhyTxDrop trace.  Implemented for encapsulation
+   * purposes.
+   */
+  void NotifyTxDrop (Ptr<const Packet> packet);
+
+  /**
+   * Public method used to fire a PhyRxBegin trace.  Implemented for encapsulation
+   * purposes.
+   */
+  void NotifyRxBegin (Ptr<const Packet> packet);
+
+  /**
+   * Public method used to fire a PhyRxEnd trace.  Implemented for encapsulation
+   * purposes.
+   */
+  void NotifyRxEnd (Ptr<const Packet> packet);
+
+  /**
+   * Public method used to fire a PhyRxDrop trace.  Implemented for encapsulation
+   * purposes.
+   */
+  void NotifyRxDrop (Ptr<const Packet> packet);
+
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  virtual int64_t AssignStreams (int64_t stream) = 0;
+
+private:
+  /**
+   * The trace source fired when a packet begins the transmission process on
+   * the medium.
+   *
+   * \see class CallBackTraceSource
+   */
+  TracedCallback<Ptr<const Packet> > m_phyTxBeginTrace;
+
+  /**
+   * The trace source fired when a packet ends the transmission process on
+   * the medium.
+   *
+   * \see class CallBackTraceSource
+   */
+  TracedCallback<Ptr<const Packet> > m_phyTxEndTrace;
+
+  /**
+   * The trace source fired when the phy layer drops a packet as it tries
+   * to transmit it.
+   *
+   * \see class CallBackTraceSource
+   */
+  TracedCallback<Ptr<const Packet> > m_phyTxDropTrace;
+
+  /**
+   * The trace source fired when a packet begins the reception process from
+   * the medium.
+   *
+   * \see class CallBackTraceSource
+   */
+  TracedCallback<Ptr<const Packet> > m_phyRxBeginTrace;
+
+  /**
+   * The trace source fired when a packet ends the reception process from
+   * the medium.
+   *
+   * \see class CallBackTraceSource
+   */
+  TracedCallback<Ptr<const Packet> > m_phyRxEndTrace;
+
+  /**
+   * The trace source fired when the phy layer drops a packet it has received.
+   *
+   * \see class CallBackTraceSource
+   */
+  TracedCallback<Ptr<const Packet> > m_phyRxDropTrace;
 };
 
 }
 
-#endif // UANPHY_H
+#endif /* UAN_PHY_H */

@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2008 Timo Bingmann
  *
@@ -26,6 +26,7 @@
 #include "ns3/string.h"
 #include "ns3/boolean.h"
 #include "ns3/double.h"
+#include "ns3/pointer.h"
 #include "ns3/gnuplot.h"
 #include "ns3/simulator.h"
 
@@ -238,7 +239,8 @@ int main (int argc, char *argv[])
 
   {
     Ptr<RandomPropagationLossModel> random = CreateObject<RandomPropagationLossModel> ();
-    random->SetAttribute ("Variable", RandomVariableValue (ExponentialVariable (50.0)));
+    Ptr<ExponentialRandomVariable> expVar = CreateObjectWithAttributes<ExponentialRandomVariable> ("Mean", DoubleValue (50.0));
+    random->SetAttribute ("Variable", PointerValue (expVar));
 
     Gnuplot plot = TestDeterministic (random);
     plot.SetTitle ("ns3::RandomPropagationLossModel with Exponential Distribution");
@@ -249,7 +251,7 @@ int main (int argc, char *argv[])
     Ptr<JakesPropagationLossModel> jakes = CreateObject<JakesPropagationLossModel> ();
 
     // doppler frequency shift for 5.15 GHz at 100 km/h
-    jakes->SetAttribute ("DopplerFreq", DoubleValue (477.9));
+    Config::SetDefault ("ns3::JakesProcess::DopplerFrequencyHz", DoubleValue (477.9));
 
     Gnuplot plot = TestDeterministicByTime (jakes, Seconds (0.001), Seconds (1.0));
     plot.SetTitle ("ns3::JakesPropagationLossModel (with 477.9 Hz shift and 1 millisec resolution)");
@@ -260,7 +262,7 @@ int main (int argc, char *argv[])
     Ptr<JakesPropagationLossModel> jakes = CreateObject<JakesPropagationLossModel> ();
 
     // doppler frequency shift for 5.15 GHz at 100 km/h
-    jakes->SetAttribute ("DopplerFreq", DoubleValue (477.9));
+    Config::SetDefault ("ns3::JakesProcess::DopplerFrequencyHz", DoubleValue (477.9));
 
     Gnuplot plot = TestDeterministicByTime (jakes, Seconds (0.0001), Seconds (0.1));
     plot.SetTitle ("ns3::JakesPropagationLossModel (with 477.9 Hz shift and 0.1 millisec resolution)");

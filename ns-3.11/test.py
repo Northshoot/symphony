@@ -42,7 +42,6 @@ from utils import get_list_from_file
 # found in the associated subdirectory wscript files.
 #
 interesting_config_items = [
-    "NS3_BUILDDIR",
     "NS3_ENABLED_MODULES",
     "NS3_MODULE_PATH",
     "NSC_ENABLED",
@@ -54,6 +53,10 @@ interesting_config_items = [
     "ENABLE_PYTHON_BINDINGS",
     "ENABLE_CLICK",
     "ENABLE_OPENFLOW",
+    "APPNAME",
+    "BUILD_PROFILE",
+    "VERSION",
+    "PYTHON",
 ]
 
 NSC_ENABLED = False
@@ -64,6 +67,16 @@ ENABLE_TESTS = True
 ENABLE_CLICK = False
 ENABLE_OPENFLOW = False
 EXAMPLE_DIRECTORIES = []
+APPNAME = ""
+BUILD_PROFILE = ""
+VERSION = ""
+PYTHON = ""
+
+#
+# This will be given a prefix and a suffix when the waf config file is
+# read.
+#
+test_runner_name = "test-runner"
 
 #
 # If the user has constrained us to run certain kinds of tests, we can tell waf
@@ -125,12 +138,31 @@ def parse_examples_to_run_file(
         #
         cpp_examples = get_list_from_file(examples_to_run_path, "cpp_examples")
         for example_name, do_run, do_valgrind_run in cpp_examples:
+            # Seperate the example name from its arguments.
+            example_name_parts = example_name.split(' ', 1)
+            if len(example_name_parts) == 1:
+                example_name      = example_name_parts[0]
+                example_arguments = ""
+            else:
+                example_name      = example_name_parts[0]
+                example_arguments = example_name_parts[1]
+
+            # Add the proper prefix and suffix to the example name to
+            # match what is done in the wscript file.
+            example_name = "%s%s-%s-%s" % (APPNAME, VERSION, example_name, BUILD_PROFILE)
+
+            # Set the full path for the example.
             example_path = os.path.join(cpp_executable_dir, example_name)
             # Add all of the C++ examples that were built, i.e. found
             # in the directory, to the list of C++ examples to run.
             if os.path.exists(example_path):
-                example_tests.append((example_path, do_run, do_valgrind_run))
+                # Add any arguments to the path.
+                if len(example_name_parts) != 1:
+                    example_path = "%s %s" % (example_path, example_arguments)
 
+                # Add this example.
+                example_tests.append((example_path, do_run, do_valgrind_run))
+    
         # Each tuple in the Python list of examples to run contains
         #
         #     (example_name, do_run)
@@ -145,10 +177,26 @@ def parse_examples_to_run_file(
         #
         python_examples = get_list_from_file(examples_to_run_path, "python_examples")
         for example_name, do_run in python_examples:
+            # Seperate the example name from its arguments.
+            example_name_parts = example_name.split(' ', 1)
+            if len(example_name_parts) == 1:
+                example_name      = example_name_parts[0]
+                example_arguments = ""
+            else:
+                example_name      = example_name_parts[0]
+                example_arguments = example_name_parts[1]
+
+            # Set the full path for the example.
             example_path = os.path.join(python_script_dir, example_name)
+
             # Add all of the Python examples that were found to the
             # list of Python examples to run.
             if os.path.exists(example_path):
+                # Add any arguments to the path.
+                if len(example_name_parts) != 1:
+                    example_path = "%s %s" % (example_path, example_arguments)
+
+                # Add this example.
                 python_tests.append((example_path, do_run))
 
 #
@@ -165,53 +213,49 @@ def parse_examples_to_run_file(
 #
 TMP_OUTPUT_DIR = "testpy-output"
 
-def get_node_text(node):
-    for child in node.childNodes:
-        if child.nodeType == child.TEXT_NODE:
-            return child.nodeValue
-    return "None"
+def read_test(test):
+    result = test.find('Result').text
+    name = test.find('Name').text
+    if not test.find('Time') is None:
+        time_real = test.find('Time').get('real')
+    else:
+        time_real = ''
+    return (result, name, time_real)
 
 #
 # A simple example of writing a text file with a test result summary.  It is 
 # expected that this output will be fine for developers looking for problems.
 #
+def node_to_text (test, f):
+    (result, name, time_real) = read_test(test)
+    output = "%s: Test Suite \"%s\" (%s)\n" % (result, name, time_real)
+    f.write(output)
+    for details in test.findall('FailureDetails'):
+        f.write("    Details:\n")
+        f.write("      Message:   %s\n" % details.find('Message').text)
+        f.write("      Condition: %s\n" % details.find('Condition').text)
+        f.write("      Actual:    %s\n" % details.find('Actual').text)
+        f.write("      Limit:     %s\n" % details.find('Limit').text)
+        f.write("      File:      %s\n" % details.find('File').text)
+        f.write("      Line:      %s\n" % details.find('Line').text)
+    for child in test.findall('Test'):
+        node_to_text(child, f)
+
 def translate_to_text(results_file, text_file):
     f = open(text_file, 'w')
-    try:
-      dom = xml.dom.minidom.parse(results_file)
-    except xml.parsers.expat.error:
-      print "\nAn error was encountered while parsing the XML file %s." % (results_file)
-      sys.exit(1)
+    import xml.etree.ElementTree as ET
+    et = ET.parse (results_file)
+    for test in et.findall('Test'):
+        node_to_text (test, f)
 
-    for suite in dom.getElementsByTagName("TestSuite"):
-        result = get_node_text(suite.getElementsByTagName("SuiteResult")[0])
-        name = get_node_text(suite.getElementsByTagName("SuiteName")[0])
-        time = get_node_text(suite.getElementsByTagName("SuiteTime")[0])
-        output = "%s: Test Suite \"%s\" (%s)\n" % (result, name, time)
-        f.write(output)
-        if result != "CRASH":
-            for case in suite.getElementsByTagName("TestCase"):
-                result = get_node_text(case.getElementsByTagName("CaseResult")[0])
-                name = get_node_text(case.getElementsByTagName("CaseName")[0])
-                time = get_node_text(case.getElementsByTagName("CaseTime")[0])
-                output =   "  %s: Test Case \"%s\" (%s)\n" % (result, name, time)
-                f.write(output)
-
-                if result == "FAIL":
-                    for details in case.getElementsByTagName("FailureDetails"):
-                        f.write("    Details:\n")
-                        f.write("      Message:   %s\n" % get_node_text(details.getElementsByTagName("Message")[0]))
-                        f.write("      Condition: %s\n" % get_node_text(details.getElementsByTagName("Condition")[0]))
-                        f.write("      Actual:    %s\n" % get_node_text(details.getElementsByTagName("Actual")[0]))
-                        f.write("      Limit:     %s\n" % get_node_text(details.getElementsByTagName("Limit")[0]))
-                        f.write("      File:      %s\n" % get_node_text(details.getElementsByTagName("File")[0]))
-                        f.write("      Line:      %s\n" % get_node_text(details.getElementsByTagName("Line")[0]))
-
-    for example in dom.getElementsByTagName("Example"):
-        result = get_node_text(example.getElementsByTagName("Result")[0])
-        name = get_node_text(example.getElementsByTagName("Name")[0])
-        time = get_node_text(example.getElementsByTagName("ElapsedTime")[0])
-        output = "%s: Example \"%s\" (%s)\n" % (result, name, time)
+    for example in et.findall('Example'):
+        result = example.find('Result').text
+        name = example.find('Name').text
+        if not example.find('Time') is None:
+            time_real = example.find('Time').get('real')
+        else:
+            time_real = ''
+        output = "%s: Example \"%s\" (%s)\n" % (result, name, time_real)
         f.write(output)
 
     f.close()
@@ -231,20 +275,18 @@ def translate_to_html(results_file, html_file):
     #
     # Read and parse the whole results file.
     #
-    dom = xml.dom.minidom.parse(results_file)
+    import xml.etree.ElementTree as ET
+    et = ET.parse(results_file)
 
     #
     # Iterate through the test suites
     #
     f.write("<h2>Test Suites</h2>\n")
-    for suite in dom.getElementsByTagName("TestSuite"):
-     
+    for suite in et.findall('Test'):     
         #
         # For each test suite, get its name, result and execution time info
         #
-        name = get_node_text(suite.getElementsByTagName("SuiteName")[0])
-        result = get_node_text(suite.getElementsByTagName("SuiteResult")[0])
-        time = get_node_text(suite.getElementsByTagName("SuiteTime")[0])
+        (result, name, time) = read_test (suite)
 
         # 
         # Print a level three header with the result, name and time.  If the 
@@ -316,15 +358,13 @@ def translate_to_html(results_file, html_file):
         #
         # Now iterate through all of the test cases.
         #
-        for case in suite.getElementsByTagName("TestCase"):
+        for case in suite.findall('Test'):
 
             #
             # Get the name, result and timing information from xml to use in
             # printing table below.
             #
-            name = get_node_text(case.getElementsByTagName("CaseName")[0])
-            result = get_node_text(case.getElementsByTagName("CaseResult")[0])
-            time = get_node_text(case.getElementsByTagName("CaseTime")[0])
+            (result, name, time) = read_test(case)
 
             #
             # If the test case failed, we iterate through possibly multiple
@@ -349,7 +389,7 @@ def translate_to_html(results_file, html_file):
                 #
 
                 first_row = True
-                for details in case.getElementsByTagName("FailureDetails"):
+                for details in case.findall('FailureDetails'):
 
                     #
                     # Start a new row in the table for each possible Failure Detail
@@ -367,12 +407,12 @@ def translate_to_html(results_file, html_file):
                         f.write("<td></td>\n")
 
                     f.write("<td>")
-                    f.write("<b>Message: </b>%s, " % get_node_text(details.getElementsByTagName("Message")[0]))
-                    f.write("<b>Condition: </b>%s, " % get_node_text(details.getElementsByTagName("Condition")[0]))
-                    f.write("<b>Actual: </b>%s, " % get_node_text(details.getElementsByTagName("Actual")[0]))
-                    f.write("<b>Limit: </b>%s, " % get_node_text(details.getElementsByTagName("Limit")[0]))
-                    f.write("<b>File: </b>%s, " % get_node_text(details.getElementsByTagName("File")[0]))
-                    f.write("<b>Line: </b>%s" % get_node_text(details.getElementsByTagName("Line")[0]))
+                    f.write("<b>Message: </b>%s, " % details.find('Message').text)
+                    f.write("<b>Condition: </b>%s, " % details.find('Condition').text)
+                    f.write("<b>Actual: </b>%s, " % details.find('Actual').text)
+                    f.write("<b>Limit: </b>%s, " % details.find('Limit').text)
+                    f.write("<b>File: </b>%s, " % details.find('File').text)
+                    f.write("<b>Line: </b>%s" % details.find('Line').text)
                     f.write("</td>\n")
                     
                     #
@@ -428,7 +468,7 @@ def translate_to_html(results_file, html_file):
     #
     # Now iterate through all of the examples
     #
-    for example in dom.getElementsByTagName("Example"):
+    for example in et.findall("Example"):
         
         #
         # Start a new row for each example
@@ -438,9 +478,7 @@ def translate_to_html(results_file, html_file):
         #
         # Get the result and name of the example in question
         #
-        result = get_node_text(example.getElementsByTagName("Result")[0])
-        name =   get_node_text(example.getElementsByTagName("Name")[0])
-        time =   get_node_text(example.getElementsByTagName("ElapsedTime")[0])
+        (result, name, time) = read_test(example)
 
         #
         # If the example either failed or crashed, print its result status
@@ -493,24 +531,6 @@ def sigint_hook(signal, frame):
     thread_exit = True
     return 0
 
-#
-# Waf can be configured to compile in debug or optimized modes.  In each
-# case, the resulting built goes into a different directory.  If we want
-# test tests to run from the correct code-base, we have to figure out which
-# mode waf is running in.  This is called its active variant.
-#
-# XXX This function pokes around in the waf internal state file.  To be a
-# little less hacky, we should add a commmand to waf to return this info
-# and use that result.
-#
-def read_waf_active_variant():
-    for line in open("build/c4che/default.cache.py").readlines():
-        if line.startswith("NS3_ACTIVE_VARIANT"):
-            exec(line, globals())
-            break
-
-    if options.verbose:
-        print "NS3_ACTIVE_VARIANT == %s" % NS3_ACTIVE_VARIANT
 
 #
 # In general, the build process itself naturally takes care of figuring out
@@ -529,7 +549,18 @@ def read_waf_active_variant():
 # and use that result.
 #
 def read_waf_config():
-    for line in open("build/c4che/%s.cache.py" % NS3_ACTIVE_VARIANT).readlines():
+    for line in open(".lock-waf_" + sys.platform + "_build", "rt"):
+        if line.startswith("top_dir ="):
+            key, val = line.split('=')
+            top_dir = eval(val.strip())
+        if line.startswith("out_dir ="):
+            key, val = line.split('=')
+            out_dir = eval(val.strip())
+    global NS3_BASEDIR
+    NS3_BASEDIR = top_dir
+    global NS3_BUILDDIR
+    NS3_BUILDDIR = out_dir
+    for line in open("%s/c4che/_cache.py" % out_dir).readlines():
         for item in interesting_config_items:
             if line.startswith(item):
                 exec(line, globals())
@@ -565,7 +596,7 @@ def make_paths():
         if key == "PYTHONPATH":
             have_PYTHONPATH = True
 
-    pypath = os.environ["PYTHONPATH"] = os.path.join (NS3_BUILDDIR, NS3_ACTIVE_VARIANT, "bindings", "python")
+    pypath = os.environ["PYTHONPATH"] = os.path.join (NS3_BUILDDIR, "bindings", "python")
 
     if not have_PYTHONPATH:
         os.environ["PYTHONPATH"] = pypath
@@ -621,7 +652,7 @@ def make_paths():
 # You should see in the verbose output something that looks like:
 #
 #   Synchronously execute valgrind --suppressions=/home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/testpy.supp
-#   --leak-check=full --error-exitcode=2 /home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/build/debug/utils/test-runner 
+#   --leak-check=full --error-exitcode=2 /home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/build/debug/utils/ns3-dev-test-runner-debug 
 #   --suite=devices-mesh-dot11s-regression --basedir=/home/craigdo/repos/ns-3-allinone-dev/ns-3-dev 
 #   --tempdir=testpy-output/2010-01-12-22-47-50-CUT 
 #   --out=testpy-output/2010-01-12-22-47-50-CUT/devices-mesh-dot11s-regression.xml
@@ -630,7 +661,7 @@ def make_paths():
 # reproduce your error:
 #
 #   valgrind --suppressions=/home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/testpy.supp
-#   --leak-check=full --error-exitcode=2 /home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/build/debug/utils/test-runner 
+#   --leak-check=full --error-exitcode=2 /home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/build/debug/utils/ns3-dev-test-runner-debug 
 #   --suite=devices-mesh-dot11s-regression --basedir=/home/craigdo/repos/ns-3-allinone-dev/ns-3-dev 
 #   --tempdir=testpy-output 
 #
@@ -642,7 +673,7 @@ def make_paths():
 # option to valgrind.  Use something like:
 #
 #   valgrind --gen-suppressions=yes --suppressions=/home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/testpy.supp
-#   --leak-check=full --error-exitcode=2 /home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/build/debug/utils/test-runner 
+#   --leak-check=full --error-exitcode=2 /home/craigdo/repos/ns-3-allinone-dev/ns-3-dev/build/debug/utils/ns3-dev-test-runner-debug 
 #   --suite=devices-mesh-dot11s-regression --basedir=/home/craigdo/repos/ns-3-allinone-dev/ns-3-dev 
 #   --tempdir=testpy-output 
 #
@@ -685,16 +716,15 @@ def make_paths():
 VALGRIND_SUPPRESSIONS_FILE = "testpy.supp"
 
 def run_job_synchronously(shell_command, directory, valgrind, is_python, build_path=""):
-    (base, build) = os.path.split (NS3_BUILDDIR)
-    suppressions_path = os.path.join (base, VALGRIND_SUPPRESSIONS_FILE)
+    suppressions_path = os.path.join (NS3_BASEDIR, VALGRIND_SUPPRESSIONS_FILE)
 
     if is_python:
-        path_cmd = "python " + os.path.join (base, shell_command)
+        path_cmd = PYTHON[0] + " " + os.path.join (NS3_BASEDIR, shell_command)
     else:
         if len(build_path):
             path_cmd = os.path.join (build_path, shell_command)
         else:
-            path_cmd = os.path.join (NS3_BUILDDIR, NS3_ACTIVE_VARIANT, shell_command)
+            path_cmd = os.path.join (NS3_BUILDDIR, shell_command)
 
     if valgrind:
         cmd = "valgrind --suppressions=%s --leak-check=full --show-reachable=yes --error-exitcode=2 %s" % (suppressions_path, 
@@ -786,7 +816,7 @@ class Job:
     #
     # This is the shell command that will be executed in the job.  For example,
     #
-    #  "utils/test-runner --suite=some-test-suite"
+    #  "utils/ns3-dev-test-runner-debug --test-name=some-test-suite"
     #
     def set_shell_command(self, shell_command):
         self.shell_command = shell_command
@@ -908,8 +938,8 @@ class worker_thread(threading.Thread):
                 if job.is_example or job.is_pyexample:
                     #
                     # If we have an example, the shell command is all we need to
-                    # know.  It will be something like "examples/udp-echo" or 
-                    # "examples/mixed-wireless.py"
+                    # know.  It will be something like "examples/udp/udp-echo" or 
+                    # "examples/wireless/mixed-wireless.py"
                     #
                     (job.returncode, standard_out, standard_err, et) = run_job_synchronously(job.shell_command, 
                         job.cwd, options.valgrind, job.is_pyexample, job.build_path)
@@ -919,8 +949,12 @@ class worker_thread(threading.Thread):
                     # to the test runner, specifically the base directory and temp
                     # file name
                     #
+                    if options.update_data:
+                        update_data = '--update-data'
+                    else:
+                        update_data = ''
                     (job.returncode, standard_out, standard_err, et) = run_job_synchronously(job.shell_command + 
-                        " --basedir=%s --tempdir=%s --out=%s" % (job.basedir, job.tempdir, job.tmp_file_name), 
+                        " --xml --tempdir=%s --out=%s %s" % (job.tempdir, job.tmp_file_name, update_data), 
                         job.cwd, options.valgrind, False)
 
                 job.set_elapsed_time(et)
@@ -936,10 +970,24 @@ class worker_thread(threading.Thread):
                 self.output_queue.put(job)
 
 #
-# This is the main function that does the work of interacting with the test-runner
-# itself.
+# This is the main function that does the work of interacting with the
+# test-runner itself.
 #
 def run_tests():
+    #
+    # Pull some interesting configuration information out of waf, primarily
+    # so we can know where executables can be found, but also to tell us what
+    # pieces of the system have been built.  This will tell us what examples 
+    # are runnable.
+    #
+    read_waf_config()
+
+    #
+    # Add the proper prefix and suffix to the test-runner name to
+    # match what is done in the wscript file.
+    #
+    test_runner_name = "%s%s-%s-%s" % (APPNAME, VERSION, "test-runner", BUILD_PROFILE)
+
     #
     # Run waf to make sure that everything is built, configured and ready to go
     # unless we are explicitly told not to.  We want to be careful about causing
@@ -992,17 +1040,12 @@ def run_tests():
             return proc.returncode
 
     #
-    # Pull some interesting configuration information out of waf, primarily
-    # so we can know where executables can be found, but also to tell us what
-    # pieces of the system have been built.  This will tell us what examples 
-    # are runnable.
+    # Dynamically set up paths.
     #
-    read_waf_active_variant()
-    read_waf_config()
     make_paths()
 
     # Get the information from the build status file.
-    build_status_file = os.path.join (NS3_BUILDDIR, NS3_ACTIVE_VARIANT, 'build-status.py')
+    build_status_file = os.path.join (NS3_BUILDDIR, 'build-status.py')
     if os.path.exists(build_status_file):
         ns3_runnable_programs = get_list_from_file(build_status_file, "ns3_runnable_programs")
         ns3_runnable_scripts = get_list_from_file(build_status_file, "ns3_runnable_scripts")
@@ -1019,7 +1062,7 @@ def run_tests():
         # Set the directories and paths for this example. 
         example_directory   = os.path.join("examples", directory)
         examples_to_run_path = os.path.join(example_directory, "examples-to-run.py")
-        cpp_executable_dir   = os.path.join(NS3_BUILDDIR, NS3_ACTIVE_VARIANT, example_directory)
+        cpp_executable_dir   = os.path.join(NS3_BUILDDIR, example_directory)
         python_script_dir    = os.path.join(example_directory)
 
         # Parse this example directory's file.
@@ -1038,7 +1081,7 @@ def run_tests():
         module_directory     = os.path.join("src", module)
         example_directory    = os.path.join(module_directory, "examples")
         examples_to_run_path = os.path.join(module_directory, "test", "examples-to-run.py")
-        cpp_executable_dir   = os.path.join(NS3_BUILDDIR, NS3_ACTIVE_VARIANT, example_directory)
+        cpp_executable_dir   = os.path.join(NS3_BUILDDIR, example_directory)
         python_script_dir    = os.path.join(example_directory)
 
         # Parse this module's file.
@@ -1063,14 +1106,15 @@ def run_tests():
     # handle them without doing all of the hard work.
     #
     if options.kinds:
-        path_cmd = os.path.join("utils", "test-runner --kinds")
+        path_cmd = os.path.join("utils", test_runner_name + " --print-test-type-list")
         (rc, standard_out, standard_err, et) = run_job_synchronously(path_cmd, os.getcwd(), False, False)
         print standard_out
 
     if options.list:
-        path_cmd = os.path.join("utils", "test-runner --list")
+        path_cmd = os.path.join("utils", test_runner_name + " --print-test-name-list")
         (rc, standard_out, standard_err, et) = run_job_synchronously(path_cmd, os.getcwd(), False, False)
-        print standard_out
+        list_items = standard_out.split('\n')
+        print "\n".join(sorted(list_items))
 
     if options.kinds or options.list:
         return
@@ -1113,7 +1157,7 @@ def run_tests():
     xml_results_file = os.path.join(testpy_output_dir, "results.xml")
     f = open(xml_results_file, 'w')
     f.write('<?xml version="1.0"?>\n')
-    f.write('<TestResults>\n')
+    f.write('<Results>\n')
     f.close()
 
     #
@@ -1129,22 +1173,30 @@ def run_tests():
     #  ./test,py:                                           run all of the suites and examples
     #  ./test.py --constrain=core:                          run all of the suites of all kinds
     #  ./test.py --constrain=unit:                          run all unit suites
-    #  ./test,py --suite=some-test-suite:                   run a single suite
-    #  ./test,py --example=udp/udp-echo:                    run no test suites
-    #  ./test,py --pyexample=wireless/mixed-wireless.py:    run no test suites
-    #  ./test,py --suite=some-suite --example=some-example: run the single suite
+    #  ./test.py --suite=some-test-suite:                   run a single suite
+    #  ./test.py --example=examples/udp/udp-echo:           run single example
+    #  ./test.py --pyexample=examples/wireless/mixed-wireless.py:  run python example
+    #  ./test.py --suite=some-suite --example=some-example: run the single suite
     #
     # We can also use the --constrain option to provide an ordering of test 
     # execution quite easily.
     #
     if len(options.suite):
-        suites = options.suite + "\n"
+        # See if this is a valid test suite.
+        path_cmd = os.path.join("utils", test_runner_name + " --print-test-name-list")
+        (rc, suites, standard_err, et) = run_job_synchronously(path_cmd, os.getcwd(), False, False)
+        if options.suite in suites:
+            suites = options.suite + "\n"
+        else:
+            print >> sys.stderr, 'The test suite was not run because an unknown test suite name was requested.'
+            sys.exit(2)
+
     elif len(options.example) == 0 and len(options.pyexample) == 0:
         if len(options.constrain):
-            path_cmd = os.path.join("utils", "test-runner --list --constrain=%s" % options.constrain)
+            path_cmd = os.path.join("utils", test_runner_name + " --print-test-name-list --test-type=%s" % options.constrain)
             (rc, suites, standard_err, et) = run_job_synchronously(path_cmd, os.getcwd(), False, False)
         else:
-            path_cmd = os.path.join("utils", "test-runner --list")
+            path_cmd = os.path.join("utils", test_runner_name + " --print-test-name-list")
             (rc, suites, standard_err, et) = run_job_synchronously(path_cmd, os.getcwd(), False, False)
     else:
         suites = ""
@@ -1222,11 +1274,11 @@ def run_tests():
             job.set_basedir(os.getcwd())
             job.set_tempdir(testpy_output_dir)
             if (options.multiple):
-                multiple = " --multiple"
-            else:
                 multiple = ""
+            else:
+                multiple = " --stop-on-failure"
 
-            path_cmd = os.path.join("utils", "test-runner --suite=%s%s" % (test, multiple))
+            path_cmd = os.path.join("utils", test_runner_name + " --test-name=%s%s" % (test, multiple))
             job.set_shell_command(path_cmd)
 
             if options.valgrind and test in core_valgrind_skip_tests:
@@ -1288,9 +1340,12 @@ def run_tests():
         if len(options.constrain) == 0 or options.constrain == "example":
             if ENABLE_EXAMPLES:
                 for test, do_run, do_valgrind_run in example_tests:
+                    # Remove any arguments and directory names from test.
+                    test_name = test.split(' ', 1)[0] 
+                    test_name = os.path.basename(test_name)
 
                     # Don't try to run this example if it isn't runnable.
-                    if os.path.basename(test) in ns3_runnable_programs:
+                    if test_name in ns3_runnable_programs:
                         if eval(do_run):
                             job = Job()
                             job.set_is_example(True)
@@ -1301,7 +1356,7 @@ def run_tests():
                             job.set_basedir(os.getcwd())
                             job.set_tempdir(testpy_output_dir)
                             job.set_shell_command(test)
-                            job.set_build_path("")
+                            job.set_build_path(options.buildpath)
 
                             if options.valgrind and not eval(do_valgrind_run):
                                 job.set_is_skip (True)
@@ -1314,8 +1369,13 @@ def run_tests():
                             total_tests = total_tests + 1
 
     elif len(options.example):
+        # Add the proper prefix and suffix to the example name to
+        # match what is done in the wscript file.
+        (example_path_without_name, example_name) = os.path.split(options.example)
+        example_name = "%s%s-%s-%s" % (APPNAME, VERSION, example_name, BUILD_PROFILE)
+        example_path = os.path.join(example_path_without_name, example_name)
+
         # Don't try to run this example if it isn't runnable.
-        example_name = os.path.basename(options.example)
         if example_name not in ns3_runnable_programs:
             print "Example %s is not runnable." % example_name
         else:
@@ -1326,16 +1386,16 @@ def run_tests():
             job = Job()
             job.set_is_example(True)
             job.set_is_pyexample(False)
-            job.set_display_name(options.example)
+            job.set_display_name(example_name)
             job.set_tmp_file_name("")
             job.set_cwd(testpy_output_dir)
             job.set_basedir(os.getcwd())
             job.set_tempdir(testpy_output_dir)
-            job.set_shell_command(options.example)
+            job.set_shell_command(example_path)
             job.set_build_path(options.buildpath)
 
             if options.verbose:
-                print "Queue %s" % options.example
+                print "Queue %s" % example_name
 
             input_queue.put(job)
             jobs = jobs + 1
@@ -1365,9 +1425,12 @@ def run_tests():
         if len(options.constrain) == 0 or options.constrain == "pyexample":
             if ENABLE_EXAMPLES:
                 for test, do_run in python_tests:
+                    # Remove any arguments and directory names from test.
+                    test_name = test.split(' ', 1)[0] 
+                    test_name = os.path.basename(test_name)
 
                     # Don't try to run this example if it isn't runnable.
-                    if os.path.basename(test) in ns3_runnable_scripts:
+                    if test_name in ns3_runnable_scripts:
                         if eval(do_run):
                             job = Job()
                             job.set_is_example(False)
@@ -1510,7 +1573,7 @@ def run_tests():
             else:
                 f.write('  <Result>CRASH</Result>\n')
 
-            f.write('  <ElapsedTime>%.3f</ElapsedTime>\n' % job.elapsed_time)
+            f.write('  <Time real="%.3f"/>\n' % job.elapsed_time)
             f.write('</Example>\n')
             f.close()
 
@@ -1561,11 +1624,10 @@ def run_tests():
             #
             if job.is_skip:
                 f = open(xml_results_file, 'a')
-                f.write("<TestSuite>\n")
-                f.write("  <SuiteName>%s</SuiteName>\n" % job.display_name)
-                f.write('  <SuiteResult>SKIP</SuiteResult>\n')
-                f.write('  <SuiteTime>Execution times not available</SuiteTime>\n')
-                f.write("</TestSuite>\n")
+                f.write("<Test>\n")
+                f.write("  <Name>%s</Name>\n" % job.display_name)
+                f.write('  <Result>SKIP</Result>\n')
+                f.write("</Test>\n")
                 f.close()
             else:
                 if job.returncode == 0 or job.returncode == 1 or job.returncode == 2:
@@ -1576,20 +1638,18 @@ def run_tests():
                     f_from.close()
                 else:
                     f = open(xml_results_file, 'a')
-                    f.write("<TestSuite>\n")
-                    f.write("  <SuiteName>%s</SuiteName>\n" % job.display_name)
-                    f.write('  <SuiteResult>CRASH</SuiteResult>\n')
-                    f.write('  <SuiteTime>Execution times not available</SuiteTime>\n')
-                    f.write("</TestSuite>\n")
+                    f.write("<Test>\n")
+                    f.write("  <Name>%s</Name>\n" % job.display_name)
+                    f.write('  <Result>CRASH</Suite>\n')
+                    f.write("</Test>\n")
                     f.close()
 
                     if job.returncode == 2:
                         f = open(xml_results_file, 'a')
-                        f.write("<TestSuite>\n")
-                        f.write("  <SuiteName>%s</SuiteName>\n" % job.display_name)
-                        f.write('  <SuiteResult>VALGR</SuiteResult>\n')
-                        f.write('  <SuiteTime>Execution times not available</SuiteTime>\n')
-                        f.write("</TestSuite>\n")
+                        f.write("<Test>\n")
+                        f.write("  <Name>%s</Name>\n" % job.display_name)
+                        f.write('  <Result>VALGR</Result>\n')
+                        f.write("</Test>\n")
                         f.close()
 
     #
@@ -1607,7 +1667,7 @@ def run_tests():
     # document
     #
     f = open(xml_results_file, 'a')
-    f.write('</TestResults>\n')
+    f.write('</Results>\n')
     f.close()
 
     #
@@ -1668,6 +1728,9 @@ def main(argv):
     parser.add_option("-e", "--example", action="store", type="string", dest="example", default="",
                       metavar="EXAMPLE",
                       help="specify a single example to run (with relative path)")
+
+    parser.add_option("-u", "--update-data", action="store_true", dest="update_data", default=False,
+                      help="If examples use reference data files, get them to re-generate them")
 
     parser.add_option("-g", "--grind", action="store_true", dest="valgrind", default=False,
                       help="run the test suites and examples using valgrind")

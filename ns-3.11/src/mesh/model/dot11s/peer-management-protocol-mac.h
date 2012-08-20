@@ -18,8 +18,8 @@
  * Author: Kirill Andreev <andreev@iitp.ru>
  */
 
-#ifndef PEER_MANAGER_MAC_PLUGIN_H_
-#define PEER_MANAGER_MAC_PLUGIN_H_
+#ifndef PEER_MANAGEMENT_PROTOCOL_MAC_H
+#define PEER_MANAGEMENT_PROTOCOL_MAC_H
 
 #include "ns3/mesh-wifi-interface-mac-plugin.h"
 
@@ -45,26 +45,32 @@ public:
   PeerManagementProtocolMac (uint32_t interface, Ptr<PeerManagementProtocol> protocol);
   ~PeerManagementProtocolMac ();
   ///\name Inherited from plugin abstract class
-  ///\{
+  // \{
   void SetParent (Ptr<MeshWifiInterfaceMac> parent);
   bool Receive (Ptr<Packet> packet, const WifiMacHeader & header);
   bool UpdateOutcomingFrame (Ptr<Packet> packet, WifiMacHeader & header, Mac48Address from, Mac48Address to);
   void UpdateBeacon (MeshWifiBeacon & beacon) const;
-  ///\}
-  ///\name Statistics:
-  ///\{
+  int64_t AssignStreams (int64_t stream);
+  // \}
+  ///\name Statistics
+  // \{
   void Report (std::ostream &) const;
   void ResetStats ();
   uint32_t GetLinkMetric (Mac48Address peerAddress);
-  ///\}
+  // \}
+
 private:
   PeerManagementProtocolMac& operator= (const PeerManagementProtocolMac &);
   PeerManagementProtocolMac (const PeerManagementProtocolMac &);
 
   friend class PeerManagementProtocol;
   friend class PeerLink;
-  ///\name Create peer link management frames:
-  ///\{
+  ///\name Create peer link management frames
+  // \{
+  /**
+   * \brief This structure keeps all fields in peer link management frame,
+   * which are not subclasses of WifiInformationElement
+   */
   struct PlinkFrameStart
   {
     uint8_t subtype;
@@ -75,18 +81,13 @@ private:
   Ptr<Packet> CreatePeerLinkOpenFrame ();
   Ptr<Packet> CreatePeerLinkConfirmFrame ();
   Ptr<Packet> CreatePeerLinkCloseFrame ();
-  /**
-   * \brief This structure keeps all fields in peer link management frame,
-   * which are not subclasses of WifiInformationElement
-   */
-  /// \name Parses the start of the frame, where there are no
-  /// WifiInformationElements exist
+  /// Parses the start of the frame, where no WifiInformationElements exist
   PlinkFrameStart ParsePlinkFrame (Ptr<const Packet> packet);
-  ///\}
-  ///// Closes link when a proper number of successive transmissions have failed
+  // \}
+  ///  Closes link when a proper number of successive transmissions have failed
   void TxError (WifiMacHeader const &hdr);
   void TxOk (WifiMacHeader const &hdr);
-  ///BCA functionallity:
+  /// BCA functionality
   void SetBeaconShift (Time shift);
   void SetPeerManagerProtcol (Ptr<PeerManagementProtocol> protocol);
   void SendPeerLinkManagementFrame (
@@ -96,9 +97,10 @@ private:
     IePeerManagement peerElement,
     IeConfiguration meshConfig
     );
-  ///\brief DUBUG only - to print established links
+  ///\brief debug only, used to print established links
   Mac48Address GetAddress () const;
   ///\name Statistics
+  // \{
   struct Statistics
   {
     uint16_t txOpen;
@@ -118,18 +120,20 @@ private:
     Statistics ();
     void Print (std::ostream & os) const;
   };
+
 private:
   struct Statistics m_stats;
   ///\}
   ///\name Information about MAC and protocol:
-  ///\{
+  // \{
   Ptr<MeshWifiInterfaceMac> m_parent;
   uint32_t m_ifIndex;
   Ptr<PeerManagementProtocol> m_protocol;
-  ///\}
+  // \}
 };
 
 } // namespace dot11s
-} //namespace ns3
-#endif
+} // namespace ns3
+
+#endif /* PEER_MANAGEMENT_PROTOCOL_MAC_H */
 

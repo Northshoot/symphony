@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 University of Washington
  *
@@ -29,6 +29,7 @@
 #include "ipv6-header.h"
 #include "ipv6-interface-address.h"
 #include "ipv6.h"
+#include "ns3/output-stream-wrapper.h"
 
 namespace ns3 {
 
@@ -171,9 +172,16 @@ public:
    * \param ipv6 the ipv6 object this routing protocol is being associated with
    */
   virtual void SetIpv6 (Ptr<Ipv6> ipv6) = 0;
+
+  /**
+   * \brief Print the Routing Table entries
+   *
+   * \param stream the ostream the Routing table is printed to
+   */
+  virtual void PrintRoutingTable (Ptr<OutputStreamWrapper> stream) const = 0;
 };
 
-} //namespace ns3
+} // namespace ns3
 
 #endif /* IPV6_ROUTING_PROTOCOL_H */
 

@@ -1,4 +1,4 @@
-// -*- Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*-
+// -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*-
 //
 // Copyright (c) 2006 Georgia Tech Research Corporation
 //
@@ -22,6 +22,7 @@
 #define IPV4_L3_PROTOCOL_H
 
 #include <list>
+#include <map>
 #include <vector>
 #include <stdint.h>
 #include "ns3/ipv4-address.h"
@@ -31,6 +32,8 @@
 #include "ns3/traced-callback.h"
 #include "ns3/ipv4-header.h"
 #include "ns3/ipv4-routing-protocol.h"
+#include "ns3/nstime.h"
+#include "ns3/simulator.h"
 
 namespace ns3 {
 
@@ -44,7 +47,7 @@ class Ipv4Route;
 class Node;
 class Socket;
 class Ipv4RawSocketImpl;
-class Ipv4L4Protocol;
+class IpL4Protocol;
 class Icmpv4L4Protocol;
 
 
@@ -63,6 +66,13 @@ class Icmpv4L4Protocol;
  * and LocalDeliver trace sources are slightly higher-level and pass
  * around the Ipv4Header as an explicit parameter and not as part of
  * the packet.
+ *
+ * IP fragmentation and reassembly is handled at this level.
+ * At the moment the fragmentation does not handle IP option headers,
+ * and in particular the ones that shall not be fragmented.
+ * Moreover, the actual implementation does not mimic exactly the Linux
+ * kernel. Hence it is not possible, for instance, to test a fragmentation
+ * attack.
  */
 class Ipv4L3Protocol : public Ipv4
 {
@@ -84,6 +94,7 @@ public:
     DROP_BAD_CHECKSUM,   /**< Bad checksum */
     DROP_INTERFACE_DOWN,   /**< Interface is down so can not send packet */
     DROP_ROUTE_ERROR,   /**< Route error */
+    DROP_FRAGMENT_TIMEOUT /**< Fragment timeout exceeded */
   };
 
   void SetNode (Ptr<Node> node);
@@ -106,7 +117,7 @@ public:
    * a working L4 Protocol and returned from this method.
    * The caller does not get ownership of the returned pointer.
    */
-  void Insert (Ptr<Ipv4L4Protocol> protocol);
+  void Insert (Ptr<IpL4Protocol> protocol);
   /**
    * \param protocolNumber number of protocol to lookup
    *        in this L4 Demux
@@ -114,16 +125,15 @@ public:
    *
    * This method is typically called by lower layers
    * to forward packets up the stack to the right protocol.
-   * It is also called from NodeImpl::GetUdp for example.
    */
-  Ptr<Ipv4L4Protocol> GetProtocol (int protocolNumber) const;
+  Ptr<IpL4Protocol> GetProtocol (int protocolNumber) const;
   /**
    * \param protocol protocol to remove from this demux.
    *
    * The input value to this method should be the value
    * returned from the Ipv4L4Protocol::Insert method.
    */
-  void Remove (Ptr<Ipv4L4Protocol> protocol);
+  void Remove (Ptr<IpL4Protocol> protocol);
 
   /**
    * \param ttl default ttl to use
@@ -246,12 +256,42 @@ private:
 
   uint32_t AddIpv4Interface (Ptr<Ipv4Interface> interface);
   void SetupLoopback (void);
+
+  /**
+   * \brief Get ICMPv4 protocol.
+   * \return Icmpv4L4Protocol pointer
+   */
   Ptr<Icmpv4L4Protocol> GetIcmp (void) const;
   bool IsUnicast (Ipv4Address ad, Ipv4Mask interfaceMask) const;
 
+  /**
+   * \brief Fragment a packet
+   * \param packet the packet
+   * \param outIfaceMtu the MTU of the interface
+   * \param listFragments the list of fragments
+   */
+  void DoFragmentation (Ptr<Packet> packet, uint32_t outIfaceMtu, std::list<Ptr<Packet> >& listFragments);
+
+  /**
+   * \brief Process a packet fragment
+   * \param packet the packet
+   * \param fragmentSize the size of the fragment
+   * \param iif Input Interface
+   * \return true is the fragment completed the packet
+   */
+  bool ProcessFragment (Ptr<Packet>& packet, Ipv4Header & ipHeader, uint32_t iif);
+
+  /**
+   * \brief Process the timeout for packet fragments
+   * \param key representing the packet fragments
+   * \param ipHeader the IP header of the original packet
+   * \param iif Input Interface
+   */
+  void HandleFragmentsTimeout ( std::pair<uint64_t, uint32_t> key, Ipv4Header & ipHeader, uint32_t iif);
+
   typedef std::vector<Ptr<Ipv4Interface> > Ipv4InterfaceList;
   typedef std::list<Ptr<Ipv4RawSocketImpl> > SocketList;
-  typedef std::list<Ptr<Ipv4L4Protocol> > L4List_t;
+  typedef std::list<Ptr<IpL4Protocol> > L4List_t;
 
   bool m_ipForward;
   bool m_weakEsModel;
@@ -274,6 +314,73 @@ private:
   Ptr<Ipv4RoutingProtocol> m_routingProtocol;
 
   SocketList m_sockets;
+
+  /**
+   * \class Fragments
+   * \brief A Set of Fragment belonging to the same packet (src, dst, identification and proto)
+   */
+  class Fragments : public SimpleRefCount<Fragments>
+  {
+public:
+    /**
+     * \brief Constructor.
+     */
+    Fragments ();
+
+    /**
+     * \brief Destructor.
+     */
+    ~Fragments ();
+
+    /**
+     * \brief Add a fragment.
+     * \param fragment the fragment
+     * \param fragmentOffset the offset of the fragment
+     * \param moreFragment the bit "More Fragment"
+     */
+    void AddFragment (Ptr<Packet> fragment, uint16_t fragmentOffset, bool moreFragment);
+
+    /**
+     * \brief If all fragments have been added.
+     * \returns true if the packet is entire
+     */
+    bool IsEntire () const;
+
+    /**
+     * \brief Get the entire packet.
+     * \return the entire packet
+     */
+    Ptr<Packet> GetPacket () const;
+
+    /**
+     * \brief Get the complete part of the packet.
+     * \return the part we have comeplete
+     */
+    Ptr<Packet> GetPartialPacket () const;
+
+private:
+    /**
+     * \brief True if other fragments will be sent.
+     */
+    bool m_moreFragment;
+
+    /**
+     * \brief The current fragments.
+     */
+    std::list<std::pair<Ptr<Packet>, uint16_t> > m_fragments;
+
+  };
+
+  typedef std::map< std::pair<uint64_t, uint32_t>, Ptr<Fragments> > MapFragments_t;
+  typedef std::map< std::pair<uint64_t, uint32_t>, EventId > MapFragmentsTimers_t;
+
+  /**
+   * \brief The hash of fragmented packets.
+   */
+  MapFragments_t       m_fragments;
+  Time                 m_fragmentExpirationTimeout;
+  MapFragmentsTimers_t m_fragmentsTimers;
+
 };
 
 } // Namespace ns3

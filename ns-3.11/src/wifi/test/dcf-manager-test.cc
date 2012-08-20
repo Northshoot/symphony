@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005,2006 INRIA
  *
@@ -85,7 +85,11 @@ private:
                          uint64_t expectedGrantTime, uint32_t from);
   void AddAccessRequestWithAckTimeout (uint64_t at, uint64_t txTime,
                                        uint64_t expectedGrantTime, uint32_t from);
+  ///\param at time to schedule DoAccessRequest event
+  ///\param txTime DoAccessRequest txTime
+  ///\param expectedGrantTime DoAccessRequest expectedGrantTime
   ///\param ackDelay is delay of the ack after txEnd
+  ///\param from DoAccessRequest DcfStateTest
   void AddAccessRequestWithSuccessfullAck (uint64_t at, uint64_t txTime,
                                            uint64_t expectedGrantTime, uint32_t ackDelay, uint32_t from);
   void DoAccessRequest (uint64_t txTime, uint64_t expectedGrantTime, DcfStateTest *state);

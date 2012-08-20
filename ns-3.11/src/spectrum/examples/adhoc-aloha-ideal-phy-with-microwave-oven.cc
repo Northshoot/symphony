@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2010 CTTC
  *
@@ -102,7 +102,7 @@ ReceivePacket (Ptr<Socket> socket)
 {
   Ptr<Packet> packet;
   uint64_t bytes = 0;
-  while (packet = socket->Recv ())
+  while ((packet = socket->Recv ()))
     {
       bytes += packet->GetSize ();
     }
@@ -191,8 +191,8 @@ int main (int argc, char** argv)
   socket.SetProtocol (1);
 
   OnOffHelper onoff ("ns3::PacketSocketFactory", Address (socket));
-  onoff.SetAttribute ("OnTime", RandomVariableValue (ExponentialVariable (0.4)));
-  onoff.SetAttribute ("OffTime", RandomVariableValue (ExponentialVariable (0.1)));
+  onoff.SetAttribute ("OnTime", StringValue ("ns3::ExponentialRandomVariable[Mean=0.4]"));
+  onoff.SetAttribute ("OffTime", StringValue ("ns3::ExponentialRandomVariable[Mean=0.1]"));
   onoff.SetAttribute ("DataRate", DataRateValue (DataRate ("0.4Mbps")));
   onoff.SetAttribute ("PacketSize", UintegerValue (1500));
 

@@ -19,8 +19,8 @@
  *          Pavel Boyko <boyko@iitp.ru>
  */
 
-#ifndef MESHWIFIINTERFACEMAC_H_
-#define MESHWIFIINTERFACEMAC_H_
+#ifndef MESH_WIFI_INTERFACE_MAC_H
+#define MESH_WIFI_INTERFACE_MAC_H
 
 #include <stdint.h>
 #include <map>
@@ -34,10 +34,12 @@
 #include "ns3/mesh-wifi-interface-mac-plugin.h"
 #include "ns3/event-id.h"
 #include "qos-utils.h"
+
 namespace ns3 {
 
 class WifiMacHeader;
 class DcaTxop;
+class UniformRandomVariable;
 /**
  * \ingroup mesh
  *
@@ -60,19 +62,19 @@ public:
   virtual ~MeshWifiInterfaceMac ();
 
   ///\name Inherited from WifiMac
-  //\{
+  // \{
   virtual void  Enqueue (Ptr<const Packet> packet, Mac48Address to, Mac48Address from);
   virtual void  Enqueue (Ptr<const Packet> packet, Mac48Address to);
   virtual bool  SupportsSendFrom () const;
   virtual void  SetLinkUpCallback (Callback<void> linkUp);
-  //\}
+  // \}
   ///\name Each mesh point interfaces must know the mesh point address
-  //\{
+  // \{
   void SetMeshPointAddress (Mac48Address);
   Mac48Address GetMeshPointAddress () const;
-  //\}
+  // \}
   ///\name Beacons
-  //\{
+  // \{
   /// Set maximum initial random delay before first beacon
   void SetRandomStartDelay (Time interval);
   /// Set interval between two successive beacons
@@ -93,13 +95,13 @@ public:
    * \attention User of ShiftTbtt () must take care to not shift it to the past.
    */
   void ShiftTbtt (Time shift);
-  //\}
+  // \}
 
   ///\name Plugins
-  //\{
+  // \{
   /// Install plugin. TODO return unique ID to allow unregister plugins
   void InstallPlugin (Ptr<MeshWifiInterfaceMacPlugin> plugin);
-  //\}
+  // \}
 
   /** \name Channel switching
    *
@@ -108,12 +110,12 @@ public:
    *
    * Number of channels to use must be limited elsewhere.
    */
-  //\{
+  // \{
   /// Current channel Id
   uint16_t GetFrequencyChannel () const;
   /// Switch channel
   void SwitchFrequencyChannel (uint16_t new_id);
-  //\}
+  // \}
 
   /// To be used by plugins sending management frames.
   void SendManagementFrame (Ptr<Packet> frame, const WifiMacHeader& hdr);
@@ -121,11 +123,11 @@ public:
   bool CheckSupportedRates (SupportedRates rates) const;
   /// \return list of supported bitrates
   SupportedRates GetSupportedRates () const;
-  ///\ name Metric Calculation routines:
-  ///\{
+  ///\name Metric Calculation routines:
+  // \{
   void SetLinkMetricCallback (Callback<uint32_t, Mac48Address, Ptr<MeshWifiInterfaceMac> > cb);
   uint32_t GetLinkMetric (Mac48Address peerAddress);
-  ///\}
+  // \}
   ///\brief Statistics:
   void Report (std::ostream &) const;
   void ResetStats ();
@@ -133,6 +135,15 @@ public:
   void SetBeaconGeneration (bool enable);
   WifiPhyStandard GetPhyStandard () const;
   virtual void FinishConfigureStandard (enum WifiPhyStandard standard);
+  /**
+   * Assign a fixed random variable stream number to the random variables
+   * used by this model.  Return the number of streams (possibly zero) that
+   * have been assigned.
+   *
+   * \param stream first stream index to use
+   * \return the number of stream indices assigned by this model
+   */
+  int64_t AssignStreams (int64_t stream);
 private:
   /// Frame receive handler
   void  Receive (Ptr<Packet> packet, WifiMacHeader const *hdr);
@@ -150,15 +161,19 @@ private:
 private:
   typedef std::vector<Ptr<MeshWifiInterfaceMacPlugin> > PluginList;
 
+  virtual void DoStart ();
+
   ///\name Mesh timing intervals
-  //\{
+  // \{
+  /// whether beaconing is enabled
+  bool m_beaconEnable;
   /// Beaconing interval.
   Time m_beaconInterval;
   /// Maximum delay before first beacon
   Time m_randomStart;
   /// Time for the next frame
   Time m_tbtt;
-  //\}
+  // \}
 
   /// Mesh point address
   Mac48Address m_mpAddress;
@@ -169,7 +184,7 @@ private:
   PluginList m_plugins;
   Callback<uint32_t, Mac48Address, Ptr<MeshWifiInterfaceMac> > m_linkMetricCallback;
   ///\name Statistics:
-  ///\{
+  // \{
   struct Statistics
   {
     uint16_t recvBeacons;
@@ -182,11 +197,14 @@ private:
     Statistics ();
   };
   Statistics m_stats;
-  ///\}
+  // \}
   /// Current PHY standard: needed to configure metric
   WifiPhyStandard m_standard;
+
+  /// Add randomness to beacon generation
+  Ptr<UniformRandomVariable> m_coefficient;
 };
 
 } // namespace ns3
 
-#endif /* MESHWIFIINTERFACEMAC_H_ */
+#endif /* MESH_WIFI_INTERFACE_MAC_H */

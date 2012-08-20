@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil;  -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 
 /*
  * Copyright (c) 2009 CTTC
@@ -23,6 +23,9 @@
 #include <math.h>
 #include <ns3/log.h>
 
+#ifdef __FreeBSD__
+#define log2(x) (log (x) / M_LN2)
+#endif
 
 
 NS_LOG_COMPONENT_DEFINE ("SpectrumValue");
@@ -383,6 +386,24 @@ Prod (const SpectrumValue& x)
     }
   return s;
 }
+
+double
+Integral (const SpectrumValue& arg)
+{
+  double i = 0;
+  Values::const_iterator vit = arg.ConstValuesBegin ();
+  Bands::const_iterator bit = arg.ConstBandsBegin ();
+  while (vit != arg.ConstValuesEnd ())
+    {
+      NS_ASSERT (bit != arg.ConstBandsEnd ());
+      i += (*vit) * (bit->fh - bit->fl);
+      ++vit;
+      ++bit;
+    }
+  NS_ASSERT (bit == arg.ConstBandsEnd ());
+  return i;
+}
+
 
 
 Ptr<SpectrumValue>

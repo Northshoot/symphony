@@ -6,10 +6,13 @@ Routing overview
 |ns3| is intended to support traditional routing approaches and protocols,
 support ports of open source routing implementations, and facilitate research
 into unorthodox routing techniques. The overall routing architecture is
-described below in :ref:`Routing architecture`. Users who wish to just read
-about how to configure global routing for wired topologies can read :ref:`Global
-centralized routing`. Unicast routing protocols are described in :ref:`Unicast
-routing`. Multicast routing is documented in :ref:`Multicast routing`.
+described below in :ref:`Routing-architecture`. Users who wish to just read
+about how to configure global routing for wired topologies can read 
+:ref:`Global-centralized-routing`. Unicast routing protocols are described in 
+:ref:`Unicast-routing`.  Multicast routing is documented in 
+:ref:`Multicast-routing`.
+
+.. _Routing-architecture:
 
 Routing architecture
 ********************
@@ -72,10 +75,12 @@ prioritized routing protocols (Ipv4ListRouting::AddRoutingProtocol(),
 Ipv4ListRouting::GetRoutingProtocol()).
 
 The details of these routing protocols are described below in
-:ref:`Unicast routing`.  For now, we will first start with a basic
+:ref:`Unicast-routing`.  For now, we will first start with a basic
 unicast routing capability that is intended to globally build routing
 tables at simulation time t=0 for simulation users who do not care
 about dynamic routing.
+
+.. _Global-centralized-routing:
 
 Global centralized routing
 **************************
@@ -156,6 +161,12 @@ of that interface to obtain a "link state advertisement (LSA)" for the router.
 Link State Advertisements are used in OSPF routing, and we follow their
 formatting.
 
+It is important to note that all of these computations are done before 
+packets are flowing in the network.  In particular, there are no
+overhead or control packets being exchanged when using this implementation.
+Instead, this global route manager just walks the list of nodes to
+build the necessary information and configure each node's routing table.
+
 The GlobalRouteManager populates a link state database with LSAs gathered from
 the entire topology. Then, for each router in the topology, the
 GlobalRouteManager executes the OSPF shortest path first (SPF) computation on
@@ -175,7 +186,12 @@ Therefore, we think that enabling these other link types will be more
 straightforward now that the underlying OSPF SPF framework is in place.
 
 Presently, we can handle IPv4 point-to-point, numbered links, as well as shared
-broadcast (CSMA) links, and we do not do equal-cost multipath.  
+broadcast (CSMA) links.  Equal-cost multipath is also supported.  Although
+wireless link types are supported by the implementation, note that due
+to the nature of this implementation, any channel effects will not be
+considered and the routing tables will assume that every node on the
+same shared channel is reachable from every other node (i.e. it will
+be treated like a broadcast CSMA link).
 
 The GlobalRouteManager first walks the list of nodes and aggregates
 a GlobalRouter interface to each one as follows:::
@@ -192,6 +208,8 @@ This interface is later queried and used to generate a Link State
 Advertisement for each router, and this link state database is
 fed into the OSPF shortest path computation logic. The Ipv4 API
 is finally used to populate the routes themselves. 
+
+.. _Unicast-routing:
 
 Unicast routing
 ***************
@@ -309,6 +327,8 @@ Presently, OLSR is limited to use with an Ipv4ListRouting object, and does not
 respond to dynamic changes to a device's IP address or link up/down
 notifications; i.e. the topology changes are due to loss/gain of connectivity
 over a wireless channel.
+
+.. _Multicast-routing:
 
 Multicast routing
 *****************

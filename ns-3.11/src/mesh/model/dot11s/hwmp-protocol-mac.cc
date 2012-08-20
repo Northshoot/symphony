@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2008,2009 IITP RAS
  *
@@ -476,5 +476,12 @@ HwmpProtocolMac::ResetStats ()
   m_stats = Statistics ();
 }
 
-} //namespace dot11s
-} //namespace ns3
+int64_t
+HwmpProtocolMac::AssignStreams (int64_t stream)
+{
+  return m_protocol->AssignStreams (stream);
+}
+
+
+} // namespace dot11s
+} // namespace ns3

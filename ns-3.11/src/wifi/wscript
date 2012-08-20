@@ -65,7 +65,6 @@ def build(bld):
         'helper/yans-wifi-helper.cc',
         'helper/nqos-wifi-mac-helper.cc',
         'helper/qos-wifi-mac-helper.cc',
-
         ]
 
     obj_test = bld.create_ns3_module_test_library('wifi')
@@ -76,10 +75,9 @@ def build(bld):
         'test/wifi-test.cc',
         ]
 
-    headers = bld.new_task_gen('ns3header')
+    headers = bld.new_task_gen(features=['ns3header'])
     headers.module = 'wifi'
     headers.source = [
-        'model/wifi-mac-trailer.h',
         'model/wifi-information-element.h',
         'model/wifi-information-element-vector.h',
         'model/wifi-net-device.h',
@@ -90,6 +88,7 @@ def build(bld):
         'model/wifi-phy-standard.h',
         'model/yans-wifi-phy.h',
         'model/yans-wifi-channel.h',
+        'model/wifi-mac-trailer.h',
         'model/wifi-phy.h',
         'model/interference-helper.h',
         'model/wifi-remote-station-manager.h',
@@ -114,6 +113,7 @@ def build(bld):
         'model/yans-error-rate-model.h',
         'model/nist-error-rate-model.h',
         'model/dsss-error-rate-model.h',
+        'model/wifi-mac-queue.h',
         'model/dca-txop.h',
         'model/wifi-mac-header.h',
         'model/qos-utils.h',
@@ -126,7 +126,6 @@ def build(bld):
         'model/capability-information.h',
         'model/dcf-manager.h',
         'model/mac-rx-middle.h', 
-        'model/mac-tx-middle.h',
         'model/mac-low.h',
         'model/originator-block-ack-agreement.h',
         'model/dcf.h',
@@ -142,12 +141,11 @@ def build(bld):
         ]
 
     if bld.env['ENABLE_GSL']:
-        obj.uselib      = 'GSL GSLCBLAS M'
-        obj_test.uselib = 'GSL GSLCBLAS M'
+        obj.use.extend(['GSL', 'GSLCBLAS', 'M'])
+        obj_test.use.extend(['GSL', 'GSLCBLAS', 'M'])
 
-    obj = bld.create_ns3_program('wifi-phy-test',
-        ['core', 'mobility', 'network', 'wifi'])
-    obj.source = 'test/wifi-phy-test.cc'
+    if (bld.env['ENABLE_EXAMPLES']):
+        bld.add_subdirs('examples')
 
     bld.ns3_python_bindings()
 

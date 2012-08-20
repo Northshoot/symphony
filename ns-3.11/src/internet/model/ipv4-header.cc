@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2005 INRIA
  *
@@ -19,6 +19,7 @@
  */
 
 #include "ns3/assert.h"
+#include "ns3/abort.h"
 #include "ns3/log.h"
 #include "ns3/header.h"
 #include "ipv4-header.h"
@@ -39,7 +40,8 @@ Ipv4Header::Ipv4Header ()
     m_flags (0),
     m_fragmentOffset (0),
     m_checksum (0),
-    m_goodChecksum (true)
+    m_goodChecksum (true),
+    m_headerSize(5*4)
 {
 }
 
@@ -71,13 +73,111 @@ Ipv4Header::SetIdentification (uint16_t identification)
   m_identification = identification;
 }
 
-
-
 void 
 Ipv4Header::SetTos (uint8_t tos)
 {
   m_tos = tos;
 }
+
+void
+Ipv4Header::SetDscp (DscpType dscp)
+{
+  m_tos &= 0x3; // Clear out the DSCP part, retain 2 bits of ECN
+  m_tos |= dscp;
+}
+
+void
+Ipv4Header::SetEcn (EcnType ecn)
+{
+  m_tos &= 0xFC; // Clear out the ECN part, retain 6 bits of DSCP
+  m_tos |= ecn;
+}
+
+Ipv4Header::DscpType 
+Ipv4Header::GetDscp (void) const
+{
+  // Extract only first 6 bits of TOS byte, i.e 0xFC
+  return DscpType (m_tos & 0xFC);
+}
+
+std::string 
+Ipv4Header::DscpTypeToString (DscpType dscp) const
+{
+  switch (dscp)
+    {
+      case DscpDefault:
+        return "Default";
+      case CS1:
+        return "CS1";
+      case AF11:
+        return "AF11";
+      case AF12:
+        return "AF12";
+      case AF13:
+        return "AF13";
+      case CS2:
+        return "CS2";
+      case AF21:
+        return "AF21";
+      case AF22:
+        return "AF22";
+      case AF23:
+        return "AF23";
+      case CS3:
+        return "CS3";
+      case AF31:
+        return "AF31";
+      case AF32:
+        return "AF32";
+      case AF33:
+        return "AF33";
+      case CS4:
+        return "CS4";
+      case AF41:
+        return "AF41";
+      case AF42:
+        return "AF42";
+      case AF43:
+        return "AF43";
+      case CS5:
+        return "CS5";
+      case EF:
+        return "EF";
+      case CS6:
+        return "CS6";
+      case CS7:
+        return "CS7";
+      default:
+        return "Unrecognized DSCP";
+    };
+}
+
+
+Ipv4Header::EcnType 
+Ipv4Header::GetEcn (void) const
+{
+  // Extract only last 2 bits of TOS byte, i.e 0x3
+  return EcnType (m_tos & 0x3);
+}
+
+std::string 
+Ipv4Header::EcnTypeToString (EcnType ecn) const
+{
+  switch (ecn)
+    {
+      case NotECT:
+        return "Not-ECT";
+      case ECT1:
+        return "ECT (1)";
+      case ECT0:
+        return "ECT (0)";
+      case CE:
+        return "CE";      
+      default:
+        return "Unknown ECN";
+    };
+}
+
 uint8_t 
 Ipv4Header::GetTos (void) const
 {
@@ -116,15 +216,20 @@ Ipv4Header::IsDontFragment (void) const
 }
 
 void 
-Ipv4Header::SetFragmentOffset (uint16_t offset)
+Ipv4Header::SetFragmentOffset (uint16_t offsetBytes)
 {
-  NS_ASSERT (!(offset & (~0x3fff)));
-  m_fragmentOffset = offset;
+  // check if the user is trying to set an invalid offset
+  NS_ABORT_MSG_IF ((offsetBytes & 0x7), "offsetBytes must be multiple of 8 bytes");
+  m_fragmentOffset = offsetBytes;
 }
 uint16_t 
 Ipv4Header::GetFragmentOffset (void) const
 {
-  NS_ASSERT (!(m_fragmentOffset & (~0x3fff)));
+  if ((m_fragmentOffset+m_payloadSize+5*4) > 65535)
+    {
+      NS_LOG_WARN("Fragment will exceed the maximum packet size once reassembled");
+    }
+
   return m_fragmentOffset;
 }
 
@@ -220,10 +325,12 @@ Ipv4Header::Print (std::ostream &os) const
       flags = "XX";
     }
   os << "tos 0x" << std::hex << m_tos << std::dec << " "
+     << "DSCP " << DscpTypeToString (GetDscp ()) << " "
+     << "ECN " << EcnTypeToString (GetEcn ()) << " "
      << "ttl " << m_ttl << " "
      << "id " << m_identification << " "
      << "protocol " << m_protocol << " "
-     << "offset " << m_fragmentOffset << " "
+     << "offset (bytes) " << m_fragmentOffset << " "
      << "flags [" << flags << "] "
      << "length: " << (m_payloadSize + 5 * 4)
      << " " 
@@ -233,7 +340,8 @@ Ipv4Header::Print (std::ostream &os) const
 uint32_t 
 Ipv4Header::GetSerializedSize (void) const
 {
-  return 5 * 4;
+  //return 5 * 4;
+	return m_headerSize;
 }
 
 void
@@ -308,6 +416,7 @@ Ipv4Header::Deserialize (Buffer::Iterator start)
   /* i.Next (2); // checksum */
   m_source.Set (i.ReadNtohU32 ());
   m_destination.Set (i.ReadNtohU32 ());
+  m_headerSize = headerSize;
 
   if (m_calcChecksum) 
     {
@@ -320,4 +429,4 @@ Ipv4Header::Deserialize (Buffer::Iterator start)
   return GetSerializedSize ();
 }
 
-}; // namespace ns3
+} // namespace ns3

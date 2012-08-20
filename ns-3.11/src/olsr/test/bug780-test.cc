@@ -38,15 +38,10 @@
 #include "ns3/internet-stack-helper.h"
 #include "ns3/v4ping-helper.h"
 #include "ns3/pcap-file.h"
+#include "ns3/pcap-test.h"
+#include "ns3/rng-seed-manager.h"
 
 #include "bug780-test.h"
-
-/// Set to true to rewrite reference traces, leave false to run regression tests
-namespace 
-{
-const bool WRITE_VECTORS = false;
-}
-
 
 namespace ns3
 {
@@ -77,17 +72,15 @@ Bug780Test::~Bug780Test()
 void
 Bug780Test::DoRun ()
 {
-  SeedManager::SetSeed (123);
+  RngSeedManager::SetSeed (12345);
+  RngSeedManager::SetRun (12345);
   CreateNodes ();
 
   Simulator::Stop (m_time);
   Simulator::Run ();
   Simulator::Destroy ();
 
-  if (!WRITE_VECTORS)
-    {
-      CheckResults ();
-    }
+  CheckResults ();  
 }
 
 void
@@ -132,6 +125,8 @@ Bug780Test::CreateNodes (void)
   InternetStackHelper internet;
   internet.SetRoutingHelper (olsr);
   internet.Install (adhocNodes);
+  int64_t streamsUsed = olsr.AssignStreams (adhocNodes, 0);
+  NS_TEST_EXPECT_MSG_EQ (streamsUsed, nWifis, "Should have assigned 3 streams");
 
   Ipv4AddressHelper addressAdhoc;
   addressAdhoc.SetBase ("10.1.1.0", "255.255.255.0");
@@ -172,8 +167,7 @@ Bug780Test::CreateNodes (void)
   p.Stop (Seconds (SimTime) - Seconds (0.001));
 
   // pcap
-  std::string prefix = (WRITE_VECTORS ? NS_TEST_SOURCEDIR : GetTempDir ()) + PREFIX;
-  wifiPhy.EnablePcapAll (prefix);
+  wifiPhy.EnablePcapAll (CreateTempDirFilename (PREFIX));
 }
 
 void
@@ -181,15 +175,7 @@ Bug780Test::CheckResults ()
 {
   for (uint32_t i = 0; i < 2; ++i)
     {
-      std::ostringstream os1, os2;
-      // File naming conventions are hard-coded here.
-      os1 << NS_TEST_SOURCEDIR << PREFIX << "-" << i << "-0.pcap";
-      os2 << GetTempDir () << PREFIX << "-" << i << "-0.pcap";
-
-      uint32_t sec (0), usec (0);
-      bool diff = PcapFile::Diff (os1.str (), os2.str (), sec, usec);
-      NS_TEST_EXPECT_MSG_EQ (diff, false, "PCAP traces " << os1.str () << " and " << os2.str ()
-                                                         << " differ starting from " << sec << " s " << usec << " us");
+      NS_PCAP_TEST_EXPECT_EQ (PREFIX << "-" << i << "-0.pcap");
     }
 }
 

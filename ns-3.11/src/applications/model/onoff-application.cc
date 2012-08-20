@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 //
 // Copyright (c) 2006 Georgia Tech Research Corporation
 //
@@ -24,10 +24,12 @@
 
 #include "ns3/log.h"
 #include "ns3/address.h"
+#include "ns3/inet-socket-address.h"
+#include "ns3/inet6-socket-address.h"
 #include "ns3/node.h"
 #include "ns3/nstime.h"
 #include "ns3/data-rate.h"
-#include "ns3/random-variable.h"
+#include "ns3/random-variable-stream.h"
 #include "ns3/socket.h"
 #include "ns3/simulator.h"
 #include "ns3/socket-factory.h"
@@ -36,6 +38,8 @@
 #include "ns3/trace-source-accessor.h"
 #include "onoff-application.h"
 #include "ns3/udp-socket-factory.h"
+#include "ns3/string.h"
+#include "ns3/pointer.h"
 
 NS_LOG_COMPONENT_DEFINE ("OnOffApplication");
 
@@ -63,14 +67,14 @@ OnOffApplication::GetTypeId (void)
                    AddressValue (),
                    MakeAddressAccessor (&OnOffApplication::m_peer),
                    MakeAddressChecker ())
-    .AddAttribute ("OnTime", "A RandomVariable used to pick the duration of the 'On' state.",
-                   RandomVariableValue (ConstantVariable (1.0)),
-                   MakeRandomVariableAccessor (&OnOffApplication::m_onTime),
-                   MakeRandomVariableChecker ())
-    .AddAttribute ("OffTime", "A RandomVariable used to pick the duration of the 'Off' state.",
-                   RandomVariableValue (ConstantVariable (1.0)),
-                   MakeRandomVariableAccessor (&OnOffApplication::m_offTime),
-                   MakeRandomVariableChecker ())
+    .AddAttribute ("OnTime", "A RandomVariableStream used to pick the duration of the 'On' state.",
+                   StringValue ("ns3::ConstantRandomVariable[Constant=1.0]"),
+                   MakePointerAccessor (&OnOffApplication::m_onTime),
+                   MakePointerChecker <RandomVariableStream>())
+    .AddAttribute ("OffTime", "A RandomVariableStream used to pick the duration of the 'Off' state.",
+                   StringValue ("ns3::ConstantRandomVariable[Constant=1.0]"),
+                   MakePointerAccessor (&OnOffApplication::m_offTime),
+                   MakePointerChecker <RandomVariableStream>())
     .AddAttribute ("MaxBytes", 
                    "The total number of bytes to send. Once these bytes are sent, "
                    "no packet is sent again, even in on state. The value zero means "
@@ -116,6 +120,15 @@ OnOffApplication::GetSocket (void) const
 {
   NS_LOG_FUNCTION (this);
   return m_socket;
+}
+
+int64_t 
+OnOffApplication::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  m_onTime->SetStream (stream);
+  m_offTime->SetStream (stream + 1);
+  return 2;
 }
 
 void
@@ -222,7 +235,7 @@ void OnOffApplication::ScheduleStartEvent ()
 {  // Schedules the event to start sending data (switch to the "On" state)
   NS_LOG_FUNCTION_NOARGS ();
 
-  Time offInterval = Seconds (m_offTime.GetValue ());
+  Time offInterval = Seconds (m_offTime->GetValue ());
   NS_LOG_LOGIC ("start at " << offInterval);
   m_startStopEvent = Simulator::Schedule (offInterval, &OnOffApplication::StartSending, this);
 }
@@ -231,7 +244,7 @@ void OnOffApplication::ScheduleStopEvent ()
 {  // Schedules the event to stop sending data (switch to "Off" state)
   NS_LOG_FUNCTION_NOARGS ();
 
-  Time onInterval = Seconds (m_onTime.GetValue ());
+  Time onInterval = Seconds (m_onTime->GetValue ());
   NS_LOG_LOGIC ("stop at " << onInterval);
   m_startStopEvent = Simulator::Schedule (onInterval, &OnOffApplication::StopSending, this);
 }
@@ -240,12 +253,30 @@ void OnOffApplication::ScheduleStopEvent ()
 void OnOffApplication::SendPacket ()
 {
   NS_LOG_FUNCTION_NOARGS ();
-  NS_LOG_LOGIC ("sending packet at " << Simulator::Now ());
+
   NS_ASSERT (m_sendEvent.IsExpired ());
   Ptr<Packet> packet = Create<Packet> (m_pktSize);
   m_txTrace (packet);
   m_socket->Send (packet);
   m_totBytes += m_pktSize;
+  if (InetSocketAddress::IsMatchingType (m_peer))
+    {
+      NS_LOG_INFO ("At time " << Simulator::Now ().GetSeconds ()
+                   << "s on-off application sent "
+                   <<  packet->GetSize () << " bytes to "
+                   << InetSocketAddress::ConvertFrom(m_peer).GetIpv4 ()
+                   << " port " << InetSocketAddress::ConvertFrom (m_peer).GetPort ()
+                   << " total Tx " << m_totBytes << " bytes");
+    }
+  else if (Inet6SocketAddress::IsMatchingType (m_peer))
+    {
+      NS_LOG_INFO ("At time " << Simulator::Now ().GetSeconds ()
+                   << "s on-off application sent "
+                   <<  packet->GetSize () << " bytes to "
+                   << Inet6SocketAddress::ConvertFrom(m_peer).GetIpv6 ()
+                   << " port " << Inet6SocketAddress::ConvertFrom (m_peer).GetPort ()
+                   << " total Tx " << m_totBytes << " bytes");
+    }
   m_lastStartTime = Simulator::Now ();
   m_residualBits = 0;
   ScheduleNextTx ();

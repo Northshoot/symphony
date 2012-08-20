@@ -1,6 +1,6 @@
 #include "int64x64-128.h"
-#include "ns3/abort.h"
-#include "ns3/assert.h"
+#include "abort.h"
+#include "assert.h"
 
 namespace ns3 {
 
@@ -84,7 +84,6 @@ int64x64_t::Divu (uint128_t a, uint128_t b)
     }
   else
     {
-      rem = rem;
       div = b >> 64;
     }
   quo = rem / div;

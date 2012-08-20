@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -18,12 +18,15 @@
  * Author: Nicola Baldo <nbaldo@cttc.es>
  */
 
-#include <ns3/spectrum-analyzer.h>
+
 #include <ns3/object-factory.h>
 #include <ns3/log.h>
 #include <ns3/double.h>
 #include <ns3/simulator.h>
 #include <ns3/trace-source-accessor.h>
+#include <ns3/antenna-model.h>
+
+#include "spectrum-analyzer.h"
 
 NS_LOG_COMPONENT_DEFINE ("SpectrumAnalyzer");
 
@@ -89,14 +92,14 @@ SpectrumAnalyzer::GetTypeId (void)
 
 
 
-Ptr<Object>
+Ptr<NetDevice>
 SpectrumAnalyzer::GetDevice ()
 {
   return m_netDevice;
 }
 
 
-Ptr<Object>
+Ptr<MobilityModel>
 SpectrumAnalyzer::GetMobility ()
 {
   return m_mobility;
@@ -110,7 +113,7 @@ SpectrumAnalyzer::GetRxSpectrumModel () const
 }
 
 void
-SpectrumAnalyzer::SetDevice (Ptr<Object> d)
+SpectrumAnalyzer::SetDevice (Ptr<NetDevice> d)
 {
   NS_LOG_FUNCTION (this << d);
   m_netDevice = d;
@@ -118,7 +121,7 @@ SpectrumAnalyzer::SetDevice (Ptr<Object> d)
 
 
 void
-SpectrumAnalyzer::SetMobility (Ptr<Object> m)
+SpectrumAnalyzer::SetMobility (Ptr<MobilityModel> m)
 {
   NS_LOG_FUNCTION (this << m);
   m_mobility = m;
@@ -133,17 +136,27 @@ SpectrumAnalyzer::SetChannel (Ptr<SpectrumChannel> c)
 }
 
 
+Ptr<AntennaModel>
+SpectrumAnalyzer::GetRxAntenna ()
+{
+  return m_antenna;
+}
+
+void
+SpectrumAnalyzer::SetAntenna (Ptr<AntennaModel> a)
+{
+  NS_LOG_FUNCTION (this << a);
+  m_antenna = a;
+}
+
 
 
 void
-SpectrumAnalyzer::StartRx (Ptr<PacketBurst> pb,
-                           Ptr <const SpectrumValue> rxPowerSpectralDensity,
-                           SpectrumType st,
-                           Time duration)
+SpectrumAnalyzer::StartRx (Ptr<SpectrumSignalParameters> params)
 {
-  NS_LOG_FUNCTION ( this << st << duration << *rxPowerSpectralDensity);
-  AddSignal (rxPowerSpectralDensity);
-  Simulator::Schedule (duration, &SpectrumAnalyzer::SubtractSignal, this, rxPowerSpectralDensity);
+  NS_LOG_FUNCTION ( this << params);
+  AddSignal (params->psd);
+  Simulator::Schedule (params->duration, &SpectrumAnalyzer::SubtractSignal, this, params->psd);
 }
 
 

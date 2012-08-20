@@ -144,4 +144,17 @@ YansWifiChannel::Add (Ptr<YansWifiPhy> phy)
   m_phyList.push_back (phy);
 }
 
+int64_t
+YansWifiChannel::AssignStreams (int64_t stream)
+{
+  int64_t currentStream = stream;
+  for (PhyList::const_iterator i = m_phyList.begin (); i != m_phyList.end (); i++)
+    {
+      Ptr<YansWifiPhy> yans = (*i);
+      currentStream += yans->AssignStreams (currentStream);
+    }
+  currentStream += m_loss->AssignStreams (stream);
+  return (currentStream - stream);
+}
+
 } // namespace ns3

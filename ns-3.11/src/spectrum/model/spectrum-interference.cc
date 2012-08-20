@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2009 CTTC
  *
@@ -67,6 +67,11 @@ SpectrumInterference::StartRx (Ptr<const Packet> p, Ptr<const SpectrumValue> rxP
   m_errorModel->StartRx (p);
 }
 
+void
+SpectrumInterference::AbortRx ()
+{
+  m_receiving = false;
+}
 
 bool
 SpectrumInterference::EndRx ()
@@ -110,10 +115,15 @@ void
 SpectrumInterference::ConditionallyEvaluateChunk ()
 {
   NS_LOG_FUNCTION (this);
-  if (m_receiving && (Now () > m_lastChangeTime))
+  NS_LOG_LOGIC ("m_receiving: " << m_receiving );
+  NS_LOG_LOGIC ("m_lastChangeTime: " << m_lastChangeTime << " Now: " << Now ());
+  bool condition  = m_receiving && (Now () > m_lastChangeTime);
+  NS_LOG_LOGIC ("if condition: " << condition);
+  if (condition)
     {
       SpectrumValue sinr = (*m_rxSignal) / ((*m_allSignals) - (*m_rxSignal) + (*m_noise));
       Time duration = Now () - m_lastChangeTime;
+      NS_LOG_LOGIC ("calling m_errorModel->EvaluateChunk (sinr, duration)");
       m_errorModel->EvaluateChunk (sinr, duration);
     }
 }

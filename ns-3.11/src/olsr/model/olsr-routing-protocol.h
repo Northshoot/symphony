@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2004 Francisco J. Ros
  * Copyright (c) 2007 INESC Porto
@@ -20,9 +20,8 @@
  *          Gustavo J. A. M. Carneiro <gjc@inescporto.pt>
  */
 
-
-#ifndef __OLSR_AGENT_IMPL_H__
-#define __OLSR_AGENT_IMPL_H__
+#ifndef OLSR_AGENT_IMPL_H
+#define OLSR_AGENT_IMPL_H
 
 #include "olsr-header.h"
 #include "ns3/test.h"
@@ -34,6 +33,7 @@
 #include "ns3/node.h"
 #include "ns3/socket.h"
 #include "ns3/event-garbage-collector.h"
+#include "ns3/random-variable-stream.h"
 #include "ns3/timer.h"
 #include "ns3/traced-callback.h"
 #include "ns3/ipv4.h"
@@ -102,6 +102,16 @@ public:
    * Return the list of routing table entries discovered by OLSR
    **/
   std::vector<RoutingTableEntry> GetRoutingTableEntries () const;
+
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  int64_t AssignStreams (int64_t stream);
 
 private:
   std::set<uint32_t> m_interfaceExclusions;
@@ -301,9 +311,12 @@ private:
                   const MessageList &> m_txPacketTrace;
   TracedCallback <uint32_t> m_routingTableChanged;
 
+  /// Provides uniform random variables.
+  Ptr<UniformRandomVariable> m_uniformRandomVariable;  
+
 };
 
 }
 }  // namespace ns3
 
-#endif
+#endif /* OLSR_AGENT_IMPL_H */

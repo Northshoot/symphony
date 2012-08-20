@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
 * Copyright (c) 2010 Network Security Lab, University of Washington, Seattle.
 *
@@ -66,6 +66,7 @@ public:
 private:
   /**
    * \param device Pointer to the NetDevice to install DeviceEnergyModel.
+   * \param source Pointer to EnergySource to install.
    *
    * Implements DeviceEnergyModel::Install.
    */

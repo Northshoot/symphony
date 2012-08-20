@@ -1,11 +1,11 @@
 ## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
 
 def build(bld):
-    obj = bld.create_ns3_module('csma-layout', ['csma', 'network', 'applications'])
+    obj = bld.create_ns3_module('csma-layout', ['csma', 'network', 'applications', 'netanim', 'point-to-point'])
     obj.source = [
         'model/csma-star-helper.cc',
         ]
-    headers = bld.new_task_gen('ns3header')
+    headers = bld.new_task_gen(features=['ns3header'])
     headers.module = 'csma-layout'
     headers.source = [
         'model/csma-star-helper.h',
@@ -14,5 +14,5 @@ def build(bld):
     if bld.env['ENABLE_EXAMPLES']:
         bld.add_subdirs('examples')
 
-    #bld.ns3_python_bindings()
+    bld.ns3_python_bindings()
 

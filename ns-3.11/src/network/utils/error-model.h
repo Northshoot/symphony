@@ -15,15 +15,49 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
- * Author: Tom Henderson <tomhend@u.washington.edu>
+ *
+ * This file incorporates work covered by the following copyright and  
+ * permission notice:   
+ *
+ * Copyright (c) 1997 Regents of the University of California.
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the University nor of the Laboratory may be used
+ *    to endorse or promote products derived from this software without
+ *    specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ * Contributed by the Daedalus Research Group, UC Berkeley
+ * (http://daedalus.cs.berkeley.edu)
+ *
  * This code has been ported from ns-2 (queue/errmodel.{cc,h}
  */
+
 #ifndef ERROR_MODEL_H
 #define ERROR_MODEL_H
 
 #include <list>
 #include "ns3/object.h"
-#include "ns3/random-variable.h"
+#include "ns3/random-variable-stream.h"
 
 namespace ns3 {
 
@@ -54,7 +88,8 @@ class Packet;
  * this:
  * \code 
  * Ptr<ErrorModel> rem = CreateObject<RateErrorModel> ();
- * rem->SetRandomVariable (UniformVariable ());
+ * Ptr<UniformRandomVariable> uv = CreateObject<UniformRandomVariable> ();
+ * rem->SetRandomVariable (uv);
  * rem->SetRate (0.001);
  * ...
  * Ptr<Packet> p;
@@ -112,13 +147,6 @@ private:
   bool m_enable;
 };
 
-enum ErrorUnit
-{
-  EU_BIT,
-  EU_BYTE,
-  EU_PKT
-};
-
 /**
  * \brief Determine which packets are errored corresponding to an underlying
  * distribution, rate, and unit.
@@ -127,7 +155,7 @@ enum ErrorUnit
  * The two parameters that govern the behavior are the rate (or
  * equivalently, the mean duration/spacing between errors), and the
  * unit (which may be per-bit, per-byte, and per-packet).
- * Users can optionally provide a RandomVariable object; the default
+ * Users can optionally provide a RandomVariableStream object; the default
  * is to use a Uniform(0,1) distribution.
 
  * Reset() on this model will do nothing
@@ -142,10 +170,17 @@ public:
   RateErrorModel ();
   virtual ~RateErrorModel ();
 
+  enum ErrorUnit
+  {
+    ERROR_UNIT_BIT,
+    ERROR_UNIT_BYTE,
+    ERROR_UNIT_PACKET
+  };
+
   /**
    * \returns the ErrorUnit being used by the underlying model
    */ 
-  enum ErrorUnit GetUnit (void) const;
+  RateErrorModel::ErrorUnit GetUnit (void) const;
   /**
    * \param error_unit the ErrorUnit to be used by the underlying model
    */ 
@@ -163,7 +198,17 @@ public:
   /**
    * \param ranvar A random variable distribution to generate random variates
    */ 
-  void SetRandomVariable (const RandomVariable &ranvar);
+  void SetRandomVariable (Ptr<RandomVariableStream>);
+
+ /**
+  * Assign a fixed random variable stream number to the random variables
+  * used by this model.  Return the number of streams (possibly zero) that
+  * have been assigned.
+  *
+  * \param stream first stream index to use
+  * \return the number of stream indices assigned by this model
+  */
+  int64_t AssignStreams (int64_t stream);
 
 private:
   virtual bool DoCorrupt (Ptr<Packet> p);
@@ -175,7 +220,7 @@ private:
   enum ErrorUnit m_unit;
   double m_rate;
 
-  RandomVariable m_ranvar;
+  Ptr<RandomVariableStream> m_ranvar;
 };
 
 /**
@@ -272,5 +317,5 @@ private:
 };
 
 
-} //namespace ns3
+} // namespace ns3
 #endif

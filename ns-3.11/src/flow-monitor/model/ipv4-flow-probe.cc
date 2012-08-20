@@ -307,6 +307,10 @@ Ipv4FlowProbe::DropLogger (const Ipv4Header &ipHeader, Ptr<const Packet> ipPaylo
           myReason = DROP_ROUTE_ERROR;
           NS_LOG_DEBUG ("DROP_ROUTE_ERROR");
           break;
+        case Ipv4L3Protocol::DROP_FRAGMENT_TIMEOUT:
+          myReason = DROP_FRAGMENT_TIMEOUT;
+          NS_LOG_DEBUG ("DROP_FRAGMENT_TIMEOUT");
+          break;
 
         default:
           myReason = DROP_INVALID_REASON;
@@ -326,10 +330,11 @@ Ipv4FlowProbe::QueueDropLogger (Ptr<const Packet> ipPayload)
   // ConstCast: see http://www.nsnam.org/bugzilla/show_bug.cgi?id=904
   bool tagFound;
   tagFound = ConstCast<Packet> (ipPayload)->RemovePacketTag (fTag);
-  NS_ASSERT_MSG (tagFound, "FlowProbeTag is missing");
-  // cast tagFound to void, to suppress 'tagFound' set but not used compiler 
-  // warning in optimized builds
-  (void) tagFound;
+  if (!tagFound)
+    {
+      return;
+    }
+
   FlowId flowId = fTag.GetFlowId ();
   FlowPacketId packetId = fTag.GetPacketId ();
   uint32_t size = fTag.GetPacketSize ();

@@ -25,7 +25,8 @@ POST=/home/lauril/dev/symphony/ns-3.11/src/tos/helper/postprocess.py
 
 
 TOS_APP_C=app.c
-NS3_DIR=/home/lauril/dev/symphony/ns-3.11/build/debug
+NS3_DIR=/home/lauril/dev/symphony/ns-3.11/build
+NS3_SRC=/home/lauril/dev/symphony/ns-3.11/src/tos
 TOS_NS3=$(TOSDIR)/platforms/ns3
 
 #flags and options 
@@ -40,10 +41,10 @@ NCC_OPT_WALL=-fPIC -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) 
 #for headers always use "ns3/heade.h" to allow moving to waf in future
 NS3_INCL = -I$(NS3_DIR) 
 TOS_INCL = -I$(TOS_NS3)
-NS3_OBJ = $(NS3_DIR)/libns3-tos.so
-NS3_CORE =$(NS3_DIR)/libns3-core.so
-NS3_NET =$(NS3_DIR)/libns3-network.so
-
+NS3_OBJ = $(NS3_DIR)/libns3.11-tos-debug.so
+NS3_CORE =$(NS3_DIR)/libns3.11-core-debug.so
+NS3_NET =$(NS3_DIR)/libns3.11-network-debug.so
+CALL_HEADER=$(NS3_SRC)/model/calls-to-ns3.h
 
 #app to create
 APP=time

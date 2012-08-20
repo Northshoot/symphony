@@ -28,10 +28,11 @@
 #include "ns3/mac-rx-middle.h"
 #include "ns3/mac-low.h"
 #include "ns3/dca-txop.h"
-#include "ns3/random-variable.h"
+#include "ns3/random-variable-stream.h"
 #include "ns3/simulator.h"
 #include "ns3/yans-wifi-phy.h"
 #include "ns3/pointer.h"
+#include "ns3/double.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/qos-tag.h"
 
@@ -79,6 +80,7 @@ MeshWifiInterfaceMac::MeshWifiInterfaceMac () :
 
   // Let the lower layers know that we are acting as a mesh node
   SetTypeOfStation (MESH);
+  m_coefficient = CreateObject<UniformRandomVariable> ();
 }
 MeshWifiInterfaceMac::~MeshWifiInterfaceMac ()
 {
@@ -124,6 +126,38 @@ MeshWifiInterfaceMac::DoDispose ()
 
   RegularWifiMac::DoDispose ();
 }
+void
+MeshWifiInterfaceMac::DoStart ()
+{
+  m_coefficient->SetAttribute ("Max", DoubleValue (m_randomStart.GetSeconds ()));
+  if (m_beaconEnable)
+    {
+      Time randomStart = Seconds (m_coefficient->GetValue ());
+      // Now start sending beacons after some random delay (to avoid collisions)
+      NS_ASSERT (!m_beaconSendEvent.IsRunning ());
+      m_beaconSendEvent = Simulator::Schedule (randomStart, &MeshWifiInterfaceMac::SendBeacon, this);
+      m_tbtt = Simulator::Now () + randomStart;
+    }
+  else
+    {
+      // stop sending beacons
+      m_beaconSendEvent.Cancel ();
+    }
+}
+
+int64_t
+MeshWifiInterfaceMac::AssignStreams (int64_t stream)
+{
+  NS_LOG_FUNCTION (this << stream);
+  int64_t currentStream = stream;
+  m_coefficient->SetStream (currentStream++);
+  for (PluginList::const_iterator i = m_plugins.begin (); i < m_plugins.end (); i++)
+    {
+      currentStream += (*i)->AssignStreams (currentStream);
+    }
+  return (currentStream - stream);
+}
+
 //-----------------------------------------------------------------------------
 // Plugins
 //-----------------------------------------------------------------------------
@@ -209,15 +243,15 @@ MeshWifiInterfaceMac::ForwardDown (Ptr<const Packet> const_packet, Mac48Address 
   // Assert that address1 is set. Assert will fail e.g. if there is no installed routing plugin.
   NS_ASSERT (hdr.GetAddr1 () != Mac48Address ());
   // Queue frame
-  if (m_stationManager->IsBrandNew (to))
+  if (m_stationManager->IsBrandNew (hdr.GetAddr1 ()))
     {
       // in adhoc mode, we assume that every destination
       // supports all the rates we support.
       for (uint32_t i = 0; i < m_phy->GetNModes (); i++)
         {
-          m_stationManager->AddSupportedMode (to, m_phy->GetMode (i));
+          m_stationManager->AddSupportedMode (hdr.GetAddr1 (), m_phy->GetMode (i));
         }
-      m_stationManager->RecordDisassociated (to);
+      m_stationManager->RecordDisassociated (hdr.GetAddr1 ());
     }
   //Classify: application sets a tag, which is removed here
   // Get Qos tag:
@@ -329,20 +363,7 @@ void
 MeshWifiInterfaceMac::SetBeaconGeneration (bool enable)
 {
   NS_LOG_FUNCTION (this << enable);
-  UniformVariable coefficient (0.0, m_randomStart.GetSeconds ());
-  if (enable)
-    {
-      Time randomStart = Seconds (coefficient.GetValue ());
-      // Now start sending beacons after some random delay (to avoid collisions)
-      NS_ASSERT (!m_beaconSendEvent.IsRunning ());
-      m_beaconSendEvent = Simulator::Schedule (randomStart, &MeshWifiInterfaceMac::SendBeacon, this);
-      m_tbtt = Simulator::Now () + randomStart;
-    }
-  else
-    {
-      // stop sending beacons
-      m_beaconSendEvent.Cancel ();
-    }
+  m_beaconEnable = enable;
 }
 bool
 MeshWifiInterfaceMac::GetBeaconGeneration () const
@@ -379,7 +400,6 @@ MeshWifiInterfaceMac::SendBeacon ()
   NS_LOG_DEBUG (GetAddress () << " is sending beacon");
 
   NS_ASSERT (!m_beaconSendEvent.IsRunning ());
-  NS_ASSERT (Simulator::Now ().GetMicroSeconds () == GetTbtt ().GetMicroSeconds ()); // assert that beacon is just on time
 
   // Form & send beacon
   MeshWifiBeacon beacon (GetSsid (), GetSupportedRates (), m_beaconInterval.GetMicroSeconds ());

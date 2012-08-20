@@ -1,4 +1,4 @@
-/* -*-  Mode: C++; c-file-style: "gnu"; indent-tabs-mode:nil; -*- */
+/* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 /*
  * Copyright (c) 2010 Dean Armstrong
  *
@@ -29,6 +29,7 @@
 #include "ns3/data-rate.h"
 #include "ns3/inet-socket-address.h"
 #include "ns3/packet-sink.h"
+#include "ns3/random-variable.h"
 
 #include "ns3/wifi-helper.h"
 #include "ns3/qos-wifi-mac-helper.h"
@@ -151,8 +152,8 @@ WifiMsduAggregatorThroughputTest::DoRun (void)
                                         udpPort));
   onoff.SetAttribute ("DataRate", DataRateValue (DataRate ("1Mbps")));
   onoff.SetAttribute ("PacketSize", UintegerValue (100));
-  onoff.SetAttribute ("OnTime", RandomVariableValue (ConstantVariable (1)));
-  onoff.SetAttribute ("OffTime", RandomVariableValue (ConstantVariable (0)));
+  onoff.SetAttribute ("OnTime", StringValue ("ns3::ConstantRandomVariable[Constant=1]"));
+  onoff.SetAttribute ("OffTime", StringValue ("ns3::ConstantRandomVariable[Constant=0]"));
   ApplicationContainer sourceApp = onoff.Install (ap.Get (0));
   sourceApp.Start (Seconds (1.0));
   sourceApp.Stop (Seconds (9.0));

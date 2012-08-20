@@ -20,8 +20,8 @@
  *          Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  */
 
-#ifndef __SOCKET_H__
-#define __SOCKET_H__
+#ifndef NS3_SOCKET_H
+#define NS3_SOCKET_H
 
 #include "ns3/callback.h"
 #include "ns3/ptr.h"
@@ -64,6 +64,7 @@ class Packet;
 class Socket : public Object
 {
 public:
+  static TypeId GetTypeId (void);
 
   Socket (void);
   virtual ~Socket (void);
@@ -82,6 +83,7 @@ public:
     ERROR_NOROUTETOHOST,
     ERROR_NODEV,
     ERROR_ADDRNOTAVAIL,
+    ERROR_ADDRINUSE,
     SOCKET_ERRNO_LAST
   };
 
@@ -94,12 +96,12 @@ public:
 
   /**
    * This method wraps the creation of sockets that is performed
-   * by a socket factory on a given node based on a TypeId.
+   * on a given node by a SocketFactory specified by TypeId.
    * 
    * \return A smart pointer to a newly created socket.
    * 
    * \param node The node on which to create the socket
-   * \param tid The TypeId of the socket to create
+   * \param tid The TypeId of a SocketFactory class to use
    */
   static Ptr<Socket> CreateSocket (Ptr<Node> node, TypeId tid);
   /**
@@ -201,21 +203,27 @@ public:
    */
   void SetRecvCallback (Callback<void, Ptr<Socket> >);
   /** 
+   * \brief Allocate a local endpoint for this socket.
    * \param address the address to try to allocate
    * \returns 0 on success, -1 on failure.
-   *
-   * Allocate a local endpoint for this socket.
    */
   virtual int Bind (const Address &address) = 0;
 
   /** 
-   * Allocate a local endpoint for this socket.
+   * \brief Allocate a local IPv4 endpoint for this socket.
    *
    * \returns 0 on success, -1 on failure.
    */
   virtual int Bind () = 0;
 
   /** 
+   * \brief Allocate a local IPv6 endpoint for this socket.
+   *
+   * \returns 0 on success, -1 on failure.
+   */
+  virtual int Bind6 () = 0;
+
+  /**
    * \brief Close a socket.
    * \returns zero on success, -1 on failure.
    *
@@ -588,10 +596,20 @@ public:
    * For IP_PKTINFO/IP6_PKTINFO. This method is only usable for 
    * Raw socket and Datagram Socket. Not supported for Stream socket.
    *
+   * Method doesn't make distinction between IPv4 and IPv6. If it is enabled,
+   * it is enabled for all types of sockets that supports packet information
+   *
    * \param flag Enable/Disable receive information
    * \returns nothing
    */
   void SetRecvPktInfo (bool flag);
+
+  /**
+   * \brief Get status indicating whether enable/disable packet information to socket
+   *
+   * \returns True if packet information should be sent to socket
+   */
+  bool IsRecvPktInfo () const;
  
 protected:
   void NotifyConnectionSucceeded (void);
@@ -605,7 +623,7 @@ protected:
   void NotifyDataRecv (void);
   virtual void DoDispose (void);
   Ptr<NetDevice> m_boundnetdevice;
-  bool m_recvpktinfo;
+  bool m_recvPktInfo;
 private:
   Callback<void, Ptr<Socket> >                   m_connectionSucceeded;
   Callback<void, Ptr<Socket> >                   m_connectionFailed;
@@ -686,8 +704,6 @@ private:
   bool m_dontFragment;
 };
 
-} //namespace ns3
+} // namespace ns3
 
-#endif /* SOCKET_H */
-
-
+#endif /* NS3_SOCKET_H */

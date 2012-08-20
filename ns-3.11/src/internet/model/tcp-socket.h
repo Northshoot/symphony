@@ -20,8 +20,8 @@
  *          Mathieu Lacage <mathieu.lacage@sophia.inria.fr>
  */
 
-#ifndef __TCP_SOCKET_H__
-#define __TCP_SOCKET_H__
+#ifndef TCP_SOCKET_H
+#define TCP_SOCKET_H
 
 #include "ns3/socket.h"
 #include "ns3/traced-callback.h"
@@ -90,12 +90,14 @@ private:
   virtual Time GetDelAckTimeout (void) const = 0;
   virtual void SetDelAckMaxCount (uint32_t count) = 0;
   virtual uint32_t GetDelAckMaxCount (void) const = 0;
+  virtual void SetTcpNoDelay (bool noDelay) = 0;
+  virtual bool GetTcpNoDelay (void) const = 0;
   virtual void SetPersistTimeout (Time timeout) = 0;
   virtual Time GetPersistTimeout (void) const = 0;
 
 };
 
-} //namespace ns3
+} // namespace ns3
 
 #endif /* TCP_SOCKET_H */
 
