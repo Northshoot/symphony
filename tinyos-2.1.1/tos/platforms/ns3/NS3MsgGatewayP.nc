@@ -1,6 +1,7 @@
 #include "sim/sim_main.h"
 #include "defines.h"
 #include "ns3/calls-to-ns3.h"
+#include <stdio.h>
 
 void
 printTosPacket( char *buf){
@@ -44,6 +45,8 @@ implementation{
 	}
         
 	extern int receiveMessage(void * msg)@C() @spontaneous(){
+		printf("TOS RX LOW \n");
+		fflush(stdout);
 		msg_in = (message_t*)msg;
 		//printTosPacket((char*)msg);
 		post receive();

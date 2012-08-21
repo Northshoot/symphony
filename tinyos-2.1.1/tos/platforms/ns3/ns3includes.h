@@ -21,7 +21,7 @@ typedef struct ns3_header{
 	uint16_t dest;
 	uint16_t src;
 	uint8_t padd;
-} ns3_header;
+} __attribute__ ((__packed__));
 
 typedef uint8_t am_id_t;
 typedef uint8_t am_group_t;
@@ -55,7 +55,7 @@ typedef struct ns3packet_header_t
 	am_addr_t src;
 	uint8_t padd;
 
-} ns3packet_header_t;
+} __attribute__ ((__packed__));
 
 typedef struct timestamp_metadata_t
 {

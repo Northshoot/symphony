@@ -229,7 +229,9 @@ namespace ns3
 
     Ptr<TosMacLow> m_tos_mac;
     message_t m_tx_msg;
+    Ptr<Packet> m_tx_pkt;
     message_t m_rx_msg;
+    Ptr<Packet> m_rx_pkt;
     Ns3ToTosProxy* m_ns3totos;
     DeviceCall m_current;
     RadioState m_state;

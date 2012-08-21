@@ -42,7 +42,7 @@ struct ns3packet_header_t
 	uint16_t dest;
 	uint16_t src;
 	uint8_t padd;
-} __attribute__ ((__packed__));
+}__attribute__ ((__packed__));
 
 typedef struct ns3packet_header_t ns3packet_header_t;
 

@@ -156,6 +156,9 @@ namespace ns3
     dlclose(handler);
     delete nstotos;
     delete tostons;
+    delete simuclock;
+    delete m_libname;
+
     //finally despose object
     Object::DoDispose();
   }

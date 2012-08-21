@@ -54,7 +54,8 @@ implementation {
  
  	void task send(){
  		counter++;
-		printf("TOSLIB::void task send() TOS_NODE_ID::%d - COUNTER::%d\n", TOS_NODE_ID, counter);
+ 		//if (counter <15){
+		printf("TOSLIB::void task send() TOS_NODE_ID::%d - COUNTER::%d - DEST::%d\n", TOS_NODE_ID, counter, dest);
 		if (locked) {
 			printf("LOCKED\n");
 			return;
@@ -70,6 +71,7 @@ implementation {
 				locked = TRUE;
 			}
 		}
+		//}
  	}
 	event void MilliTimer.fired() {
 		printf("event void MilliTimer.fired() %d Node %d\n", call MilliTimer.getNow(), TOS_NODE_ID);

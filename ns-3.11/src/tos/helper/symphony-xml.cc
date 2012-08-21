@@ -327,7 +327,6 @@ SymphonyXML::SymphonyXML()
   TAG_callback = xercesc::XMLString::transcode("callback");
   TAG_format = xercesc::XMLString::transcode("format");
   TAG_source = xercesc::XMLString::transcode("source");
-
   TAG_empty = xercesc::XMLString::transcode("empty");
 
   m_ConfigFileParser = new xercesc::XercesDOMParser();
@@ -340,7 +339,6 @@ SymphonyXML::~SymphonyXML()
   std::map<std::string, ns3::Ptr<ns3::HardwareModel> >::iterator iterHw;
 
   m_modelMap.clear();
-
   m_models.clear();
   delete m_ConfigFileParser;
   try
@@ -353,6 +351,7 @@ SymphonyXML::~SymphonyXML()
       xercesc::XMLString::release(&TAG_format);
       xercesc::XMLString::release(&TAG_source);
       xercesc::XMLString::release(&TAG_empty);
+
       xercesc::XMLPlatformUtils::Terminate(); // Terminate after release of memory
   }
   catch (xercesc::XMLException& e)

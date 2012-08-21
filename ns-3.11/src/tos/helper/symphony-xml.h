@@ -79,13 +79,14 @@ private:
   xercesc::DOMElement* elementRoot;
 
   XMLCh* TAG_root;
-  XMLCh* TAG_empty;
   XMLCh* TAG_model;
   XMLCh* TAG_property;
-  XMLCh* TAG_callback;
   XMLCh* TAG_call;
+  XMLCh* TAG_callback;
   XMLCh* TAG_format;
   XMLCh* TAG_source;
+  XMLCh* TAG_empty;
+
   std::vector<std::string> tos_functions;
   std::map<std::string, ns3::Ptr<ns3::HardwareModel> > m_models;
 

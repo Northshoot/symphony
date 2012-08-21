@@ -222,6 +222,7 @@ TosNetDevice::DeviceSend(void* msg) {
   std::cerr <<"TosNetDevice::DeviceSend(void* msg) "<<(!m_busy)<<std::endl;
   NS_ASSERT(m_state == RADIO_STATE_ON && !m_busy);
    if(m_state == RADIO_STATE_ON && !m_busy){
+
     memcpy((void *)&m_tx_msg, (void *)msg, sizeof(message_t));
     m_state = RADIO_STATE_TX;
     m_busy=true;
@@ -244,7 +245,7 @@ TosNetDevice::TransmitData(void)
   NS_LOG_FUNCTION_NOARGS();
   printf("\t\t\t\tNS3 SENDING\n");
   //printTosPacket((char*)&m_tx_msg);
-  Ptr<Packet> pkt = TosToNsPacket((message_t*)&m_tx_msg);
+  m_tx_pkt = TosToNsPacket((message_t*)&m_tx_msg);
   WifiMacHeader hdr;
   hdr.SetTypeData();
   hdr.SetAddr1(Mac48Address::GetBroadcast());
@@ -252,8 +253,8 @@ TosNetDevice::TransmitData(void)
   // hdr.SetAddr3 (GetBssid ());
   hdr.SetDsNotFrom();
   hdr.SetDsNotTo();
-  pkt->AddHeader(hdr);
-  m_tos_mac->TransmitData(pkt->Copy(), &hdr);
+  m_tx_pkt->AddHeader(hdr);
+  m_tos_mac->TransmitData(m_tx_pkt->Copy(), &hdr);
 
 }
 
@@ -279,9 +280,10 @@ TosNetDevice::DoStart(void)
 }
 Ptr<Packet>
 TosNetDevice::TosToNsPacket(message_t* msg) {
-	Ptr <Packet> pkt =Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
-							sizeof(message_t)));
-	return pkt;
+//	Ptr <Packet> pkt =Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
+//							sizeof(message_t)));
+	return Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
+            sizeof(message_t)));;
 }
 
 message_t*
@@ -293,7 +295,7 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	NS_LOG_FUNCTION_NOARGS();
 
 	memcpy((void *)&m_rx_msg, (const void *)msg, sizeof(message_t));
-	//printTosPacket((char *) &m_rx_msg);
+	printTosPacket((char *) &m_rx_msg);
 	return &m_rx_msg;
 }
 void
@@ -344,9 +346,11 @@ TosNetDevice::GetCurrentMsg(){
 
 void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
-
-	message_t * msg = NsToTosPacket(packet, hdr);
-	if(m_state != RADIO_STATE_TX) {
+  std::cerr<<"TosNetDevice::ForwardUp " <<std::endl;
+  if(m_state != RADIO_STATE_TX) {
+        m_rx_pkt = packet->Copy();
+	message_t * msg = NsToTosPacket(m_rx_pkt, hdr);
+	std::cerr<<"TosNetDevice::ForwardUp " <<std::endl;
 	  c_ns2tosRx((void*) msg);
 	} else {
 	  NS_LOG_FUNCTION("RX in RADIO_STATE_TX"<<m_node->GetId());

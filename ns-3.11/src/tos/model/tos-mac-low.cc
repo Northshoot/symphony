@@ -189,13 +189,16 @@ TosMacLow::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPre
    * packet queue.
    */
   WifiMacHeader hdr;
-  packet->RemoveHeader (hdr);
+  m_currentPacket = packet->Copy();
+  std::cerr<<"TosMacLow::ReceiveOk packet copy " << rxSnr<<std::endl;
+  m_currentPacket->RemoveHeader (hdr);
   WifiMacTrailer fcs;
-  packet->RemoveTrailer(fcs);
+  m_currentPacket->RemoveTrailer(fcs);
   //TODO: inmplement snr convertion
 //  SnrTag tag;
-//  packet->RemovePacketTag (tag);
-  m_rxCallback (packet,&hdr);
+//  m_currentPacket->RemovePacketTag (tag);
+  std::cerr<<"TosMacLow::ReceiveOk about to callback " << rxSnr<<std::endl;
+  m_rxCallback (m_currentPacket->Copy(),&hdr);
   return;
 }
 
