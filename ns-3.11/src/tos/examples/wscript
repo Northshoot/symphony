@@ -4,7 +4,11 @@ def build(bld):
     obj = bld.create_ns3_program('tos-simple',
                                  ['tos'])
     
-    obj.use.append('-lxerces-c')
+    obj.env.append_value("CXXFLAGS", ["-lxerces-c"])
+    obj.env.append_value("LDFLAGS_EXTRA",["-lxerces-c"])
+    print "*** obj.env ***"
+    print obj.env
+    obj.use.append('xerces-c')
     obj.source = 'tos.cc'
 
 
