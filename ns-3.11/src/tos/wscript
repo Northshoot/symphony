@@ -10,14 +10,13 @@ def generate():
 
 def build(bld):
     generate()
-    obj = bld.create_ns3_module('tos', ['wifi','network', 'propagation'])
+    obj = bld.create_ns3_module('tos', ['core','wifi','network','mobility','propagation'])
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
     #obj.env.append_value('CXXFLAGS', '-I/home/lauril/dev/symphony/tinyos-2.1.1/tos/types') 
     obj.env.append_value('CCFLAGS','-std=gnu++0x')
-    obj.env.append_value("CXXFLAGS", ["-lxerces-c"])
-    obj.env.append_value("LINKFLAGS",["-lxerces-c"])
-    obj.env.append_value('LINKFLAGS','-ldl') 
-    
+
+    obj.env.append_value("LINKFLAGS",["-lxerces-c","-ldl"])
+
     obj.source = ['model/tos-to-ns3-proxy.cc',
     			  #'model/tiny-bridge.cc',
     			  'model/ns3-to-tos-proxy_auto.cc',
