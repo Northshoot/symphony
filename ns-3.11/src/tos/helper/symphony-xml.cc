@@ -19,7 +19,7 @@
 #include "ns3/model-element.h"
 
 #include "symphony-xml.h"
-
+XERCES_CPP_NAMESPACE_USE
 // trim from start
 static inline std::string &
 ltrim(std::string &s)

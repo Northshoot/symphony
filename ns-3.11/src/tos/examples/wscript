@@ -5,7 +5,6 @@ def build(bld):
                                  ['tos'])
     obj.env.append_value("CXXFLAGS", ["-lxerces-c"])
     obj.env.append_value("LINKFLAGS",["-lxerces-c","-ldl"])
-    obj.use.append('lxerces-c')
     obj.use.append('xerces-c')
     print "*** obj.env tos-examples***"
     print obj.env['LINKFLAGS']
