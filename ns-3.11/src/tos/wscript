@@ -8,28 +8,31 @@ def configure(conf):
 def generate():
 	 Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.11/build/symphony.xml")
 
+def configure(conf):
+    conf.env.append_value("CXXFLAGS",['-std=gnu++0x'])
+    conf.env.append_value("LINKFLAGS_EXTRA",["-lxerces-c"])
+    
 def build(bld):
     generate()
-    obj = bld.create_ns3_module('tos', ['core','wifi','network','mobility','propagation'])
+    obj = bld.create_ns3_module('tos', ['core','wifi','mobility'])
     obj.env.append_value('CPPPATH', '../../tinyos-2.1.1/tos/platforms/ns3/') 
     #obj.env.append_value('CXXFLAGS', '-I/home/lauril/dev/symphony/tinyos-2.1.1/tos/types') 
-    obj.env.append_value('CCFLAGS','-std=gnu++0x')
-    
+    obj.env.append_value('CCFLAGS','-std=gnu++0x')    
     obj.env.append_value("LINKFLAGS",["-lxerces-c","-ldl"])
     obj.source = ['model/tos-to-ns3-proxy.cc',
-    			  #'model/tiny-bridge.cc',
-    			  'model/ns3-to-tos-proxy_auto.cc',
-    			  'model/tos-node-list.cc',
-    			  'model/tos-mac-low.cc',
-    			  'model/tos-net-device.cc',
-    			  'helper/tos-node-container.cc',
-    			  'helper/tos-helper.cc',
-    			  'helper/yans-tos-helper.cc',
-    			  'helper/tos-net-device-container.cc',
-    			  'helper/tos-mobility-helper.cc',
+    		  #'model/tiny-bridge.cc',
+    		  'model/ns3-to-tos-proxy_auto.cc',
+    		  'model/tos-node-list.cc',
+    		  'model/tos-mac-low.cc',
+    		  'model/tos-net-device.cc',
+    		  'helper/tos-node-container.cc',
+    		  'helper/tos-helper.cc',
+    		  'helper/yans-tos-helper.cc',
+    		  'helper/tos-net-device-container.cc',
+    		  'helper/tos-mobility-helper.cc',
                   'helper/symphony-xml.cc',
                   'helper/practical-socket.cc',
-    			  'model/tos-node.cc',
+    		  'model/tos-node.cc',
                   'model/simu-clock.cc',
                   'model/RF230-radio-model.cc',
                   'model/tos-radio-model.cc',
@@ -43,9 +46,10 @@ def build(bld):
 
     headers = bld.new_task_gen(features=['ns3header'])
     headers.module = 'tos'
-    headers.source = ['model/calls-to-ns3.h',
-                  'model/tos-to-ns3-proxy.h',
-    			  'model/tos-node.h',
+    headers.source = [
+		      'model/calls-to-ns3.h',
+                      'model/tos-to-ns3-proxy.h',
+    		      'model/tos-node.h',
     			  'model/simu-clock.h',
     			  'model/ns3-to-tos-proxy_auto.h',
     			  'model/tos-packet.h',

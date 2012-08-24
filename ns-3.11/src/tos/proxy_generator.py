@@ -52,6 +52,7 @@ class Ns3ToTosProxyGenerator:
         return_code = call(exe, shell=True)
         if return_code !=0:
             print "Error compiling proxy!"
+            sys.exit(1)
         else:
             rm=call('rm  ns3-to-tos-proxy_auto.o', shell=True)            
             if rm != 0:
@@ -73,7 +74,7 @@ class Ns3ToTosProxyGenerator:
     ~Ns3ToTosProxy();
     void * getFunction(std::string name);
 private:
-    dense_hash_map<std::string, void *> m_tos_functions;
+    std::map<std::string, void *> m_tos_functions;
 """            
         header_ += self.text.getHeaderClose()
         self.header.write(header_)
@@ -152,7 +153,7 @@ private:
 
 
 Ns3ToTosProxy::Ns3ToTosProxy() {
-    m_tos_functions.set_empty_key("empty");
+    //m_tos_functions.set_empty_key("empty");
 }            
 
 void
@@ -196,9 +197,9 @@ Ns3ToTosProxy::~Ns3ToTosProxy() { }
 #ifndef NS3TOTOSPROXYAUTO_H_
 #define NS3TOTOSPROXYAUTO_H_
 #include <stdint.h>
-
 #include <string>
-#include <google/dense_hash_map>
+#include <map>
+
 """
             for type in self.typedefs:
                 part += type +' \n'
@@ -206,7 +207,6 @@ Ns3ToTosProxy::~Ns3ToTosProxy() { }
             part = part + '\n'
             part = part + """
 
-using google::dense_hash_map;
 
 class Ns3ToTosProxy {
     public:

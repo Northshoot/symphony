@@ -10,6 +10,8 @@ def build(bld):
 
     # Set the libraries the testrunner depends on equal to the list of
     # enabled modules plus the list of enabled module test libraries.
+    if 'ns3-tos' in env['NS3_ENABLED_MODULES']: 
+            env['NS3_ENABLED_MODULES'].remove('ns3-tos')
     test_runner.use = [mod for mod in (env['NS3_ENABLED_MODULES'] + env['NS3_ENABLED_MODULE_TEST_LIBRARIES'])]
     
     obj = bld.create_ns3_program('bench-simulator', ['core'])
@@ -28,5 +30,8 @@ def build(bld):
 
         obj = bld.create_ns3_program('print-introspected-doxygen', ['network'])
         obj.source = 'print-introspected-doxygen.cc'
+        tmpenv=env['NS3_ENABLED_MODULES']
+        if 'ns3-tos' in env['NS3_ENABLED_MODULES']: 
+            env['NS3_ENABLED_MODULES'].remove('ns3-tos')
         obj.use = [mod for mod in env['NS3_ENABLED_MODULES']]
 

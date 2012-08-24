@@ -97,13 +97,13 @@ namespace ns3
 
     //commands from tos-radio emulations
     //implementation of radio state
-    error_t
+    tos_error_t
     DeviceTurnOff();
-    error_t
+    tos_error_t
     DeviceStandby();
-    error_t
+    tos_error_t
     DeviceTurnOn();
-    error_t
+    tos_error_t
     DeviceSetChannel(uint8_t channel);
     void
     done();
@@ -112,7 +112,7 @@ namespace ns3
     message_t
     GetCurrentMsg();
     //implementation of RadioSend
-    error_t
+    tos_error_t
     DeviceSend(void * msg);
     //callback
 

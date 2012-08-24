@@ -51,7 +51,7 @@ printTosPacket( char *buf){
 }
 
 NS_LOG_COMPONENT_DEFINE("TosNetDevice");
-using namespace std;
+
 namespace ns3 {
 
 NS_OBJECT_ENSURE_REGISTERED (TosNetDevice);
@@ -184,24 +184,24 @@ TosNetDevice::SetNode(Ptr<Node> node) {
 	m_node = node;
 }
 
-error_t
+tos_error_t
 TosNetDevice::DeviceTurnOff() {
   m_state = RADIO_STATE_OFF;
 	return SUCCESS;
 }
 
-error_t
+tos_error_t
 TosNetDevice::DeviceStandby() {
 	return EBUSY;
 }
 
-error_t
+tos_error_t
 TosNetDevice::DeviceTurnOn() {
   DoStart();
 	return SUCCESS;
 }
 
-error_t
+tos_error_t
 TosNetDevice::DeviceSetChannel(uint8_t channel) {
 	return EBUSY;
 }
@@ -217,7 +217,7 @@ TosNetDevice::DeviceGetChannel() {
 	return static_cast<uint8_t>(channel);
 }
 
-error_t
+tos_error_t
 TosNetDevice::DeviceSend(void* msg) {
   std::cerr <<"TosNetDevice::DeviceSend(void* msg) "<<(!m_busy)<<std::endl;
   NS_ASSERT(m_state == RADIO_STATE_ON && !m_busy);
