@@ -4,7 +4,7 @@ import time
 import string
 import datetime
 from subprocess import call
-
+from shutil import copy2 as copyfile
 from xml.etree import ElementTree as ET
 
 
@@ -17,6 +17,7 @@ class Ns3ToTosProxyGenerator:
         self.xml_file   = xml_file
         self.cwd        = os.getcwd() + '/'
         self.text       = self.TextFolder()
+        self.standart_xml = "src/symphony/helper/symphony.xml"
         self.header_name     = "src/symphony/model/ns3-to-tos-proxy_auto.h"
         self.cpp_name        = "src/symphony/model/ns3-to-tos-proxy_auto.cc"
         self.tree       = None
@@ -36,6 +37,14 @@ class Ns3ToTosProxyGenerator:
     def checkLastModified(self):
         self.header = open(self.cwd + self.header_name,'w')
         self.cpp  = open(self.cwd + self.cpp_name,'w')
+        try:
+            xml=open(self.xml_file, 'r')
+            xml.close()
+        except IOError:
+            #no xml file so we prebuild with standart
+            print "No file"
+            self.xml_file = self.standart_xml
+            copyfile(self.standart_xml, "build/")
         self.createProxy()
         
     #everything needs to be performed in order otherwise you will get bogus output
