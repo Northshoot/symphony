@@ -14,7 +14,7 @@
 
 
 #include "ns3/core-module.h"
-#include "ns3/tos-module.h"
+#include "ns3/symphony-module.h"
 #include "ns3/core-module.h"
 #include "ns3/mobility-module.h"
 #include "ns3/network-module.h"
@@ -26,10 +26,13 @@
 
 using namespace ns3;
 
-int main(void)
+int main(int argc, char *argv[])
 {
 
-
+        std::string nodeModel="/home/lauril/dev/symphony/ns-3.11/build/symphony.xml";
+        CommandLine cmd;
+        cmd.AddValue ("nodeModel", "model of the node in XML format", nodeModel);
+        cmd.Parse (argc, argv);
         //Create TosNodeContainer
 	TosNodeContainer c;
 	//Create nodes
@@ -46,7 +49,7 @@ int main(void)
 	  wifi.SetStandard (WIFI_PHY_STANDARD_80211b);
 	  wifi.EnableLogComponents ();
 	  //Set node model
-	  wifi.SetNodeModel("/home/lauril/dev/symphony/ns-3.11/build/symphony.xml");
+	  wifi.SetNodeModel(nodeModel);
 	 //LogComponentEnableAll(LOG_ALL);
 	  //Create physical layer
 	  YansTosPhyHelper wifiPhy =  YansTosPhyHelper::Default ();
@@ -81,7 +84,7 @@ int main(void)
 
 
    //Set run-time for the simulation
-    ns3::Simulator::Stop(ns3::Seconds(1000));
+    ns3::Simulator::Stop(ns3::Seconds(100));
     //Run simulation
     ns3::Simulator::Run();
    //Clean up all objects

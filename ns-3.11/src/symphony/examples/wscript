@@ -1,6 +1,6 @@
 # -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
 
 def build(bld):
-    obj = bld.create_ns3_program('symphony-example', ['symphony'])
-    obj.source = 'symphony-example.cc'
+    obj = bld.create_ns3_program('tos-simple', ['symphony'])
+    obj.source = 'tos.cc'
 

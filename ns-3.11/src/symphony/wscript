@@ -4,7 +4,7 @@ from proxy_generator import *
 #     pass
 
 def configure(conf):
-     conf.check_nonfatal(header_name='xercesc/dom/DOM.hpp', define_name='HAVE_XERCES_H')
+     conf.check_nonfatal(header_name='XMLValidator.hpp', define_name='HAVE_XERCES_H')
      conf.env['xercersc'] = conf.check(mandatory=True, lib='xerces-c', uselib_store='XERCES')
      conf.env['ldl'] = conf.check(mandatory=True, lib='dl', uselib_store='LDL')
      
@@ -15,6 +15,7 @@ def generate():
 def build(bld):
     generate()
     module = bld.create_ns3_module('symphony', ['core','wifi','mobility'])
+    module.env.append_value("LINKFLAGS",['-lxerces-c'])
     module.use.append("XERCES")
     module.use.append("LDL")
     module.source = [
@@ -73,8 +74,8 @@ def build(bld):
                     '../wifi/model/wifi-mac-trailer.h',
         ]
 
-    if bld.env.ENABLE_EXAMPLES:
-        bld.add_subdirs('examples')
+    #if bld.env.ENABLE_EXAMPLES:
+    bld.add_subdirs('examples')
 
     # bld.ns3_python_bindings()
 

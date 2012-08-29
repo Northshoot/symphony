@@ -177,7 +177,7 @@ namespace ns3
     callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
     simuclock = new SimuClock(NANOSECOND, NONE, callBackFromClock);
     tostons->simu_clock = simuclock;
-    m_libname = "/home/lauril/dev/symphony/ns-3.11/build/debug/libtos.so";
+    m_libname = "/home/lauril/dev/symphony/ns-3.11/build/libtos.so";
 
     //changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
     //for eclipse debug full path is needed for the lib

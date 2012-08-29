@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <symphony>
   <model name="radio">
   	<callback return="int" params="1" param1="int" time="5" name="sendDone"/>
@@ -9,14 +9,11 @@
   	<callback return="int" params="1" param1="uint32_t" name="tickFired"/>
   	<callback return="int" params="0" name="radioStateDone"/>
   	<callback return="int" params="1" param1="void *" name="receiveMessage"/>
-  	<callback return="int" params="1" param1="uint32_t" name="runNextEventExternal"/>
-  	
+  	<callback return="int" params="1" param1="uint32_t" name="runNextEventExternal"/>  	
    <property units="kb" size="28" name="packet"/>
-   <property units="Mb" size="280" initial="220" name="buffer"/>
-   
+   <property units="Mb" size="280" initial="220" name="buffer"/>   
    <call unit="ms" time="200" name="radioStart"/>
    <call time="80" name="swithChannel"/>
    <call units="ms" time="60" name="DeviceSend"/>
   </model>
-
 </symphony>

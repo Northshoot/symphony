@@ -39,6 +39,7 @@ void
 TosHelper::SetNodeModel(std::string file)
 {
   std::string m_xmlFile=file;
+  NS_LOG_FUNCTION(file);
   sym.readConfigFile(m_xmlFile);
   m_tosExternals = sym.getExternalFunctions();
   m_radioModel = sym.getModel("radio");

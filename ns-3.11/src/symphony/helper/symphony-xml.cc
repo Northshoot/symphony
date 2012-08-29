@@ -80,10 +80,12 @@ SymphonyXML::readConfigFile(std::string & configFile) throw (std::runtime_error)
       m_ConfigFileParser->parse(configFile.c_str());
       // no need to free this pointer - owned by the parent parser object
       xmlDoc = m_ConfigFileParser->getDocument();
+      if(!xmlDoc)
+        throw(std::runtime_error("empty XML document"));
 
       elementRoot = xmlDoc->getDocumentElement();
       if (!elementRoot)
-        throw(std::runtime_error("empty XML document"));
+        throw(std::runtime_error("empty root element"));
 
       m_init = true;
 

@@ -13,6 +13,7 @@ encoding//src/mobility/wscript=utf-8
 encoding//src/mpi/wscript=utf-8
 encoding//src/openflow/wscript=utf-8
 encoding//src/propagation/wscript=utf-8
+encoding//src/symphony/examples/wscript=utf-8
 encoding//src/symphony/wscript=utf-8
 encoding//src/test/perf/wscript=utf-8
 encoding//src/test/wscript=utf-8
