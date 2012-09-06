@@ -92,11 +92,11 @@ TosNodeContainer::Get (uint32_t i) const
   return m_TosNode[i];
 }
 void 
-TosNodeContainer::Create (uint32_t n)
+TosNodeContainer::Create (uint32_t n, const char * lib)
 {
   for (uint32_t i = 0; i < n; i++)
     {
-      m_TosNode.push_back (CreateObject<TosNode> (i ,MilliSeconds(0),"./libtos.so"));
+      m_TosNode.push_back (CreateObject<TosNode> (i ,MilliSeconds(0), lib));
     }
 }
 void 

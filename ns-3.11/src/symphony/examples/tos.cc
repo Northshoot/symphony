@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
         //Create TosNodeContainer
 	TosNodeContainer c;
 	//Create nodes
-	c.Create(2);
+	c.Create(2,"/home/lauril/dev/symphony/ns-3.11/build/libtos.so");
 
 	//Create helper
 	TosHelper wifi;
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 
 
    //Set run-time for the simulation
-    ns3::Simulator::Stop(ns3::Seconds(100));
+    ns3::Simulator::Stop(ns3::Seconds(20));
     //Run simulation
     ns3::Simulator::Run();
    //Clean up all objects

@@ -230,6 +230,7 @@ public:
    * \param n The number of NodeTests to create
    */
   void Create (uint32_t n);
+void Create (uint32_t n, const char * lib);
 
   /**
    * \brief Create n NodeTests with specified systemId for distributed simulations

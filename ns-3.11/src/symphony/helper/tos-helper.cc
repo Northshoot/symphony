@@ -65,7 +65,7 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	      Ptr<TosNode> node = *i;
 	      NS_LOG_DEBUG(node);
 	      Ptr<TosNetDevice> device = CreateObject<TosNetDevice> ();
-	      Ptr<TosMacLow> mac = new TosMacLow();
+	      Ptr<TosMacLow> mac = CreateObject< TosMacLow>();
 	      Ptr<WifiPhy> phy = phyHelper.Create (node, device);
 	      mac->SetAddress (Mac48Address::Allocate ());
 	      phy->ConfigureStandard (m_standard);

@@ -48,6 +48,7 @@ printTosPacket( char *buf){
 	printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
 	printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
 	printf ("offsetof() is %lu\n",offsetof(ns3packet_header_t,fdest));
+	delete hdr;
 }
 
 NS_LOG_COMPONENT_DEFINE("TosNetDevice");
@@ -65,6 +66,7 @@ public:
   }
   virtual ~PhyTosListener ()
   {
+    delete m_device;
   }
   virtual void NotifyRxStart (Time duration)
   {
@@ -282,8 +284,7 @@ Ptr<Packet>
 TosNetDevice::TosToNsPacket(message_t* msg) {
 //	Ptr <Packet> pkt =Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
 //							sizeof(message_t)));
-	return Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
-            sizeof(message_t)));;
+	return Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),sizeof(message_t)));;
 }
 
 message_t*
@@ -296,6 +297,7 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 
 	memcpy((void *)&m_rx_msg, (const void *)msg, sizeof(message_t));
 	printTosPacket((char *) &m_rx_msg);
+	//delete msg;
 	return &m_rx_msg;
 }
 void
@@ -333,8 +335,8 @@ void TosNetDevice::DoDispose(void) {
 	m_phy->Dispose();
 	m_tos_mac=0;
 	m_phy=0;
-	delete m_phyListener;
 	m_phyListener=0;
+	delete m_phyListener;
 	NetDevice::DoDispose ();
 }
 

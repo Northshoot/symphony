@@ -94,6 +94,12 @@ TosMacLow::DoDispose (void)
   NS_LOG_FUNCTION (this);
   m_sendDataEvent.Cancel ();
   m_phy = 0;
+  m_txParams =0;
+  m_listener = 0;
+
+  delete m_txParams;
+  delete m_listener;
+
   Object::DoDispose();
 }
 

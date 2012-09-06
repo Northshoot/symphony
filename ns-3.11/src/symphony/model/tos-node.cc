@@ -94,7 +94,7 @@ namespace ns3
     return m_id;
   }
 
-  SimuClock *
+  Ptr<SimuClock>
   TosNode::getClock()
   {
     return simuclock;
@@ -142,32 +142,37 @@ namespace ns3
     /**
      * Check and remove shutdown event
      */
-    cerr << "TosNode::DoDispose(void)" << endl;
-    if (m_shutdown_event.IsRunning())
+    for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
+         i != m_devices.end (); i++)
       {
-        m_shutdown_event.Cancel();
-        Simulator::Remove(m_shutdown_event);
+        Ptr<NetDevice> device = *i;
+        device->Dispose ();
+        *i = 0;
       }
-    if (m_boot_event.IsRunning())
-      {
-        Simulator::Cancel(m_boot_event);
-        Simulator::Remove(m_boot_event);
-      }
+    m_devices.clear ();
+//    if (m_shutdown_event.IsRunning())
+//      {
+//        m_shutdown_event.Cancel();
+//        Simulator::Remove(m_shutdown_event);
+//      }
+//    if (m_boot_event.IsRunning())
+//      {
+//        Simulator::Cancel(m_boot_event);
+//        Simulator::Remove(m_boot_event);
+//      }
     dlclose(handler);
     delete nstotos;
     delete tostons;
-    delete simuclock;
+
     delete m_libname;
+    delete error;
+    m_devices.clear();
 
-    //finally despose object
-    Object::DoDispose();
+
+    Node::DoDispose();
   }
 
-  TosNode::~TosNode()
-  {
-    //everything removed in DoDispose
-    cout << "TosNode::~TosNode()" << endl;
-  }
+  TosNode::~TosNode() {  }
 
   void
   TosNode::DoStart()
@@ -175,7 +180,7 @@ namespace ns3
     //open instance of the library  LM_ID_NEWLM
     NS_ASSERT(m_init);
     callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
-    simuclock = new SimuClock(NANOSECOND, NONE, callBackFromClock);
+    simuclock = CreateObject<SimuClock>(NANOSECOND, NONE, callBackFromClock);
     tostons->simu_clock = simuclock;
     m_libname = "/home/lauril/dev/symphony/ns-3.11/build/libtos.so";
 

@@ -19,7 +19,7 @@
  * otherwise linking with C will fail
  * Which results in segfault
  */
-#include "ns3/pointer.h"
+#include "ns3/ptr.h"
 #include "ns3/wifi-mac-header.h"
 
 #include "simu-clock.h"
@@ -43,7 +43,7 @@ class TosToNs3Proxy {
 	   //we define a generic function for calls from TinyOS to
 	   //ns3 then each function is dispatched to the right format by casting
 	   int deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2 );
-	   ns3::SimuClock * simu_clock;
+	   ns3::Ptr<ns3::SimuClock>  simu_clock;
 
 	~TosToNs3Proxy();
 private:

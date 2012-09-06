@@ -102,7 +102,7 @@ namespace ns3
      */
     Callback<uint32_t, uint32_t> callBackFromClock;
 
-    SimuClock *
+    Ptr<SimuClock>
     getClock();
 
     void
@@ -126,7 +126,7 @@ namespace ns3
     void
     Construct(void);
     uint32_t m_id; // Node id for this node
-    SimuClock * simuclock;
+    Ptr<SimuClock>  simuclock;
     uint32_t m_sid; // System id for this node
     Time m_bootTime; //boot time of the node
     Time m_shutDownTime; //shut down time of the node
@@ -135,7 +135,6 @@ namespace ns3
     EventId m_boot_event; //boot event
     EventId m_shutdown_event; //shut down event
     //reference to the
-    Ptr<Node> m_node;
     std::vector<Ptr<TosNetDevice> > m_devices;
     const char * m_libname;
 
