@@ -72,9 +72,7 @@ TosMacLow::TosMacLow ()
 }
 
 TosMacLow::~TosMacLow ()
-{
-  NS_LOG_FUNCTION (this);
-}
+{}
 
 //void
 //TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
@@ -97,8 +95,8 @@ TosMacLow::DoDispose (void)
   m_txParams =0;
   m_listener = 0;
 
-  delete m_txParams;
-  delete m_listener;
+//  delete m_txParams;
+//  delete m_listener;
 
   Object::DoDispose();
 }

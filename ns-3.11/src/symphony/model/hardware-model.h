@@ -18,7 +18,8 @@ public:
   HardwareModel();
   HardwareModel(std::string name);
 
-  virtual  ~HardwareModel();
+    ~HardwareModel();
+
 
   Ptr<ModelElement>
   getElement(ModelVocabulary::ElementType et, std::string name);
@@ -43,7 +44,7 @@ protected:
      * end of their own DoDispose method.
      */
 
-  virtual void DoDispose (void);
+  void DoDispose (void);
 private:
   void printUniqueElement(UniqueElement elem);
   inline UniqueElement& getUniqueElement(ModelVocabulary::ElementType type);

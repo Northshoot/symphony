@@ -45,7 +45,7 @@ TosHelper::SetNodeModel(std::string file)
   m_radioModel = sym.getModel("radio");
 }
 TosHelper::~TosHelper() {
-	// TODO Auto-generated destructor stub
+  m_tosExternals.clear();
 }
 
 TosHelper
@@ -65,7 +65,7 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	      Ptr<TosNode> node = *i;
 	      NS_LOG_DEBUG(node);
 	      Ptr<TosNetDevice> device = CreateObject<TosNetDevice> ();
-	      Ptr<TosMacLow> mac = CreateObject< TosMacLow>();
+	      Ptr<TosMacLow> mac = CreateObject<TosMacLow>();
 	      Ptr<WifiPhy> phy = phyHelper.Create (node, device);
 	      mac->SetAddress (Mac48Address::Allocate ());
 	      phy->ConfigureStandard (m_standard);

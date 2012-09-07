@@ -28,6 +28,16 @@ ModelVocabulary::getVocabulary(ElementType type) const
   return (element_vocabularies.find(type))->second;
 }
 
+
+ModelVocabulary::~ModelVocabulary(){
+  tos_functions.clear();
+   property_vocabulary.clear();
+   call_vocabulary.clear();
+   callback_vocabulary.clear();
+   format_vocabulary.clear();
+   source_vocabulary.clear();
+   element_vocabularies.clear();
+}
 void
 ModelVocabulary::Constuct()
 {

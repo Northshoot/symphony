@@ -18,6 +18,7 @@ printTosPacket( char *buf){
     printf("header: ");
     printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
     printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
+    hdr =NULL;
 }
 
 module NS3MsgGatewayP{

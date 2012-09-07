@@ -84,6 +84,7 @@ implementation {
 	    atomic counter = ((radio_count_msg_t*)payload)->counter;
 		printf("\t\t# %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
 		//post send();
+		call MilliTimer.startOneShot(1000);
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
 		else {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;
@@ -97,7 +98,7 @@ implementation {
 		if (&packet == bufPtr) {
 			locked = FALSE;
 			printf("event void AMSend.sendDone %d\n",TOS_NODE_ID);
-			call MilliTimer.startOneShot(2000);
+			//call MilliTimer.startOneShot(2000);
 		}
 
 	}

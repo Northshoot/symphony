@@ -27,6 +27,8 @@ public:
 
   static ModelVocabulary& getInstance();
 
+  virtual
+ ~ModelVocabulary();
 
   std::vector<std::string>
   getCallVocabulary() const

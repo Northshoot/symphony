@@ -94,9 +94,10 @@ TosNodeContainer::Get (uint32_t i) const
 void 
 TosNodeContainer::Create (uint32_t n, const char * lib)
 {
+  Time boot = MicroSeconds(0);
   for (uint32_t i = 0; i < n; i++)
     {
-      m_TosNode.push_back (CreateObject<TosNode> (i ,MilliSeconds(0), lib));
+      m_TosNode.push_back (CreateObject<TosNode> (i ,boot, lib));
     }
 }
 void 

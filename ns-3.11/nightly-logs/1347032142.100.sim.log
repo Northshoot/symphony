@@ -1,0 +1,3267 @@
+Waf: Entering directory `/home/lauril/dev/symphony/ns-3.11/build'
+Waf: Leaving directory `/home/lauril/dev/symphony/ns-3.11/build'
+'build' finished successfully (0.312s)
+TosHelper:SetNodeModel(/home/lauril/dev/symphony/ns-3.11/build/symphony.xml)
+TosHelper:Install()
+0x763ce0
+TosNetDevice:TosNetDevice()
+[tos mac=00:00:00:00:00:00] TosMacLow:TosMacLow(0x7d9eb0)
+WifiPhy:WifiPhy(0x7d9fa0)
+YansWifiPhy:YansWifiPhy(0x7d9fa0)
+WifiPhyStateHelper:WifiPhyStateHelper(0x7da1d0)
+YansWifiPhy:SetEdThreshold(0x7d9fa0, -96)
+YansWifiPhy:SetCcaMode1Threshold(0x7d9fa0, -99)
+YansWifiPhy:SetTxGain(0x7d9fa0, 1)
+YansWifiPhy:SetRxGain(0x7d9fa0, 0)
+YansWifiPhy:SetTxPowerEnd(0x7d9fa0, 16.0206)
+YansWifiPhy:SetTxPowerStart(0x7d9fa0, 16.0206)
+YansWifiPhy:SetRxNoiseFigure(0x7d9fa0, 7)
+start at channel 1
+YansTosPhyHelper:Create(0x7fff95402ad0,  phy: , 0x7d9fa0,  ErrorRate: , 0x7da2d0,  channel: , 0x7d9980,  node: , 0x763ce0,  device: , 0x7d9cf0)
+YansWifiPhy:ConfigureStandard(0x7d9fa0, 1)
+YansWifiPhy:Configure80211b(0x7d9fa0)
+node=0x763ce0, mob=0
+0x764290
+TosNetDevice:TosNetDevice()
+[tos mac=00:00:00:00:00:00] TosMacLow:TosMacLow(0x7da770)
+WifiPhy:WifiPhy(0x7da860)
+YansWifiPhy:YansWifiPhy(0x7da860)
+WifiPhyStateHelper:WifiPhyStateHelper(0x7daa90)
+YansWifiPhy:SetEdThreshold(0x7da860, -96)
+YansWifiPhy:SetCcaMode1Threshold(0x7da860, -99)
+YansWifiPhy:SetTxGain(0x7da860, 1)
+YansWifiPhy:SetRxGain(0x7da860, 0)
+YansWifiPhy:SetTxPowerEnd(0x7da860, 16.0206)
+YansWifiPhy:SetTxPowerStart(0x7da860, 16.0206)
+YansWifiPhy:SetRxNoiseFigure(0x7da860, 7)
+start at channel 1
+YansTosPhyHelper:Create(0x7fff95402ad0,  phy: , 0x7da860,  ErrorRate: , 0x7dab90,  channel: , 0x7d9980,  node: , 0x764290,  device: , 0x7da5b0)
+YansWifiPhy:ConfigureStandard(0x7da860, 1)
+YansWifiPhy:Configure80211b(0x7da860)
+node=0x764290, mob=0
+TosMobilityHelper:Install()
+node=0x763ce0, mob=0x7daf50
+TosMobilityHelper:Install()
+node=0x764290, mob=0x7db0a0
+TosNode:DoStart(0x763ce0,  , /home/lauril/dev/symphony/ns-3.11/build/libtos.so)
+TosNode:DoStart(0x764290,  , /home/lauril/dev/symphony/ns-3.11/build/libtos.so)
+TosNode:BootBooted(0x763ce0,  , 0,  , 0,  ms)
+TosNetDevice:DoStart()
+TosNode:BootBooted(0x764290,  , 1,  , 0,  ms)
+TosNetDevice:DoStart()
+TosNetDevice:radioStartDone()
+TosNetDevice:radioStartDone()
+LibToTosProxy called: 0 time 0
+	FROM toslib: gateway(proxy,0,id_this_lib): 0
+FROM toslib: sim_main_start_mote
+Scheduler.init()
+App: booted 0
+AMControl.startDone: TOS_NODE_ID == 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::1 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebad0, 0x7e2c90)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+LibToTosProxy called: 0 time 0
+	FROM toslib: gateway(proxy,0,id_this_lib): 0
+FROM toslib: sim_main_start_mote
+Scheduler.init()
+App: booted 1
+AMControl.startDone: TOS_NODE_ID == 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 1
+event void MilliTimer.fired() 1205 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::2 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebc20, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 2
+event void MilliTimer.fired() 2208 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::3 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cc50, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 3
+event void MilliTimer.fired() 3210 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::4 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8388d6fc50, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 4
+event void MilliTimer.fired() 4213 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::5 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cdc0, 0x7ebd60)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 5
+event void MilliTimer.fired() 5216 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::6 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebbb0, 0x7e2c90)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 6
+event void MilliTimer.fired() 6219 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::7 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebd90, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 7
+event void MilliTimer.fired() 7222 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::8 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebad0, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 8
+event void MilliTimer.fired() 8225 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::9 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebc20, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 9
+event void MilliTimer.fired() 9228 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::10 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cc50, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 10
+event void MilliTimer.fired() 10231 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::11 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8388d6fc50, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 11
+event void MilliTimer.fired() 11234 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::12 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cdc0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 12
+event void MilliTimer.fired() 12237 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::13 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebbb0, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 13
+event void MilliTimer.fired() 13240 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::14 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebd90, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 14
+event void MilliTimer.fired() 14243 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::15 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebad0, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 15
+event void MilliTimer.fired() 15246 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::16 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebc20, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 16
+event void MilliTimer.fired() 16249 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::17 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cc50, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 17
+event void MilliTimer.fired() 17251 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::18 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8388d6fc50, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 18
+event void MilliTimer.fired() 18254 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::19 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cdc0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 19
+event void MilliTimer.fired() 19257 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::20 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebbb0, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 20
+event void MilliTimer.fired() 20260 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::21 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebd90, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 21
+event void MilliTimer.fired() 21263 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::22 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebad0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 22
+event void MilliTimer.fired() 22266 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::23 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebc20, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 23
+event void MilliTimer.fired() 23269 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::24 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cc50, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 24
+event void MilliTimer.fired() 24272 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::25 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8388d6fc50, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 25
+event void MilliTimer.fired() 25275 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::26 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cdc0, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 26
+event void MilliTimer.fired() 26278 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::27 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebbb0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 27
+event void MilliTimer.fired() 27281 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::28 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebd90, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 28
+event void MilliTimer.fired() 28284 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::29 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebad0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 29
+event void MilliTimer.fired() 29287 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::30 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebc20, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 30
+event void MilliTimer.fired() 30290 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::31 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cc50, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 31
+event void MilliTimer.fired() 31292 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::32 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8388d6fc50, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 32
+event void MilliTimer.fired() 32295 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::33 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cdc0, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 33
+event void MilliTimer.fired() 33298 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::34 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebbb0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 34
+event void MilliTimer.fired() 34301 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::35 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebd90, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 35
+event void MilliTimer.fired() 35304 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::36 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebad0, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 36
+event void MilliTimer.fired() 36307 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::37 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebc20, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 37
+event void MilliTimer.fired() 37310 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::38 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cc50, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 38
+event void MilliTimer.fired() 38313 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::39 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8388d6fc50, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 39
+event void MilliTimer.fired() 39316 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::40 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cdc0, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 40
+event void MilliTimer.fired() 40319 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::41 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebbb0, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 41
+event void MilliTimer.fired() 41322 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::42 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebd90, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 42
+event void MilliTimer.fired() 42325 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::43 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebad0, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 43
+event void MilliTimer.fired() 43328 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::44 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebc20, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 44
+event void MilliTimer.fired() 44331 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::45 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cc50, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 45
+event void MilliTimer.fired() 45333 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::46 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8388d6fc50, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 46
+event void MilliTimer.fired() 46336 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::47 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cdc0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 47
+event void MilliTimer.fired() 47339 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::48 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebbb0, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 48
+event void MilliTimer.fired() 48342 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::49 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebd90, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 49
+event void MilliTimer.fired() 49345 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::50 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebad0, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 50
+event void MilliTimer.fired() 50348 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::51 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebc20, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 51
+event void MilliTimer.fired() 51351 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::52 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cc50, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 52
+event void MilliTimer.fired() 52354 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::53 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8388d6fc50, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 53
+event void MilliTimer.fired() 53357 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::54 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cdc0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 54
+event void MilliTimer.fired() 54360 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::55 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebbb0, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 55
+event void MilliTimer.fired() 55363 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::56 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebd90, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 56
+event void MilliTimer.fired() 56366 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::57 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebad0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 57
+event void MilliTimer.fired() 57369 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::58 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebc20, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 58
+event void MilliTimer.fired() 58372 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::59 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cc50, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 59
+event void MilliTimer.fired() 59374 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::60 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8388d6fc50, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 60
+event void MilliTimer.fired() 60377 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::61 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cdc0, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 61
+event void MilliTimer.fired() 61380 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::62 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebbb0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 62
+event void MilliTimer.fired() 62383 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::63 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebd90, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 63
+event void MilliTimer.fired() 63386 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::64 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebad0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 64
+event void MilliTimer.fired() 64389 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::65 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebc20, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 65
+event void MilliTimer.fired() 65392 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::66 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cc50, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 66
+event void MilliTimer.fired() 66395 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::67 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8388d6fc50, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 67
+event void MilliTimer.fired() 67398 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::68 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cdc0, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 68
+event void MilliTimer.fired() 68401 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::69 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebbb0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 69
+event void MilliTimer.fired() 69404 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::70 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebd90, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 70
+event void MilliTimer.fired() 70407 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::71 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebad0, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 71
+event void MilliTimer.fired() 71410 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::72 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebc20, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 72
+event void MilliTimer.fired() 72413 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::73 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cc50, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 73
+event void MilliTimer.fired() 73415 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::74 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8388d6fc50, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 74
+event void MilliTimer.fired() 74417 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::75 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cdc0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 75
+event void MilliTimer.fired() 75420 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::76 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebbb0, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 76
+event void MilliTimer.fired() 76423 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::77 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebd90, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 77
+event void MilliTimer.fired() 77426 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::78 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebad0, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 78
+event void MilliTimer.fired() 78429 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::79 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebc20, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 79
+event void MilliTimer.fired() 79432 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::80 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cc50, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 80
+event void MilliTimer.fired() 80435 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::81 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8388d6fc50, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 81
+event void MilliTimer.fired() 81438 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::82 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cdc0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 82
+event void MilliTimer.fired() 82441 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::83 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebbb0, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 83
+event void MilliTimer.fired() 83444 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::84 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebd90, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 84
+event void MilliTimer.fired() 84447 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::85 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebad0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 85
+event void MilliTimer.fired() 85450 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::86 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebc20, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 86
+event void MilliTimer.fired() 86453 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::87 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cc50, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 87
+event void MilliTimer.fired() 87456 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::88 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8388d6fc50, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 88
+event void MilliTimer.fired() 88458 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::89 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8392b8cdc0, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 89
+event void MilliTimer.fired() 89461 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::90 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebbb0, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 90
+event void MilliTimer.fired() 90464 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::91 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebd90, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 91
+event void MilliTimer.fired() 91467 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::92 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebad0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 92
+event void MilliTimer.fired() 92470 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::93 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebc20, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 93
+event void MilliTimer.fired() 93473 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::94 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8392b8cdc0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cc50, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 94
+event void MilliTimer.fired() 94476 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::95 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebbb0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7f8388d6fc50, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7f8388d6fc50, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7f8388d6fc50, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 95
+event void MilliTimer.fired() 95479 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::96 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebd90, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7f8392b8cdc0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7f8392b8cdc0, 0x7f8392b8cb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7f8392b8cdc0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 96
+event void MilliTimer.fired() 96482 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::97 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7ebad0, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebbb0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebbb0, 0x7644c0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebbb0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 97
+event void MilliTimer.fired() 97485 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::98 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7ebc20, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebd90, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebd90, 0x7eb920)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebd90, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+		# 0 RadioTest event message_t* Receive.receive 98
+event void MilliTimer.fired() 98488 Node 0
+TOSLIB::void task send() TOS_NODE_ID::0 - COUNTER::99 - DEST::1
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7d9fa0, 0x7f8392b8cc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x764290, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7da860, 0x7ebad0, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7da860, 0x7ebad0, 0x7f8388d6fb70)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:02] TosMacLow:ReceiveOk(0x7da770, 0x7ebad0, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 1
+TOS RX LOW 
+		# 1 RadioTest event message_t* Receive.receive 99
+event void MilliTimer.fired() 99491 Node 1
+TOSLIB::void task send() TOS_NODE_ID::1 - COUNTER::100 - DEST::0
+				 SENDING
+ m_tosnetdevice->DeviceSend 
+TosNetDevice::DeviceSend(void* msg) 1
+				NS3 SENDING
+TosMacLow::ForwardDown phy state: 0
+YansWifiPhy:SendPacket(0x7da860, 0x7f8388d6fc50, DsssRate1Mbps, 0, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+TosNetDevice:DeviceSendDone(DEVICE_SEND_DONE)
+ 	NotifyTxStart 944
+propagation: txPower=17.0206dbm, rxPower=-80dbm, distance=50m, delay=+166.0ns
+TosNetDevice:GetNode(0x763ce0, N3ns33PtrINS_4NodeEEE)
+YansWifiPhy:StartReceivePacket(0x7d9fa0, 0x7ebc20, -80, DsssRate1Mbps, 0)
+WifiPhy:GetPayloadDurationMicroSeconds(94, DsssRate1Mbps)
+ size=94 mode=DsssRate1Mbps rate=1000000
+sync to signal (power=1e-11W)
+ 	NotifyRxStart 944
+YansWifiPhy:EndReceive(0x7d9fa0, 0x7ebc20, 0x7ebaa0)
+mode=1000000, snr=22.6572, per=0, size=94
+ 	NotifyRxEndOk
+[tos mac=00:00:00:00:00:01] TosMacLow:ReceiveOk(0x7d9eb0, 0x7ebc20, 22.6572, DsssRate1Mbps, 0)
+TosMacLow::ReceiveOk 
+TosMacLow::ReceiveOk packet copy 22.6572
+TosMacLow::ReceiveOk about to callback 22.6572
+TosNetDevice::ForwardUp 
+TosNetDevice:NsToTosPacket()
+TosNetDevice::ForwardUp 
+event void AMSend.sendDone 0
+TOS RX LOW 
+TosNode::DoDispose(void)
+TosNode::DoDispose(void)
+event void AMSend.sendDone 1
+		# 0 RadioTest event message_t* Receive.receive 100
+Generated and successfully compiled proxy!

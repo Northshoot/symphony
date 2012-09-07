@@ -29,14 +29,26 @@ using namespace ns3;
 int main(int argc, char *argv[])
 {
 
+
         std::string nodeModel="/home/lauril/dev/symphony/ns-3.11/build/symphony.xml";
+        std::string nodeImage="/home/lauril/dev/symphony/ns-3.11/build/libtos.so";
+        uint64_t simLength = 100;
+        bool realTime = false;
         CommandLine cmd;
         cmd.AddValue ("nodeModel", "model of the node in XML format", nodeModel);
+        cmd.AddValue ("nodeImage", "node image", nodeImage);
+        cmd.AddValue("simLength","the length of the simulation", simLength);
+        cmd.AddValue("realTime","true to use real time simulation", realTime);
         cmd.Parse (argc, argv);
         //Create TosNodeContainer
+
+        if(realTime){
+            GlobalValue::Bind ("SimulatorImplementationType",
+               StringValue ("ns3::RealtimeSimulatorImpl"));
+        }
 	TosNodeContainer c;
 	//Create nodes
-	c.Create(2,"/home/lauril/dev/symphony/ns-3.11/build/libtos.so");
+	c.Create(2,nodeImage.c_str());
 
 	//Create helper
 	TosHelper wifi;
@@ -84,7 +96,7 @@ int main(int argc, char *argv[])
 
 
    //Set run-time for the simulation
-    ns3::Simulator::Stop(ns3::Seconds(20));
+    ns3::Simulator::Stop(ns3::Seconds(simLength));
     //Run simulation
     ns3::Simulator::Run();
    //Clean up all objects

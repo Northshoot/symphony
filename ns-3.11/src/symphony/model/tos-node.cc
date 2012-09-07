@@ -142,13 +142,13 @@ namespace ns3
     /**
      * Check and remove shutdown event
      */
-    for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
-         i != m_devices.end (); i++)
-      {
-        Ptr<NetDevice> device = *i;
-        device->Dispose ();
-        *i = 0;
-      }
+//    for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
+//         i != m_devices.end (); i++)
+//      {
+//        Ptr<NetDevice> device = *i;
+//        device->Dispose ();
+//        *i = 0;
+//      }
     m_devices.clear ();
 //    if (m_shutdown_event.IsRunning())
 //      {
@@ -164,11 +164,9 @@ namespace ns3
     delete nstotos;
     delete tostons;
 
-    delete m_libname;
-    delete error;
+//    delete m_libname;
+//    delete error;
     m_devices.clear();
-
-
     Node::DoDispose();
   }
 

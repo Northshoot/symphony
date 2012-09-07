@@ -18,6 +18,15 @@ HardwareModel::HardwareModel()
 {
 }
 
+void
+HardwareModel::DoDispose(){
+  deleteElements(m_properties);
+  deleteElements(m_callbacks);
+  deleteElements(m_calls);
+  deleteElements(m_formats);
+  deleteElements(m_sources);
+    Object::DoDispose();
+}
 HardwareModel::HardwareModel(std::string name)
 {
   m_name=name;
@@ -116,13 +125,5 @@ HardwareModel::getUniqueElement(ModelVocabulary::ElementType type)
   }
 }
 
-void
-HardwareModel::DoDispose(void)
-{
-  deleteElements(m_properties);
-  deleteElements(m_callbacks);
-  deleteElements(m_calls);
-  deleteElements(m_formats);
-  deleteElements(m_sources);
-}
+
 }

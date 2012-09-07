@@ -193,8 +193,10 @@ SymphonyXML::createModels()
 
       createModelElement(nodeList, ModelVocabulary::SOURCE, model);
       m_models[mapIter->first] = model;
+
       //model->printModel();
     }
+
 }
 //HardwareModel
 //SymphonyXML::createHwModel(xercesc::DOMElement* currentElement,
@@ -342,6 +344,7 @@ SymphonyXML::~SymphonyXML()
 
   m_modelMap.clear();
   m_models.clear();
+  tos_functions.clear();
   delete m_ConfigFileParser;
   try
   {

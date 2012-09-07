@@ -27,6 +27,9 @@ class ModelElement : public Object
 public:
   static TypeId GetTypeId (void);
   ModelElement();
+
+
+
   ModelElement(std::string name);
 
   void
@@ -37,7 +40,7 @@ public:
 
   void
   printElement();
-  virtual
+
   ~ModelElement();
 protected:
     /**
@@ -46,7 +49,7 @@ protected:
      * end of their own DoDispose method.
      */
 
-  virtual void DoDispose (void);
+  void DoDispose (void);
 private:
   typedef std::map<std::string, std::string> Attribute;
   std::string m_name;

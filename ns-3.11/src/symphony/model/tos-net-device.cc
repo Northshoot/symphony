@@ -48,7 +48,7 @@ printTosPacket( char *buf){
 	printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
 	printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
 	printf ("offsetof() is %lu\n",offsetof(ns3packet_header_t,fdest));
-	delete hdr;
+
 }
 
 NS_LOG_COMPONENT_DEFINE("TosNetDevice");
@@ -296,8 +296,8 @@ TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	NS_LOG_FUNCTION_NOARGS();
 
 	memcpy((void *)&m_rx_msg, (const void *)msg, sizeof(message_t));
-	printTosPacket((char *) &m_rx_msg);
-	//delete msg;
+	//printTosPacket((char *) &m_rx_msg);
+	free(msg);
 	return &m_rx_msg;
 }
 void
@@ -328,14 +328,15 @@ message_t* TosNetDevice::DeviceReceive(message_t* msg) {
 }
 
 void TosNetDevice::DoDispose(void) {
-    std::cerr<<"TosNetDevice::DoDispose(void) " <<std::endl;
 	NS_LOG_FUNCTION_NOARGS ();
-	m_node=0;
-	m_tos_mac->Dispose();
-	m_phy->Dispose();
-	m_tos_mac=0;
-	m_phy=0;
-	m_phyListener=0;
+//	m_node=0;
+//	m_tos_mac->Dispose();
+//	m_phy->Dispose();
+//	m_tos_mac=0;
+//	m_phy=0;
+//	m_phyListener=0;
+	m_ns3totos=0;
+
 	delete m_phyListener;
 	NetDevice::DoDispose ();
 }

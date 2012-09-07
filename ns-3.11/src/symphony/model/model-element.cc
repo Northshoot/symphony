@@ -23,7 +23,12 @@ namespace ns3
 
     return tid;
   }
-
+ModelElement::~ModelElement(){}
+void
+ModelElement::DoDispose(){
+  attribute.clear();
+  Object::DoDispose();
+}
 ModelElement::ModelElement()
 {
 }
@@ -68,16 +73,4 @@ ModelElement::printElement()
       std::cout<<"]";
 }
 
-ModelElement::~ModelElement()
-{
-  DoDispose();
-  //std::cout<< "ModelElement::~ModelElement()"<<std::endl;
-}
-
-void
-ModelElement::DoDispose(void)
-{
-  //std::cout << "DoDispose " << count << std::endl;
-  attribute.clear();
-}
 }
