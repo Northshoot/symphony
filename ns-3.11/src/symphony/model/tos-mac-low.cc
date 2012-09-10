@@ -90,10 +90,12 @@ void
 TosMacLow::DoDispose (void)
 {
   NS_LOG_FUNCTION (this);
-  m_sendDataEvent.Cancel ();
-  m_phy = 0;
-  m_txParams =0;
-  m_listener = 0;
+  if(m_sendDataEvent.IsRunning()){
+      m_sendDataEvent.Cancel ();
+  }
+//  m_phy = 0;
+//  m_txParams =0;
+//  m_listener = 0;
 
 //  delete m_txParams;
 //  delete m_listener;
@@ -179,7 +181,7 @@ TosMacLow::ReceiveError (Ptr<const Packet> packet, double rxSnr)
   NS_LOG_FUNCTION (this << packet << rxSnr);
   NS_LOG_DEBUG ("rx failed ");
   std::cerr<<"TosMacLow::ReceiveError "<<std::endl;
-  return;
+
 }
 
 void
@@ -193,17 +195,15 @@ TosMacLow::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPre
    * packet queue.
    */
   WifiMacHeader hdr;
-  m_currentPacket = packet->Copy();
-  std::cerr<<"TosMacLow::ReceiveOk packet copy " << rxSnr<<std::endl;
-  m_currentPacket->RemoveHeader (hdr);
+  packet->RemoveHeader(hdr);
   WifiMacTrailer fcs;
-  m_currentPacket->RemoveTrailer(fcs);
+  packet->RemoveTrailer(fcs);
+
   //TODO: inmplement snr convertion
 //  SnrTag tag;
 //  m_currentPacket->RemovePacketTag (tag);
-  std::cerr<<"TosMacLow::ReceiveOk about to callback " << rxSnr<<std::endl;
-  m_rxCallback (m_currentPacket->Copy(),&hdr);
-  return;
+  m_rxCallback (packet,&hdr);
+
 }
 
 

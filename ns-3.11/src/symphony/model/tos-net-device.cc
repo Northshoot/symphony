@@ -284,20 +284,24 @@ Ptr<Packet>
 TosNetDevice::TosToNsPacket(message_t* msg) {
 //	Ptr <Packet> pkt =Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
 //							sizeof(message_t)));
-	return Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),sizeof(message_t)));;
+	return Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),sizeof(message_t)));
 }
 
 message_t*
 TosNetDevice::NsToTosPacket(Ptr<Packet> packet, const WifiMacHeader* hdr) {
 	WifiMacHeader hdrr;
-	message_t * msg  = (message_t*) malloc(sizeof(message_t));
+	//message_t * msg  = (message_t*) malloc(sizeof(message_t));
+	if(packet) {
 	packet->RemoveHeader(hdrr);
-	packet->CopyData(reinterpret_cast< uint8_t*>(msg), sizeof(message_t));
+	packet->CopyData(reinterpret_cast< uint8_t*>(&m_rx_msg), sizeof(message_t));
 	NS_LOG_FUNCTION_NOARGS();
 
-	memcpy((void *)&m_rx_msg, (const void *)msg, sizeof(message_t));
+	//memcpy( ((void *)&m_rx_msg), ((const void *)msg), sizeof(message_t));
 	//printTosPacket((char *) &m_rx_msg);
-	free(msg);
+	//free(msg);
+	} else {
+	    NS_LOG_FUNCTION("PACKET IS NULL");
+	}
 	return &m_rx_msg;
 }
 void
@@ -330,14 +334,14 @@ message_t* TosNetDevice::DeviceReceive(message_t* msg) {
 void TosNetDevice::DoDispose(void) {
 	NS_LOG_FUNCTION_NOARGS ();
 //	m_node=0;
-//	m_tos_mac->Dispose();
-//	m_phy->Dispose();
+	m_tos_mac->Dispose();
+	m_phy->Dispose();
 //	m_tos_mac=0;
 //	m_phy=0;
 //	m_phyListener=0;
-	m_ns3totos=0;
+//	m_ns3totos=0;
 
-	delete m_phyListener;
+	delete(m_phyListener);
 	NetDevice::DoDispose ();
 }
 
@@ -349,7 +353,6 @@ TosNetDevice::GetCurrentMsg(){
 
 void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
-  std::cerr<<"TosNetDevice::ForwardUp " <<std::endl;
   if(m_state != RADIO_STATE_TX) {
         m_rx_pkt = packet->Copy();
 	message_t * msg = NsToTosPacket(m_rx_pkt, hdr);

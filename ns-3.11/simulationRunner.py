@@ -10,8 +10,8 @@ folder="nightly-logs/"
 runLog = open(folder+"LOGSUMMARY.SIM.LOG",'w')
 
 run=True
-runtime=302400
-simTime = 100
+runtime=31536000
+simTime = 50000
 num=0
 while runtime >=0:
     before = time.time()
@@ -32,7 +32,7 @@ while runtime >=0:
     print msg
     runLog.write(msg)
     runtime-=simTime
-    simTime+=100
+    simTime+=1000
     num+=1
      
 runLog.close()     
