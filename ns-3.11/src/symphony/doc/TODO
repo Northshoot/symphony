@@ -25,5 +25,6 @@ Create demo sensor
 *scheduler logger
 
 
-
-
+patching /usr/lib/ncc/nesc_nx.h:316
+http://www.cyberciti.biz/faq/appy-patch-file-using-patch-command/
+sudo patch < ../../helper/nesc_nx.h.symphony.patch
