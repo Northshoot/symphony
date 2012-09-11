@@ -256,7 +256,7 @@ TosNetDevice::TransmitData(void)
   hdr.SetDsNotFrom();
   hdr.SetDsNotTo();
   m_tx_pkt->AddHeader(hdr);
-  m_tos_mac->TransmitData(m_tx_pkt->Copy(), &hdr);
+  m_tos_mac->TransmitData(m_tx_pkt, &hdr);
 
 }
 
@@ -282,8 +282,6 @@ TosNetDevice::DoStart(void)
 }
 Ptr<Packet>
 TosNetDevice::TosToNsPacket(message_t* msg) {
-//	Ptr <Packet> pkt =Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),
-//							sizeof(message_t)));
 	return Create <Packet> (Packet(reinterpret_cast<uint8_t*>(msg),sizeof(message_t)));
 }
 
@@ -354,8 +352,8 @@ TosNetDevice::GetCurrentMsg(){
 void
 TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
   if(m_state != RADIO_STATE_TX) {
-        m_rx_pkt = packet->Copy();
-	message_t * msg = NsToTosPacket(m_rx_pkt, hdr);
+        //m_rx_pkt = packet->Copy();
+	message_t * msg = NsToTosPacket(packet, hdr);
 	std::cerr<<"TosNetDevice::ForwardUp " <<std::endl;
 	  c_ns2tosRx((void*) msg);
 	} else {
