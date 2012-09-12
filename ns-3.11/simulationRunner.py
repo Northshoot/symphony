@@ -86,7 +86,7 @@ class Worker(Thread):
             self.queue.task_done()
 
 
-def main(number_of_workers=3):
+def main(number_of_workers):
     folder="nightly-logs/"
     runtime=31536000
     simTime = 2419200
@@ -112,4 +112,4 @@ def main(number_of_workers=3):
 if __name__ == "__main__":
     import multiprocessing
     # call main             
-    main(multiprocessing.cpu_count()-1)
+    main(multiprocessing.cpu_count())
