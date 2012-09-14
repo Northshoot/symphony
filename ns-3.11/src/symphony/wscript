@@ -14,7 +14,7 @@ def generate():
 
 def build(bld):
     generate()
-    module = bld.create_ns3_module('symphony', ['core','wifi','mobility'])
+    module = bld.create_ns3_module('symphony', ['core','wifi','mobility','internet','emu','applications'])
     module.env.append_value("LINKFLAGS",['-lxerces-c'])
     module.use.append("XERCES")
     module.use.append("LDL")
@@ -38,6 +38,7 @@ def build(bld):
                       'model/model-vocabulary.cc',
                       'model/model-element.cc',
                       'model/hardware-model.cc',
+                      'model/gateway-client.cc',
         ]
 
     module_test = bld.create_ns3_module_test_library('symphony')
@@ -71,6 +72,7 @@ def build(bld):
                     'model/model-vocabulary.h',
                     'model/model-element.h',
                     'model/hardware-model.h',
+                    'model/gateway-client.h',
                     '../wifi/model/wifi-mac-trailer.h',
         ]
 
