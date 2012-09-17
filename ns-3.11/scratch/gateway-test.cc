@@ -74,12 +74,14 @@ NS_LOG_COMPONENT_DEFINE ("GatewayClientExample");
 void
 sender(Ptr<WSNGatewayClient> app){
   NS_LOG_INFO("send send");
-  uint8_t m_size=50;
-  uint8_t* data = new uint8_t[m_size];
-  for (uint32_t i = 0; i < m_size; ++i) data[i] = 0;
+  std::string str("hej");
+
+  const uint8_t* data = reinterpret_cast<const uint8_t*>(str.c_str());
+
   app->sendData(data,sizeof(data));
+  NS_LOG_INFO(sizeof(str.c_str()));
   Simulator::Schedule (Seconds(1), &sender,app);
-  delete[] data;
+
 }
 int 
 main (int argc, char *argv[])

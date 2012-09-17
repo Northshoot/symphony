@@ -72,9 +72,9 @@ WSNGatewayClient::StartApplication(void)
 {
   NS_LOG_FUNCTION (this);
   m_started = Simulator::Now ();
-  m_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::Ipv4RawSocketFactory"));
+  m_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::TcpSocketFactory"));
   NS_ASSERT (m_socket != 0);
-  m_socket->SetAttribute ("Protocol", UintegerValue (6));
+  //m_socket->SetAttribute ("Protocol", UintegerValue (6));
   m_socket->SetRecvCallback (MakeCallback (&WSNGatewayClient::Receive, this));
   int status;
   InetSocketAddress m_src =InetSocketAddress (Ipv4Address::GetAny (), 0);
@@ -91,7 +91,7 @@ WSNGatewayClient::connect(){
 }
 
 void
-WSNGatewayClient::sendData( uint8_t * data, int size){
+WSNGatewayClient::sendData(const uint8_t * data, int size){
   NS_LOG_FUNCTION (m_seq);
   Ptr<Packet> p = Create<Packet> ();
 
@@ -105,13 +105,13 @@ WSNGatewayClient::sendData( uint8_t * data, int size){
   //
 
 
-//  uint32_t tmp = GetNode ()->GetId ();
-//  Write32 (&data[0 * sizeof(uint32_t)], tmp);
-//
-//  tmp = GetApplicationId ();
-//  Write32 (&data[1 * sizeof(uint32_t)], tmp);
+  uint32_t tmp = GetNode ()->GetId ();
+  Write32 (&data[0 * sizeof(uint32_t)], tmp);
 
-  Ptr<Packet> dataPacket = Create<Packet> ((uint8_t *) data, m_size);
+  tmp = GetApplicationId ();
+  Write32 (&data[1 * sizeof(uint32_t)], tmp);
+
+  Ptr<Packet> dataPacket = Create<Packet> ((const uint8_t *) data, m_size);
 
  // p->AddHeader (tcpheader);
 //  Icmpv4Header header;

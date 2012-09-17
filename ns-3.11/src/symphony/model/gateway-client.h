@@ -33,7 +33,7 @@ class WSNGatewayClient : public Application
     virtual ~WSNGatewayClient();
     void Receive (Ptr<Socket> socket);
     
-    void sendData( uint8_t * data, int size);
+    void sendData( const uint8_t * data, int size);
     void connect();
     void disconnect();
     
