@@ -29,16 +29,11 @@ WSNGatewayClient::GetTypeId (void)
     .SetParent<Application> ()
     .AddConstructor<WSNGatewayClient> ()
     .AddAttribute ("Remote",
-                   "The address of the machine we want to ping.",
+                   "The address of the machine we want to send packet to.",
                    Ipv4AddressValue (),
                    MakeIpv4AddressAccessor (&WSNGatewayClient::m_remote),
                    MakeIpv4AddressChecker ())
-    .AddAttribute ("Verbose",
-                   "Produce usual output.",
-                   BooleanValue (false),
-                   MakeBooleanAccessor (&WSNGatewayClient::m_verbose),
-                   MakeBooleanChecker ())
-    .AddAttribute ("Size", "The number of data bytes to be sent, real packet will be 8 (ICMP) + 20 (IP) bytes longer.",
+    .AddAttribute ("Port", "The number of the port on remote server.",
                    UintegerValue (56),
                    MakeUintegerAccessor (&WSNGatewayClient::m_size),
                    MakeUintegerChecker<uint32_t> (16));
@@ -47,11 +42,7 @@ WSNGatewayClient::GetTypeId (void)
 }
 
 WSNGatewayClient::WSNGatewayClient()
-:   m_size (56),
-    m_socket (0),
-    m_seq (0),
-    m_verbose (false),
-    m_recv (0),
+:   m_socket (0),
     m_port(21567)
   {
   }
@@ -63,7 +54,6 @@ void
 WSNGatewayClient::DoDispose()
 {
   NS_LOG_FUNCTION (this);
-  //m_socket->Close ();
   m_socket = 0;
   Application::DoDispose ();
 }
@@ -74,62 +64,26 @@ WSNGatewayClient::StartApplication(void)
   m_started = Simulator::Now ();
   
 }
-void
-WSNGatewayClient::connect(){
-
-}
 
 void
 WSNGatewayClient::sendData(const uint8_t * data, int size){
-  NS_LOG_FUNCTION (m_seq);
+//we create a connection and send data the size is the size of data
+  NS_LOG_FUNCTION (size);
+  //create tcp socket
   m_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::TcpSocketFactory"));
   NS_ASSERT (m_socket != 0);
-  //m_socket->SetAttribute ("Protocol", UintegerValue (6));
+  //set rx call back if we expect something back
   m_socket->SetRecvCallback (MakeCallback (&WSNGatewayClient::Receive, this));
 
   int status;
-  InetSocketAddress m_src =InetSocketAddress (Ipv4Address::GetAny (), 0);
+  InetSocketAddress m_src = InetSocketAddress (Ipv4Address::GetAny (), 0);
   status = m_socket->Bind (m_src);
   NS_ASSERT (status != -1);
   InetSocketAddress dst = InetSocketAddress (m_remote, m_port);
   status = m_socket->Connect (dst);
   NS_ASSERT (status != -1);
-
-  Ptr<Packet> p = Create<Packet> ();
-
-  m_seq++;
-
-  //
-  // We must write quantities out in some form of network order.  Since there
-  // isn't an htonl to work with we just follow the convention in pcap traces
-  // (where any difference would show up anyway) and borrow that code.  Don't
-  // be too surprised when you see that this is a little endian convention.
-  //
-
-
-//  uint32_t tmp = GetNode ()->GetId ();
- // Write32 (&data[0 * sizeof(uint32_t)], tmp);
-
- // tmp = GetApplicationId ();
- // Write32 (&data[1 * sizeof(uint32_t)], tmp);
-
-  Ptr<Packet> dataPacket = Create<Packet> ((const uint8_t *) data, m_size);
-
- // p->AddHeader (tcpheader);
-//  Icmpv4Header header;
-//  header.SetType (TcpHeader::);
-//  header.SetCode (0);
-//  if (Node::ChecksumEnabled ())
-//    {
-//      header.EnableChecksum ();
-//    }
-//  p->AddHeader (tcpheader);
-  m_sent.insert (std::make_pair (m_seq - 1, Simulator::Now ()));
   m_socket->Send (data,size, 0);
-m_socket->Close ();
-
-//  m_next = Simulator::Schedule (m_interval, &V4Ping::Send, this);
-  //delete[] data;
+  m_socket->Close ();
 }
 
 void
@@ -140,15 +94,11 @@ WSNGatewayClient::StopApplication (void)
   
 }
 
-void
-WSNGatewayClient::disconnect() {
-  NS_LOG_FUNCTION (this);
-  m_next.Cancel ();
-  m_socket->Close ();
-}
+
 void
 WSNGatewayClient::Receive (Ptr<Socket> socket)
 {
+  //if needed a callback function must be created, added, data extracted and forwarded to the proper receiver
   NS_LOG_FUNCTION (this << socket);
 }
 
@@ -166,21 +116,5 @@ WSNGatewayClient::GetApplicationId (void) const
   NS_ASSERT_MSG (false, "forgot to add application to node");
   return 0; // quiet compiler
 }
-// Writes data to buffer in little-endian format; least significant byte
-// of data is at lowest buffer address
-void
-WSNGatewayClient::Write32 (uint8_t *buffer, const uint32_t data)
-{
-  buffer[0] = (data >> 0) & 0xff;
-  buffer[1] = (data >> 8) & 0xff;
-  buffer[2] = (data >> 16) & 0xff;
-  buffer[3] = (data >> 24) & 0xff;
-}
 
-// Writes data from a little-endian formatted buffer to data
-void
-WSNGatewayClient::Read32 (const uint8_t *buffer, uint32_t &data)
-{
-  data = (buffer[3] << 24) + (buffer[2] << 16) + (buffer[1] << 8) + buffer[0];
-}
 }

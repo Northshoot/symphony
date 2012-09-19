@@ -3,7 +3,7 @@
  *
  *  Created on: Aug 14, 2012
  *      Author: lauril
- * more info http://cs.baylor.edu/~donahoo/practical/CSockets/practical/
+ * simple example of app sending a packet to remote python server end closing connection
  * 
  */
 
@@ -34,13 +34,9 @@ class WSNGatewayClient : public Application
     void Receive (Ptr<Socket> socket);
     
     void sendData( const uint8_t * data, int size);
-    void connect();
-    void disconnect();
+
     
    private:
-    void Write32 (uint8_t *buffer, const uint32_t data);
-    void Read32 (const uint8_t *buffer, uint32_t &data);
-
     // inherited from Application base class.
     virtual void StartApplication (void);
     virtual void StopApplication (void);
@@ -59,20 +55,11 @@ class WSNGatewayClient : public Application
 
     Ptr<Socket> m_socket;
     uint16_t m_seq;
-    TracedCallback<Time> m_traceRtt;
-    /// produce ping-style output if true
-    bool m_verbose;
-
-    /// received packets counter
-    uint32_t m_recv;
+    //remote port
     uint16_t m_port;
     /// Start time to report total ping time
     Time m_started;
 
-    /// Next packet will be sent
-    EventId m_next;
-    /// All sent but not answered packets. Map icmp seqno -> when sent
-    std::map<uint16_t, Time> m_sent;
   };
 }
 #endif /* TOS_GATEWAY_CLIENT_H_ */
