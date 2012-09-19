@@ -63,7 +63,7 @@ void
 WSNGatewayClient::DoDispose()
 {
   NS_LOG_FUNCTION (this);
-  m_socket->Close ();
+  //m_socket->Close ();
   m_socket = 0;
   Application::DoDispose ();
 }
@@ -72,18 +72,7 @@ WSNGatewayClient::StartApplication(void)
 {
   NS_LOG_FUNCTION (this);
   m_started = Simulator::Now ();
-  m_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::TcpSocketFactory"));
-  NS_ASSERT (m_socket != 0);
-  //m_socket->SetAttribute ("Protocol", UintegerValue (6));
-  m_socket->SetRecvCallback (MakeCallback (&WSNGatewayClient::Receive, this));
-  int status;
-  InetSocketAddress m_src =InetSocketAddress (Ipv4Address::GetAny (), 0);
-  status = m_socket->Bind (m_src);
-  NS_ASSERT (status != -1);
-  InetSocketAddress dst = InetSocketAddress (m_remote, m_port);
-  status = m_socket->Connect (dst);
-  NS_ASSERT (status != -1);
-
+  
 }
 void
 WSNGatewayClient::connect(){
@@ -93,6 +82,19 @@ WSNGatewayClient::connect(){
 void
 WSNGatewayClient::sendData(const uint8_t * data, int size){
   NS_LOG_FUNCTION (m_seq);
+  m_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::TcpSocketFactory"));
+  NS_ASSERT (m_socket != 0);
+  //m_socket->SetAttribute ("Protocol", UintegerValue (6));
+  m_socket->SetRecvCallback (MakeCallback (&WSNGatewayClient::Receive, this));
+
+  int status;
+  InetSocketAddress m_src =InetSocketAddress (Ipv4Address::GetAny (), 0);
+  status = m_socket->Bind (m_src);
+  NS_ASSERT (status != -1);
+  InetSocketAddress dst = InetSocketAddress (m_remote, m_port);
+  status = m_socket->Connect (dst);
+  NS_ASSERT (status != -1);
+
   Ptr<Packet> p = Create<Packet> ();
 
   m_seq++;
@@ -105,11 +107,11 @@ WSNGatewayClient::sendData(const uint8_t * data, int size){
   //
 
 
-  uint32_t tmp = GetNode ()->GetId ();
-  Write32 (&data[0 * sizeof(uint32_t)], tmp);
+//  uint32_t tmp = GetNode ()->GetId ();
+ // Write32 (&data[0 * sizeof(uint32_t)], tmp);
 
-  tmp = GetApplicationId ();
-  Write32 (&data[1 * sizeof(uint32_t)], tmp);
+ // tmp = GetApplicationId ();
+ // Write32 (&data[1 * sizeof(uint32_t)], tmp);
 
   Ptr<Packet> dataPacket = Create<Packet> ((const uint8_t *) data, m_size);
 
@@ -123,7 +125,9 @@ WSNGatewayClient::sendData(const uint8_t * data, int size){
 //    }
 //  p->AddHeader (tcpheader);
   m_sent.insert (std::make_pair (m_seq - 1, Simulator::Now ()));
-  m_socket->Send (dataPacket, 0);
+  m_socket->Send (data,size, 0);
+m_socket->Close ();
+
 //  m_next = Simulator::Schedule (m_interval, &V4Ping::Send, this);
   //delete[] data;
 }
@@ -133,8 +137,7 @@ WSNGatewayClient::StopApplication (void)
 {
   NS_LOG_FUNCTION (this);
   m_next.Cancel ();
-  m_socket->Close ();
-
+  
 }
 
 void
