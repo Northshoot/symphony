@@ -1,0 +1,59 @@
+	ns3::WifiMacHeader whdr;
+    whdr.SetTypeData ();
+    whdr.SetAddr1 ("00:00:00:00:00:00");
+    whdr.SetAddr2 ("00:00:00:00:00:00");
+    whdr.SetDsNotFrom ();
+    whdr.SetDsNotTo ();
+    whdr.SetSequenceNumber (1);
+    whdr.SetFragmentNumber (0);
+    whdr.SetNoMoreFragments ();
+    whdr.SetNoRetry ();
+    
+adhocWIFI
+  WifiMacHeader hdr;
+  hdr.SetTypeData ();
+  hdr.SetAddr1 (to);
+  hdr.SetAddr2 (m_low->GetAddress ());
+  hdr.SetAddr3 (GetBssid ());
+  hdr.SetDsNotFrom ();
+  hdr.SetDsNotTo ();
+  
+  DCA-TXOP
+  WifiMacTrailer fcs;
+  uint32_t fullPacketSize = hdr.GetSerializedSize () + packet->GetSize () + fcs.GetSerializedSize ();
+  m_stationManager->PrepareForQueue (hdr.GetAddr1 (), &hdr,
+                                     packet, fullPacketSize);
+               
+  WifiRemoteStationManager
+  WifiRemoteStationManager::PrepareForQueue (Mac48Address address, const WifiMacHeader *header,
+                                           Ptr<const Packet> packet, uint32_t fullPacketSize)
+{
+  if (IsLowLatency () || address.IsGroup ())
+    {
+      return;
+    }
+  WifiRemoteStation *station = Lookup (address, header);
+  WifiMode rts = DoGetRtsMode (station);
+  WifiMode data = DoGetDataMode (station, fullPacketSize);
+  TxModeTag tag;
+  // first, make sure that the tag is not here anymore.
+  ConstCast<Packet> (packet)->RemovePacketTag (tag);
+  tag = TxModeTag (rts, data);
+  // and then, add it back
+  packet->AddPacketTag (tag);
+}            
+
+mac-low
+  m_currentHdr.SetDuration (duration);
+
+  m_currentPacket->AddHeader (m_currentHdr);
+  WifiMacTrailer fcs;
+  m_currentPacket->AddTrailer (fcs);
+  
+  forward down
+  m_phy->SendPacket (packet, txMode, WIFI_PREAMBLE_LONG, 0);
+  
+
+yans-wifi-channel
+108 dstNode = dstNetDevice->GetObject<NetDevice> ()->GetNode ()->GetId ();
+          

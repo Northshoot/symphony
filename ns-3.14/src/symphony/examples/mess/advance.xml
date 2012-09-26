@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<symphony>
+  <callback>
+   <function return="int" params="1" param1="int">setUniqueID</function>
+   <function return="void" params="1" param1="int">sim_main_start_mote</function>
+   <function return="int" params="1" param1="long">setProxy</function>
+   <function return="int" params="1" param1="uint32_t">tickFired</function>
+   <function return="int" params="1" param1="uint32_t">tickFired</function>
+  <function return="int" params="1" param1="void *" time="60">receiveMessage</function>
+ </callback>
+ <device>
+  <radiodevice t_units="ms" m_startUp="500" m_channelSwith="300" m_txDelay="200">RF230-Radio-Model</radiodevice>
+  <memory s_unit="Kb" t_unit="ms" size="512" m_read="0" m_write="0" m_start="0">Node-Heap-Memory-Model</memory>
+  <memory s_unit="Mb" t_unit="ms" size="2" m_read="5" m_write="7" m_start="600">Node-Flash-Memory-Model</memory>
+ </devices>
+</symphony>
