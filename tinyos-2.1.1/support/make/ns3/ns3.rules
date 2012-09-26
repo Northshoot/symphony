@@ -1,0 +1,42 @@
+
+ifdef MAKE_DEPUTY_FLAG
+				NCC_SAFE_TINYOS_FLAGS = -DSAFE_TINYOS -I$(TOSDIR)/lib/safe -fnesc-deputy -fnesc-deputy-args='-I$(TOSDIR)/lib/safe/include --FLIDs=build/$(PLATFORM)/flids.txt --envmachine -DSAFE_TINYOS --nolib '
+else
+				NCC_SAFE_TINYOS_FLAGS =
+endif
+
+OBJCOPY = avr-objcopy
+OBJDUMP = avr-objdump
+SET_ID = tos-set-symbols
+NCC = ncc
+LIBS = -lm
+
+# Use __ as the separator - requires nesC 1.2.9 or later
+ifneq ($(filter ns3sim,$(GOALS)),sim-exe)
+ifneq ($(filter sim-sf,$(GOALS)),sim-sf)
+	PFLAGS += -fnesc-separator=__
+endif
+endif
+
+#adress is set by WsnNodecontainer or manually when creating
+#AMADDR = ActiveMessageAddressC__addr
+
+
+PFLAGS += -Wall -Wshadow $(NESC_FLAGS)
+PFLAGS += -target=$(PLATFORM) -fnesc-cfile=$(BUILDDIR)/app.c 
+PFLAGS += -DTOSH_DATA_LENGTH=$(MSG_SIZE)
+
+ifdef DEFAULT_LOCAL_GROUP
+PFLAGS += -DDEFINED_TOS_AM_GROUP=$(DEFAULT_LOCAL_GROUP)
+endif
+
+
+#BUILDLESS_DEPS += bytes 
+
+ifndef NOWIRING
+include $(TINYOS_MAKE_PATH)/wiring.extra
+endif
+
+builddir: FORCE
+	mkdir -p $(BUILDDIR)
+

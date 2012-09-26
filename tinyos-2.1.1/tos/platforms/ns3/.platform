@@ -1,0 +1,16 @@
+push( @includes, qw(
+  %T/platforms/ns3/system
+  %T/platforms/ns3/timers
+  %T/platforms/ns3/sim
+  %T/platforms/ns3/radio
+  %T/system
+  %T/types
+  %T/lib/timer
+) );
+
+@opts = qw(
+  -fnesc-target=pc
+  -fnesc-scheduler=TinySchedulerC,TinySchedulerC.TaskBasic,TaskBasic,TaskBasic,runTask,postTask
+
+);
+

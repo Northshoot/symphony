@@ -1,0 +1,10 @@
+#-*-Makefile-*- vim:syntax=make
+#$Id: micaz.target,v 1.6 2008/07/09 15:36:50 sallai Exp $
+
+PLATFORM = ns3
+
+$(call TOSMake_include_platform,ns3)
+
+ns3: $(BUILD_DEPS)
+	@:
+
