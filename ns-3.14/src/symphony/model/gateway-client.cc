@@ -90,7 +90,6 @@ void
 WSNGatewayClient::StopApplication (void)
 {
   NS_LOG_FUNCTION (this);
-  m_next.Cancel ();
   
 }
 
