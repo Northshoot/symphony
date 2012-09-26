@@ -1,0 +1,5 @@
+Application for testing hidden terminal
+Two nodes send to same source
+
+run:
+./waf --run="tos-hidden-terminal"
