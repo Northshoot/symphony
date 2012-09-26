@@ -1,5 +1,0 @@
-Application for testing simple symphony example
-Ping-pong application with increasing counter.
-
-run:
-./waf --run="tos"
