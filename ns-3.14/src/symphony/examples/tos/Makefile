@@ -51,20 +51,7 @@ NS3_NET =$(NS3_DIR)/$(PRE_NS_LIB)-network-$(POST_NS_LIB)
 CALL_HEADER=$(NS3_SRC)/model/calls-to-ns3.h
 
 #app to create
-APP=time
-
-TOS_IMG=post_app
-#main file
-MAIN=main
-OUT=time_t
-
 SIM_LIB=libtos
-#we just build libtos.so and copy it to the ns3/debug
-#the simulation app can be developed in the scratch folder and run
-#./waf --run="main"
-#remember that you need to build ns simulation enviroment
-
-#TODO: integrate tos build with waf
 
 all:
 		@echo "                                   "
@@ -88,9 +75,6 @@ all:
 clean:
 	rm -rf $(OUT) *.o app.c
 	
-run:
-	make
-	-exec " ./"$(OUT)
 	
 
 
