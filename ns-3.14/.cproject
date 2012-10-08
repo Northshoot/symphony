@@ -27,7 +27,7 @@
 							</builder>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser" id="org.eclipse.cdt.build.core.settings.holder.libs.1723794266" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs">
 								<option id="org.eclipse.cdt.build.core.settings.holder.libpaths.1210158172" name="Library Paths" superClass="org.eclipse.cdt.build.core.settings.holder.libpaths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ns-3.11/build}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/ns-3.14/build}&quot;"/>
 								</option>
 							</tool>
 							<tool errorParsers="org.eclipse.cdt.core.VCErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser" id="org.eclipse.cdt.build.core.settings.holder.463783827" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">

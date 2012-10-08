@@ -38,15 +38,17 @@ namespace ns3
   TypeId
   TosNode::GetTypeId(void)
   {
-    static TypeId tid = TypeId("ns3::TosNode").SetParent<Node>().AddConstructor<
-        TosNode>().AddAttribute("TosDeviceList",
-        "The list of devices associated to this Node.", ObjectVectorValue(),
-        MakeObjectVectorAccessor(&TosNode::m_devices),
-        MakeObjectVectorChecker<TosNetDevice>()).AddAttribute("Tid",
-        "The id (unique integer) of this Node.",
-        TypeId::ATTR_GET, // allow only getting it.
-        UintegerValue(0), MakeUintegerAccessor(&TosNode::m_id),
-        MakeUintegerChecker<uint32_t>());
+    static TypeId tid = TypeId("ns3::TosNode").SetParent<Node>()
+        .AddConstructor<TosNode>()
+        .AddAttribute("TosDeviceList","The list of devices associated to this Node.",
+            ObjectVectorValue(),
+            MakeObjectVectorAccessor(&TosNode::m_devices),
+            MakeObjectVectorChecker<TosNetDevice>())
+        .AddAttribute("Tid",
+                "The id (unique integer) of this Node.",
+                TypeId::ATTR_GET, // allow only getting it.
+                UintegerValue(0), MakeUintegerAccessor(&TosNode::m_id),
+                MakeUintegerChecker<uint32_t>());
     return tid;
   }
 

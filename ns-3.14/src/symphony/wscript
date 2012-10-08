@@ -39,7 +39,7 @@ def build(bld):
                       'model/model-element.cc',
                       'model/hardware-model.cc',
                       'model/gateway-client.cc',
-                      'model/sensor.cc',
+                      'model/raw-sensor.cc',
         ]
 
     module_test = bld.create_ns3_module_test_library('symphony')
@@ -75,7 +75,7 @@ def build(bld):
                     'model/hardware-model.h',
                     'model/gateway-client.h',
                     '../wifi/model/wifi-mac-trailer.h',
-                    'model/sensor.h',
+                    'model/raw-sensor.h',
         ]
 
     #if bld.env.ENABLE_EXAMPLES:
