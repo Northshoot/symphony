@@ -3,6 +3,7 @@ push( @includes, qw(
   %T/platforms/ns3/timers
   %T/platforms/ns3/sim
   %T/platforms/ns3/radio
+  %T/platforms/ns3/sensors
   %T/system
   %T/types
   %T/lib/timer

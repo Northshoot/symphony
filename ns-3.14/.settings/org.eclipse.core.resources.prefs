@@ -26,4 +26,5 @@ encoding//src/wifi/wscript=utf-8
 encoding//src/wscript=utf-8
 encoding//utils/wscript=utf-8
 encoding/simulationRunner.py=utf-8
+encoding/test.py=utf-8
 encoding/wscript=utf-8

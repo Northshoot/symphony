@@ -10,7 +10,7 @@
 
 
 #TinyOS options
-TOS_APP=RadioApp
+TOS_APP=SensorApp
 SIM_OBJ=sim
 TARGET=ns3
 NODE=symphony.xml
