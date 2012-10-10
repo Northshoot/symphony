@@ -16,13 +16,12 @@
 #include "gateway.h"
 #include "calls-to-ns3.h"
 #include "tos-net-device.h"
+#include "raw-sensor.h"
 
 
 TosToNs3Proxy::TosToNs3Proxy() { }
 
-
-
-//fucntions for TosNode
+//functions for TosNode
 int
 TosToNs3Proxy::confirmSet(int a){
 	std::cout<<"LibToTosProxy called: "<< a <<" time " << simu_clock->getTimeNow()<<'\n';
@@ -44,9 +43,14 @@ TosToNs3Proxy::setDevice(ns3::Ptr<ns3::TosNetDevice> device){
 	m_tosnetdevice  = device;
 }
 
+void
+TosToNs3Proxy::SetSensor(ns3::Ptr<ns3::RawSensor> sens)
+{
+  m_sensor=sens;
+}
 int
 TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2){
-
+        NS_ASSERT_MSG(m_tosnetdevice != NULL, "Device is NULL");
 	switch (call) {
 	case RADIO_ON:
 		return m_tosnetdevice->DeviceTurnOn();
@@ -104,8 +108,40 @@ TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, v
 return -1;
 }
 
+int
+TosToNs3Proxy::SensorCommand(SensorCall call)
+{
 
-TosToNs3Proxy::~TosToNs3Proxy() {
-	// TODO Auto-generated destructor stub
+ NS_ASSERT_MSG(m_sensor != NULL, "Sensor is null");
+
+  switch (call) {
+  case SENSOR_ON:
+           m_sensor->DoStart();
+           return 1;
+          break;
+
+  case SENSOR_OFF:
+           m_sensor->DoDispose();
+           return 1;
+          break;
+
+  case SENSOR_GET_DATA:
+    NS_ASSERT_MSG(false," bad index no where to go "+ call);
+          break;
+
+  case SENSOR_RESET:
+    NS_ASSERT_MSG(false," bad index no where to go "+ call);
+          break;
+
+    default:
+          //OPS! never ever go here!
+          //if you have -> core dump :D
+          NS_ASSERT_MSG(false," bad index no where to go "+ call);
+          return -1;
+          break;
 }
+//just in case if anything else fails
+return -1;
+}
+TosToNs3Proxy::~TosToNs3Proxy() {}
 

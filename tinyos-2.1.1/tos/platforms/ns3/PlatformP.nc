@@ -45,8 +45,10 @@
 module PlatformP
 {
   provides interface Init;
-  uses interface Init as SubInit;
-
+  uses {
+  	interface Init as SubInit;
+	interface Init as TimerInit;
+   }
 }
 
 implementation
@@ -56,10 +58,11 @@ implementation
     error_t ok = SUCCESS;
     // Sub components initialization.
     ok = ecombine(ok, call SubInit.init());
-
+    call TimerInit.init();
     return SUCCESS;
   }
 
+    
 
 
 }

@@ -16,6 +16,7 @@
 #include "ns3/object.h"
 #include "ns3/event-id.h"
 #include "ns3/nstime.h"
+#include "ns3/ns3-to-tos-proxy_auto.h"
 
 #ifndef __SIZE_T
 #define __SIZE_T
@@ -44,6 +45,9 @@ namespace ns3
 
     void
     RawSensorEvent(Time ms);
+
+    void
+    SetNs3ToTosProxy(Ns3ToTosProxy * proxy);
 
   private:
     Time m_started;
@@ -79,6 +83,7 @@ namespace ns3
     char *m_buffer;
     size_t m_fileLen;
     uint32_t m_id;
+    Ns3ToTosProxy * m_proxy;
   };
 }
 

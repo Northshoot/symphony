@@ -741,7 +741,7 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b1f55e211f0, const void *arg_0x2b1f55e214c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2b798f92a1f0, const void *arg_0x2b798f92a4c8);
 #line 776
 __extension__ 
 #line 793
@@ -1049,8 +1049,10 @@ typedef __gnuc_va_list va_list;
 typedef _G_fpos_t fpos_t;
 #line 169
 struct _IO_FILE;
+extern struct _IO_FILE *stdout;
 struct _IO_FILE;
-struct _IO_FILE;
+#line 243
+extern int fflush(FILE *__stream);
 #line 363
 extern int printf(const char *__restrict __format, ...);
 # 23 "/home/lauril/dev/symphony/ns-3.14/build/ns3/calls-to-ns3.h"
@@ -1084,9 +1086,25 @@ typedef enum __nesc_unnamed4274 {
   RADIO_STATE_TX, 
   RADIO_STATE_RX
 } RadioState;
-# 61 "/home/lauril/dev/symphony/ns-3.14/build/ns3/tos-to-ns3-proxy.h"
+
+
+
+
+
+
+#line 34
+typedef enum __nesc_unnamed4275 {
+  SENSOR_ON = 0, 
+  SENSOR_OFF = 1, 
+  SENSOR_GET_DATA = 2, 
+  SENSOR_RESET = 3
+} SensorCall;
+# 65 "/home/lauril/dev/symphony/ns-3.14/build/ns3/tos-to-ns3-proxy.h"
 int gateway(void *obj, int func, int arg);
 int setProxy(void *obj);
+
+
+int gatewaySensor(void *obj, SensorCall call);
 # 6 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
 int a;
 int id_this_lib;
@@ -1104,7 +1122,7 @@ int setUniqueID(int i)   ;
 
 int setProxy(void *con)   ;
 # 43 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/types/Leds.h"
-enum __nesc_unnamed4275 {
+enum __nesc_unnamed4276 {
   LEDS_LED0 = 1 << 0, 
   LEDS_LED1 = 1 << 1, 
   LEDS_LED2 = 1 << 2, 
@@ -1144,16 +1162,40 @@ typedef enum LogLevel {
   LOG_PREFIX_TIME = 0x40000000, 
   LOG_PREFIX_NODE = 0x20000000
 } LogLevel;
+# 40 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.h"
+typedef struct __nesc_unnamed4277 {
+#line 40
+  int notUsed;
+} 
+#line 40
+TMilli;
+typedef struct __nesc_unnamed4278 {
+#line 41
+  int notUsed;
+} 
+#line 41
+T32khz;
+typedef struct __nesc_unnamed4279 {
+#line 42
+  int notUsed;
+} 
+#line 42
+TMicro;
+typedef TMilli NsTimerP$Timer$precision_tag;
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t PlatformP$Init$init(void );
 #line 62
 static error_t LedsP$Init$init(void );
 #line 62
+static error_t NsTimerP$Init$init(void );
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static void NsTimerP$Timer$default$fired(void );
+# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b1f560eecb0);
+uint8_t arg_0x2b798fbf4cb0);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1182,10 +1224,54 @@ static void SensorAppC$DataIn$interruptWithData(error_t result, uint16_t length,
 static error_t MagnetomiterP$SplitControl$start(void );
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t PlatformP$SubInit$init(void );
-# 54 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformP.nc"
+#line 62
+static error_t PlatformP$TimerInit$init(void );
+# 56 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformP.nc"
 static inline error_t PlatformP$Init$init(void );
 # 68 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/LedsP.nc"
 static inline error_t LedsP$Init$init(void );
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static void NsTimerP$Timer$fired(void );
+# 20 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+uint32_t NsTimerP$time_now = 0;
+
+
+
+
+
+
+
+
+#line 21
+typedef struct NsTimerP$__nesc_unnamed4280 {
+
+  uint32_t t0;
+  uint32_t dt;
+  uint32_t shoot;
+  bool isoneshot : 1;
+  bool isrunning : 1;
+  bool _reserved : 6;
+} NsTimerP$Timer_t;
+
+NsTimerP$Timer_t NsTimerP$m_timer;
+
+static inline void NsTimerP$updateTimer(void );
+
+
+
+
+
+
+
+
+extern int tickFired(uint32_t a)   ;
+#line 133
+static inline error_t NsTimerP$Init$init(void );
+
+
+
+
+static inline void NsTimerP$Timer$default$fired(void );
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t SimMainP$SoftwareInit$init(void );
 # 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
@@ -1201,7 +1287,7 @@ static inline error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b1f560eecb0);
+uint8_t arg_0x2b798fbf4cb0);
 
 
 
@@ -1211,7 +1297,7 @@ extern int runNextEventExternal(uint32_t a)   ;
 
 
 
-enum SchedulerBasicP$__nesc_unnamed4276 {
+enum SchedulerBasicP$__nesc_unnamed4281 {
 
   SchedulerBasicP$NUM_TASKS = 0U, 
   SchedulerBasicP$NO_TASK = 255
@@ -1328,6 +1414,7 @@ static inline void SensorAppC$SensorControl$startDone(error_t err);
 
 
 
+
 static inline void SensorAppC$SensorControl$stopDone(error_t err);
 
 
@@ -1343,6 +1430,8 @@ static void MagnetomiterP$SplitControl$stopDone(error_t error);
 static void MagnetomiterP$data$interruptWithData(error_t result, uint16_t length, void *buffer);
 # 17 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/MagnetomiterP.nc"
 static inline error_t MagnetomiterP$SplitControl$start(void );
+
+
 
 
 extern int sensorStartDone(error_t error)   ;
@@ -1378,9 +1467,9 @@ static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b1f560eecb0){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b798fbf4cb0){
 #line 75
-    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b1f560eecb0);
+    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b798fbf4cb0);
 #line 75
 }
 #line 75
@@ -1439,7 +1528,31 @@ static inline bool SchedulerBasicP$Scheduler$runNextTask(void )
   return TRUE;
 }
 
-#line 120
+# 138 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+static inline void NsTimerP$Timer$default$fired(void )
+#line 138
+{
+}
+
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void NsTimerP$Timer$fired(void ){
+#line 83
+  NsTimerP$Timer$default$fired();
+#line 83
+}
+#line 83
+# 33 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+static inline void NsTimerP$updateTimer(void )
+#line 33
+{
+
+  if (NsTimerP$m_timer.shoot == NsTimerP$time_now) {
+
+      NsTimerP$Timer$fired();
+    }
+}
+
+# 120 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline void SchedulerBasicP$Scheduler$init(void )
 {
   printf("Scheduler.init()\n");
@@ -1459,6 +1572,31 @@ inline static void SimMainP$Scheduler$init(void ){
 #line 57
 }
 #line 57
+# 133 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+static inline error_t NsTimerP$Init$init(void )
+#line 133
+{
+  /* atomic removed: atomic calls only */
+#line 134
+  NsTimerP$time_now = 0;
+  return 0;
+}
+
+# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+inline static error_t PlatformP$TimerInit$init(void ){
+#line 62
+  unsigned char __nesc_result;
+#line 62
+
+#line 62
+  __nesc_result = NsTimerP$Init$init();
+#line 62
+
+#line 62
+  return __nesc_result;
+#line 62
+}
+#line 62
 # 68 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/LedsP.nc"
 static inline error_t LedsP$Init$init(void )
 #line 68
@@ -1492,13 +1630,13 @@ static inline  error_t ecombine(error_t r1, error_t r2)
   return r1 == r2 ? r1 : FAIL;
 }
 
-# 54 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformP.nc"
+# 56 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformP.nc"
 static inline error_t PlatformP$Init$init(void )
 {
   error_t ok = SUCCESS;
 
   ok = ecombine(ok, PlatformP$SubInit$init());
-
+  PlatformP$TimerInit$init();
   return SUCCESS;
 }
 
@@ -1544,7 +1682,8 @@ inline static error_t SimMainP$SoftwareInit$init(void ){
 static inline error_t MagnetomiterP$SplitControl$start(void )
 #line 17
 {
-  return 0;
+
+  return gatewaySensor(proxy, SENSOR_ON);
 }
 
 # 104 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
@@ -1606,9 +1745,10 @@ static inline void SensorAppC$SensorControl$startDone(error_t err)
 {
   if (err == SUCCESS) {
       printf("SensorControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
+      fflush(stdout);
     }
   else 
-#line 19
+#line 20
     {
       SensorAppC$SensorControl$start();
     }
@@ -1621,9 +1761,9 @@ inline static void MagnetomiterP$SplitControl$startDone(error_t error){
 #line 113
 }
 #line 113
-# 24 "SensorAppC.nc"
+# 25 "SensorAppC.nc"
 static inline void SensorAppC$SensorControl$stopDone(error_t err)
-#line 24
+#line 25
 {
 }
 
@@ -1634,9 +1774,9 @@ inline static void MagnetomiterP$SplitControl$stopDone(error_t error){
 #line 138
 }
 #line 138
-# 30 "SensorAppC.nc"
+# 31 "SensorAppC.nc"
 static inline void SensorAppC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer)
-#line 30
+#line 31
 {
   printf("event void InterruptWithData.interruptWithData NODE_ID %d - data lenght %d\n", TOS_NODE_ID, length);
 }
@@ -1689,6 +1829,23 @@ extern   int runNextEventExternal(uint32_t a)
 {
 
   SchedulerBasicP$Scheduler$runNextTask();
+  return 0;
+}
+
+# 42 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+extern   int tickFired(uint32_t a)
+#line 42
+{
+
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+#line 44
+    NsTimerP$time_now = a;
+#line 44
+    __nesc_atomic_end(__nesc_atomic); }
+  NsTimerP$updateTimer();
+  runNextEventExternal(0);
+
+  NsTimerP$Timer$fired();
   return 0;
 }
 
@@ -1832,9 +1989,9 @@ extern   int runNextEventExternal(uint32_t a)
 {
 }
 
-# 20 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/MagnetomiterP.nc"
+# 22 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/MagnetomiterP.nc"
 extern   int sensorStartDone(error_t error)
-#line 20
+#line 22
 {
   MagnetomiterP$SplitControl$startDone(error);
   return 0;
@@ -1845,14 +2002,14 @@ extern   int sensorStartDone(error_t error)
 
 
 extern   int sensorStopDone(error_t error)
-#line 29
+#line 31
 {
   MagnetomiterP$SplitControl$stopDone(error);
   return 0;
 }
 
 extern   void interruptData(error_t result, uint16_t lenght, void *buffer)
-#line 34
+#line 36
 {
   MagnetomiterP$data$interruptWithData(result, lenght, buffer);
 }

@@ -78,7 +78,7 @@ namespace ns3
     nstotos = new Ns3ToTosProxy(); //ns3 to tos
     tostons = new TosToNs3Proxy(); //tos to ns3
     m_init = false;
-    ;
+
   }
 
   void
@@ -195,8 +195,8 @@ namespace ns3
       {
         for (uint32_t i = 0; i < m_tos_functions.size(); i++)
           {
-            string f = m_tos_functions.at(i);
-            //NS_LOG_FUNCTION(this<<"adding function " << f);
+            string f = m_tos_functions[i];
+            NS_LOG_FUNCTION(this<<"adding function " << f);
             nstotos->addFunction(f, getFunc(f.c_str()));
           }
       }
@@ -225,6 +225,7 @@ namespace ns3
     //TosNetDevice is started explicitly from tinyos code
     //    	  Simulator::ScheduleWithContext (GetId (), Seconds (0.0),
     //    	                                  &TosNetDevice::Start, device);
+#ifdef WITH_RADIO
     tostons->setDevice(device);
     device->setNs3ToTos(nstotos);
     device->SetDeviceSendDoneCallback(
@@ -233,6 +234,7 @@ namespace ns3
         MakeCallback(&Ns3ToTosProxy::radioStartDone, nstotos));
     device->SetReceiveMessageCallback(
         MakeCallback(&Ns3ToTosProxy::receiveMessage, nstotos));
+#endif
     return index;
   }
 
@@ -272,6 +274,16 @@ namespace ns3
   TosNode::GetNSensors(void) const
   {
     return m_sensors.size();
+  }
+  TosToNs3Proxy *
+  TosNode::GetTosToNs3Proxy(void)
+  {
+    return tostons;
+  }
+  Ns3ToTosProxy *
+  TosNode::GetNs3ToTosProxy(void)
+  {
+    return nstotos;
   }
 
   void *

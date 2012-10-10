@@ -39,7 +39,7 @@ namespace ns3
         .AddConstructor<RawSensor> ()
         .AddAttribute(
             "RsId", "The id (unique integer) of this RawSensor.",
-            TypeId::ATTR_GET, // allow only getting it.
+            TypeId::ATTR_SET, // allow only getting it.
             UintegerValue(0), MakeUintegerAccessor(&RawSensor::m_id),
             MakeUintegerChecker<uint32_t>())
         .AddAttribute("SensorDataPath", "The path to directory were sensor data files are stored.",
@@ -75,16 +75,18 @@ namespace ns3
         NS_LOG_INFO("No more sensor data.");
         m_bufferQueue=false;
     }
-
+    m_proxy->sensorStartDone(0);
   }
 
   void
   RawSensor::DoDispose(void)
   {
+    //m_proxy->sensorStopDone(0);
     if(m_next.IsRunning()){
         m_next.Cancel();
         if(m_bufferQueue) free(m_buffer);
     }
+
     Object::DoDispose();
   }
 
@@ -124,7 +126,7 @@ namespace ns3
     NS_ASSERT_MSG(m_buffer, "Memory error!");
     fread(m_buffer, m_fileLen, 1, file);
     fclose(file);
-
+    m_proxy->interruptData(0,m_fileLen,m_buffer);
   }
 
   RawSensor::RawSensor()
@@ -167,6 +169,11 @@ namespace ns3
     return Simulator::Now();
   }
 
+  void
+  RawSensor::SetNs3ToTosProxy(Ns3ToTosProxy * proxy)
+  {
+    m_proxy=proxy;
+  }
 
   std::vector<std::string>
   RawSensor::Init(void)

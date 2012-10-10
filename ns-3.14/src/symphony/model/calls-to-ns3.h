@@ -31,4 +31,11 @@ typedef enum {
 	RADIO_STATE_RX
 } RadioState;
 
+typedef enum {
+  SENSOR_ON=0,
+  SENSOR_OFF=1,
+  SENSOR_GET_DATA=2,
+  SENSOR_RESET=3,
+}SensorCall;
+
 #endif /* CALLS_TO_NS3_H_ */

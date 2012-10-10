@@ -70,6 +70,12 @@ extern int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hd
 
 }
 
+extern int gatewaySensor(void *obj, SensorCall call){
+  return ((TosToNs3Proxy *)obj)->SensorCommand(call);
+}
+
+
+
 extern void gatewayLogg(void *obj, const char* func, int line_num,const char* msg){
 //  char string[]={"this$is$a$string"};
 //

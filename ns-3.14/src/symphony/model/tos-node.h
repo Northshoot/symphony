@@ -91,6 +91,10 @@ namespace ns3
     GetSensor(uint32_t index) const;
     uint32_t
     GetNSensors(void) const;
+    TosToNs3Proxy *
+    GetTosToNs3Proxy();
+    Ns3ToTosProxy *
+    GetNs3ToTosProxy();
 
     uint32_t
     getNow();

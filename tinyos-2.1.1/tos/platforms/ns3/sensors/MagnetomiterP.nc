@@ -1,4 +1,4 @@
-#include "sim/sim_main.h"
+#include "../sim/sim_main.h"
 #include "defines.h"
 #include "ns3/calls-to-ns3.h"
 
@@ -15,8 +15,10 @@ module MagnetomiterP
 implementation
 {
 	 command error_t SplitControl.start(){
-		return 0;
+	 	
+		return gatewaySensor( proxy ,SENSOR_ON);
 		}
+		
 	extern int sensorStartDone(error_t error)@C() @spontaneous(){
         signal SplitControl.startDone( error );        
         return 0;

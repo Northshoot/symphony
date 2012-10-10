@@ -17,6 +17,7 @@
 #include "ns3/config.h"
 #include "ns3/simulator.h"
 #include "ns3/names.h"
+#include "ns3/type-id.h"
 
 #include "tos-net-device-container.h"
 #include "tos-helper.h"
@@ -24,6 +25,8 @@
 #include "ns3/tos-net-device.h"
 #include "ns3/tos-mac-low.h"
 #include "ns3/RF230-radio-model.h"
+#include "ns3/symphony-sensor-container.h"
+#include "ns3/raw-sensor.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosHelper");
 
@@ -32,9 +35,8 @@ TosPhyHelper::~TosPhyHelper() {}
 
 TosHelper::TosHelper():
 		m_standard (WIFI_PHY_STANDARD_80211a) {
-
-
 }
+
 void
 TosHelper::SetNodeModel(std::string file)
 {
@@ -63,7 +65,6 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	  for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
 	    {
 	      Ptr<TosNode> node = *i;
-	      NS_LOG_DEBUG(node);
 	      Ptr<TosNetDevice> device = CreateObject<TosNetDevice> ();
 	      Ptr<TosMacLow> mac = CreateObject<TosMacLow>();
 	      Ptr<WifiPhy> phy = phyHelper.Create (node, device);
@@ -79,6 +80,27 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	      NS_LOG_DEBUG ("node=" << node << ", mob=" << node->GetObject<MobilityModel> ());
 	    }
 	  return devices;
+}
+
+SymphonySensorContainer
+TosHelper::InstallSensors(uint32_t i , TosNodeContainer c, std::string path)
+{
+  NS_LOG_FUNCTION_NOARGS();
+  SymphonySensorContainer sensors;
+      for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
+        {
+          Ptr<TosNode> node = *i;
+          Ptr<RawSensor> sensor = CreateObject<RawSensor> ();
+          sensor->SetAttribute("RsId", UintegerValue(node->GetId()));
+          sensor->SetAttribute("SensorDataPath", StringValue(path));
+          sensors.Add(sensor);
+          (node->GetTosToNs3Proxy())->SetSensor(sensor);
+          sensor->SetNs3ToTosProxy(node->GetNs3ToTosProxy());
+          node->SetCallback(m_tosExternals);
+          NS_LOG_DEBUG ("node=" << node << ", sensor=" << sensor);
+        }
+      return sensors;
+
 }
 
 void

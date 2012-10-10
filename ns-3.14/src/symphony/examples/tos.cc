@@ -21,7 +21,7 @@
 
 #include "ns3/wifi-module.h"
 
-
+#define WITH_RADIO
 
 
 using namespace ns3;
