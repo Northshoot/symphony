@@ -75,13 +75,13 @@ namespace ns3
         NS_LOG_INFO("No more sensor data.");
         m_bufferQueue=false;
     }
-    m_proxy->sensorStartDone(0);
+    SensorStartDone(0);
   }
 
   void
   RawSensor::DoDispose(void)
   {
-    //m_proxy->sensorStopDone(0);
+    //SensorStopDone(0);
     if(m_next.IsRunning()){
         m_next.Cancel();
         if(m_bufferQueue) free(m_buffer);
@@ -126,7 +126,7 @@ namespace ns3
     NS_ASSERT_MSG(m_buffer, "Memory error!");
     fread(m_buffer, m_fileLen, 1, file);
     fclose(file);
-    m_proxy->interruptData(0,m_fileLen,m_buffer);
+    InterruptData(0,m_fileLen,m_buffer);
   }
 
   RawSensor::RawSensor()

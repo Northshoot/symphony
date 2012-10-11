@@ -17,6 +17,7 @@
 #include "ns3/event-id.h"
 #include "ns3/nstime.h"
 #include "ns3/ns3-to-tos-proxy_auto.h"
+#include  "ns3/calls-to-ns3.h"
 
 #ifndef __SIZE_T
 #define __SIZE_T
@@ -73,7 +74,9 @@ namespace ns3
     std::vector<std::string>
     Init(void);
 
-
+    Callback<int, uint8_t> SensorStartDone;
+    Callback<int, uint8_t> SensorStopDone;
+    Callback<int, uint8_t, void *> InterruptData;
     EventId m_next;
     std::string m_path;
     std::string m_ids;
