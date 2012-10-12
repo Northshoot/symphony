@@ -17,6 +17,7 @@
 #include "ns3/log.h"
 #include "ns3/nstime.h"
 #include "ns3/string.h"
+#include "ns3/callback.h"
 #include "ns3/simulator.h"
 #include "ns3/event-id.h"
 #include "ns3/assert.h"
@@ -46,6 +47,18 @@ namespace ns3
             StringValue(),
             MakeStringAccessor(&RawSensor::m_path),
             MakeStringChecker())
+         .AddAttribute("SensorStartDone","Callback for sensor start done event.",
+             CallbackValue(),
+             MakeCallbackAccessor(&RawSensor::m_SensorStartDone),
+             MakeCallbackChecker ())
+          .AddAttribute("SensorStopDone","Callback for sensor stop done event.",
+                          CallbackValue(),
+                          MakeCallbackAccessor(&RawSensor::m_SensorStopDone),
+                          MakeCallbackChecker ())
+          .AddAttribute("InterruptData","Callback for sensor Interrupt with data event.",
+                                       CallbackValue(),
+                                       MakeCallbackAccessor(&RawSensor::m_InterruptData),
+                                       MakeCallbackChecker ())
             ;
     return tid;
   }
@@ -75,7 +88,9 @@ namespace ns3
         NS_LOG_INFO("No more sensor data.");
         m_bufferQueue=false;
     }
-    SensorStartDone(0);
+    //this must be sett!
+    NS_ASSERT_MSG(!m_SensorStartDone.IsNull(), "SensorStartDone is not set!");
+    m_SensorStartDone(0);
   }
 
   void
@@ -124,9 +139,12 @@ namespace ns3
     fseek(file, 0, SEEK_SET);
     m_buffer = (char *) malloc(m_fileLen);
     NS_ASSERT_MSG(m_buffer, "Memory error!");
+
     fread(m_buffer, m_fileLen, 1, file);
     fclose(file);
-    InterruptData(0,m_fileLen,m_buffer);
+    NS_ASSERT_MSG(!m_InterruptData.IsNull(),"Callback for sensor interrupt with data is not set");
+    int val = m_InterruptData(0,m_fileLen,(void*) m_buffer);
+    NS_LOG_DEBUG(val);
   }
 
   RawSensor::RawSensor()
@@ -169,11 +187,7 @@ namespace ns3
     return Simulator::Now();
   }
 
-  void
-  RawSensor::SetNs3ToTosProxy(Ns3ToTosProxy * proxy)
-  {
-    m_proxy=proxy;
-  }
+
 
   std::vector<std::string>
   RawSensor::Init(void)

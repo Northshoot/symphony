@@ -128,13 +128,6 @@ namespace ns3
     message_t*
     DeviceReceive(message_t* msg);
 
-    //set callbacks
-    void
-    SetRadioStartDoneCallback(Callback<void, int> c);
-    void
-    SetDeviceSendDoneCallback(Callback<int, int> c);
-    void
-    SetReceiveMessageCallback(Callback<int, void *> c);
 
     void
     SetRadioModel(Ptr<HardwareModel>  model);
@@ -209,6 +202,7 @@ namespace ns3
     RadioStartDoneCallback c_ns2tosStartDone;
     DeviceSendDoneCallback c_ns2tosSendDone;
     ReceiveMessageCallback c_ns2tosRx;
+
 
     PhyTosListener * m_phyListener;
     virtual void

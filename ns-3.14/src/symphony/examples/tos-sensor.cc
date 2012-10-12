@@ -14,7 +14,6 @@
 
 #include "ns3/core-module.h"
 #include "ns3/symphony-module.h"
-#include "ns3/core-module.h"
 #include "ns3/mobility-module.h"
 #include "ns3/network-module.h"
 
@@ -28,7 +27,7 @@ main(int argc, char *argv[])
 
   std::string nodeModel = "/home/lauril/dev/symphony/ns-3.14/build/symphony.xml";
   std::string nodeImage = "/home/lauril/dev/symphony/ns-3.14/build/libtos.so";
-  uint64_t simLength = 10000;
+  uint64_t simLength = 1000;
   bool realTime = false;
   CommandLine cmd;
   cmd.AddValue("nodeModel", "model of the node in XML format", nodeModel);

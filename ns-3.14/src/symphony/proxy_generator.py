@@ -82,7 +82,6 @@ class Ns3ToTosProxyGenerator:
         header_+="""
     ~Ns3ToTosProxy();
     void * getFunction(std::string name);
-private:
     std::map<std::string, void *> m_tos_functions;
 """            
         header_ += self.text.getHeaderClose()
@@ -142,6 +141,7 @@ private:
             cpp += '\n}\n'
         cpp+="""void* \nNs3ToTosProxy::getFunction(std::string name){
 \treturn (void *)m_tos_functions[name]; \n}"""
+
         cpp += self.text.getCppEnd()
         self.cpp.write(cpp)
         self.cpp.close()

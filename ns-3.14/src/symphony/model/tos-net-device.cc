@@ -131,6 +131,18 @@ TosNetDevice::GetTypeId(void) {
 	                   MakePointerAccessor (&TosNetDevice::GetMac,
 	                                        &TosNetDevice::SetMac),
 	                   MakePointerChecker<WifiMac> ())
+            .AddAttribute("StartDone","Callback for device start done event.",
+	                   CallbackValue(),
+                           MakeCallbackAccessor(&TosNetDevice::c_ns2tosStartDone),
+                           MakeCallbackChecker ())
+             .AddAttribute("SendDone","Callback for device send done event.",
+                                                      CallbackValue(),
+                                                      MakeCallbackAccessor(&TosNetDevice::c_ns2tosSendDone),
+                                                      MakeCallbackChecker ())
+            .AddAttribute("ReceivePacket","Callback to forward packet up.",
+                           CallbackValue(),
+                           MakeCallbackAccessor(&TosNetDevice::c_ns2tosRx),
+                           MakeCallbackChecker ())
 	  ;
 	  return tid;
 }
@@ -265,6 +277,7 @@ TosNetDevice::radioStartDone()
 {
   Simulator::Remove(m_startUpEvent);
   m_state = RADIO_STATE_ON;
+  NS_ASSERT_MSG(!c_ns2tosStartDone.IsNull(),"StartDone callback is not set.");
   c_ns2tosStartDone(SUCCESS);
   NS_LOG_FUNCTION_NOARGS ();
 }
@@ -310,26 +323,32 @@ TosNetDevice::SendDone(uint8_t error){
 
 }
 
-void TosNetDevice::DeviceSendDone(uint8_t error) {
+void
+TosNetDevice::DeviceSendDone(uint8_t error) {
   m_state = RADIO_STATE_ON;
   NS_LOG_FUNCTION("DEVICE_SEND_DONE");
   m_busy = false;
   //Simulator::Remove(m_sendEvent);
+  NS_ASSERT_MSG(!c_ns2tosSendDone.IsNull(),"SendDone callback is not set.");
   c_ns2tosSendDone(error);
 }
 
-void TosNetDevice::DeviceCancel(message_t* msg) {
+void
+TosNetDevice::DeviceCancel(message_t* msg) {
 }
 
-bool TosNetDevice::DeviceRXHeader(message_t* msg) {
+bool
+TosNetDevice::DeviceRXHeader(message_t* msg) {
 	return true;
 }
 
-message_t* TosNetDevice::DeviceReceive(message_t* msg) {
+message_t*
+TosNetDevice::DeviceReceive(message_t* msg) {
 	return &m_rx_msg;
 }
 
-void TosNetDevice::DoDispose(void) {
+void
+TosNetDevice::DoDispose(void) {
 	NS_LOG_FUNCTION_NOARGS ();
 //	m_node=0;
 	m_tos_mac->Dispose();
@@ -355,13 +374,15 @@ TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr) {
         //m_rx_pkt = packet->Copy();
 	message_t * msg = NsToTosPacket(packet, hdr);
 	std::cerr<<"TosNetDevice::ForwardUp " <<std::endl;
+	NS_ASSERT_MSG(!c_ns2tosRx.IsNull(), "Receive callback is not set.");
 	  c_ns2tosRx((void*) msg);
 	} else {
 	  NS_LOG_FUNCTION("RX in RADIO_STATE_TX"<<m_node->GetId());
 	}
 }
 
-void TosNetDevice::Setup(void) {
+void
+TosNetDevice::Setup(void) {
 }
 
 Ptr<WifiChannel>
@@ -375,18 +396,6 @@ TosNetDevice::Send(Ptr<Packet> packet, const Address& dest) {
 	return false;
 }
 
-void
-TosNetDevice::SetRadioStartDoneCallback(Callback<void,int> c){
-  c_ns2tosStartDone =c;
-}
-void
-TosNetDevice::SetDeviceSendDoneCallback(Callback<int,int> c){
-  c_ns2tosSendDone=c;
-}
-void
-TosNetDevice::SetReceiveMessageCallback(Callback<int, void *> c){
-  c_ns2tosRx =c;
-}
 
 void
 TosNetDevice::SetIfIndex(const uint32_t index) {

@@ -93,9 +93,16 @@ TosHelper::InstallSensors(uint32_t i , TosNodeContainer c, std::string path)
           Ptr<RawSensor> sensor = CreateObject<RawSensor> ();
           sensor->SetAttribute("RsId", UintegerValue(node->GetId()));
           sensor->SetAttribute("SensorDataPath", StringValue(path));
+
+//          Callback<int, uint8_t> tmp =
+//              MakeCallback(&Ns3ToTosProxy::sensorStartDone,(node->GetNs3ToTosProxy()));
+//          sensor->SetAttribute("SensorStartDone", CallbackValue(tmp));
+//          Callback<int, uint8_t,uint16_t,void *> tmp1=
+//              MakeCallback(&Ns3ToTosProxy::interruptData,(node->GetNs3ToTosProxy()));
+//          sensor->SetAttribute("InterruptData", CallbackValue(tmp1));
           sensors.Add(sensor);
-          (node->GetTosToNs3Proxy())->SetSensor(sensor);
-          sensor->SetNs3ToTosProxy(node->GetNs3ToTosProxy());
+         (node->GetTosToNs3Proxy())->SetSensor(sensor);
+//          sensor->SetNs3ToTosProxy(node->GetNs3ToTosProxy());
           node->SetCallback(m_tosExternals);
           NS_LOG_DEBUG ("node=" << node << ", sensor=" << sensor);
         }

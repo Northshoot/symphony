@@ -12,17 +12,15 @@
 #include <string>
 #include <map>
 #include <stdint.h>
+#include "ns3/callback.h"
 #include "ns3/uinteger.h"
 #include "ns3/object.h"
 #include "ns3/event-id.h"
 #include "ns3/nstime.h"
 #include "ns3/ns3-to-tos-proxy_auto.h"
-#include  "ns3/calls-to-ns3.h"
+#include "ns3/calls-to-ns3.h"
 
-#ifndef __SIZE_T
-#define __SIZE_T
-typedef unsigned int size_t;
-#endif
+
 
 namespace ns3
 {
@@ -47,8 +45,7 @@ namespace ns3
     void
     RawSensorEvent(Time ms);
 
-    void
-    SetNs3ToTosProxy(Ns3ToTosProxy * proxy);
+
 
   private:
     Time m_started;
@@ -74,9 +71,9 @@ namespace ns3
     std::vector<std::string>
     Init(void);
 
-    Callback<int, uint8_t> SensorStartDone;
-    Callback<int, uint8_t> SensorStopDone;
-    Callback<int, uint8_t, void *> InterruptData;
+    Callback<int, uint8_t> m_SensorStartDone;
+    Callback<int, uint8_t> m_SensorStopDone;
+    Callback<int, uint8_t,uint16_t,void *> m_InterruptData;
     EventId m_next;
     std::string m_path;
     std::string m_ids;
@@ -84,9 +81,9 @@ namespace ns3
     bool m_bufferQueue;
     std::vector<uint64_t> m_fileNames;
     char *m_buffer;
-    size_t m_fileLen;
+    long m_fileLen;
     uint32_t m_id;
-    Ns3ToTosProxy * m_proxy;
+
   };
 }
 

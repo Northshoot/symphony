@@ -5,6 +5,7 @@
  *      Author: laurynas
  */
 #include <vector>
+#include<map>
 #include <iostream>
 #include <dlfcn.h>
 #include <link.h>
@@ -225,16 +226,23 @@ namespace ns3
     //TosNetDevice is started explicitly from tinyos code
     //    	  Simulator::ScheduleWithContext (GetId (), Seconds (0.0),
     //    	                                  &TosNetDevice::Start, device);
-#ifdef WITH_RADIO
+
     tostons->setDevice(device);
     device->setNs3ToTos(nstotos);
-    device->SetDeviceSendDoneCallback(
-        MakeCallback(&Ns3ToTosProxy::sendDone, nstotos));
-    device->SetRadioStartDoneCallback(
-        MakeCallback(&Ns3ToTosProxy::radioStartDone, nstotos));
-    device->SetReceiveMessageCallback(
-        MakeCallback(&Ns3ToTosProxy::receiveMessage, nstotos));
-#endif
+
+    void * tmp = nstotos->getFunction("StartDone");
+    ((int (*) int) tmp)(0);
+    std::cout<<"nstotos->getFunction(test)"<<  <<std::endl;
+    device->SetAttribute("SendDone",
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::sendDone, nstotos))
+        );
+    device->SetAttribute("StartDone",
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::radioStartDone, nstotos))
+        );
+    device->SetAttribute("ReceivePacket",
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::receiveMessage, nstotos))
+        );
+
     return index;
   }
 

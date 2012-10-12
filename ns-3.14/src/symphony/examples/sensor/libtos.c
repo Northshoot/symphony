@@ -744,7 +744,7 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b798f92a1f0, const void *arg_0x2b798f92a4c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2b803d3661f0, const void *arg_0x2b803d3664c8);
 #line 776
 __extension__ 
 #line 793
@@ -1197,7 +1197,7 @@ static error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b798fbf4cb0);
+uint8_t arg_0x2b803d630cb0);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1289,7 +1289,7 @@ static inline error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b798fbf4cb0);
+uint8_t arg_0x2b803d630cb0);
 
 
 
@@ -1469,9 +1469,9 @@ static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b798fbf4cb0){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b803d630cb0){
 #line 75
-    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b798fbf4cb0);
+    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b803d630cb0);
 #line 75
 }
 #line 75
