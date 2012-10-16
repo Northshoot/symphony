@@ -74,12 +74,12 @@ TosMacLow::TosMacLow ()
 TosMacLow::~TosMacLow ()
 {}
 
-//void
-//TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
-//{
-//  phy->RegisterListener (m_listener);
-//}
-//
+void
+TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
+{
+  phy->RegisterListener (m_listener);
+}
+
 void
 TosMacLow::DoStart(void)
 {
@@ -151,7 +151,7 @@ TosMacLow::SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callb
   m_rxCallback = callback;
 }
 void
-TosMacLow::SetTxCallback (Callback<void,uint8_t> callback){
+TosMacLow::SetTxCallback (Callback<void,Time> callback){
   m_txCallback = callback;
 }
 
@@ -188,7 +188,7 @@ void
 TosMacLow::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPreamble preamble)
 {
   NS_LOG_FUNCTION (this << packet << rxSnr << txMode << preamble);
-  std::cerr<<"TosMacLow::ReceiveOk "<<std::endl;
+  //std::cerr<<"TosMacLow::ReceiveOk "<<std::endl;
   /* A packet is received from the PHY.
    * When we have handled this packet,
    * we handle any packet present in the
@@ -240,8 +240,7 @@ TosMacLow::ForwardDown (Ptr<const Packet> packet, const WifiMacHeader* hdr,
                 ", mode=" << txMode <<
                 ", duration=" << hdr->GetDuration () <<
                 ", seq=0x" << std::hex << m_currentHdr.GetSequenceControl () << std::dec);
-  std::cout<<"TosMacLow::ForwardDown phy state: "<< m_phy->IsStateCcaBusy()<<std::endl;
-  m_phy->SendPacket (packet, txMode, WIFI_PREAMBLE_LONG, 0);
+   m_phy->SendPacket (packet, txMode, WIFI_PREAMBLE_LONG, 0);
 }
 
 

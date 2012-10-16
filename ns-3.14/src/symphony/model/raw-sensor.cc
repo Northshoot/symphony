@@ -66,14 +66,12 @@ namespace ns3
   void
   RawSensor::DoStart(void)
   {
-    //m_path= "/home/lauril/dev/symphony/ns-3.14/bin_pkt/";
+
     m_ids="ID10";
     m_directory = Init();
     m_fileNames = GetMyData();
-    //m_bufferQueue = CreateQueue();
     Object::DoStart();
     m_started = Simulator::Now();
-    std::cout<<"Sensor started at: "<<m_started.GetMilliSeconds()<<std::endl;
     if(m_fileNames.size()>0){
       uint64_t now=m_fileNames.front();
       m_fileNames.erase(m_fileNames.begin());

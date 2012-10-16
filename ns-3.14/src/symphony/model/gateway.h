@@ -46,7 +46,7 @@ extern int gateway(void *tthis,int call, int arg){
 			return ((TosToNs3Proxy *)tthis)->getNow(arg);
 			break;
 		case 2:
-			std::cout << "((TosToNs3Proxy *)tthis)->getNow() "<< ((TosToNs3Proxy *)tthis)->getNow(arg) << std::endl;
+			//std::cout << "((TosToNs3Proxy *)tthis)->getNow() "<< ((TosToNs3Proxy *)tthis)->getNow(arg) << std::endl;
 			return 0;
 			break;
 

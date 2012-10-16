@@ -46,8 +46,8 @@ implementation{
 	}
         
 	extern int receiveMessage(void * msg)@C() @spontaneous(){
-		printf("TOS RX LOW \n");
-		fflush(stdout);
+//		printf("TOS RX LOW \n");
+//		fflush(stdout);
 		msg_in = (message_t*)msg;
 		//printTosPacket((char*)msg);
 		post receive();
@@ -55,7 +55,7 @@ implementation{
 	}
 	
     extern int sendDone(void * msg, error_t err)@C() @spontaneous(){
-    	error_out = err;
+    	atomic error_out = err;
     	post sendDoneTask();   
     	return 0; 	
     }
@@ -69,7 +69,7 @@ implementation{
 //gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);	
 	command error_t Send.send(message_t* msg){
 		msg_out = msg;		
-		printf("\t\t\t\t SENDING\n");
+		//printf("\t\t\t\t SENDING\n");
 //		printTosPacket((char*)msg);
 		a=gatewayRadio(proxy, RADIO_SEND,-1,-1,(void *)msg, (void *) msg);
 		return 0;
@@ -94,7 +94,7 @@ implementation{
 	 * it is quicker to recover from this state.
 	 */
 	tasklet_async command error_t State.standby(){
-		void * buff;
+		void * buff=NULL;
 		return gatewayRadio(proxy, RADIO_SLEEP,  -1,-1, buff, buff);
 	}
 
@@ -103,7 +103,7 @@ implementation{
 	 * and able to transmit.
 	 */
 	tasklet_async command error_t State.turnOn(){
-		void * buff;
+		void * buff=NULL;
         return gatewayRadio(proxy, RADIO_ON, -1,-1, buff, buff);
 	}
 
@@ -113,7 +113,7 @@ implementation{
 	 * SUCCESS otherwise.
 	 */
 	tasklet_async command error_t State.setChannel(uint8_t channel){
-		void * buff;
+		void * buff=NULL;
         return gatewayRadio(proxy, RADIO_SET_CHANNEL, -1, -1, buff, buff);
 	}
 
@@ -121,7 +121,7 @@ implementation{
 	//tasklet_async event void done();
 
 	tasklet_async command uint8_t State.getChannel(){
-		void * buff;
+		void * buff=NULL;
 		return gatewayRadio(proxy, RADIO_GET_CHANNEL, -1, -1, buff, buff);
 		}
 }

@@ -744,7 +744,7 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b803d3661f0, const void *arg_0x2b803d3664c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2ba5039c61f0, const void *arg_0x2ba5039c64c8);
 #line 776
 __extension__ 
 #line 793
@@ -1197,7 +1197,7 @@ static error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b803d630cb0);
+uint8_t arg_0x2ba503c90cb0);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1282,14 +1282,14 @@ static void SimMainP$Boot$booted(void );
 static error_t SimMainP$PlatformInit$init(void );
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SimMainP$Scheduler$init(void );
-# 13 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+# 17 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
 int sim_main_start_mote(int id)   ;
-#line 60
+#line 64
 static inline error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b803d630cb0);
+uint8_t arg_0x2ba503c90cb0);
 
 
 
@@ -1469,9 +1469,9 @@ static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b803d630cb0){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2ba503c90cb0){
 #line 75
-    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b803d630cb0);
+    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2ba503c90cb0);
 #line 75
 }
 #line 75
@@ -1657,11 +1657,11 @@ inline static error_t SimMainP$PlatformInit$init(void ){
 #line 62
 }
 #line 62
-# 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+# 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
 static inline error_t SimMainP$SoftwareInit$default$init(void )
-#line 60
+#line 64
 {
-#line 60
+#line 64
   return SUCCESS;
 }
 
@@ -1851,15 +1851,15 @@ extern   int tickFired(uint32_t a)
   return 0;
 }
 
-# 13 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+# 17 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
   int sim_main_start_mote(int id)
-#line 13
+#line 17
 {
 
-  printf("FROM toslib: sim_main_start_mote\n");
+
 
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-#line 17
+#line 21
     {
 
 
@@ -1884,7 +1884,7 @@ extern   int tickFired(uint32_t a)
 
       TOS_NODE_ID = id;
     }
-#line 40
+#line 44
     __nesc_atomic_end(__nesc_atomic); }
 
 

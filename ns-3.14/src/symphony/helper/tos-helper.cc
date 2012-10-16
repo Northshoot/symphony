@@ -34,7 +34,7 @@ namespace ns3 {
 TosPhyHelper::~TosPhyHelper() {}
 
 TosHelper::TosHelper():
-		m_standard (WIFI_PHY_STANDARD_80211a) {
+		m_standard (ZIGBEE_PHY_STANDARD_802154) {
 }
 
 void
@@ -94,12 +94,12 @@ TosHelper::InstallSensors(uint32_t i , TosNodeContainer c, std::string path)
           sensor->SetAttribute("RsId", UintegerValue(node->GetId()));
           sensor->SetAttribute("SensorDataPath", StringValue(path));
 
-//          Callback<int, uint8_t> tmp =
-//              MakeCallback(&Ns3ToTosProxy::sensorStartDone,(node->GetNs3ToTosProxy()));
-//          sensor->SetAttribute("SensorStartDone", CallbackValue(tmp));
-//          Callback<int, uint8_t,uint16_t,void *> tmp1=
-//              MakeCallback(&Ns3ToTosProxy::interruptData,(node->GetNs3ToTosProxy()));
-//          sensor->SetAttribute("InterruptData", CallbackValue(tmp1));
+          Callback<int, uint8_t> tmp =
+              MakeCallback(&Ns3ToTosProxy::sensorStartDone,(node->GetNs3ToTosProxy()));
+          sensor->SetAttribute("SensorStartDone", CallbackValue(tmp));
+          Callback<int, uint8_t,uint16_t,void *> tmp1=
+              MakeCallback(&Ns3ToTosProxy::interruptData,(node->GetNs3ToTosProxy()));
+          sensor->SetAttribute("InterruptData", CallbackValue(tmp1));
           sensors.Add(sensor);
          (node->GetTosToNs3Proxy())->SetSensor(sensor);
 //          sensor->SetNs3ToTosProxy(node->GetNs3ToTosProxy());

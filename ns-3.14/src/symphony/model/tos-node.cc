@@ -112,8 +112,6 @@ namespace ns3
   TosNode::BootBooted(void)
   {
     simuclock->Start();
-    ;
-    //tickTime(100);
     nstotos->sim_main_start_mote(m_id);
     Simulator::Remove (m_boot_event);
   }
@@ -122,7 +120,6 @@ namespace ns3
   TosNode::wrapFire(uint32_t a)
   {
     a = simuclock->getTimeNow();
-    //cout<< "Time " << a << " ms"<<endl;
     nstotos->tickFired(a);
     return 0;
   }
@@ -139,7 +136,6 @@ namespace ns3
   void
   TosNode::DoDispose(void)
   {
-    std::cerr << "TosNode::DoDispose(void)" << std::endl;
     /**
      * Check and remove shutdown event
      */
@@ -203,7 +199,6 @@ namespace ns3
       }
 
     nstotos->setProxy((long) (tostons));
-    ;
     //has to be started from nodes
     //	for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
     //	       i != m_devices.end (); i++)
@@ -230,9 +225,7 @@ namespace ns3
     tostons->setDevice(device);
     device->setNs3ToTos(nstotos);
 
-    void * tmp = nstotos->getFunction("StartDone");
-    ((int (*) int) tmp)(0);
-    std::cout<<"nstotos->getFunction(test)"<<  <<std::endl;
+
     device->SetAttribute("SendDone",
         CallbackValue(MakeCallback(&Ns3ToTosProxy::sendDone, nstotos))
         );
@@ -298,16 +291,20 @@ namespace ns3
   TosNode::getFunc(const char* func_name)
   {
     char *error = NULL;
-    int len = strlen(func_name);
-    char * name;
-    name = new char[len+1];
-    strcpy( name, func_name );
     void * tmp = dlsym(handler, func_name);
     if ((error = dlerror()) != NULL)
       {
-        std::stringstream sstm;
-        sstm << "Cannot get function: " << name << "\n" << error;
-        NS_ASSERT_MSG(false, sstm.str());
+//        std::stringstream sstm;
+//        sstm << "Cannot get function: " << name << "\n" << error;
+//        NS_ASSERT_MSG(false, sstm.str());
+        //this is not fail safe, better way for multiple models is neede
+        //for now return default function which prints error is the function is not found
+      std::string defFunc = "sim_function_not_found";
+      std::stringstream sstm;
+      sstm << "Function not found: " << func_name << ". Using default TOS function.\n" << error;
+      void * tmp = dlsym(handler, defFunc.c_str());
+      NS_LOG_ERROR(sstm.str());
+      return tmp;
       }
     else
       {

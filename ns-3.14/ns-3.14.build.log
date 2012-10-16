@@ -4,8 +4,7 @@
 /home/lauril/dev/symphony/ns-3.14/waf build 
 Waf: Entering directory `/home/lauril/dev/symphony/ns-3.14/build'
 Waf: Leaving directory `/home/lauril/dev/symphony/ns-3.14/build'
-'build' finished successfully (0.182s)
-No file
+'build' finished successfully (0.202s)
 Generated and successfully compiled proxy!
 
 Modules built:

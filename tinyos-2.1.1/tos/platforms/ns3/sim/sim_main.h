@@ -21,7 +21,7 @@ int setProxy(void * con) @C() @spontaneous() {
          proxy=con;
          if(proxy != NULL ){
             a=gateway(proxy,0,id_this_lib);
-           printf("\tFROM toslib: gateway(proxy,0,id_this_lib): %i\n", a);
+           //printf("\tFROM toslib: gateway(proxy,0,id_this_lib): %i\n", a);
 //           printf("proxy in lib: %i\n", id_this_lib);
          } else {
              printf("FROM toslib: ops! no proxy\n");

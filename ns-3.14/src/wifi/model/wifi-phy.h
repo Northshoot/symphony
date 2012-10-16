@@ -337,6 +337,7 @@ public:
 
   virtual Ptr<WifiChannel> GetChannel (void) const = 0;
 
+  static WifiMode GetDsssRate250Kbps ();
   static WifiMode GetDsssRate1Mbps ();
   static WifiMode GetDsssRate2Mbps ();
   static WifiMode GetDsssRate5_5Mbps ();

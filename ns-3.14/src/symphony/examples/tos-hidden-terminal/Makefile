@@ -21,12 +21,15 @@ GCC=gcc
 NCC=ncc
 LIB=ar rcs
 PY=python
-POST=/home/lauril/dev/symphony/ns-3.11/src/tos/helper/postprocess.py
+
 
 
 TOS_APP_C=app.c
-NS3_DIR=/home/lauril/dev/symphony/ns-3.11/build/debug
+NS3_DIR=/home/lauril/dev/symphony/ns-3.14/build
+SYMPHONY_SRC=/home/lauril/dev/symphony/ns-3.14/src/symphony
 TOS_NS3=$(TOSDIR)/platforms/ns3
+
+POST=$(SYMPHONY_SRC)/helper/postprocess.py
 
 #flags and options 
 OPTFLAGS_GPP = #-g -O0
@@ -37,29 +40,18 @@ NCC_OPT=-fPIC -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfil
 NCC_OPT_WALL=-fPIC -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(NS3_DIR)
 #include dirs
 
-#for headers always use "ns3/heade.h" to allow moving to waf in future
+#for headers always use "ns3/header.h" to allow moving to waf in future
 NS3_INCL = -I$(NS3_DIR) 
 TOS_INCL = -I$(TOS_NS3)
-NS3_OBJ = $(NS3_DIR)/libns3-tos.so
-NS3_CORE =$(NS3_DIR)/libns3-core.so
-NS3_NET =$(NS3_DIR)/libns3-network.so
-
+PRE_NS_LIB=libns3-dev
+POST_NS_LIB=debug.so
+NS3_OBJ = $(NS3_DIR)/$(PRE_NS_LIB)-symphony-$(POST_NS_LIB)
+NS3_CORE =$(NS3_DIR)/$(PRE_NS_LIB)-core-$(POST_NS_LIB)
+NS3_NET =$(NS3_DIR)/$(PRE_NS_LIB)-network-$(POST_NS_LIB)
+CALL_HEADER=$(NS3_SRC)/model/calls-to-ns3.h
 
 #app to create
-APP=time
-
-TOS_IMG=post_app
-#main file
-MAIN=main
-OUT=time_t
-
 SIM_LIB=libtos
-#we just build libtos.so and copy it to the ns3/debug
-#the simulation app can be developed in the scratch folder and run
-#./waf --run="main"
-#remember that you need to build ns simulation enviroment
-
-#TODO: integrate tos build with waf
 
 all:
 		@echo "                                   "
@@ -83,9 +75,6 @@ all:
 clean:
 	rm -rf $(OUT) *.o app.c
 	
-run:
-	make
-	-exec " ./"$(OUT)
 	
 
 

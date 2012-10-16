@@ -24,7 +24,6 @@ TosToNs3Proxy::TosToNs3Proxy() { }
 //functions for TosNode
 int
 TosToNs3Proxy::confirmSet(int a){
-	std::cout<<"LibToTosProxy called: "<< a <<" time " << simu_clock->getTimeNow()<<'\n';
 	return 0;
 }
 
@@ -33,7 +32,7 @@ uint32_t
 TosToNs3Proxy::getNow(int b){
 	NS_ASSERT_MSG(simu_clock != NULL, "Clock is null in LibToTosProxy::getNow");
 	uint32_t a = simu_clock->getTimeNow();
-	std::cout<<"LibToTosProxy::getNow(void) " <<a<<std::endl;
+	//std::cout<<"LibToTosProxy::getNow(void) " <<a<<std::endl;
 
 	return a;
 }
@@ -90,7 +89,7 @@ TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, v
 	case RADIO_SEND:
 		//keep the tongue in right mouth
 		//TODO: make some sanity check
-	        std::cerr <<" m_tosnetdevice->DeviceSend "<<std::endl;
+	        //std::cerr <<" m_tosnetdevice->DeviceSend "<<std::endl;
 		return m_tosnetdevice->DeviceSend(obj2);
 		break;
 
