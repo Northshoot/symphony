@@ -5,6 +5,7 @@
  *      Author: laurynas
  */
 #include <vector>
+#include<map>
 #include <iostream>
 #include <dlfcn.h>
 #include <link.h>
@@ -33,7 +34,7 @@ NS_LOG_COMPONENT_DEFINE("TosNode");
 namespace ns3
 {
 
-  NS_OBJECT_ENSURE_REGISTERED(TosNode);
+   NS_OBJECT_ENSURE_REGISTERED (TosNode);
 
   TypeId
   TosNode::GetTypeId(void)
@@ -62,11 +63,10 @@ namespace ns3
 
   TosNode::TosNode(uint32_t node_id, Time bootTime)
   {
-
     TosNode(node_id, bootTime, "./libtos.so");
   }
 
-  TosNode::TosNode(uint32_t node_id, Time bootTime, const char *lib) :
+  TosNode::TosNode(uint32_t node_id, Time bootTime, const char* lib) :
       m_id(node_id), m_bootTime(bootTime), m_libname(lib)
   {
     Construct();
@@ -78,14 +78,15 @@ namespace ns3
     m_id = TosNodeList::Add(this);
     nstotos = new Ns3ToTosProxy(); //ns3 to tos
     tostons = new TosToNs3Proxy(); //tos to ns3
-    m_init=false;
-    NS_LOG_FUNCTION_NOARGS();
+    m_init = false;
+
   }
 
   void
-  TosNode::SetCallback(std::vector<std::string> tosExternals){
-    m_tos_functions=tosExternals;
-    m_init=true;
+  TosNode::SetCallback(std::vector<std::string> tosExternals)
+  {
+    m_tos_functions = tosExternals;
+    m_init = true;
   }
 
   uint32_t
@@ -111,17 +112,14 @@ namespace ns3
   TosNode::BootBooted(void)
   {
     simuclock->Start();
-    NS_LOG_FUNCTION(this << " " <<m_id << " " << simuclock->getTimeNow() << " ms" );
-    //tickTime(100);
     nstotos->sim_main_start_mote(m_id);
-    Simulator::Remove(m_boot_event);
+    Simulator::Remove (m_boot_event);
   }
 
   uint32_t
   TosNode::wrapFire(uint32_t a)
   {
     a = simuclock->getTimeNow();
-    //cout<< "Time " << a << " ms"<<endl;
     nstotos->tickFired(a);
     return 0;
   }
@@ -138,50 +136,49 @@ namespace ns3
   void
   TosNode::DoDispose(void)
   {
-    std::cerr<<"TosNode::DoDispose(void)"<<std::endl;
     /**
      * Check and remove shutdown event
      */
-//    for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
-//         i != m_devices.end (); i++)
-//      {
-//        Ptr<NetDevice> device = *i;
-//        device->Dispose ();
-//        *i = 0;
-//      }
-    m_devices.clear ();
-//    if (m_shutdown_event.IsRunning())
-//      {
-//        m_shutdown_event.Cancel();
-//        Simulator::Remove(m_shutdown_event);
-//      }
-//    if (m_boot_event.IsRunning())
-//      {
-//        Simulator::Cancel(m_boot_event);
-//        Simulator::Remove(m_boot_event);
-//      }
-    dlclose(handler);
+    //    for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
+    //         i != m_devices.end (); i++)
+    //      {
+    //        Ptr<NetDevice> device = *i;
+    //        device->Dispose ();
+    //        *i = 0;
+    //      }
+    m_devices.clear();
+    //    if (m_shutdown_event.IsRunning())
+    //      {
+    //        m_shutdown_event.Cancel();
+    //        Simulator::Remove(m_shutdown_event);
+    //      }
+    //    if (m_boot_event.IsRunning())
+    //      {
+    //        Simulator::Cancel(m_boot_event);
+    //        Simulator::Remove(m_boot_event);
+    //      }
+    dlclose (handler);
     delete nstotos;
     delete tostons;
-
-//    delete m_libname;
-//    delete error;
+    //    delete m_libname;
+    //    delete error;
     m_devices.clear();
     Node::DoDispose();
   }
 
-  TosNode::~TosNode() {  }
+  TosNode::~TosNode()
+  {
+  }
 
   void
   TosNode::DoStart()
   {
     //open instance of the library  LM_ID_NEWLM
-    NS_ASSERT(m_init);
+    NS_ASSERT (m_init);
     callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
-    simuclock = CreateObject<SimuClock>(NANOSECOND, NONE, callBackFromClock);
+    simuclock = CreateObject < SimuClock
+        > (NANOSECOND, NONE, callBackFromClock);
     tostons->simu_clock = simuclock;
-
-
     //changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
     //for eclipse debug full path is needed for the lib
     //TODO: add script for copying libtos.so to build/debug
@@ -193,24 +190,22 @@ namespace ns3
       }
     else
       {
-
         for (uint32_t i = 0; i < m_tos_functions.size(); i++)
           {
-            string f = m_tos_functions.at(i);
-            //NS_LOG_FUNCTION(this<<"adding function " << f);
+            string f = m_tos_functions[i];
+            NS_LOG_FUNCTION(this<<"adding function " << f);
             nstotos->addFunction(f, getFunc(f.c_str()));
           }
-
       }
-    nstotos->setProxy((long) tostons);
-    NS_LOG_FUNCTION(this<<" " << m_libname);
+
+    nstotos->setProxy((long) (tostons));
     //has to be started from nodes
-//	for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
-//	       i != m_devices.end (); i++)
-//	    {
-//	      Ptr<TosNetDevice> device = *i;
-//	      device->Start ();
-//	    }
+    //	for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
+    //	       i != m_devices.end (); i++)
+    //	    {
+    //	      Ptr<TosNetDevice> device = *i;
+    //	      device->Start ();
+    //	    }
     Node::DoStart();
     Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
   }
@@ -221,28 +216,35 @@ namespace ns3
     uint32_t index = m_devices.size();
     m_devices.push_back(device);
     // device->SetNode (this);
-//    	  device->SetIfIndex (index);
-//    	  device->SetReceiveCallback (MakeCallback (&Node::NonPromiscReceiveFromDevice, this));
+    //    	  device->SetIfIndex (index);
+    //    	  device->SetReceiveCallback (MakeCallback (&Node::NonPromiscReceiveFromDevice, this));
     //TosNetDevice is started explicitly from tinyos code
-//    	  Simulator::ScheduleWithContext (GetId (), Seconds (0.0),
-//    	                                  &TosNetDevice::Start, device);
+    //    	  Simulator::ScheduleWithContext (GetId (), Seconds (0.0),
+    //    	                                  &TosNetDevice::Start, device);
+
     tostons->setDevice(device);
     device->setNs3ToTos(nstotos);
-    device->SetDeviceSendDoneCallback(
-        MakeCallback(&Ns3ToTosProxy::sendDone, nstotos));
-    device->SetRadioStartDoneCallback(
-        MakeCallback(&Ns3ToTosProxy::radioStartDone, nstotos));
-    device->SetReceiveMessageCallback(
-        MakeCallback(&Ns3ToTosProxy::receiveMessage, nstotos));
-    return index;
 
+
+    device->SetAttribute("SendDone",
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::sendDone, nstotos))
+        );
+    device->SetAttribute("StartDone",
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::radioStartDone, nstotos))
+        );
+    device->SetAttribute("ReceivePacket",
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::receiveMessage, nstotos))
+        );
+
+    return index;
   }
 
   Ptr<TosNetDevice>
   TosNode::GetDevice(uint32_t index) const
   {
-    NS_ASSERT_MSG (index < m_devices.size (), "Device index " << index <<
-        " is out of range (only have " << m_devices.size () << " devices).");
+    NS_ASSERT_MSG(index < m_devices.size(),
+        "Device index " << index << " is out of range (only have "
+            << m_devices.size() << " devices).");
     return m_devices[index];
   }
 
@@ -252,20 +254,57 @@ namespace ns3
     return m_devices.size();
   }
 
+  uint32_t
+  TosNode::AddSensor(Ptr<RawSensor> sensor)
+  {
+    uint32_t index = m_sensors.size();
+    m_sensors.push_back(sensor);
+    return index;
+  }
+
+  Ptr<RawSensor>
+  TosNode::GetSensor(uint32_t index) const
+  {
+    NS_ASSERT_MSG(index < m_sensors.size(),
+        "Sensor index " << index << " is out of range (only have "
+            << m_devices.size() << " sensors).");
+    return m_sensors[index];
+  }
+
+  uint32_t
+  TosNode::GetNSensors(void) const
+  {
+    return m_sensors.size();
+  }
+  TosToNs3Proxy *
+  TosNode::GetTosToNs3Proxy(void)
+  {
+    return tostons;
+  }
+  Ns3ToTosProxy *
+  TosNode::GetNs3ToTosProxy(void)
+  {
+    return nstotos;
+  }
+
   void *
   TosNode::getFunc(const char* func_name)
   {
     char *error = NULL;
-    int len = strlen(func_name);
-    char * name;
-    name = new char[len+1];
-    strcpy( name, func_name );
     void * tmp = dlsym(handler, func_name);
     if ((error = dlerror()) != NULL)
       {
-        std::stringstream sstm;
-        sstm << "Cannot get function: " << name << "\n" << error;
-        NS_ASSERT_MSG(false, sstm.str());
+//        std::stringstream sstm;
+//        sstm << "Cannot get function: " << name << "\n" << error;
+//        NS_ASSERT_MSG(false, sstm.str());
+        //this is not fail safe, better way for multiple models is neede
+        //for now return default function which prints error is the function is not found
+      std::string defFunc = "sim_function_not_found";
+      std::stringstream sstm;
+      sstm << "Function not found: " << func_name << ". Using default TOS function.\n" << error;
+      void * tmp = dlsym(handler, defFunc.c_str());
+      NS_LOG_ERROR(sstm.str());
+      return tmp;
       }
     else
       {

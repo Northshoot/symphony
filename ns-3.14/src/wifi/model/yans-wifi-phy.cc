@@ -156,6 +156,9 @@ YansWifiPhy::ConfigureStandard (enum WifiPhyStandard standard)
   NS_LOG_FUNCTION (this << standard);
   switch (standard)
     {
+  case ZIGBEE_PHY_STANDARD_802154:
+    Configure802154 ();
+          break;
     case WIFI_PHY_STANDARD_80211a:
       Configure80211a ();
       break;
@@ -552,6 +555,14 @@ YansWifiPhy::Configure80211a (void)
   m_deviceRateSet.push_back (WifiPhy::GetOfdmRate54Mbps ());
 }
 
+void
+YansWifiPhy::Configure802154 (void)
+{
+  NS_LOG_FUNCTION (this);
+  m_channelStartingFrequency = 2407; // 2.407 GHz
+
+  m_deviceRateSet.push_back (WifiPhy::GetDsssRate250Kbps ());
+}
 
 void
 YansWifiPhy::Configure80211b (void)

@@ -31,7 +31,7 @@ implementation {
  
 	event void Boot.booted() {
 		printf("App: booted %d\n", TOS_NODE_ID);
-		if(TOS_NODE_ID == 0) dest = 1;
+		if(TOS_NODE_ID == 0) dest = 3;
 		else if (TOS_NODE_ID == 1) dest = 0;
 		else printf("TOS_NODE_ID error: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		call AMControl.start();
@@ -42,7 +42,7 @@ implementation {
 		  if  (TOS_NODE_ID == 0){
             post send();			
 		  }
-		  printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
+		  //printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		}else {
 			call AMControl.start();
 		}
@@ -55,7 +55,7 @@ implementation {
  	void task send(){
  		counter++;
  		//if (counter <15){
-		printf("TOSLIB::void task send() TOS_NODE_ID::%d - COUNTER::%d - DEST::%d\n", TOS_NODE_ID, counter, dest);
+		printf("TOSNODE::void task send() TOS_NODE_ID::%d - COUNTER::%d - DEST::%d\n", TOS_NODE_ID, counter, dest);
 		if (locked) {
 			printf("LOCKED\n");
 			return;
@@ -67,14 +67,14 @@ implementation {
 				return;
 			}
 			rcm->counter = counter;
-			if (call AMSend.send(dest, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+			if (call AMSend.send(AM_BROADCAST_ADDR, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 				locked = TRUE;
 			}
 		}
 		//}
  	}
 	event void MilliTimer.fired() {
-		printf("event void MilliTimer.fired() %d Node %d\n", call MilliTimer.getNow(), TOS_NODE_ID);
+		//printf("event void MilliTimer.fired() %d Node %d\n", call MilliTimer.getNow(), TOS_NODE_ID);
 		post send();
 	}
 
@@ -82,7 +82,7 @@ implementation {
 			void* payload, uint8_t len) {
 		//get counter		
 	    atomic counter = ((radio_count_msg_t*)payload)->counter;
-		printf("\t\t# %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
+		printf("TOSNODE:: %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
 		//post send();
 		call MilliTimer.startOneShot(1000);
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}

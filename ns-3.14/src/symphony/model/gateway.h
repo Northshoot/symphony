@@ -46,7 +46,7 @@ extern int gateway(void *tthis,int call, int arg){
 			return ((TosToNs3Proxy *)tthis)->getNow(arg);
 			break;
 		case 2:
-			std::cout << "((TosToNs3Proxy *)tthis)->getNow() "<< ((TosToNs3Proxy *)tthis)->getNow(arg) << std::endl;
+			//std::cout << "((TosToNs3Proxy *)tthis)->getNow() "<< ((TosToNs3Proxy *)tthis)->getNow(arg) << std::endl;
 			return 0;
 			break;
 
@@ -69,6 +69,12 @@ extern int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hd
 	return ((TosToNs3Proxy *)obj)->deviceCommand(call, val1, val2, hdr,msg);
 
 }
+
+extern int gatewaySensor(void *obj, SensorCall call){
+  return ((TosToNs3Proxy *)obj)->SensorCommand(call);
+}
+
+
 
 extern void gatewayLogg(void *obj, const char* func, int line_num,const char* msg){
 //  char string[]={"this$is$a$string"};

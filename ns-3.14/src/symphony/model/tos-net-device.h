@@ -41,7 +41,7 @@ namespace ns3
   public:
 
     typedef Callback<void, int> RadioStartDoneCallback;
-    typedef Callback<int, int> DeviceSendDoneCallback;
+    typedef Callback<int, void*, uint8_t> DeviceSendDoneCallback;
     typedef Callback<int, void *> ReceiveMessageCallback;
 
     static TypeId
@@ -94,7 +94,8 @@ namespace ns3
     Send(Ptr<Packet> packet, const Address& dest);
     void
     radioStartDone(void);
-
+    void
+    StartRx(Time a);
     //commands from tos-radio emulations
     //implementation of radio state
     tos_error_t
@@ -117,7 +118,7 @@ namespace ns3
     //callback
 
     void
-    SendDone(uint8_t error);
+    SendDone(Time duration);
     void
     DeviceCancel(message_t* msg);
     //implementation of BareReceive
@@ -128,16 +129,8 @@ namespace ns3
     message_t*
     DeviceReceive(message_t* msg);
 
-    //set callbacks
     void
-    SetRadioStartDoneCallback(Callback<void, int> c);
-    void
-    SetDeviceSendDoneCallback(Callback<int, int> c);
-    void
-    SetReceiveMessageCallback(Callback<int, void *> c);
-
-    void
-    SetRadioModel(Ptr<HardwareModel>  model);
+    SetRadioModel(Ptr<HardwareModel> model);
 
     // inherited from NetDevice base class.
     virtual void
@@ -190,7 +183,7 @@ namespace ns3
     virtual bool
     SupportsSendFrom(void) const;
     void
-        DeviceSendDone(uint8_t error);
+    DeviceSendDone(uint8_t error);
 
   private:
     /**
@@ -203,8 +196,8 @@ namespace ns3
     message_t*
     NsToTosPacket(Ptr<Packet> pkt, const WifiMacHeader * hdr);
 
-    // This value conforms to the 802.11 specification
-    static const uint16_t MAX_MSDU_SIZE = 2304;
+    // This value conforms to the TinyOS specification TEP:111
+    static const uint16_t MAX_MSDU_SIZE = 232;
 
     RadioStartDoneCallback c_ns2tosStartDone;
     DeviceSendDoneCallback c_ns2tosSendDone;
@@ -238,10 +231,15 @@ namespace ns3
     Time m_startUpTime;
     EventId m_startUpEvent;
     EventId m_sendEvent;
+    EventId m_trasmit;
+    EventId m_RxEvent;
+    uint32_t m_dr;
+    uint32_t m_rx;
+    uint32_t m_tx;
     //TODO:
     //the model needs to be implemented with accesors
     //default model need to be added in case inserted is not working (?)
-    Ptr<HardwareModel>  m_txParams;
+    Ptr<HardwareModel> m_txParams;
 
     //inherited from NetDevice
     Ptr<Node> m_node;

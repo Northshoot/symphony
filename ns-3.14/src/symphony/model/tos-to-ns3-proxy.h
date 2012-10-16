@@ -22,6 +22,7 @@
 #include "ns3/ptr.h"
 #include "ns3/wifi-mac-header.h"
 
+#include "raw-sensor.h"
 #include "simu-clock.h"
 #include "tos-net-device.h"
 
@@ -37,18 +38,21 @@ class TosToNs3Proxy {
 		 */
 	   int confirmSet(int);
 	   void setDevice(ns3::Ptr<ns3::TosNetDevice> device);
+	   void SetSensor(ns3::Ptr<ns3::RawSensor> sens);
 	   uint32_t getNow(int);
 	   void setDownlink(void *  tos);
 
 	   //we define a generic function for calls from TinyOS to
 	   //ns3 then each function is dispatched to the right format by casting
 	   int deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2 );
+	   int SensorCommand(SensorCall call);
 	   ns3::Ptr<ns3::SimuClock>  simu_clock;
 
 	~TosToNs3Proxy();
 private:
 
      ns3::Ptr<ns3::TosNetDevice> m_tosnetdevice;
+     ns3::Ptr<ns3::RawSensor> m_sensor;
 
 
 	
@@ -62,6 +66,7 @@ int gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
 
 int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);
+int gatewaySensor(void *obj, SensorCall call);
 void gatewayLogg(void *obj, const char* func, int line_num,const char* msg);
 
 #ifdef __cplusplus

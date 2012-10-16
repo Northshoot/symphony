@@ -9,10 +9,14 @@ module SimMainP {
   uses interface Init as SoftwareInit;
 }
 implementation {
+	
 
+  void sim_function_not_found(){
+  	 printf("ERROR: Fucntion does not exist!!!\n");
+  }
   int sim_main_start_mote(int id) @C() @spontaneous() {
     //char timeBuf[128];
-    printf("FROM toslib: sim_main_start_mote\n");
+    //printf("FROM toslib: sim_main_start_mote\n");
 
     atomic {
       /* First, initialize the Scheduler so components can post

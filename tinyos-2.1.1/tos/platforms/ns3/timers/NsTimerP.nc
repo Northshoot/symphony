@@ -134,4 +134,6 @@ extern int tickFired(uint32_t a) @C() @spontaneous() {
     atomic time_now=0;
     return 0;
   }
+  
+  default  event void Timer.fired(){}
 }

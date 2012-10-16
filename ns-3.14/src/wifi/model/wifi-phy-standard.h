@@ -33,6 +33,8 @@ enum WifiPhyStandard
   WIFI_PHY_STANDARD_80211a,
   /** DSSS PHY (Clause 15) and HR/DSSS PHY (Clause 18) */
   WIFI_PHY_STANDARD_80211b,
+  /** FOR Symphony Experimental **/
+  ZIGBEE_PHY_STANDARD_802154,
   /** ERP-OFDM PHY (Clause 19, Section 19.5) */
   WIFI_PHY_STANDARD_80211g,
   /** OFDM PHY for the 5 GHz band (Clause 17 with 10 MHz channel bandwidth) */

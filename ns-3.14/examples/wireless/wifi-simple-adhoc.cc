@@ -77,6 +77,7 @@ static void GenerateTraffic (Ptr<Socket> socket, uint32_t pktSize,
 {
   if (pktCount > 0)
     {
+
       socket->Send (Create<Packet> (pktSize));
       Simulator::Schedule (pktInterval, &GenerateTraffic, 
                            socket, pktSize,pktCount-1, pktInterval);

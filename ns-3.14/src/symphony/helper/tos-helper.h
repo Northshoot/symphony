@@ -18,6 +18,9 @@
 #include "tos-node-container.h"
 #include "tos-net-device-container.h"
 #include "symphony-xml.h"
+#include "ns3/raw-sensor.h"
+#include "ns3/symphony-sensor-container.h"
+
 namespace ns3
 {
 
@@ -81,6 +84,8 @@ namespace ns3
     EnableLogComponentsAll(LogLevel level);
 
     void SetNodeModel(std::string file);
+    SymphonySensorContainer
+    InstallSensors(uint32_t i , TosNodeContainer c, std::string path) ;
 
   private:
     std::vector<std::string> m_tosExternals;

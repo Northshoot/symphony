@@ -1,5 +1,5 @@
 take only needed modules configure:
-./waf --disable-python --disable-examples --disable-tests --enable-modules='symphony' configure
+./waf --disable-python --disable-tests --enable-modules='symphony' configure
 ./waf build
 
 

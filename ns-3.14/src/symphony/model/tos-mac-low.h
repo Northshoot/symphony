@@ -140,7 +140,7 @@ class TosMacLow : public Object
 public:
   typedef Callback<void, Ptr<Packet>, const WifiMacHeader*> MacLowRxCallback;
   typedef Callback<void, Ptr<Packet>, const WifiMacHeader*> MacLowRxErrorCallback;
-  typedef Callback<void, uint8_t> MacLowTxCallback;
+  typedef Callback<void, Time> MacLowTxCallback;
   TosMacLow ();
   virtual ~TosMacLow ();
 
@@ -165,7 +165,7 @@ public:
    * an instance of ns3::MacRxMiddle.
    */
   void SetRxCallback (Callback<void,Ptr<Packet>,const WifiMacHeader *> callback);
-  void SetTxCallback (Callback<void,uint8_t> callback);
+  void SetTxCallback (Callback<void,Time> callback);
 
 
   /**

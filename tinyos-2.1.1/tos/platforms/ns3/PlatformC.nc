@@ -15,13 +15,19 @@
 configuration PlatformC 
 {
   provides interface Init;
-  uses interface Init as SubInit;
+  uses {
+  	 interface Init as SubInit;
+  	
+  	 
+  	 }
+  
 }
 
 implementation {
-	components PlatformP, LedsC;
+	components PlatformP, LedsC, NsTimerP;
 	
     Init = PlatformP.Init;
     SubInit = PlatformP.SubInit;
+    PlatformP.TimerInit -> NsTimerP.Init;
 
 }

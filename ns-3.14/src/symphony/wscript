@@ -10,7 +10,7 @@ def configure(conf):
      
 
 def generate():
-	 Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.11/build/symphony.xml")
+	 Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.14/build/symphony.xml")
 
 def build(bld):
     generate()
@@ -31,6 +31,7 @@ def build(bld):
             		  'helper/tos-mobility-helper.cc',
                       'helper/symphony-xml.cc',
                       'helper/practical-socket.cc',
+                      'helper/symphony-sensor-container.cc',
         		      'model/tos-node.cc',
                       'model/simu-clock.cc',
                       'model/RF230-radio-model.cc',
@@ -39,6 +40,7 @@ def build(bld):
                       'model/model-element.cc',
                       'model/hardware-model.cc',
                       'model/gateway-client.cc',
+                      'model/raw-sensor.cc',
         ]
 
     module_test = bld.create_ns3_module_test_library('symphony')
@@ -59,6 +61,7 @@ def build(bld):
         			'model/ns3includes.h',
         			'model/tos-mac-low.h',
         			'helper/tos-node-container.h',
+                    'helper/symphony-sensor-container.h',
         			'model/tos-node-list.h',
         			'model/tos-net-device.h',
         			'helper/tos-helper.h',
@@ -74,6 +77,7 @@ def build(bld):
                     'model/hardware-model.h',
                     'model/gateway-client.h',
                     '../wifi/model/wifi-mac-trailer.h',
+                    'model/raw-sensor.h',
         ]
 
     #if bld.env.ENABLE_EXAMPLES:

@@ -119,7 +119,7 @@ implementation
   
   command void Scheduler.init()
   {
-    printf("Scheduler.init()\n");
+    //printf("Scheduler.init()\n");
   
     atomic
     {

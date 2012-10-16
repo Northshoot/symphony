@@ -354,6 +354,19 @@ WifiPhy::NotifyMonitorSniffTx (Ptr<const Packet> packet, uint16_t channelFreqMhz
  */
 
 WifiMode
+WifiPhy::GetDsssRate250Kbps ()
+{
+  static WifiMode mode =
+    WifiModeFactory::CreateWifiMode ("DsssRate250Kbps",
+                                     WIFI_MOD_CLASS_DSSS,
+                                     true,
+                                     22000000, 250000,
+                                     WIFI_CODE_RATE_UNDEFINED,
+                                     2);
+  return mode;
+}
+
+WifiMode
 WifiPhy::GetDsssRate1Mbps ()
 {
   static WifiMode mode =
