@@ -20,7 +20,7 @@ implementation {
 
  
 	event void MilliTimer.fired() {
-		//printf("%s - %d\n",__PRETTY_FUNCTION__, call MilliTimer.getNow());
+		printf("%s - %d\n",__PRETTY_FUNCTION__, call MilliTimer.getNow());
 		call Leds.led1Toggle();
 	}
 

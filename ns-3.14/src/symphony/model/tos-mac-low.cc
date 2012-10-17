@@ -74,11 +74,11 @@ TosMacLow::TosMacLow ()
 TosMacLow::~TosMacLow ()
 {}
 
-void
-TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
-{
-  phy->RegisterListener (m_listener);
-}
+//void
+//TosMacLow::SetupPhyMacLowListener (Ptr<WifiPhy> phy)
+//{
+//  phy->RegisterListener (m_listener);
+//}
 
 void
 TosMacLow::DoStart(void)

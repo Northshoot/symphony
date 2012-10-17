@@ -1,0 +1,444 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Internet Stack &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="Internet Models" href="internet-models.html" />
+    <link rel="next" title="IPv4" href="ipv4.html" />
+    <link rel="prev" title="Internet Models" href="internet-models.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ipv4.html" title="IPv4"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="internet-models.html" title="Internet Models"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="internet-models.html" accesskey="U">Internet Models</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="internet-stack">
+<h1>Internet Stack<a class="headerlink" href="#internet-stack" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="internet-stack-aggregation">
+<h2>Internet stack aggregation<a class="headerlink" href="#internet-stack-aggregation" title="Permalink to this headline">¶</a></h2>
+<p>A bare class <tt class="xref cpp cpp-class docutils literal"><span class="pre">Node</span></tt> is not very useful as-is; other objects must be
+aggregated to it to provide useful node functionality.</p>
+<p>The <em>ns-3</em> source code directory <tt class="docutils literal"><span class="pre">src/internet</span></tt> provides implementation
+of TCP/IPv4- and IPv6-related components. These include IPv4, ARP, UDP, TCP,
+IPv6, Neighbor Discovery, and other related protocols.</p>
+<p>Internet Nodes are not subclasses of class Node; they are simply Nodes that have
+had a bunch of IPv4-related objects aggregated to them. They can be put together
+by hand, or via a helper function <tt class="xref cpp cpp-func docutils literal"><span class="pre">InternetStackHelper::Install</span> <span class="pre">()</span></tt>
+which does the following to all nodes passed in as arguments::</p>
+<div class="highlight-python"><pre>void
+InternetStackHelper::Install (Ptr&lt;Node&gt; node) const
+{
+  if (node-&gt;GetObject&lt;Ipv4&gt; () != 0)
+    {
+      NS_FATAL_ERROR ("InternetStackHelper::Install(): Aggregating "
+                      "an InternetStack to a node with an existing Ipv4 object");
+      return;
+    }
+
+  CreateAndAggregateObjectFromTypeId (node, "ns3::ArpL3Protocol");
+  CreateAndAggregateObjectFromTypeId (node, "ns3::Ipv4L3Protocol");
+  CreateAndAggregateObjectFromTypeId (node, "ns3::Icmpv4L4Protocol");
+  CreateAndAggregateObjectFromTypeId (node, "ns3::UdpL4Protocol");
+  node-&gt;AggregateObject (m_tcpFactory.Create&lt;Object&gt; ());
+  Ptr&lt;PacketSocketFactory&gt; factory = CreateObject&lt;PacketSocketFactory&gt; ();
+  node-&gt;AggregateObject (factory);
+  // Set routing
+  Ptr&lt;Ipv4&gt; ipv4 = node-&gt;GetObject&lt;Ipv4&gt; ();
+  Ptr&lt;Ipv4RoutingProtocol&gt; ipv4Routing = m_routing-&gt;Create (node);
+  ipv4-&gt;SetRoutingProtocol (ipv4Routing);
+}</pre>
+</div>
+<p>Where multiple implementations exist in <em>ns-3</em> (TCP, IP routing), these objects
+are added by a factory object (TCP) or by a routing helper (m_routing).</p>
+<p>Note that the routing protocol is configured and set outside this
+function. By default, the following protocols are added to Ipv4::</p>
+<div class="highlight-python"><pre>InternetStackHelper::InternetStackHelper ()
+{
+  SetTcp ("ns3::TcpL4Protocol");
+  static Ipv4StaticRoutingHelper staticRouting;
+  static Ipv4GlobalRoutingHelper globalRouting;
+  static Ipv4ListRoutingHelper listRouting;
+  listRouting.Add (staticRouting, 0);
+  listRouting.Add (globalRouting, -10);
+  SetRoutingHelper (listRouting);
+}</pre>
+</div>
+<p>By default, IPv4 and IPv6 are enabled.</p>
+<div class="section" id="internet-node-structure">
+<h3>Internet Node structure<a class="headerlink" href="#internet-node-structure" title="Permalink to this headline">¶</a></h3>
+<p>An IPv4-capable Node (an <em>ns-3</em> Node augmented by aggregation to have one or more
+IP stacks) has the following internal structure.</p>
+<div class="section" id="layer-3-protocols">
+<h4>Layer-3 protocols<a class="headerlink" href="#layer-3-protocols" title="Permalink to this headline">¶</a></h4>
+<p>At the lowest layer, sitting above the NetDevices, are the &#8220;layer 3&#8221; protocols,
+including IPv4, IPv6, and ARP. The class
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv4L3Protocol</span></tt> is an implementation class whose public interface is
+typically class <tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv4</span></tt>, but the
+Ipv4L3Protocol public API is also used internally at present.</p>
+<p>In class Ipv4L3Protocol, one method described below is <tt class="docutils literal"><span class="pre">Receive</span> <span class="pre">()</span></tt>::</p>
+<div class="highlight-python"><pre> /**
+   * Lower layer calls this method after calling L3Demux::Lookup
+   * The ARP subclass needs to know from which NetDevice this
+   * packet is coming to:
+   *    - implement a per-NetDevice ARP cache
+   *    - send back arp replies on the right device
+   */
+  void Receive( Ptr&lt;NetDevice&gt; device, Ptr&lt;const Packet&gt; p, uint16_t protocol,
+const Address &amp;from, const Address &amp;to, NetDevice::PacketType packetType);</pre>
+</div>
+<p>First, note that the <tt class="docutils literal"><span class="pre">Receive</span> <span class="pre">()</span></tt> function has a matching signature to the
+ReceiveCallback in the class <tt class="xref cpp cpp-class docutils literal"><span class="pre">Node</span></tt>. This function pointer is
+inserted into the Node&#8217;s protocol handler when <tt class="docutils literal"><span class="pre">AddInterface</span> <span class="pre">()</span></tt> is called.
+The actual registration is done
+with a statement such as follows::</p>
+<div class="highlight-python"><pre>RegisterProtocolHandler ( MakeCallback (&amp;Ipv4Protocol::Receive, ipv4),
+   Ipv4L3Protocol::PROT_NUMBER, 0);</pre>
+</div>
+<p>The Ipv4L3Protocol object is aggregated to the Node; there is only one such
+Ipv4L3Protocol object. Higher-layer protocols that have a packet to send down to
+the Ipv4L3Protocol object can call <tt class="docutils literal"><span class="pre">GetObject&lt;Ipv4L3Protocol&gt;</span> <span class="pre">()</span></tt> to obtain a
+pointer, as follows::</p>
+<div class="highlight-python"><pre>Ptr&lt;Ipv4L3Protocol&gt; ipv4 = m_node-&gt;GetObject&lt;Ipv4L3Protocol&gt; ();
+if (ipv4 != 0)
+  {
+    ipv4-&gt;Send (packet, saddr, daddr, PROT_NUMBER);
+  }</pre>
+</div>
+<p>This class nicely demonstrates two techniques we exploit in <em>ns-3</em> to bind
+objects together:  callbacks, and object aggregation.</p>
+<p>Once IPv4 routing has determined that a packet is for the local node, it
+forwards it up the stack.  This is done with the following function::</p>
+<div class="highlight-python"><pre>void
+Ipv4L3Protocol::LocalDeliver (Ptr&lt;const Packet&gt; packet, Ipv4Header const&amp;ip, uint32_t iif)</pre>
+</div>
+<p>The first step is to find the right Ipv4L4Protocol object, based on IP protocol
+number. For instance, TCP is registered in the demux as protocol number 6.
+Finally, the <tt class="docutils literal"><span class="pre">Receive()</span></tt> function on the Ipv4L4Protocol (such as
+<tt class="docutils literal"><span class="pre">TcpL4Protocol::Receive</span></tt> is called.</p>
+<p>We have not yet introduced the class Ipv4Interface. Basically, each NetDevice is
+paired with an IPv4 representation of such device. In Linux, this class
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv4Interface</span></tt> roughly corresponds to the <tt class="docutils literal"><span class="pre">struct</span> <span class="pre">in_device</span></tt>; the
+main purpose is to provide address-family specific information (addresses) about
+an interface.</p>
+<p>All the classes have appropriate traces in order to track sent, received and lost packets.
+The users is encouraged to use them so to find out if (and where) a packet is dropped. A
+common mistake is to forget the effects of local queues when sending packets, e.g., the ARP
+queue. This can be particularly puzzling when sending jumbo packets or packet bursts using UDP.
+The ARP cache pending queue is limited (3 datagrams) and IP packets might be fragmented, easily
+overfilling the ARP cache queue size. In those cases it is useful to increase the ARP cache
+pending size to a proper value, e.g.::</p>
+<div class="highlight-python"><pre>Config::SetDefault ("ns3::ArpCache::PendingQueueSize", UintegerValue (MAX_BURST_SIZE/L2MTU*3));</pre>
+</div>
+<p>The IPv6 implementation follows a similar architecture.  Dual-stacked nodes (one with
+support for both IPv4 and IPv6) will allow an IPv6 socket to receive IPv4 connections
+as a standard dual-stacked system does.  A socket bound and listening to an IPv6 endpoint
+can receive an IPv4 connection and will return the remote address as an IPv4-mapped address.
+Support for the IPV6_V6ONLY socket option does not currently exist.</p>
+</div>
+<div class="section" id="layer-4-protocols-and-sockets">
+<h4>Layer-4 protocols and sockets<a class="headerlink" href="#layer-4-protocols-and-sockets" title="Permalink to this headline">¶</a></h4>
+<p>We next describe how the transport protocols, sockets, and applications tie
+together. In summary, each transport protocol implementation is a socket
+factory. An application that needs a new socket</p>
+<p>For instance, to create a UDP socket, an application would use a code snippet
+such as the following::</p>
+<div class="highlight-python"><pre>Ptr&lt;Udp&gt; udpSocketFactory = GetNode ()-&gt;GetObject&lt;Udp&gt; ();
+Ptr&lt;Socket&gt; m_socket = socketFactory-&gt;CreateSocket ();
+m_socket-&gt;Bind (m_local_address);
+...</pre>
+</div>
+<p>The above will query the node to get a pointer to its UDP socket factory, will
+create one such socket, and will use the socket with an API similar to the
+C-based sockets API, such as <tt class="docutils literal"><span class="pre">Connect</span> <span class="pre">()</span></tt> and <tt class="docutils literal"><span class="pre">Send</span> <span class="pre">()</span></tt>.  The address passed
+to the <tt class="docutils literal"><span class="pre">Bind</span> <span class="pre">()</span></tt>, <tt class="docutils literal"><span class="pre">Connect</span> <span class="pre">()</span></tt>, or <tt class="docutils literal"><span class="pre">Send</span> <span class="pre">()</span></tt> functions may be a
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv4Address</span></tt>, <tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv6Address</span></tt>, or <tt class="xref cpp cpp-class docutils literal"><span class="pre">Address</span></tt>.
+If a <tt class="xref cpp cpp-class docutils literal"><span class="pre">Address</span></tt> is passed in and contains anything other than
+a <tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv4Address</span></tt> or <tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv6Address</span></tt>, these functions will
+return an error.  The <tt class="docutils literal"><span class="pre">Bind</span> <span class="pre">(void)</span></tt> and <tt class="docutils literal"><span class="pre">Bind6</span> <span class="pre">(void)</span></tt> functions bind to
+&#8220;0.0.0.0&#8221; and &#8221;::&#8221; respectively.
+See the chapter on <em>ns-3</em> sockets for more information.</p>
+<p>We have described so far a socket factory (e.g. <tt class="docutils literal"><span class="pre">class</span> <span class="pre">Udp</span></tt>) and a socket,
+which may be specialized (e.g., class <tt class="xref cpp cpp-class docutils literal"><span class="pre">UdpSocket</span></tt>).  There are a few
+more key objects that relate to the specialized task of demultiplexing a packet
+to one or more receiving sockets.  The key object in this task is class
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv4EndPointDemux</span></tt>.  This demultiplexer stores objects of class
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">Ipv4EndPoint</span></tt>.  This class holds the addressing/port tuple (local
+port, local address, destination port, destination address) associated with the
+socket, and a receive callback. This receive callback has a receive function
+registered by the socket. The <tt class="docutils literal"><span class="pre">Lookup</span> <span class="pre">()</span></tt> function to Ipv4EndPointDemux
+returns a list of Ipv4EndPoint objects (there may be a list since more than one
+socket may match the packet). The layer-4 protocol copies the packet to each
+Ipv4EndPoint and calls its <tt class="docutils literal"><span class="pre">ForwardUp</span> <span class="pre">()</span></tt> method, which then calls the
+<tt class="docutils literal"><span class="pre">Receive</span> <span class="pre">()</span></tt> function registered by the socket.</p>
+<p>An issue that arises when working with the sockets API on real
+systems is the need to manage the reading from a socket, using
+some type of I/O (e.g., blocking, non-blocking, asynchronous, ...).
+<em>ns-3</em> implements an asynchronous model for socket I/O; the application
+sets a callback to be notified of received data ready to be read, and the
+callback is invoked by the transport protocol when data is available.
+This callback is specified as follows::</p>
+<div class="highlight-python"><pre>void Socket::SetRecvCallback (Callback&lt;void, Ptr&lt;Socket&gt;,
+  Ptr&lt;Packet&gt;, const Address&amp;&gt; receivedData);</pre>
+</div>
+<p>The data being received is conveyed in the Packet data buffer.  An example
+usage is in class <tt class="xref cpp cpp-class docutils literal"><span class="pre">PacketSink</span></tt>::</p>
+<div class="highlight-python"><pre>m_socket-&gt;SetRecvCallback (MakeCallback(&amp;PacketSink::HandleRead, this));</pre>
+</div>
+<p>To summarize, internally, the UDP implementation is organized as follows:</p>
+<ul class="simple">
+<li>a <tt class="docutils literal"><span class="pre">UdpImpl</span></tt> class that implements the UDP socket factory functionality</li>
+<li>a <tt class="docutils literal"><span class="pre">UdpL4Protocol</span></tt> class that implements the protocol logic that is
+socket-independent</li>
+<li>a <tt class="docutils literal"><span class="pre">UdpSocketImpl</span></tt> class that implements socket-specific aspects of UDP</li>
+<li>a class called <tt class="docutils literal"><span class="pre">Ipv4EndPoint</span></tt> that stores the addressing tuple (local port,
+local address, destination port, destination address) associated with the
+socket, and a receive callback for the socket.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="ipv4-capable-node-interfaces">
+<h3>Ipv4-capable node interfaces<a class="headerlink" href="#ipv4-capable-node-interfaces" title="Permalink to this headline">¶</a></h3>
+<p>Many of the implementation details, or internal objects themselves, of
+Ipv4-capable Node objects are not exposed at the simulator public API. This
+allows for different implementations; for instance, replacing the native <em>ns-3</em>
+models with ported TCP/IP stack code.</p>
+<p>The C++ public APIs of all of these objects is found in the <tt class="docutils literal"><span class="pre">src/network</span></tt>
+directory, including principally:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">address.h</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">socket.h</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">node.h</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">packet.h</span></tt></li>
+</ul>
+<p>These are typically base class objects that implement the default values used in
+the implementation, implement access methods to get/set state variables, host
+attributes, and implement publicly-available methods exposed to clients such as
+<tt class="docutils literal"><span class="pre">CreateSocket</span></tt>.</p>
+</div>
+<div class="section" id="example-path-of-a-packet">
+<h3>Example path of a packet<a class="headerlink" href="#example-path-of-a-packet" title="Permalink to this headline">¶</a></h3>
+<p>These two figures show an example stack trace of how packets flow through the
+Internet Node objects.</p>
+<div class="figure" id="internet-node-send">
+<img alt="_images/internet-node-send.png" src="_images/internet-node-send.png" />
+<p class="caption">Send path of a packet.</p>
+</div>
+<div class="figure" id="internet-node-recv">
+<img alt="_images/internet-node-recv.png" src="_images/internet-node-recv.png" />
+<p class="caption">Receive path of a packet.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Internet Stack</a><ul>
+<li><a class="reference internal" href="#internet-stack-aggregation">Internet stack aggregation</a><ul>
+<li><a class="reference internal" href="#internet-node-structure">Internet Node structure</a><ul>
+<li><a class="reference internal" href="#layer-3-protocols">Layer-3 protocols</a></li>
+<li><a class="reference internal" href="#layer-4-protocols-and-sockets">Layer-4 protocols and sockets</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ipv4-capable-node-interfaces">Ipv4-capable node interfaces</a></li>
+<li><a class="reference internal" href="#example-path-of-a-packet">Example path of a packet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="internet-models.html"
+                        title="previous chapter">Internet Models</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="ipv4.html"
+                        title="next chapter">IPv4</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/internet-stack.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="ipv4.html" title="IPv4"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="internet-models.html" title="Internet Models"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="internet-models.html" >Internet Models</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

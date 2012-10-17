@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Energy Framework &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="next" title="Flow Monitor" href="flow-monitor.html" />
+    <link rel="prev" title="Tap NetDevice" href="tap.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="flow-monitor.html" title="Flow Monitor"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tap.html" title="Tap NetDevice"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="energy-framework">
+<h1>Energy Framework<a class="headerlink" href="#energy-framework" title="Permalink to this headline">¶</a></h1>
+<p>Energy consumption is a key issue for wireless devices, and wireless network researchers often need to investigate the energy consumption at a node or in the overall network while running network simulations in ns-3. This requires ns-3 to support energy consumption modeling. Further, as concepts such as fuel cells and energy scavenging are becoming viable for low power wireless devices, incorporating the effect of these emerging technologies into simulations requires support for modeling diverse energy sources in ns-3. The ns-3 Energy Framework provides the basis for energy consumption and energy source modeling.</p>
+<div class="section" id="model-description">
+<h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this headline">¶</a></h2>
+<p>The source code for the Energy Framework is currently at: <tt class="docutils literal"><span class="pre">src/energy</span></tt>.</p>
+<div class="section" id="design">
+<h3>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h3>
+<p>The ns-3 Energy Framework is composed of 2 parts: Energy Source and Device Energy Model.
+The framework will be implemented into the <tt class="docutils literal"><span class="pre">src/energy/models</span></tt> folder.</p>
+<div class="section" id="energy-source">
+<h4>Energy Source<a class="headerlink" href="#energy-source" title="Permalink to this headline">¶</a></h4>
+<p>The Energy Source represents the power supply on each node. A node can have one or more energy sources, and each energy source can be connected to multiple device energy models. Connecting an energy source to a device energy model implies that the corresponding device draws power from the source. The basic functionality of the Energy Source is to provide energy for devices on the node. When energy is completely drained from the Energy Source, it notifies the devices on node such that each device can react to this event. Further, each node can access the Energy Source Objects for information such as remaining energy or energy fraction (battery level). This enables the implementation of energy aware protocols in ns-3.</p>
+<p>In order to model a wide range of power supplies such as batteries, the Energy Source must be able to capture characteristics of these supplies. There are 2 important characteristics or effects related to practical batteries:</p>
+<ul class="simple">
+<li>Rate Capacity Effect: Decrease of battery lifetime when the current draw is higher than the rated value of the battery.</li>
+<li>Recovery Effect: Increase of battery lifetime when the battery is alternating between discharge and idle states.</li>
+</ul>
+<p>In order to incorporate the Rate Capacity Effect, the Energy Source uses current draw from all devices on the same node to calculate energy consumption. The Energy Source polls all devices on the same node periodically to calculate the total current draw and hence the energy consumption. When a device changes state, its corresponding Device Energy Model will notify the Energy Source of this change and new total current draw will be calculated.</p>
+<p>The Energy Source base class keeps a list of devices (Device Energy Model objects) using the particular Energy Source as power supply. When energy is completely drained, the Energy Source will notify all devices on this list. Each device can then handle this event independently, based on the desired behavior when power supply is drained.</p>
+</div>
+<div class="section" id="device-energy-model">
+<h4>Device Energy Model<a class="headerlink" href="#device-energy-model" title="Permalink to this headline">¶</a></h4>
+<p>The Device Energy Model is the energy consumption model of a device on node. It is designed to be a state based model where each device is assumed to have a number of states, and each state is associated with a power consumption value. Whenever the state of the device changes, the corresponding Device Energy Model will notify the Energy Source of the new current draw of the device. The Energy Source will then calculate the new total current draw and update the remaining energy.</p>
+<p>The Device Energy Model can also be used for devices that do not have finite number of states. For example, in an electric vehicle, the current draw of the motor is determined by its speed. Since the vehicle&#8217;s speed can take continuous values within a certain range, it is infeasible to define a set of discrete states of operation. However, by converting the speed value into current directly, the same set of Device Energy Model APIs can still be used.</p>
+</div>
+</div>
+<div class="section" id="future-work">
+<h3>Future Work<a class="headerlink" href="#future-work" title="Permalink to this headline">¶</a></h3>
+<p>For Device Energy Models, we are planning to include support for other PHY layer models provided in ns-3 such as WiMAX. For Energy Sources, we are planning to included new types of Energy Sources such as energy scavenging.</p>
+</div>
+<div class="section" id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<table class="docutils footnote" frame="void" id="id1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td>ns-2 Energy model: <a class="reference external" href="http://www.cubinlab.ee.unimelb.edu.au/~jrid/Docs/Manuel-NS2/node204.html">http://www.cubinlab.ee.unimelb.edu.au/~jrid/Docs/Manuel-NS2/node204.html</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[2]</td><td><ol class="first last upperalpha simple" start="8">
+<li>Wu, S. Nabar and R. Poovendran. An Energy Framework for the Network Simulator 3 (ns-3).</li>
+</ol>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[3]</td><td>M. Handy and D. Timmermann. Simulation of mobile wireless networks with accurate
+modelling of non-linear battery effects. In Proc. of Applied simulation and Modeling
+(ASM), 2003.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[4]</td><td>D. N. Rakhmatov and S. B. Vrudhula. An analytical high-level battery model for use in energy
+management of portable electronic systems. In Proc. of IEEE/ACM International Conference on
+Computer Aided Design (ICCAD’01), pages 488–493, November 2001.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[5]</td><td>D. N. Rakhmatov, S. B. Vrudhula, and D. A. Wallach. Battery lifetime prediction for
+energy-aware computing. In Proc. of the 2002 International Symposium on Low Power
+Electronics and Design (ISLPED’02), pages 154–159, 2002.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The main way that ns-3 users will typically interact with the Energy Framework is through the helper API and through the publicly visible attributes of the framework. The helper API is defined in <tt class="docutils literal"><span class="pre">src/energy/helper/*.h</span></tt>.</p>
+<p>In order to use the energy framework, the user must install an Energy Source for the node of interest and the corresponding Device Energy Model for the network devices. Energy Source (objects) are aggregated onto each node by the Energy Source Helper. In order to allow multiple energy sources per node, we aggregate an Energy Source Container rather than directly aggregating a source object.</p>
+<p>The Energy Source object also keeps a list of Device Energy Model objects using the source as power supply. Device Energy Model objects are installed onto the Energy Source by the Device Energy Model Helper. User can access the Device Energy Model objects through the Energy Source object to obtain energy consumption information of individual devices.</p>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>The example directories, <tt class="docutils literal"><span class="pre">src/examples/energy</span></tt> and
+<tt class="docutils literal"><span class="pre">examples/energy</span></tt>, contain some basic code that shows how to set up
+the framework.</p>
+</div>
+<div class="section" id="helpers">
+<h3>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="energy-source-helper">
+<h4>Energy Source Helper<a class="headerlink" href="#energy-source-helper" title="Permalink to this headline">¶</a></h4>
+<p>Base helper class for Energy Source objects, this helper Aggregates Energy Source object onto a node. Child implementation of this class creates the actual Energy Source object.</p>
+</div>
+<div class="section" id="device-energy-model-helper">
+<h4>Device Energy Model Helper<a class="headerlink" href="#device-energy-model-helper" title="Permalink to this headline">¶</a></h4>
+<p>Base helper class for Device Energy Model objects, this helper attaches Device Energy Model objects onto Energy Source objects. Child implementation of this class creates the actual Device Energy Model object.</p>
+</div>
+</div>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<p>Attributes differ between Energy Sources and Devices Energy Models implementations, please look at the specific child class for details.</p>
+<div class="section" id="basic-energy-source">
+<h4>Basic Energy Source<a class="headerlink" href="#basic-energy-source" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">BasicEnergySourceInitialEnergyJ</span></tt>: Initial energy stored in basic energy source.</li>
+<li><tt class="docutils literal"><span class="pre">BasicEnergySupplyVoltageV</span></tt>: Initial supply voltage for basic energy source.</li>
+<li><tt class="docutils literal"><span class="pre">PeriodicEnergyUpdateInterval</span></tt>: Time between two consecutive periodic energy updates.</li>
+</ul>
+</div>
+<div class="section" id="rv-battery-model">
+<h4>RV Battery Model<a class="headerlink" href="#rv-battery-model" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">RvBatteryModelPeriodicEnergyUpdateInterval</span></tt>: RV battery model sampling interval.</li>
+<li><tt class="docutils literal"><span class="pre">RvBatteryModelOpenCircuitVoltage</span></tt>: RV battery model open circuit voltage.</li>
+<li><tt class="docutils literal"><span class="pre">RvBatteryModelCutoffVoltage</span></tt>: RV battery model cutoff voltage.</li>
+<li><tt class="docutils literal"><span class="pre">RvBatteryModelAlphaValue</span></tt>: RV battery model alpha value.</li>
+<li><tt class="docutils literal"><span class="pre">RvBatteryModelBetaValue</span></tt>: RV battery model beta value.</li>
+<li><tt class="docutils literal"><span class="pre">RvBatteryModelNumOfTerms</span></tt>: The number of terms of the infinite sum for estimating battery level.</li>
+</ul>
+</div>
+<div class="section" id="wifi-radio-energy-model">
+<h4>WiFi Radio Energy Model<a class="headerlink" href="#wifi-radio-energy-model" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">IdleCurrentA</span></tt>: The default radio Idle current in Ampere.</li>
+<li><tt class="docutils literal"><span class="pre">CcaBusyCurrentA</span></tt>: The default radio CCA Busy State current in Ampere.</li>
+<li><tt class="docutils literal"><span class="pre">TxCurrentA</span></tt>: The radio Tx current in Ampere.</li>
+<li><tt class="docutils literal"><span class="pre">RxCurrentA</span></tt>: The radio Rx current in Ampere.</li>
+<li><tt class="docutils literal"><span class="pre">SwitchingCurrentA</span></tt>: The default radio Channel Switch current in Ampere.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="tracing">
+<h3>Tracing<a class="headerlink" href="#tracing" title="Permalink to this headline">¶</a></h3>
+<p>Traced values differ between Energy Sources and Devices Energy Models implementations, please look at the specific child class for details.</p>
+<div class="section" id="id6">
+<h4>Basic Energy Source<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">RemainingEnergy</span></tt>: Remaining energy at BasicEnergySource.</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h4>RV Battery Model<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">RvBatteryModelBatteryLevel</span></tt>: RV battery model battery level.</li>
+<li><tt class="docutils literal"><span class="pre">RvBatteryModelBatteryLifetime</span></tt>: RV battery model battery lifetime.</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h4>WiFi Radio Energy Model<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">TotalEnergyConsumption</span></tt>: Total energy consumption of the radio device.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="validation">
+<h3>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h3>
+<p>Comparison of the Energy Framework against actual devices have not been performed. Current implementation of the Energy Framework is checked numerically for computation errors. The RV battery model is validated by comparing results with what was presented in the original RV battery model paper.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Energy Framework</a><ul>
+<li><a class="reference internal" href="#model-description">Model Description</a><ul>
+<li><a class="reference internal" href="#design">Design</a><ul>
+<li><a class="reference internal" href="#energy-source">Energy Source</a></li>
+<li><a class="reference internal" href="#device-energy-model">Device Energy Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#future-work">Future Work</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#helpers">Helpers</a><ul>
+<li><a class="reference internal" href="#energy-source-helper">Energy Source Helper</a></li>
+<li><a class="reference internal" href="#device-energy-model-helper">Device Energy Model Helper</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#attributes">Attributes</a><ul>
+<li><a class="reference internal" href="#basic-energy-source">Basic Energy Source</a></li>
+<li><a class="reference internal" href="#rv-battery-model">RV Battery Model</a></li>
+<li><a class="reference internal" href="#wifi-radio-energy-model">WiFi Radio Energy Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tracing">Tracing</a><ul>
+<li><a class="reference internal" href="#id6">Basic Energy Source</a></li>
+<li><a class="reference internal" href="#id7">RV Battery Model</a></li>
+<li><a class="reference internal" href="#id8">WiFi Radio Energy Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tap.html"
+                        title="previous chapter">Tap NetDevice</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="flow-monitor.html"
+                        title="next chapter">Flow Monitor</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/energy.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="flow-monitor.html" title="Flow Monitor"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tap.html" title="Tap NetDevice"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -6,9 +6,6 @@
 #5.Link library with proxies
 #6.Link whole simulations
 
-
-
-
 #TinyOS options
 TOS_APP=RadioApp
 SIM_OBJ=sim

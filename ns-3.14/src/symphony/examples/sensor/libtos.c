@@ -744,7 +744,7 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2ba5039c61f0, const void *arg_0x2ba5039c64c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2b99f9a1f1f0, const void *arg_0x2b99f9a1f4c8);
 #line 776
 __extension__ 
 #line 793
@@ -1197,7 +1197,7 @@ static error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2ba503c90cb0);
+uint8_t arg_0x2b99f9ce94d8);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1289,7 +1289,7 @@ static inline error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2ba503c90cb0);
+uint8_t arg_0x2b99f9ce94d8);
 
 
 
@@ -1469,9 +1469,9 @@ static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2ba503c90cb0){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b99f9ce94d8){
 #line 75
-    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2ba503c90cb0);
+    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b99f9ce94d8);
 #line 75
 }
 #line 75
@@ -1557,8 +1557,8 @@ static inline void NsTimerP$updateTimer(void )
 # 120 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline void SchedulerBasicP$Scheduler$init(void )
 {
-  printf("Scheduler.init()\n");
   /* atomic removed: atomic calls only */
+
 
   {
     memset((void *)SchedulerBasicP$m_next, SchedulerBasicP$NO_TASK, sizeof SchedulerBasicP$m_next);
@@ -1817,9 +1817,9 @@ static __inline void __nesc_disable_interrupt()
   proxy = con;
   if (proxy != (void *)0) {
       a = gateway(proxy, 0, id_this_lib);
-      printf("\tFROM toslib: gateway(proxy,0,id_this_lib): %i\n", a);
     }
-  else {
+  else 
+    {
       printf("FROM toslib: ops! no proxy\n");
     }
   return id_this_lib;

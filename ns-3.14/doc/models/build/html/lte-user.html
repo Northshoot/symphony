@@ -1,0 +1,927 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>User Documentation &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="LTE Module" href="lte.html" />
+    <link rel="next" title="Testing Documentation" href="lte-testing.html" />
+    <link rel="prev" title="Design Documentation" href="lte-design.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="lte-testing.html" title="Testing Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lte-design.html" title="Design Documentation"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="lte.html" accesskey="U">LTE Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="user-documentation">
+<h1>User Documentation<a class="headerlink" href="#user-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
+<p>We assume the reader is already familiar with how to use the ns-3
+simulator to run generic simulation programs. If this is not the case,
+we strongly recommend the reader to consult <a class="reference internal" href="lte-references.html#ns3tutorial">[ns3tutorial]</a>.</p>
+</div>
+<div class="section" id="usage-overview">
+<h2>Usage Overview<a class="headerlink" href="#usage-overview" title="Permalink to this headline">¶</a></h2>
+<p>The ns-3 LTE model is a software library that allows the simulation of
+LTE networks, optionally including the Evolved Packet Core (EPC).  The
+process of performing such simulations typically involves the
+following steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><em>Define the scenario</em> to be simulated</li>
+<li><em>Write a simulation program</em> that recreates the desired scenario
+topology/architecture. This is done accessing the ns-3 LTE model
+library using the <tt class="docutils literal"><span class="pre">ns3::LteHelper</span></tt> API defined in <tt class="docutils literal"><span class="pre">src/lte/helper/lte-helper.h</span></tt>.</li>
+<li><em>Specify configuration parameters</em> of the objects that are being
+used for the simulation. This can be done using input files (via the
+<tt class="docutils literal"><span class="pre">ns3::ConfigStore</span></tt>) or directly within the simulation program.</li>
+<li><em>Configure the desired output</em> to be produced by the simulator</li>
+<li><em>Run</em> the simulation.</li>
+</ol>
+</div></blockquote>
+<p>All these aspects will be explained in the following sections by means
+of practical examples.</p>
+</div>
+<div class="section" id="basic-simulation-program">
+<h2>Basic simulation program<a class="headerlink" href="#basic-simulation-program" title="Permalink to this headline">¶</a></h2>
+<p>Here is the minimal simulation program that is needed to do an LTE-only simulation (without EPC).</p>
+<ol class="arabic">
+<li><p class="first">Initial boilerplate:</p>
+<div class="highlight-none"><div class="highlight"><pre>#include &quot;ns3/core-module.h&quot;
+#include &quot;ns3/network-module.h&quot;
+#include &quot;ns3/mobility-module.h&quot;
+#include &quot;ns3/lte-module.h&quot;
+
+using namespace ns3;
+
+int main (int argc, char *argv[])
+{
+  // the rest of the simulation program follows
+</pre></div>
+</div>
+</li>
+<li><p class="first">Create a LteHelper object:</p>
+<div class="highlight-none"><div class="highlight"><pre>Ptr&lt;LteHelper&gt; lteHelper = CreateObject&lt;LteHelper&gt; ();
+</pre></div>
+</div>
+<p>This will instantiate some common
+objects (e.g., the Channel object) and provide the methods to add
+eNBs and UEs and configure them.</p>
+</li>
+<li><p class="first">Create Node objects for the eNB(s) and the UEs:</p>
+<div class="highlight-none"><div class="highlight"><pre>NodeContainer enbNodes;
+enbNodes.Create (1);
+NodeContainer ueNodes;
+ueNodes.Create (2);
+</pre></div>
+</div>
+<p>Note that the above Node instances at this point still don&#8217;t have
+an LTE protocol stack installed; they&#8217;re just empty nodes.</p>
+</li>
+<li><p class="first">Configure the Mobility model for all the nodes:</p>
+<div class="highlight-none"><div class="highlight"><pre>MobilityHelper mobility;
+mobility.SetMobilityModel (&quot;ns3::ConstantPositionMobilityModel&quot;);
+mobility.Install (enbNodes);
+mobility.SetMobilityModel (&quot;ns3::ConstantPositionMobilityModel&quot;);
+mobility.Install (ueNodes);
+</pre></div>
+</div>
+<p>The above will place all nodes at the coordinates (0,0,0). Please
+refer to the documentation of the ns-3 mobility model for how to
+set your own position or configure node movement.</p>
+</li>
+<li><p class="first">Install an LTE protocol stack on the eNB(s):</p>
+<div class="highlight-none"><div class="highlight"><pre>NetDeviceContainer enbDevs;
+enbDevs = lteHelper-&gt;InstallEnbDevice (enbNodes);
+</pre></div>
+</div>
+</li>
+<li><p class="first">Install an LTE protocol stack on the UEs:</p>
+<div class="highlight-none"><div class="highlight"><pre>NetDeviceContainer ueDevs;
+ueDevs = lteHelper-&gt;InstallUeDevice (ueNodes);
+</pre></div>
+</div>
+</li>
+<li><p class="first">Attach the UEs to an eNB. This will configure each UE according to
+the eNB configuration, and create an RRC connection between them:</p>
+<div class="highlight-none"><div class="highlight"><pre>lteHelper-&gt;Attach (ueDevs, enbDevs.Get (0));
+</pre></div>
+</div>
+</li>
+<li><p class="first">Activate an EPS Bearer including the setup of the Radio Bearer between an eNB and its attached UE:</p>
+<div class="highlight-none"><div class="highlight"><pre>enum EpsBearer::Qci q = EpsBearer::GBR_CONV_VOICE;
+EpsBearer bearer (q);
+lteHelper-&gt;ActivateEpsBearer (ueDevs, bearer);
+</pre></div>
+</div>
+<p>In the current version of the ns-3 LTE model, the activation of an
+EPS Bearer will also activate two saturation traffic generators for
+that bearer, one in uplink and one in downlink.</p>
+</li>
+<li><p class="first">Set the stop time:</p>
+<div class="highlight-none"><div class="highlight"><pre>Simulator::Stop (Seconds (0.005));
+</pre></div>
+</div>
+<p>This is needed otherwise the simulation will last forever, because
+(among others) the start-of-subframe event is scheduled repeatedly, and the
+ns-3 simulator scheduler will hence never run out of events.</p>
+</li>
+<li><p class="first">Run the simulation:</p>
+<div class="highlight-none"><div class="highlight"><pre>Simulator::Run ();
+</pre></div>
+</div>
+</li>
+<li><p class="first">Cleanup and exit:</p>
+<div class="highlight-none"><div class="highlight"><pre>Simulator::Destroy ();
+return 0;
+}
+</pre></div>
+</div>
+</li>
+</ol>
+<p>For how to compile and run simulation programs, please refer to <a class="reference internal" href="lte-references.html#ns3tutorial">[ns3tutorial]</a>.</p>
+</div>
+<div class="section" id="configuration-of-lte-model-parameters">
+<h2>Configuration of LTE model parameters<a class="headerlink" href="#configuration-of-lte-model-parameters" title="Permalink to this headline">¶</a></h2>
+<p>All the relevant LTE model parameters are managed through the ns-3
+attribute system. Please refer to the <a class="reference internal" href="lte-references.html#ns3tutorial">[ns3tutorial]</a> and <a class="reference internal" href="lte-references.html#ns3manual">[ns3manual]</a>
+for detailed information on all the possible methods to do it
+(environmental variables, C++ API, GtkConfigStore...).</p>
+<p>In the following, we just briefly summarize
+how to do it using input files together with the ns-3 ConfigStore.
+First of all, you need to put the following in your simulation
+program, right after <tt class="docutils literal"><span class="pre">main</span> <span class="pre">()</span></tt> starts:</p>
+<div class="highlight-none"><div class="highlight"><pre>CommandLine cmd;
+cmd.Parse (argc, argv);
+ConfigStore inputConfig;
+inputConfig.ConfigureDefaults ();
+// parse again so you can override default values from the command line
+cmd.Parse (argc, argv);
+</pre></div>
+</div>
+<p>for the above to work, make sure you also <tt class="docutils literal"><span class="pre">#include</span> <span class="pre">&quot;ns3/config-store.h&quot;</span></tt>.
+Now create a text file named (for example) <tt class="docutils literal"><span class="pre">input-defaults.txt</span></tt>
+specifying the new default values that you want to use for some attributes:</p>
+<div class="highlight-none"><div class="highlight"><pre>default ns3::LteHelper::Scheduler &quot;ns3::PfFfMacScheduler&quot;
+default ns3::LteHelper::PathlossModel &quot;ns3::FriisSpectrumPropagationLossModel&quot;
+default ns3::LteEnbNetDevice::UlBandwidth &quot;25&quot;
+default ns3::LteEnbNetDevice::DlBandwidth &quot;25&quot;
+default ns3::LteEnbNetDevice::DlEarfcn &quot;100&quot;
+default ns3::LteEnbNetDevice::UlEarfcn &quot;18100&quot;
+default ns3::LteUePhy::TxPower &quot;10&quot;
+default ns3::LteUePhy::NoiseFigure &quot;9&quot;
+default ns3::LteEnbPhy::TxPower &quot;30&quot;
+default ns3::LteEnbPhy::NoiseFigure &quot;5&quot;
+</pre></div>
+</div>
+<p>Supposing your simulation program is called
+<tt class="docutils literal"><span class="pre">src/lte/examples/lte-sim-with-input</span></tt>, you can now pass these
+settings to the simulation program in the following way:</p>
+<div class="highlight-none"><div class="highlight"><pre>./waf --command-template=&quot;%s --ns3::ConfigStore::Filename=input-defaults.txt --ns3::ConfigStore::Mode=Load --ns3::ConfigStore::FileFormat=RawText&quot; --run src/lte/examples/lte-sim-with-input
+</pre></div>
+</div>
+<p>Furthermore, you can generate a template input file with the following
+command:</p>
+<div class="highlight-none"><div class="highlight"><pre>./waf --command-template=&quot;%s --ns3::ConfigStore::Filename=input-defaults.txt --ns3::ConfigStore::Mode=Save --ns3::ConfigStore::FileFormat=RawText&quot; --run src/lte/examples/lte-sim-with-input
+</pre></div>
+</div>
+<p>note that the above will put in the file <tt class="docutils literal"><span class="pre">input-defaults.txt</span></tt> <em>all</em>
+the default values that are registered in your particular build of the
+simulator, including lots of non-LTE attributes.</p>
+</div>
+<div class="section" id="simulation-output">
+<h2>Simulation Output<a class="headerlink" href="#simulation-output" title="Permalink to this headline">¶</a></h2>
+<p>The ns-3 LTE model currently supports the output to file of MAC, RLC
+and PDCP level Key Performance Indicators (KPIs). You can enable it in
+the following way:</p>
+<div class="highlight-none"><div class="highlight"><pre>Ptr&lt;LteHelper&gt; lteHelper = CreateObject&lt;LteHelper&gt; ();
+
+// configure all the simulation scenario here...
+
+lteHelper-&gt;EnableMacTraces ();
+lteHelper-&gt;EnableRlcTraces ();
+lteHelper-&gt;EnablePdcpTraces ();
+
+Simulator::Run ();
+</pre></div>
+</div>
+<p>RLC and PDCP KPIs are calculated over a time interval and stored on ASCII
+files, two for RLC KPIs and two for PDCP KPIs, in each case one for
+uplink and one for downlink. The time interval duration can be controlled using the attribute
+<tt class="docutils literal"><span class="pre">ns3::RadioBearerStatsCalculator::EpochDuration</span></tt>.</p>
+<p>The columns of the RLC KPI files is the following (the same
+for uplink and downlink):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>start time of measurement interval in seconds since the start of simulation</li>
+<li>end time of measurement interval in seconds since the start of simulation</li>
+<li>Cell ID</li>
+<li>unique UE ID (IMSI)</li>
+<li>cell-specific UE ID (RNTI)</li>
+<li>Logical Channel ID</li>
+<li>Number of transmitted RLC PDUs</li>
+<li>Total bytes transmitted.</li>
+<li>Number of received RLC PDUs</li>
+<li>Total bytes received</li>
+<li>Average RLC PDU delay in seconds</li>
+<li>Standard deviation of the RLC PDU delay</li>
+<li>Minimum value of the RLC PDU delay</li>
+<li>Maximum value of the RLC PDU delay</li>
+<li>Average RLC PDU size, in bytes</li>
+<li>Standard deviation of the RLC PDU size</li>
+<li>Minimum RLC PDU size</li>
+<li>Maximum RLC PDU size</li>
+</ol>
+</div></blockquote>
+<p>Similarly, the columns of the PDCP KPI files is the following (again, the same
+for uplink and downlink):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>start time of measurement interval in seconds since the start of simulation</li>
+<li>end time of measurement interval in seconds since the start of simulation</li>
+<li>Cell ID</li>
+<li>unique UE ID (IMSI)</li>
+<li>cell-specific UE ID (RNTI)</li>
+<li>Logical Channel ID</li>
+<li>Number of transmitted PDCP PDUs</li>
+<li>Total bytes transmitted.</li>
+<li>Number of received PDCP PDUs</li>
+<li>Total bytes received</li>
+<li>Average PDCP PDU delay in seconds</li>
+<li>Standard deviation of the PDCP PDU delay</li>
+<li>Minimum value of the PDCP PDU delay</li>
+<li>Maximum value of the PDCP PDU delay</li>
+<li>Average PDCP PDU size, in bytes</li>
+<li>Standard deviation of the PDCP PDU size</li>
+<li>Minimum PDCP PDU size</li>
+<li>Maximum PDCP PDU size</li>
+</ol>
+</div></blockquote>
+<p>MAC KPIs are basically a trace of the resource allocation reported by
+the scheduler upon the start of every subframe. They are stored in
+ASCII files. For downlink MAC KPIs the format is the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Simulation time in seconds at which the allocation is indicated by the scheduler</li>
+<li>Cell ID</li>
+<li>unique UE ID (IMSI)</li>
+<li>Frame number</li>
+<li>Subframe number</li>
+<li>cell-specific UE ID (RNTI)</li>
+<li>MCS of TB 1</li>
+<li>size of TB 1</li>
+<li>MCS of TB 2 (0 if not present)</li>
+<li>size of TB 2 (0 if not present)</li>
+</ol>
+</div></blockquote>
+<p>while for uplink MAC KPIs the format is:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Simulation time in seconds at which the allocation is indicated by the scheduler</li>
+<li>Cell ID</li>
+<li>unique UE ID (IMSI)</li>
+<li>Frame number</li>
+<li>Subframe number</li>
+<li>cell-specific UE ID (RNTI)</li>
+<li>MCS of TB</li>
+<li>size of TB</li>
+</ol>
+</div></blockquote>
+<p>The names of the files used for MAC KPI output can be customized via
+the ns-3 attributes <tt class="docutils literal"><span class="pre">ns3::MacStatsCalculator::DlOutputFilename</span></tt> and
+<tt class="docutils literal"><span class="pre">ns3::MacStatsCalculator::UlOutputFilename</span></tt>.</p>
+</div>
+<div class="section" id="fading-trace-usage">
+<h2>Fading Trace Usage<a class="headerlink" href="#fading-trace-usage" title="Permalink to this headline">¶</a></h2>
+<p>In this section we will describe how to use fading traces within LTE simulations.</p>
+<div class="section" id="fading-traces-generation">
+<h3>Fading Traces Generation<a class="headerlink" href="#fading-traces-generation" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to generate fading traces by using a dedicated matlab script provided with the code (<tt class="docutils literal"><span class="pre">/lte/model/fading-traces/fading-trace-generator.m</span></tt>). This script already includes the typical taps configurations for three 3GPP scenarios (i.e., pedestrian, vehicular and urban as defined in Annex B.2 of <a class="reference internal" href="lte-references.html#ts36104">[TS36104]</a>); however users can also introduce their specific configurations. The list of the configurable parameters is provided in the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">fc</span></tt> : the frequency in use (it affects the computation of the doppler speed).</li>
+<li><tt class="docutils literal"><span class="pre">v_km_h</span></tt> : the speed of the users</li>
+<li><tt class="docutils literal"><span class="pre">traceDuration</span></tt> : the duration in seconds of the total length of the trace.</li>
+<li><tt class="docutils literal"><span class="pre">numRBs</span></tt> : the number of the resource block to be evaluated.</li>
+<li><tt class="docutils literal"><span class="pre">tag</span></tt> : the tag to be applied to the file generated.</li>
+</ul>
+</div></blockquote>
+<p>The file generated contains ASCII-formatted real values organized in a matrix fashion: every row corresponds to a different RB, and every column correspond to a different temporal fading trace sample.</p>
+<p>It has to be noted that the ns-3 LTE module is able to work with any fading trace file that complies with the above described ASCII format. Hence, other external tools can be used to generate custom fading traces, such as for example other simulators or experimental devices.</p>
+</div>
+<div class="section" id="fading-traces-usage">
+<h3>Fading Traces Usage<a class="headerlink" href="#fading-traces-usage" title="Permalink to this headline">¶</a></h3>
+<p>When using a fading trace, it is of paramount importance to specify correctly the trace parameters in the simulation, so that the fading model can load and use it correcly.
+The parameters to be configured are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">TraceFilename</span></tt> : the name of the trace to be loaded (absolute path, or relative path w.r.t. the path from where the simulation program is executed);</li>
+<li><tt class="docutils literal"><span class="pre">TraceLength</span></tt> : the trace duration in seconds;</li>
+<li><tt class="docutils literal"><span class="pre">SamplesNum</span></tt> : the number of samples;</li>
+<li><tt class="docutils literal"><span class="pre">WindowSize</span></tt> : the size of the fading sampling window in seconds;</li>
+</ul>
+</div></blockquote>
+<p>It is important to highlight that the sampling interval of the fading trace has to be 1 ms or greater, and in the latter case it has to be an integer multiple of 1 ms in order to be correctly processed by the fading module.</p>
+<p>The default configuration of the matlab script provides a trace 10 seconds long, made of 10,000 samples (i.e., 1 sample per TTI=1ms) and used with a windows size of 0.5 seconds amplitude. These are also the default values of the parameters above used in the simulator; therefore their settage can be avoided in case the fading trace respects them.</p>
+<p>In order to activate the fading module (which is not active by default) the following code should be included in the simulation program:</p>
+<div class="highlight-none"><div class="highlight"><pre>Ptr&lt;LteHelper&gt; lteHelper = CreateObject&lt;LteHelper&gt; ();
+lteHelper-&gt;SetFadingModel(&quot;ns3::TraceFadingLossModel&quot;);
+</pre></div>
+</div>
+<p>And for setting the parameters:</p>
+<div class="highlight-none"><div class="highlight"><pre>lteHelper-&gt;SetFadingModelAttribute (&quot;TraceFilename&quot;, StringValue (&quot;src/lte/model/fading-traces/fading_trace_EPA_3kmph.fad&quot;));
+lteHelper-&gt;SetFadingModelAttribute (&quot;TraceLength&quot;, TimeValue (Seconds (10.0)));
+lteHelper-&gt;SetFadingModelAttribute (&quot;SamplesNum&quot;, UintegerValue (10000));
+lteHelper-&gt;SetFadingModelAttribute (&quot;WindowSize&quot;, TimeValue (Seconds (0.5)));
+lteHelper-&gt;SetFadingModelAttribute (&quot;RbNum&quot;, UintegerValue (100));
+</pre></div>
+</div>
+<p>It has to be noted that, <tt class="docutils literal"><span class="pre">TraceFilename</span></tt> does not have a default value, therefore is has to be always set explicitly.</p>
+<p>The simulator provide natively three fading traces generated according to the configurations defined in in Annex B.2 of <a class="reference internal" href="lte-references.html#ts36104">[TS36104]</a>. These traces are available in the folder <tt class="docutils literal"><span class="pre">src/lte/model/fading-traces/</span></tt>). An excerpt from these traces is represented in the following figures.</p>
+<div class="figure align-center" id="fig-fadingpedestriantrace">
+<img alt="Fading trace 3 kmph" src="_images/fading_pedestrian.png" />
+<p class="caption">Excerpt of the fading trace included in the simulator for a pedestrian scenario (speed of 3 kmph).</p>
+</div>
+<div class="figure align-center" id="fig-fadingvehiculartrace">
+<img alt="Fading trace 60 kmph" src="_images/fading_vehicular.png" />
+<p class="caption">Excerpt of the fading trace included in the simulator for a vehicular  scenario (speed of 60 kmph).</p>
+</div>
+<div class="figure align-center" id="fig-fadingurbantrace">
+<img alt="Fading trace 3 kmph" src="_images/fading_urban_3kmph.png" />
+<p class="caption">Excerpt of the fading trace included in the simulator for an urban  scenario (speed of 3 kmph).</p>
+</div>
+</div>
+</div>
+<div class="section" id="buildings-mobility-model">
+<h2>Buildings Mobility Model<a class="headerlink" href="#buildings-mobility-model" title="Permalink to this headline">¶</a></h2>
+<p>We now explain by examples how to use the buildings model (in particular, the <tt class="docutils literal"><span class="pre">BuildingMobilityModel</span></tt> and the <tt class="docutils literal"><span class="pre">BuildingPropagationModel</span></tt> classes) in an ns-3 simulation program to setup an LTE simulation scenario that includes buildings and indoor nodes.</p>
+<ol class="arabic">
+<li><p class="first">Header files to be included:</p>
+<div class="highlight-none"><div class="highlight"><pre>#include &lt;ns3/buildings-mobility-model.h&gt;
+#include &lt;ns3/buildings-propagation-loss-model.h&gt;
+#include &lt;ns3/building.h&gt;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Pathloss model selection:</p>
+<div class="highlight-none"><div class="highlight"><pre>Ptr&lt;LteHelper&gt; lteHelper = CreateObject&lt;LteHelper&gt; ();
+
+lteHelper-&gt;SetAttribute (&quot;PathlossModel&quot;, StringValue (&quot;ns3::BuildingsPropagationLossModel&quot;));
+</pre></div>
+</div>
+</li>
+<li><p class="first">EUTRA Band Selection</p>
+</li>
+</ol>
+<p>The selection of the working frequency of the propagation model has to be done with the standard ns-3 attribute system as described in the correspond section (&#8220;Configuration of LTE model parameters&#8221;) by means of the DlEarfcn and UlEarfcn parameters, for instance:</p>
+<div class="highlight-none"><div class="highlight"><pre>lteHelper-&gt;SetEnbDeviceAttribute (&quot;DlEarfcn&quot;, UintegerValue (100));
+lteHelper-&gt;SetEnbDeviceAttribute (&quot;UlEarfcn&quot;, UintegerValue (18100));
+</pre></div>
+</div>
+<p>It is to be noted that using other means to configure the frequency used by the propagation model (i.e., configuring the corresponding BuildingsPropagationLossModel attributes directly) might generates conflicts in the frequencies definition in the modules during the simulation, and is therefore not advised.</p>
+<ol class="arabic">
+<li><p class="first">Mobility model selection:</p>
+<div class="highlight-none"><div class="highlight"><pre>MobilityHelper mobility;
+mobility.SetMobilityModel (&quot;ns3::BuildingsMobilityModel&quot;);
+</pre></div>
+</div>
+</li>
+<li><p class="first">Building creation:</p>
+<div class="highlight-none"><div class="highlight"><pre>double x_min = 0.0;
+double x_max = 10.0;
+double y_min = 0.0;
+double y_max = 20.0;
+double z_min = 0.0;
+double z_max = 10.0;
+Ptr&lt;Building&gt; b = CreateObject &lt;Building&gt; ();
+b-&gt;SetBoundaries (Box (x_min, x_max, y_min, y_max, z_min, z_max));
+b-&gt;SetBuildingType (Building::Residential);
+b-&gt;SetExtWallsType (Building::ConcreteWithWindows);
+b-&gt;SetNFloors (3);
+b-&gt;SetNRoomsX (3);
+b-&gt;SetNRoomsY (2);
+</pre></div>
+</div>
+<p>This will instantiate a residential building with base of 10 x 20 meters and height of 10 meters whose external walls are of concrete with windows; the building has three floors and has an internal 3 x 2  grid of rooms of equal size.</p>
+</li>
+<li><p class="first">Node creation and positioning:</p>
+<div class="highlight-none"><div class="highlight"><pre>ueNodes.Create (2);
+mobility.Install (ueNodes);
+NetDeviceContainer ueDevs;
+ueDevs = lteHelper-&gt;InstallUeDevice (ueNodes);
+Ptr&lt;BuildingsMobilityModel&gt; mm0 = enbNodes.Get (0)-&gt;GetObject&lt;BuildingsMobilityModel&gt; ();
+Ptr&lt;BuildingsMobilityModel&gt; mm1 = enbNodes.Get (1)-&gt;GetObject&lt;BuildingsMobilityModel&gt; ();
+mm0-&gt;SetPosition (Vector (5.0, 5.0, 1.5));
+mm1-&gt;SetPosition (Vector (30.0, 40.0, 1.5));
+</pre></div>
+</div>
+</li>
+</ol>
+<p>This positions the node on the scenario. Note that, in this example, node 0 will be in the building, and node 1 will be out of the building. Note that this alone is not sufficient to setup the topology correctly. What is left to be done is to issue the following command after we have placed all nodes in the simulation:</p>
+<div class="highlight-none"><div class="highlight"><pre>BuildingsHelper::MakeMobilityModelConsistent ();
+</pre></div>
+</div>
+<p>This command will go through the lists of all nodes and of all buildings, determine for each user if it is indoor or outdoor, and if indoor it will also determine the building in which the user is located and the corresponding floor and number inside the building.</p>
+</div>
+<div class="section" id="mimo-model">
+<h2>MIMO Model<a class="headerlink" href="#mimo-model" title="Permalink to this headline">¶</a></h2>
+<p>Is this subsection we illustrate how to configure the MIMO parameters. LTE defines 7 types of transmission modes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Transmission Mode 1: SISO.</li>
+<li>Transmission Mode 2: MIMO Tx Diversity.</li>
+<li>Transmission Mode 3: MIMO Spatial Multiplexity Open Loop.</li>
+<li>Transmission Mode 4: MIMO Spatial Multiplexity Closed Loop.</li>
+<li>Transmission Mode 5: MIMO Multi-User.</li>
+<li>Transmission Mode 6: Closer loop single layer precoding.</li>
+<li>Transmission Mode 7: Single antenna port 5.</li>
+</ul>
+</div></blockquote>
+<p>According to model implemented, the simulator includes the first three transmission modes types. The default one is the Transmission Mode 1 (SISO). In order to change the default Transmission Mode to be used, the attribute <tt class="docutils literal"><span class="pre">DefaultTransmissionMode</span></tt> of the <tt class="docutils literal"><span class="pre">LteEnbRrc</span></tt> can be used, as shown in the following:</p>
+<div class="highlight-none"><div class="highlight"><pre>Config::SetDefault (&quot;ns3::LteEnbRrc::DefaultTransmissionMode&quot;, UintegerValue (0)); // SISO
+Config::SetDefault (&quot;ns3::LteEnbRrc::DefaultTransmissionMode&quot;, UintegerValue (1)); // MIMO Tx diversity (1 layer)
+Config::SetDefault (&quot;ns3::LteEnbRrc::DefaultTransmissionMode&quot;, UintegerValue (2)); // MIMO Spatial Multiplexity (2 layers)
+</pre></div>
+</div>
+<p>For changing the transmission mode of a certain user during the simulation a specific interface has been implemented in both standard schedulers:</p>
+<div class="highlight-none"><div class="highlight"><pre>void TransmissionModeConfigurationUpdate (uint16_t rnti, uint8_t txMode);
+</pre></div>
+</div>
+<p>This method can be used both for developing transmission mode decision engine (i.e., for optimizing the transmission mode according to channel condition and/or user&#8217;s requirements) and for manual switching from simulation script. In the latter case, the switching can be done as shown in the following:</p>
+<div class="highlight-none"><div class="highlight"><pre>Ptr&lt;LteEnbNetDevice&gt; lteEnbDev = enbDevs.Get (0)-&gt;GetObject&lt;LteEnbNetDevice&gt; ();
+PointerValue ptrval;
+enbNetDev-&gt;GetAttribute (&quot;FfMacScheduler&quot;, ptrval);
+Ptr&lt;RrFfMacScheduler&gt; rrsched = ptrval.Get&lt;RrFfMacScheduler&gt; ();
+Simulator::Schedule (Seconds (0.2), &amp;RrFfMacScheduler::TransmissionModeConfigurationUpdate, rrsched, rnti, 1);
+</pre></div>
+</div>
+<p>Finally, the model implemented can be reconfigured according to different MIMO models by updating the gain values (the only constraints is that the gain has to be constant during simulation run-time and common for the layers). The gain of each Transmission Mode can be changed according to the standard ns3 attribute system, where the attributes are: <tt class="docutils literal"><span class="pre">TxMode1Gain</span></tt>, <tt class="docutils literal"><span class="pre">TxMode2Gain</span></tt>, <tt class="docutils literal"><span class="pre">TxMode3Gain</span></tt>, <tt class="docutils literal"><span class="pre">TxMode4Gain</span></tt>, <tt class="docutils literal"><span class="pre">TxMode5Gain</span></tt>, <tt class="docutils literal"><span class="pre">TxMode6Gain</span></tt> and <tt class="docutils literal"><span class="pre">TxMode7Gain</span></tt>. By default only <tt class="docutils literal"><span class="pre">TxMode1Gain</span></tt>, <tt class="docutils literal"><span class="pre">TxMode2Gain</span></tt> and <tt class="docutils literal"><span class="pre">TxMode3Gain</span></tt> have a meaningful value, that are the ones derived by _[CatreuxMIMO] (i.e., respectively 0.0, 4.2 and -2.8 dB).</p>
+</div>
+<div class="section" id="use-of-antennamodel">
+<h2>Use of AntennaModel<a class="headerlink" href="#use-of-antennamodel" title="Permalink to this headline">¶</a></h2>
+<p>We now show how associate a particular AntennaModel with an eNB device
+in order to model a sector of a macro eNB. For this purpose, it is
+convenient to use the <tt class="docutils literal"><span class="pre">CosineAntennaModel</span></tt> provided by the ns-3
+antenna module. The configuration of the eNB is to be done via the
+<tt class="docutils literal"><span class="pre">LteHelper</span></tt> instance right before the creation of the
+<tt class="docutils literal"><span class="pre">EnbNetDevice</span></tt>, as shown in the following:</p>
+<div class="highlight-none"><div class="highlight"><pre>lteHelper-&gt;SetEnbAntennaModelType (&quot;ns3::CosineAntennaModel&quot;);
+lteHelper-&gt;SetEnbAntennaModelAttribute (&quot;Orientation&quot;, DoubleValue (0));
+lteHelper-&gt;SetEnbAntennaModelAttribute (&quot;Beamwidth&quot;,   DoubleValue (60);
+lteHelper-&gt;SetEnbAntennaModelAttribute (&quot;MaxGain&quot;,     DoubleValue (0.0));
+</pre></div>
+</div>
+<p>the above code will generate an antenna model with a 60 degrees
+beamwidth pointing along the X axis. The orientation is measured
+in degrees from the X axis, e.g., an orientation of 90 would point
+along the Y axis, and an orientation of -90 would point in the
+negative direction along the Y axis. The beamwidth is the -3 dB
+beamwidth, e.g, for a 60 degree beamwidth the antenna gain at an angle
+of <img class="math" src="_images/math/c92f50866ae53a7941f9826899b44d48c94d3f92.png" alt="\pm 30"/> degrees from the direction of orientation is -3 dB.</p>
+<p>To create a multi-sector site, you need to create different ns-3 nodes
+placed at the same position, and to configure separate <tt class="docutils literal"><span class="pre">EnbNetDevice</span></tt>
+with different antenna orientations to be installed on each node.</p>
+</div>
+<div class="section" id="radio-environment-maps">
+<h2>Radio Environment Maps<a class="headerlink" href="#radio-environment-maps" title="Permalink to this headline">¶</a></h2>
+<p>By using the class RadioEnvironmentMapHelper it is possible to output
+to a file a Radio Environment Map (REM), i.e., a uniform 2D grid of values
+that represent the Signal-to-noise ratio in the downlink with respect
+to the eNB that has the strongest signal at each point.</p>
+<p>To do this, you just need to add the following code to your simulation
+program towards the end, right before the call to Simulator::Run ():</p>
+<div class="highlight-none"><div class="highlight"><pre>Ptr&lt;RadioEnvironmentMapHelper&gt; remHelper = CreateObject&lt;RadioEnvironmentMapHelper&gt; ();
+remHelper-&gt;SetAttribute (&quot;ChannelPath&quot;, StringValue (&quot;/ChannelList/0&quot;));
+remHelper-&gt;SetAttribute (&quot;OutputFile&quot;, StringValue (&quot;rem.out&quot;));
+remHelper-&gt;SetAttribute (&quot;XMin&quot;, DoubleValue (-400.0));
+remHelper-&gt;SetAttribute (&quot;XMax&quot;, DoubleValue (400.0));
+remHelper-&gt;SetAttribute (&quot;XRes&quot;, UintegerValue (100));
+remHelper-&gt;SetAttribute (&quot;YMin&quot;, DoubleValue (-300.0));
+remHelper-&gt;SetAttribute (&quot;YMax&quot;, DoubleValue (300.0));
+remHelper-&gt;SetAttribute (&quot;YRes&quot;, UintegerValue (75));
+remHelper-&gt;SetAttribute (&quot;Z&quot;, DoubleValue (0.0));
+remHelper-&gt;Install ();
+</pre></div>
+</div>
+<p>By configuring the attributes of the RadioEnvironmentMapHelper object
+as shown above, you can tune the parameters of the REM to be
+generated. Note that each RadioEnvironmentMapHelper instance can
+generate only one REM; if you want to generate more REMs, you need to
+create one separate instance for each REM.</p>
+<p>Note that the REM generation is very demanding, in particular:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the run-time memory consumption is approximately 5KB per pixel. For example,
+a REM with a resolution of 500x500 needs about 1.25 GB of memory, and
+a resolution of 1000x1000 needs about 5 GB (too much for a
+regular PC at the time of this writing).</li>
+<li>if you generate a REM at the beginning of a simulation, it will
+slow down the execution of the rest of the simulation. If you want
+to generate a REM for a program and also use the same program to
+get simulation result, it is recommended to add a command-line
+switch that allows to either generate the REM or run the complete
+simulation. For this purpose, note that there is an attribute
+<tt class="docutils literal"><span class="pre">RadioEnvironmentMapHelper::StopWhenDone</span></tt> (default: true) that
+will force the simulation to stop right after the REM has been generated.</li>
+</ul>
+</div></blockquote>
+<p>The REM is stored in an ASCII file in the following format:</p>
+<blockquote>
+<div><ul class="simple">
+<li>column 1 is the x coordinate</li>
+<li>column 2 is the y coordinate</li>
+<li>column 3 is the z coordinate</li>
+<li>column 4 is the SINR in linear units</li>
+</ul>
+</div></blockquote>
+<p>A minimal gnuplot script that allows you to plot the REM is given
+below:</p>
+<div class="highlight-none"><div class="highlight"><pre>set view map;
+set xlabel &quot;X&quot;
+set ylabel &quot;Y&quot;
+set cblabel &quot;SINR (dB)&quot;
+unset key
+plot &quot;rem.out&quot; using ($1):($2):(10*log10($4)) with image
+</pre></div>
+</div>
+<p>As an example, here is the REM that can be obtained with the example program lena-dual-stripe, which shows a three-sector LTE macrocell in a co-channel deployment with some residential femtocells randomly deployed in two blocks of apartments.</p>
+<div class="figure align-center" id="fig-lena-dual-stripe">
+<img alt="_images/lena-dual-stripe.png" src="_images/lena-dual-stripe.png" />
+<p class="caption">REM obtained from the lena-dual-stripe example</p>
+</div>
+</div>
+<div class="section" id="amc-model-and-cqi-calculation">
+<h2>AMC Model and CQI Calculation<a class="headerlink" href="#amc-model-and-cqi-calculation" title="Permalink to this headline">¶</a></h2>
+<p>The simulator provides two possible schemes for what concerns the selection of the MCSs and correspondly the generation of the CQIs. The first one is based on the GSoC module <a class="reference internal" href="lte-references.html#piro2011">[Piro2011]</a> and works per RB basis. This model can be activated with the ns3 attribute system, as presented in the following:</p>
+<div class="highlight-none"><div class="highlight"><pre>Config::SetDefault (&quot;ns3::LteAmc::AmcModel&quot;, EnumValue (LteAmc::PiroEW2010));
+</pre></div>
+</div>
+<p>While, the solution based on the physical error model can be controlled with:</p>
+<div class="highlight-none"><div class="highlight"><pre>Config::SetDefault (&quot;ns3::LteAmc::AmcModel&quot;, EnumValue (LteAmc::MiErrorModel));
+</pre></div>
+</div>
+<p>Finally, the required efficiency of the <tt class="docutils literal"><span class="pre">PiroEW2010</span></tt> AMC module can be tuned thanks to the <tt class="docutils literal"><span class="pre">Ber</span></tt> attribute (), for instance:</p>
+<div class="highlight-none"><div class="highlight"><pre>Config::SetDefault (&quot;ns3::LteAmc::Ber&quot;, DoubleValue (0.00005));
+</pre></div>
+</div>
+</div>
+<div class="section" id="evolved-packet-core-epc">
+<h2>Evolved Packet Core (EPC)<a class="headerlink" href="#evolved-packet-core-epc" title="Permalink to this headline">¶</a></h2>
+<p>We now explain how to write a simulation program that allows to
+simulate the EPC in addition to the LTE radio access network. The use
+of EPC allows to use IPv4 networking with LTE devices. In other words,
+you will be able to use the regular ns-3 applications and sockets over
+IPv4 over LTE, and also to connect an LTE network to any other IPv4
+network you might have in your simulation.</p>
+<p>First of all, in your simulation program you need to create two
+helpers:</p>
+<div class="highlight-none"><div class="highlight"><pre>Ptr&lt;LteHelper&gt; lteHelper = CreateObject&lt;LteHelper&gt; ();
+Ptr&lt;EpcHelper&gt; epcHelper = CreateObject&lt;EpcHelper&gt; ();
+</pre></div>
+</div>
+<p>Then, you need to tell the LTE helper that the EPC will be used:</p>
+<div class="highlight-none"><div class="highlight"><pre>lteHelper-&gt;SetEpcHelper (epcHelper);
+</pre></div>
+</div>
+<p>the above step is necessary so that the LTE helper will trigger the
+appropriate EPC configuration in correspondance with some important
+configuration, such as when a new eNB or UE is added to the
+simulation, or an EPS bearer is created. The EPC helper will
+automatically take care of the necessary setup, such as S1 link
+creation and S1 bearer setup. All this will be done without the
+intervention of the user.</p>
+<p>It is to be noted that, upon construction, the EpcHelper will also
+create and configure the PGW node. Its configuration in particular
+is very complex, and hence is done automatically by the Helper. Still,
+it is allowed to access the PGW node in order to connect it to other
+IPv4 network (e.g., the internet). Here is a very simple example about
+how to connect a single remote host to the PGW via a point-to-point
+link:</p>
+<div class="highlight-none"><div class="highlight"><pre>Ptr&lt;Node&gt; pgw = epcHelper-&gt;GetPgwNode ();
+
+ // Create a single RemoteHost
+NodeContainer remoteHostContainer;
+remoteHostContainer.Create (1);
+Ptr&lt;Node&gt; remoteHost = remoteHostContainer.Get (0);
+InternetStackHelper internet;
+internet.Install (remoteHostContainer);
+
+// Create the internet
+PointToPointHelper p2ph;
+p2ph.SetDeviceAttribute (&quot;DataRate&quot;, DataRateValue (DataRate (&quot;100Gb/s&quot;)));
+p2ph.SetDeviceAttribute (&quot;Mtu&quot;, UintegerValue (1500));
+p2ph.SetChannelAttribute (&quot;Delay&quot;, TimeValue (Seconds (0.010)));
+NetDeviceContainer internetDevices = p2ph.Install (pgw, remoteHost);
+Ipv4AddressHelper ipv4h;
+ipv4h.SetBase (&quot;1.0.0.0&quot;, &quot;255.0.0.0&quot;);
+Ipv4InterfaceContainer internetIpIfaces = ipv4h.Assign (internetDevices);
+// interface 0 is localhost, 1 is the p2p device
+Ipv4Address remoteHostAddr = internetIpIfaces.GetAddress (1);
+</pre></div>
+</div>
+<p>It&#8217;s important to specify routes so that the remote host can reach LTE
+UEs. One way of doing this is by exploiting the fact that the
+EpcHelper will by default assign to LTE UEs an IP address in the
+7.0.0.0 network. With this in mind, it suffices to do:</p>
+<div class="highlight-none"><div class="highlight"><pre>Ipv4StaticRoutingHelper ipv4RoutingHelper;
+Ptr&lt;Ipv4StaticRouting&gt; remoteHostStaticRouting = ipv4RoutingHelper.GetStaticRouting (remoteHost-&gt;GetObject&lt;Ipv4&gt; ());
+remoteHostStaticRouting-&gt;AddNetworkRouteTo (Ipv4Address (&quot;7.0.0.0&quot;), Ipv4Mask (&quot;255.0.0.0&quot;), 1);
+</pre></div>
+</div>
+<p>Now, you should go on and create LTE eNBs and UEs as explained in the
+previous sections. You can of course configure other LTE aspects such
+as pathloss and fading models. Right after you created the UEs, you
+should also configure them for IP networking. This is done as
+follows. We assume you have a container for UE and eNodeB nodes like this:</p>
+<div class="highlight-none"><div class="highlight"><pre>NodeContainer ueNodes;
+NodeContainer enbNodes;
+</pre></div>
+</div>
+<p>to configure an LTE-only simulation, you would then normally do
+something like this:</p>
+<div class="highlight-none"><div class="highlight"><pre>NetDeviceContainer ueLteDevs = lteHelper-&gt;InstallUeDevice (ueNodes);
+lteHelper-&gt;Attach (ueLteDevs, enbLteDevs.Get (0));
+</pre></div>
+</div>
+<p>in order to configure the UEs for IP networking, you just need to
+additionally do like this:</p>
+<div class="highlight-none"><div class="highlight"><pre>// we install the IP stack on the UEs
+InternetStackHelper internet;
+internet.Install (ueNodes);
+
+// assign IP address to UEs
+for (uint32_t u = 0; u &lt; ueNodes.GetN (); ++u)
+  {
+    Ptr&lt;Node&gt; ue = ueNodes.Get (u);
+    Ptr&lt;NetDevice&gt; ueLteDevice = ueLteDevs.Get (u);
+    Ipv4InterfaceContainer ueIpIface = epcHelper-&gt;AssignUeIpv4Address (NetDeviceContainer (ueLteDevice));
+    // set the default gateway for the UE
+    Ptr&lt;Ipv4StaticRouting&gt; ueStaticRouting = ipv4RoutingHelper.GetStaticRouting (ue-&gt;GetObject&lt;Ipv4&gt; ());
+    ueStaticRouting-&gt;SetDefaultRoute (epcHelper-&gt;GetUeDefaultGatewayAddress (), 1);
+  }
+</pre></div>
+</div>
+<p>The activation of bearers is done exactly in the same way as for an
+LTE-only simulation. Here is how to activate a default bearer:</p>
+<div class="highlight-none"><div class="highlight"><pre>lteHelper-&gt;ActivateEpsBearer (ueLteDevs, EpsBearer (EpsBearer::NGBR_VIDEO_TCP_DEFAULT), EpcTft::Default ());
+</pre></div>
+</div>
+<p>you can of course use custom EpsBearer and EpcTft configurations,
+please refer to the doxygen documentation for how to do it.</p>
+<p>Finally, you can install applications on the LTE UE nodes that communicate
+with remote applications over the internet. This is done following the
+usual ns-3 procedures. Following our simple example with a single
+remoteHost, here is how to setup downlink communication, with an
+UdpClient application on the remote host, and a PacketSink on the LTE UE
+(using the same variable names of the previous code snippets)</p>
+<div class="highlight-none"><div class="highlight"><pre>uint16_t dlPort = 1234;
+PacketSinkHelper packetSinkHelper (&quot;ns3::UdpSocketFactory&quot;, InetSocketAddress (Ipv4Address::GetAny (), dlPort));
+ApplicationContainer serverApps = packetSinkHelper.Install (ue);
+serverApps.Start (Seconds (0.01));
+UdpClientHelper client (ueIpIface.GetAddress (0), dlPort);
+ApplicationContainer clientApps = client.Install (remoteHost);
+clientApps.Start (Seconds (0.01));
+</pre></div>
+</div>
+<p>That&#8217;s all! You can now start your simulation as usual:</p>
+<div class="highlight-none"><div class="highlight"><pre>Simulator::Stop (Seconds (10.0));
+Simulator::Run ();
+</pre></div>
+</div>
+</div>
+<div class="section" id="examples-programs">
+<h2>Examples Programs<a class="headerlink" href="#examples-programs" title="Permalink to this headline">¶</a></h2>
+<p>The directory <tt class="docutils literal"><span class="pre">src/lte/examples/</span></tt> contains some example simulation programs that
+show how to simulate different LTE scenarios.</p>
+</div>
+<div class="section" id="reference-scenarios">
+<h2>Reference scenarios<a class="headerlink" href="#reference-scenarios" title="Permalink to this headline">¶</a></h2>
+<p>There is a vast amount of reference LTE simulation scenarios which can be found in the literature. Here we list some of them:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The dual stripe model <a class="reference internal" href="lte-references.html#r4-092042">[R4-092042]</a>, which is partially implemented in the example program <tt class="docutils literal"><span class="pre">src/lte/examples/lena-dual-stripe.cc</span></tt></li>
+<li>The system simulation scenarios mentioned in section A.2 of <a class="reference internal" href="lte-references.html#tr36814">[TR36814]</a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">User Documentation</a><ul>
+<li><a class="reference internal" href="#background">Background</a></li>
+<li><a class="reference internal" href="#usage-overview">Usage Overview</a></li>
+<li><a class="reference internal" href="#basic-simulation-program">Basic simulation program</a></li>
+<li><a class="reference internal" href="#configuration-of-lte-model-parameters">Configuration of LTE model parameters</a></li>
+<li><a class="reference internal" href="#simulation-output">Simulation Output</a></li>
+<li><a class="reference internal" href="#fading-trace-usage">Fading Trace Usage</a><ul>
+<li><a class="reference internal" href="#fading-traces-generation">Fading Traces Generation</a></li>
+<li><a class="reference internal" href="#fading-traces-usage">Fading Traces Usage</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#buildings-mobility-model">Buildings Mobility Model</a></li>
+<li><a class="reference internal" href="#mimo-model">MIMO Model</a></li>
+<li><a class="reference internal" href="#use-of-antennamodel">Use of AntennaModel</a></li>
+<li><a class="reference internal" href="#radio-environment-maps">Radio Environment Maps</a></li>
+<li><a class="reference internal" href="#amc-model-and-cqi-calculation">AMC Model and CQI Calculation</a></li>
+<li><a class="reference internal" href="#evolved-packet-core-epc">Evolved Packet Core (EPC)</a></li>
+<li><a class="reference internal" href="#examples-programs">Examples Programs</a></li>
+<li><a class="reference internal" href="#reference-scenarios">Reference scenarios</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lte-design.html"
+                        title="previous chapter">Design Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lte-testing.html"
+                        title="next chapter">Testing Documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/lte-user.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="lte-testing.html" title="Testing Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lte-design.html" title="Design Documentation"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="lte.html" >LTE Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -15,14 +15,10 @@ LedsP::Leds::led1Toggle - msg
 *memory monitoring
 should be done via post processing get allocs and make calls to the ns3 with info about them
 
-*demo sensor
-Create demo sensor 
 
-*XML description not sure they are good.
 
-*move down radio under driver layer
 
-*scheduler logger
+
 
 
 patching /usr/lib/ncc/nesc_nx.h:316

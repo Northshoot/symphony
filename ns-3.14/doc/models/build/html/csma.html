@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CSMA NetDevice &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="next" title="DSDV Routing" href="dsdv.html" />
+    <link rel="prev" title="Click Modular Router Integration" href="click.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="dsdv.html" title="DSDV Routing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="click.html" title="Click Modular Router Integration"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="csma-netdevice">
+<h1>CSMA NetDevice<a class="headerlink" href="#csma-netdevice" title="Permalink to this headline">¶</a></h1>
+<p>This is the introduction to CSMA NetDevice chapter, to complement the Csma model
+doxygen.</p>
+<div class="section" id="overview-of-the-csma-model">
+<h2>Overview of the CSMA model<a class="headerlink" href="#overview-of-the-csma-model" title="Permalink to this headline">¶</a></h2>
+<p>The <em>ns-3</em> CSMA device models a simple bus network in the spirit of Ethernet.
+Although it does not model any real physical network you could ever build or
+buy, it does provide some very useful functionality.</p>
+<p>Typically when one thinks of a bus network Ethernet or IEEE 802.3 comes to mind.
+Ethernet uses CSMA/CD (Carrier Sense Multiple Access with Collision Detection
+with exponentially increasing backoff to contend for the shared transmission
+medium. The <em>ns-3</em> CSMA device models only a portion of this process, using the
+nature of the globally available channel to provide instantaneous (faster than
+light) carrier sense and priority-based collision &#8220;avoidance.&#8221; Collisions in the
+sense of Ethernet never happen and so the <em>ns-3</em> CSMA device does not model
+collision detection, nor will any transmission in progress be &#8220;jammed.&#8221;</p>
+<div class="section" id="csma-layer-model">
+<h3>CSMA Layer Model<a class="headerlink" href="#csma-layer-model" title="Permalink to this headline">¶</a></h3>
+<p>There are a number of conventions in use for describing layered communications
+architectures in the literature and in textbooks. The most common layering model
+is the ISO seven layer reference model. In this view the CsmaNetDevice and
+CsmaChannel pair occupies the lowest two layers &#8211; at the physical (layer one),
+and data link (layer two) positions. Another important reference model is that
+specified by RFC 1122, &#8220;Requirements for Internet Hosts &#8211; Communication
+Layers.&#8221; In this view the CsmaNetDevice and CsmaChannel pair occupies the lowest
+layer &#8211; the link layer. There is also a seemingly endless litany of alternative
+descriptions found in textbooks and in the literature. We adopt the naming
+conventions used in the IEEE 802 standards which speak of LLC, MAC, MII and PHY
+layering. These acronyms are defined as:</p>
+<ul class="simple">
+<li>LLC:  Logical Link Control;</li>
+<li>MAC:  Media Access Control;</li>
+<li>MII:  Media Independent Interface;</li>
+<li>PHY:  Physical Layer.</li>
+</ul>
+<p>In this case the <em>LLC</em> and <em>MAC</em> are sublayers of the OSI data link layer and
+the <em>MII</em> and <em>PHY</em> are sublayers of the OSI physical layer.</p>
+<p>The &#8220;top&#8221; of the CSMA device defines the transition from the network layer to
+the data link layer. This transition is performed by higher layers by calling
+either CsmaNetDevice::Send or CsmaNetDevice::SendFrom.</p>
+<p>In contrast to the IEEE 802.3 standards, there is no precisely specified PHY in
+the CSMA model in the sense of wire types, signals or pinouts. The &#8220;bottom&#8221;
+interface of the CsmaNetDevice can be thought of as as a kind of Media
+Independent Interface (MII) as seen in the &#8220;Fast Ethernet&#8221; (IEEE 802.3u)
+specifications. This MII interface fits into a corresponding media independent
+interface on the CsmaChannel. You will not find the equivalent of a 10BASE-T or
+a 1000BASE-LX PHY.</p>
+<p>The CsmaNetDevice calls the CsmaChannel through a media independent interface.
+There is a method defined to tell the channel when to start &#8220;wiggling the wires&#8221;
+using the method CsmaChannel::TransmitStart, and a method to tell the channel
+when the transmission process is done and the channel should begin propagating
+the last bit across the &#8220;wire&#8221;: CsmaChannel::TransmitEnd.</p>
+<p>When the TransmitEnd method is executed, the channel will model a single uniform
+signal propagation delay in the medium and deliver copes of the packet to each
+of the devices attached to the packet via the CsmaNetDevice::Receive method.</p>
+<p>There is a &#8220;pin&#8221; in the device media independent interface corresponding to
+&#8220;COL&#8221; (collision). The state of the channel may be sensed by calling
+CsmaChannel::GetState. Each device will look at this &#8220;pin&#8221; before starting a
+send and will perform appropriate backoff operations if required.</p>
+<p>Properly received packets are forwarded up to higher levels from the
+CsmaNetDevice via a callback mechanism. The callback function is initialized by
+the higher layer (when the net device is attached) using
+CsmaNetDevice::SetReceiveCallback and is invoked upon &#8220;proper&#8221; reception of a
+packet by the net device in order to forward the packet up
+the protocol stack.</p>
+</div>
+</div>
+<div class="section" id="csma-channel-model">
+<h2>CSMA Channel Model<a class="headerlink" href="#csma-channel-model" title="Permalink to this headline">¶</a></h2>
+<p>The class CsmaChannel models the actual transmission medium. There is no fixed
+limit for the number of devices connected to the channel. The CsmaChannel models
+a data rate and a speed-of-light delay which can be accessed via the attributes
+&#8220;DataRate&#8221; and &#8220;Delay&#8221; respectively. The data rate provided to the channel is
+used to set the data rates used by the transmitter sections of the CSMA devices
+connected to the channel. There is no way to independently set data rates in the
+devices. Since the data rate is only used to calculate a delay time, there is no
+limitation (other than by the data type holding the value) on the speed at which
+CSMA channels and devices can operate; and no restriction based on any kind of
+PHY characteristics.</p>
+<p>The CsmaChannel has three states, <tt class="docutils literal"><span class="pre">IDLE</span></tt>, <tt class="docutils literal"><span class="pre">TRANSMITTING</span></tt> and
+<tt class="docutils literal"><span class="pre">PROPAGATING</span></tt>. These three states are &#8220;seen&#8221; instantaneously by all devices on
+the channel. By this we mean that if one device begins or ends a simulated
+transmission, all devices on the channel are <em>immediately</em> aware of the
+change in state. There is no time during which one device may see an <tt class="docutils literal"><span class="pre">IDLE</span></tt>
+channel while another device physically further away in the collision domain may
+have begun transmitting with the associated signals not propagated down the
+channel to other devices. Thus there is no need for collision detection in the
+CsmaChannel model and it is not implemented in any way.</p>
+<p>We do, as the name indicates, have a Carrier Sense aspect to the model.  Since
+the simulator is single threaded, access to the common channel will be
+serialized by the simulator. This provides a deterministic mechanism for
+contending for the channel. The channel is allocated (transitioned from state
+<tt class="docutils literal"><span class="pre">IDLE</span></tt> to state <tt class="docutils literal"><span class="pre">TRANSMITTING</span></tt>) on a first-come first-served basis.
+The channel always goes through a three state process::</p>
+<div class="highlight-python"><pre>IDLE -&gt; TRANSMITTING -&gt; PROPAGATING -&gt; IDLE</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">TRANSMITTING</span></tt> state models the time during which the source net device is
+actually wiggling the signals on the wire. The <tt class="docutils literal"><span class="pre">PROPAGATING</span></tt> state models the
+time after the last bit was sent, when the signal is propagating down the wire
+to the &#8220;far end.&#8221;</p>
+<p>The transition to the <tt class="docutils literal"><span class="pre">TRANSMITTING</span></tt> state is  driven by a call to
+CsmaChannel::TransmitStart which is called by the net device that transmits the
+packet. It is the responsibility of that device to end the transmission with a
+call to CsmaChannel::TransmitEnd at the appropriate simulation time that
+reflects the time elapsed to put all of the packet bits on the wire. When
+TransmitEnd is called, the channel schedules an event corresponding to a single
+speed-of-light delay. This delay applies to all net devices on the channel
+identically. You can think of a symmetrical hub in which the packet bits
+propagate to a central location and then back out equal length cables to the
+other devices on the channel. The single &#8220;speed of light&#8221; delay then corresponds
+to the time it takes for: 1) a signal to propagate from one CsmaNetDevice
+through its cable to the hub; plus 2) the time it takes for the hub to forward
+the packet out a port; plus 3) the time it takes for the signal in question to
+propagate to the destination net device.</p>
+<p>The CsmaChannel models a broadcast medium so the packet is delivered to all of
+the devices on the channel (including the source) at the end of the propagation
+time. It is the responsibility of the sending device to determine whether or not
+it receives a packet broadcast over the channel.</p>
+<p>The CsmaChannel provides following Attributes:</p>
+<ul class="simple">
+<li>DataRate:  The bitrate for packet transmission on connected devices;</li>
+<li>Delay: The speed of light transmission delay for the channel.</li>
+</ul>
+</div>
+<div class="section" id="csma-net-device-model">
+<h2>CSMA Net Device Model<a class="headerlink" href="#csma-net-device-model" title="Permalink to this headline">¶</a></h2>
+<p>The CSMA network device appears somewhat like an Ethernet device. The
+CsmaNetDevice provides following Attributes:</p>
+<ul class="simple">
+<li>Address:  The Mac48Address of the device;</li>
+<li>SendEnable:  Enable packet transmission if true;</li>
+<li>ReceiveEnable:  Enable packet reception if true;</li>
+<li>EncapsulationMode:  Type of link layer encapsulation to use;</li>
+<li>RxErrorModel:  The receive error model;</li>
+<li>TxQueue:  The transmit queue used by the device;</li>
+<li>InterframeGap:  The optional time to wait between &#8220;frames&#8221;;</li>
+<li>Rx:  A trace source for received packets;</li>
+<li>Drop:  A trace source for dropped packets.</li>
+</ul>
+<p>The CsmaNetDevice supports the assignment of a &#8220;receive error model.&#8221; This is an
+ErrorModel object that is used to simulate data corruption on the link.</p>
+<p>Packets sent over the CsmaNetDevice are always routed through the transmit queue
+to provide a trace hook for packets sent out over the network. This transmit
+queue can be set (via attribute) to model different queuing strategies.</p>
+<p>Also configurable by attribute is the encapsulation method used by the device.
+Every packet gets an EthernetHeader that includes the destination and source MAC
+addresses, and a length/type field. Every packet also gets an EthernetTrailer
+which includes the FCS. Data in the packet may be encapsulated in different
+ways.</p>
+<p>By default, or by setting the &#8220;EncapsulationMode&#8221; attribute to &#8220;Dix&#8221;, the
+encapsulation is according to the DEC, Intel, Xerox standard. This is sometimes
+called EthernetII framing and is the familiar destination MAC, source MAC,
+EtherType, Data, CRC format.</p>
+<p>If the &#8220;EncapsulationMode&#8221; attribute is set to &#8220;Llc&#8221;, the encapsulation is by
+LLC SNAP. In this case, a SNAP header is added that contains the EtherType (IP
+or ARP).</p>
+<p>The other implemented encapsulation modes are IP_ARP (set &#8220;EncapsulationMode&#8221; to
+&#8220;IpArp&#8221;) in which the length type of the Ethernet header receives the protocol
+number of the packet; or ETHERNET_V1 (set &#8220;EncapsulationMode&#8221; to &#8220;EthernetV1&#8221;)
+in which the length type of the Ethernet header receives the length of the
+packet.  A &#8220;Raw&#8221; encapsulation mode is defined but not implemented &#8211; use of the
+RAW mode results in an assertion.</p>
+<p>Note that all net devices on a channel must be set to the same encapsulation
+mode for correct results. The encapsulation mode is not sensed at the receiver.</p>
+<p>The CsmaNetDevice implements a random exponential backoff algorithm that is
+executed if the channel is determined to be busy (<tt class="docutils literal"><span class="pre">TRANSMITTING</span></tt> or
+<tt class="docutils literal"><span class="pre">PPROPAGATING</span></tt>) when the device wants to start propagating. This results in a
+random delay of up to pow (2, retries) - 1 microseconds before a retry is
+attempted. The default maximum number of retries is 1000.</p>
+</div>
+<div class="section" id="using-the-csmanetdevice">
+<h2>Using the CsmaNetDevice<a class="headerlink" href="#using-the-csmanetdevice" title="Permalink to this headline">¶</a></h2>
+<p>The CSMA net devices and channels are typically created and configured using the
+associated <tt class="docutils literal"><span class="pre">CsmaHelper</span></tt> object.  The various <em>ns-3</em> device helpers generally
+work in a similar way, and their use is seen in many of our example programs.</p>
+<p>The conceptual model of interest is that of a bare computer &#8220;husk&#8221; into which
+you plug net devices. The bare computers are created using a <tt class="docutils literal"><span class="pre">NodeContainer</span></tt>
+helper. You just ask this helper to create as many computers (we call them
+<tt class="docutils literal"><span class="pre">Nodes</span></tt>) as you need on your network::</p>
+<div class="highlight-python"><pre>NodeContainer csmaNodes;
+csmaNodes.Create (nCsmaNodes);</pre>
+</div>
+<p>Once you have your nodes, you need to instantiate a <tt class="docutils literal"><span class="pre">CsmaHelper</span></tt> and set any
+attributes you may want to change.:</p>
+<div class="highlight-python"><pre>CsmaHelper csma;
+csma.SetChannelAttribute ("DataRate", StringValue ("100Mbps"));
+csma.SetChannelAttribute ("Delay", TimeValue (NanoSeconds (6560)));
+
+csma.SetDeviceAttribute ("EncapsulationMode", StringValue ("Dix"));
+csma.SetDeviceAttribute ("FrameSize", UintegerValue (2000));</pre>
+</div>
+<p>Once the attributes are set, all that remains is to create the devices and
+install them on the required nodes, and to connect the devices together using a
+CSMA channel. When we create the net devices, we add them to a container to
+allow you to use them in the future. This all takes just one line of code.:</p>
+<div class="highlight-python"><pre>NetDeviceContainer csmaDevices = csma.Install (csmaNodes);</pre>
+</div>
+<p>We recommend thinking carefully about changing these Attributes, since
+it can result in behavior that surprises users.  We allow this because
+we believe flexibility is important.  As an example of a possibly
+surprising effect of changing Attributes, consider the following:</p>
+<p>The Mtu Attribute indicates the Maximum Transmission Unit to the device.
+This is the size of the largest Protocol Data Unit (PDU) that the
+device can send.  This Attribute defaults to 1500 bytes and corresponds
+to a number found in RFC 894, &#8220;A Standard for the Transmission of IP
+Datagrams over Ethernet Networks.&#8221;  The number is actually derived
+from the maximum packet size for 10Base5 (full-spec Ethernet) networks &#8211;
+1518 bytes.  If you subtract DIX encapsulation overhead for Ethernet
+packets (18 bytes) you will end up with a maximum possible data size (MTU)
+of 1500 bytes.  One can also find that the MTU for IEEE 802.3 networks
+is 1492 bytes.  This is because LLC/SNAP encapsulation adds an extra eight
+bytes of overhead to the packet.  In both cases, the underlying network
+hardware is limited to 1518 bytes, but the MTU is different because the
+encapsulation is different.</p>
+<p>If one leaves the Mtu Attribute at 1500 bytes and changes the encapsulation
+mode Attribute to Llc, the result will be a network that encapsulates 1500
+byte PDUs with LLC/SNAP framing resulting in packets of 1526 bytes.  This
+would be illegal in many networks, but we allow you do do this.  This
+results in a simulation that quite subtly does not reflect what you might
+be expecting since a real device would balk at sending a 1526 byte packet.</p>
+<p>There also exist jumbo frames (1500 &lt; MTU &lt;= 9000 bytes) and super-jumbo
+(MTU &gt; 9000 bytes) frames that are not officially sanctioned by IEEE but
+are available in some high-speed (Gigabit) networks and NICs.  In the
+CSMA model, one could leave the encapsulation mode set to Dix, and set the
+Mtu to 64000 bytes &#8211; even though an associated CsmaChannel DataRate was
+left at 10 megabits per second (certainly not Gigabit Ethernet).  This
+would essentially model an Ethernet switch made out of vampire-tapped
+1980s-style 10Base5 networks that support super-jumbo datagrams, which is
+certainly not something that was ever made, nor is likely to ever be made;
+however it is quite easy for you to configure.</p>
+<p>Be careful about assumptions regarding what CSMA is actually modelling and
+how configuration (Attributes) may allow you to swerve considerably away
+from reality.</p>
+</div>
+<div class="section" id="csma-tracing">
+<h2>CSMA Tracing<a class="headerlink" href="#csma-tracing" title="Permalink to this headline">¶</a></h2>
+<p>Like all <em>ns-3</em> devices, the CSMA Model provides a number of trace sources.
+These trace sources can be hooked using your own custom trace code, or you can
+use our helper functions to arrange for tracing to be enabled on devices you
+specify.</p>
+<div class="section" id="upper-level-mac-hooks">
+<h3>Upper-Level (MAC) Hooks<a class="headerlink" href="#upper-level-mac-hooks" title="Permalink to this headline">¶</a></h3>
+<p>From the point of view of tracing in the net device, there are several
+interesting points to insert trace hooks. A convention inherited from other
+simulators is that packets destined for transmission onto attached networks pass
+through a single &#8220;transmit queue&#8221; in the net device. We provide trace hooks at
+this point in packet flow, which corresponds (abstractly) only to a transition
+from the network to data link layer, and call them collectively the device MAC
+hooks.</p>
+<p>When a packet is sent to the CSMA net device for transmission it always passes
+through the transmit queue. The transmit queue in the CsmaNetDevice inherits
+from Queue, and therefore inherits three trace sources:</p>
+<ul class="simple">
+<li>An Enqueue operation source (see Queue::m_traceEnqueue);</li>
+<li>A Dequeue operation source (see Queue::m_traceDequeue);</li>
+<li>A Drop operation source (see Queue::m_traceDrop).</li>
+</ul>
+<p>The upper-level (MAC) trace hooks for the CsmaNetDevice are, in fact, exactly
+these three trace sources on the single transmit queue of the device.</p>
+<p>The m_traceEnqueue event is triggered when a packet is placed on the transmit
+queue. This happens at the time that CsmaNetDevice::Send or
+CsmaNetDevice::SendFrom is called by a higher layer to queue a packet for
+transmission.</p>
+<p>The m_traceDequeue event is triggered when a packet is removed from the transmit
+queue. Dequeues from the transmit queue can happen in three situations:  1) If
+the underlying channel is idle when the CsmaNetDevice::Send or
+CsmaNetDevice::SendFrom is called, a packet is dequeued from the transmit queue
+and immediately transmitted;  2) If the underlying channel is idle, a packet may
+be dequeued and immediately transmitted in an internal TransmitCompleteEvent
+that functions much like a transmit complete interrupt service routine; or 3)
+from the random exponential backoff handler if a timeout is detected.</p>
+<p>Case (3) implies that a packet is dequeued from the transmit queue if it is
+unable to be transmitted according to the backoff rules. It is important to
+understand that this will appear as a Dequeued packet and it is easy to
+incorrectly assume that the packet was transmitted since it passed through the
+transmit queue. In fact, a packet is actually dropped by the net device in this
+case. The reason for this behavior is due to the definition of the Queue Drop
+event. The m_traceDrop event is, by definition, fired when a packet cannot be
+enqueued on the transmit queue because it is full. This event only fires if the
+queue is full and we do not overload this event to indicate that the CsmaChannel
+is &#8220;full.&#8221;</p>
+</div>
+<div class="section" id="lower-level-phy-hooks">
+<h3>Lower-Level (PHY) Hooks<a class="headerlink" href="#lower-level-phy-hooks" title="Permalink to this headline">¶</a></h3>
+<p>Similar to the upper level trace hooks, there are trace hooks available at the
+lower levels of the net device. We call these the PHY hooks. These events fire
+from the device methods that talk directly to the CsmaChannel.</p>
+<p>The trace source m_dropTrace is called to indicate a packet that is dropped by
+the device. This happens in two cases: First, if the receive side of the net
+device is not enabled (see CsmaNetDevice::m_receiveEnable and the associated
+attribute &#8220;ReceiveEnable&#8221;).</p>
+<p>The m_dropTrace is also used to indicate that a packet was discarded as corrupt
+if a receive error model is used (see CsmaNetDevice::m_receiveErrorModel and the
+associated attribute &#8220;ReceiveErrorModel&#8221;).</p>
+<p>The other low-level trace source fires on reception of an accepted packet (see
+CsmaNetDevice::m_rxTrace). A packet is accepted if it is destined for the
+broadcast address, a multicast address, or to the MAC address assigned to the
+net device.</p>
+</div>
+</div>
+<div class="section" id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
+<p>The ns3 CSMA model is a simplistic model of an Ethernet-like network.  It
+supports a Carrier-Sense function and allows for Multiple Access to a
+shared medium.  It is not physical in the sense that the state of the
+medium is instantaneously shared among all devices.  This means that there
+is no collision detection required in this model and none is implemented.
+There will never be a &#8220;jam&#8221; of a packet already on the medium.  Access to
+the shared channel is on a first-come first-served basis as determined by
+the simulator scheduler.  If the channel is determined to be busy by looking
+at the global state, a random exponential backoff is performed and a retry
+is attempted.</p>
+<p>Ns-3 Attributes provide a mechanism for setting various parameters in the
+device and channel such as addresses, encapsulation modes and error model
+selection.  Trace hooks are provided in the usual manner with a set of
+upper level hooks corresponding to a transmit queue and used in ASCII
+tracing; and also a set of lower level hooks used in pcap tracing.</p>
+<p>Although the ns-3 CsmaChannel and CsmaNetDevice does not model any kind of
+network you could build or buy, it does provide us with some useful
+functionality.  You should, however, understand that it is explicitly not
+Ethernet or any flavor of IEEE 802.3 but an interesting subset.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">CSMA NetDevice</a><ul>
+<li><a class="reference internal" href="#overview-of-the-csma-model">Overview of the CSMA model</a><ul>
+<li><a class="reference internal" href="#csma-layer-model">CSMA Layer Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#csma-channel-model">CSMA Channel Model</a></li>
+<li><a class="reference internal" href="#csma-net-device-model">CSMA Net Device Model</a></li>
+<li><a class="reference internal" href="#using-the-csmanetdevice">Using the CsmaNetDevice</a></li>
+<li><a class="reference internal" href="#csma-tracing">CSMA Tracing</a><ul>
+<li><a class="reference internal" href="#upper-level-mac-hooks">Upper-Level (MAC) Hooks</a></li>
+<li><a class="reference internal" href="#lower-level-phy-hooks">Lower-Level (PHY) Hooks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="click.html"
+                        title="previous chapter">Click Modular Router Integration</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dsdv.html"
+                        title="next chapter">DSDV Routing</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/csma.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="dsdv.html" title="DSDV Routing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="click.html" title="Click Modular Router Integration"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
