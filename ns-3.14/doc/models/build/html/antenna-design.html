@@ -1,0 +1,328 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Design documentation &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="Antenna Module" href="antenna.html" />
+    <link rel="next" title="User Documentation" href="antenna-user.html" />
+    <link rel="prev" title="Antenna Module" href="antenna.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="antenna-user.html" title="User Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="antenna.html" title="Antenna Module"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="antenna.html" accesskey="U">Antenna Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="design-documentation">
+<h1>Design documentation<a class="headerlink" href="#design-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Antenna module provides:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>a new base class (AntennaModel) that provides an interface for the modeling of the radiation pattern of an antenna;</li>
+<li>a set of classes derived from this base class that each models the radiation pattern of different types of antennas.</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="antennamodel">
+<h2>AntennaModel<a class="headerlink" href="#antennamodel" title="Permalink to this headline">¶</a></h2>
+<p>The AntennaModel uses the coordinate system adopted in <a class="reference internal" href="#balanis">[Balanis]</a> and
+depicted in Figure <a class="reference internal" href="#fig-antenna-coordinate-system"><em>Coordinate system of the AntennaModel</em></a>. This system
+is obtained by traslating the cartesian coordinate system used by the
+ns-3 MobilityModel into the new origin <img class="math" src="_images/math/3eabe6c97f03e413d1aa3c292e9478f286e64df1.png" alt="o"/> which is the location
+of the antenna, and then transforming the coordinates of every generic
+point <img class="math" src="_images/math/36f73fc1312ee0349b3f3a0f3bd9eb5504339011.png" alt="p"/> of the space from cartesian coordinates
+<img class="math" src="_images/math/c73ed093cc73a8d9a14185fa525e7067e5c3725d.png" alt="(x,y,z)"/> into spherical coordinates
+<img class="math" src="_images/math/9d0a890b2519a548f0c339ce7a19103e2c7be7f7.png" alt="(r, \theta,\phi)"/>.
+The antenna model neglects the radial component <img class="math" src="_images/math/b55ca7a0aa88ab7d58f4fc035317fdac39b17861.png" alt="r"/>, and
+only considers the angle components <img class="math" src="_images/math/2970e0c0faac60fa141ff89ab518b5550a28956d.png" alt="(\theta, \phi)"/>. An antenna
+radiation pattern is then expressed as a mathematical function
+<img class="math" src="_images/math/e05479d0a205b4c59247cac86b6170b4c84046f0.png" alt="g(\theta, \phi) \longrightarrow \mathcal{R}"/> that returns the
+gain (in dB) for each possible direction of
+transmission/reception. All angles are expressed in radians.</p>
+<div class="figure align-center" id="fig-antenna-coordinate-system">
+<img alt="_images/antenna-coordinate-system.png" src="_images/antenna-coordinate-system.png" />
+<p class="caption">Coordinate system of the AntennaModel</p>
+</div>
+</div>
+<div class="section" id="provided-models">
+<h2>Provided models<a class="headerlink" href="#provided-models" title="Permalink to this headline">¶</a></h2>
+<p>In this section we describe the antenna radiation pattern models that
+are included within the antenna module.</p>
+<div class="section" id="isotropicantennamodel">
+<h3>IsotropicAntennaModel<a class="headerlink" href="#isotropicantennamodel" title="Permalink to this headline">¶</a></h3>
+<p>This antenna radiation pattern model provides a unitary gain (0 dB)
+for all direction.</p>
+</div>
+<div class="section" id="cosineantennamodel">
+<h3>CosineAntennaModel<a class="headerlink" href="#cosineantennamodel" title="Permalink to this headline">¶</a></h3>
+<p>This is the cosine model described in <a class="reference internal" href="#chunjian">[Chunjian]</a>: the antenna gain is
+determined as:</p>
+<div class="math">
+<p><img src="_images/math/42800a87394ffd0c7b32bfdc0c6b3b14f2204684.png" alt="g(\phi, \theta) = \cos^{n} \left(\frac{\phi - \phi_{0}}{2}  \right)"/></p>
+</div><p>where <img class="math" src="_images/math/38716b51d14d196bb0540dbf9c697f3c0396a530.png" alt="\phi_{0}"/> is the azimuthal orientation of the antenna
+(i.e., its direction of maximum gain) and the exponential</p>
+<div class="math">
+<p><img src="_images/math/77653e2c904dd8fd61195b03d0916213c877016d.png" alt="n = -\frac{3}{20 \log_{10} \left( \cos \frac{\phi_{3dB}}{4} \right)}"/></p>
+</div><p>determines the desired 3dB beamwidth <img class="math" src="_images/math/ce4dfc0d95dbe74f115d785c56425f3eb359f805.png" alt="\phi_{3dB}"/>.</p>
+<p>A major difference between the model of <a class="reference internal" href="#chunjian">[Chunjian]</a> and the one
+implemented in the class CosineAntennaModel is that only the element
+factor (i.e., what described by the above formulas) is considered. In
+fact, <a class="reference internal" href="#chunjian">[Chunjian]</a> also considered an additional antenna array
+factor. The reason why the latter is excluded is that we expect that
+the average user would desire to specify a given beamwidth exactly,
+without adding an array factor at a latter stage which would in
+practice alter the effective beamwidth of the resulting radiation
+pattern.</p>
+</div>
+<div class="section" id="parabolicantennamodel">
+<h3>ParabolicAntennaModel<a class="headerlink" href="#parabolicantennamodel" title="Permalink to this headline">¶</a></h3>
+<p>This model is based on the parabolic approximation of the main lobe radiation pattern. It is often used in the context of cellular system to model the radiation pattern of a cell sector, see for instance <a class="reference internal" href="#r4-092042a">[R4-092042a]</a> and <a class="reference internal" href="#calcev">[Calcev]</a>. The antenna gain in dB is determined as:</p>
+<div class="math">
+<p><img src="_images/math/07e6b6136779053c7de8935183b7d7991d1bdc73.png" alt="g_{dB}(\phi, \theta) = -\min \left( 12 \left(\frac{\phi  - \phi_{0}}{\phi_{3dB}} \right)^2, A_{max} \right)"/></p>
+</div><p>where <img class="math" src="_images/math/38716b51d14d196bb0540dbf9c697f3c0396a530.png" alt="\phi_{0}"/> is the azimuthal orientation of the antenna
+(i.e., its direction of maximum gain), <img class="math" src="_images/math/ce4dfc0d95dbe74f115d785c56425f3eb359f805.png" alt="\phi_{3dB}"/> is its 3 dB
+beamwidth, and <img class="math" src="_images/math/57ab05803d219bfc843f883cb50c0ffa0f57f6ab.png" alt="A_{max}"/> is the maximum attenuation in dB of the
+antenna.</p>
+<table class="docutils citation" frame="void" id="balanis" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[Balanis]</a></td><td>C.A. Balanis, &#8220;Antenna Theory - Analysis and Design&#8221;,  Wiley, 2nd Ed.</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="chunjian" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[Chunjian]</td><td><em>(<a class="fn-backref" href="#id2">1</a>, <a class="fn-backref" href="#id3">2</a>, <a class="fn-backref" href="#id4">3</a>)</em> Li Chunjian, &#8220;Efficient Antenna Patterns for
+Three-Sector WCDMA Systems&#8221;, Master of Science Thesis, Chalmers
+University of Technology, Göteborg, Sweden, 2003</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="calcev" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[Calcev]</a></td><td>George Calcev and Matt Dillon, &#8220;Antenna Tilt Control in
+CDMA Networks&#8221;, in Proc. of the 2nd Annual International Wireless
+Internet Conference (WICON), 2006</td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="r4-092042a" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[R4-092042a]</a></td><td>3GPP TSG RAN WG4 (Radio) Meeting #51, R4-092042, Simulation
+assumptions and parameters for FDD HeNB RF requirements.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Design documentation</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#antennamodel">AntennaModel</a></li>
+<li><a class="reference internal" href="#provided-models">Provided models</a><ul>
+<li><a class="reference internal" href="#isotropicantennamodel">IsotropicAntennaModel</a></li>
+<li><a class="reference internal" href="#cosineantennamodel">CosineAntennaModel</a></li>
+<li><a class="reference internal" href="#parabolicantennamodel">ParabolicAntennaModel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="antenna.html"
+                        title="previous chapter">Antenna Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="antenna-user.html"
+                        title="next chapter">User Documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/antenna-design.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="antenna-user.html" title="User Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="antenna.html" title="Antenna Module"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="antenna.html" >Antenna Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

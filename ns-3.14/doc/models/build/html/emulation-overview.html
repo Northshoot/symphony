@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Emulation Overview &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="next" title="Emu NetDevice" href="emu.html" />
+    <link rel="prev" title="DSR Routing" href="dsr.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="emu.html" title="Emu NetDevice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dsr.html" title="DSR Routing"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="emulation-overview">
+<h1>Emulation Overview<a class="headerlink" href="#emulation-overview" title="Permalink to this headline">¶</a></h1>
+<p><em>ns-3</em> has been designed for integration into testbed and virtual machine
+environments. We have addressed this need by providing two kinds of net devices.
+The first kind, which we call an <tt class="docutils literal"><span class="pre">Emu</span></tt> <tt class="docutils literal"><span class="pre">NetDevice</span></tt> allows <em>ns-3</em> simulations
+to send data on a &#8220;real&#8221; network. The second kind, called a <tt class="docutils literal"><span class="pre">Tap</span></tt>
+<tt class="docutils literal"><span class="pre">NetDevice</span></tt> allows a &#8220;real&#8221; host to participate in an <em>ns-3</em> simulation as if
+it were one of the simulated nodes. An <em>ns-3</em> simulation may be constructed with
+any combination of simulated, <tt class="docutils literal"><span class="pre">Emu</span></tt>, or <tt class="docutils literal"><span class="pre">Tap</span></tt> devices.</p>
+<p>One of the use-cases we want to support is that of a testbed. A concrete example
+of an environment of this kind is the ORBIT testbed. ORBIT is a laboratory
+emulator/field trial network arranged as a two dimensional grid of 400 802.11
+radio nodes. We integrate with ORBIT by using their &#8220;imaging&#8221; process to load
+and run <em>ns-3</em> simulations on the ORBIT array. We use our <tt class="docutils literal"><span class="pre">Emu</span></tt> <tt class="docutils literal"><span class="pre">NetDevice</span></tt>
+to drive the hardware in the testbed and we can accumulate results either using
+the <em>ns-3</em> tracing and logging functions, or the native ORBIT data gathering
+techniques. See <a class="reference external" href="http://www.orbit-lab.org/">http://www.orbit-lab.org/</a> for details on the ORBIT
+testbed.</p>
+<p>A simulation of this kind is shown in the following figure:</p>
+<div class="figure" id="testbed">
+<img alt="_images/testbed.png" src="_images/testbed.png" />
+<p class="caption">Example Implementation of Testbed Emulation.</p>
+</div>
+<p>You can see that there are separate hosts, each running a subset of a &#8220;global&#8221;
+simulation. Instead of an <em>ns-3</em> channel connecting the hosts, we use real
+hardware provided by the testbed. This allows <em>ns-3</em> applications and protocol
+stacks attached to a simulation node to communicate over real hardware.</p>
+<p>We expect the primary use for this configuration will be to generate repeatable
+experimental results in a real-world network environment that includes all of
+the <em>ns-3</em> tracing, logging, visualization and statistics gathering tools.</p>
+<p>In what can be viewed as essentially an inverse configuration, we allow &#8220;real&#8221;
+machines running native applications and protocol stacks to integrate with an
+<em>ns-3</em> simulation. This allows for the simulation of large networks connected to
+a real machine, and also enables virtualization. A simulation of this kind is
+shown in the following figure:</p>
+<div class="figure" id="emulated-channel">
+<img alt="_images/emulated-channel.png" src="_images/emulated-channel.png" />
+<p class="caption">Implementation overview of emulated channel.</p>
+</div>
+<p>Here, you will see that there is a single host with a number of virtual machines
+running on it. An <em>ns-3</em> simulation is shown running in the virtual machine shown
+in the center of the figure. This simulation has a number of nodes with
+associated <em>ns-3</em> applications and protocol stacks that are talking to an <em>ns-3</em>
+channel through native simulated <em>ns-3</em> net devices.</p>
+<p>There are also two virtual machines shown at the far left and far right of the
+figure. These VMs are running native (Linux) applications and protocol stacks.
+The VM is connected into the simulation by a Linux Tap net device. The user-mode
+handler for the Tap device is instantiated in the simulation and attached to a
+proxy node that represents the native VM in the simulation. These handlers allow
+the Tap devices on the native VMs to behave as if they were <em>ns-3</em> net devices in
+the simulation VM. This, in turn, allows the native software and protocol suites
+in the native VMs to believe that they are connected to the simulated <em>ns-3</em>
+channel.</p>
+<p>We expect the typical use case for this environment will be to analyze the
+behavior of native applications and protocol suites in the presence of large
+simulated <em>ns-3</em> networks.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="emu.html">Emu NetDevice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="emu.html#behavior">Behavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emu.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="emu.html#implementation">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tap.html">Tap NetDevice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tap.html#tapbridge-model-overview">TapBridge Model Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tap.html#tapbridge-configurelocal-mode">TapBridge ConfigureLocal Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tap.html#tapbridge-uselocal-mode">TapBridge UseLocal Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tap.html#tapbridge-usebridge-mode">TapBridge UseBridge Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tap.html#tapbridge-configurelocal-operation">TapBridge ConfigureLocal Operation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tap.html#tapbridge-uselocal-mode-operation">TapBridge UseLocal Mode Operation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tap.html#tapbridge-usebridge-operation">TapBridge UseBridge Operation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tap.html#tap-bridge-channel-model">Tap Bridge Channel Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tap.html#tap-bridge-tracing-model">Tap Bridge Tracing Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tap.html#using-the-tapbridge">Using the TapBridge</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="dsr.html"
+                        title="previous chapter">DSR Routing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="emu.html"
+                        title="next chapter">Emu NetDevice</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/emulation-overview.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="emu.html" title="Emu NetDevice"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="dsr.html" title="DSR Routing"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

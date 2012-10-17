@@ -59,6 +59,7 @@ SOURCES = \
 	$(SRC)/olsr/doc/olsr.rst \
 	$(SRC)/openflow/doc/openflow-switch.rst \
 	$(SRC)/point-to-point/doc/point-to-point.rst \
+	$(SRC)/symphony/doc/symphony.rst \
 	$(SRC)/wifi/doc/wifi.rst \
 	$(SRC)/wimax/doc/wimax.rst \
 	$(SRC)/uan/doc/uan.rst \

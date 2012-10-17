@@ -1,0 +1,550 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>TCP models in ns-3 &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="Internet Models" href="internet-models.html" />
+    <link rel="next" title="LTE Module" href="lte.html" />
+    <link rel="prev" title="Routing overview" href="routing-overview.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="lte.html" title="LTE Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="routing-overview.html" title="Routing overview"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="internet-models.html" accesskey="U">Internet Models</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tcp-models-in-ns-3">
+<h1>TCP models in ns-3<a class="headerlink" href="#tcp-models-in-ns-3" title="Permalink to this headline">¶</a></h1>
+<p>This chapter describes the TCP models available in <em>ns-3</em>.</p>
+<div class="section" id="generic-support-for-tcp">
+<h2>Generic support for TCP<a class="headerlink" href="#generic-support-for-tcp" title="Permalink to this headline">¶</a></h2>
+<p><em>ns-3</em> was written to support multiple TCP implementations. The implementations
+inherit from a few common header classes in the <tt class="docutils literal"><span class="pre">src/network</span></tt> directory, so that
+user code can swap out implementations with minimal changes to the scripts.</p>
+<p>There are two important abstract base classes:</p>
+<ul class="simple">
+<li>class <tt class="xref cpp cpp-class docutils literal"><span class="pre">TcpSocket</span></tt>:  This is defined in
+<tt class="docutils literal"><span class="pre">src/internet/model/tcp-socket.{cc,h}</span></tt>. This class exists for hosting TcpSocket
+attributes that can be reused across different implementations. For instance,
+the attribute <tt class="docutils literal"><span class="pre">InitialCwnd</span></tt> can be used for any of the implementations
+that derive from class <tt class="xref cpp cpp-class docutils literal"><span class="pre">TcpSocket</span></tt>.</li>
+<li>class <tt class="xref cpp cpp-class docutils literal"><span class="pre">TcpSocketFactory</span></tt>:  This is used by the layer-4 protocol
+instance to create TCP sockets of the right type.</li>
+</ul>
+<p>There are presently two implementations of TCP available for <em>ns-3</em>.</p>
+<ul class="simple">
+<li>a natively implemented TCP for ns-3</li>
+<li>support for the <a class="reference external" href="http://www.wand.net.nz/~stj2/nsc/">Network Simulation Cradle (NSC)</a></li>
+</ul>
+<p>It should also be mentioned that various ways of combining virtual machines
+with <em>ns-3</em> makes available also some additional TCP implementations, but
+those are out of scope for this chapter.</p>
+</div>
+<div class="section" id="ns-3-tcp">
+<h2>ns-3 TCP<a class="headerlink" href="#ns-3-tcp" title="Permalink to this headline">¶</a></h2>
+<p>Until ns-3.10 release, <em>ns-3</em> contained a port of the TCP model from <a class="reference external" href="http://www.ece.gatech.edu/research/labs/MANIACS/GTNetS/index.html">GTNetS</a>.
+This implementation was substantially rewritten by Adriam Tam for ns-3.10.
+The model is a full TCP, in that it is bidirectional and attempts to model the
+connection setup and close logic.</p>
+<p>The implementation of TCP is contained in the following files::</p>
+<div class="highlight-python"><pre>src/internet/model/tcp-header.{cc,h}
+src/internet/model/tcp-l4-protocol.{cc,h}
+src/internet/model/tcp-socket-factory-impl.{cc,h}
+src/internet/model/tcp-socket-base.{cc,h}
+src/internet/model/tcp-tx-buffer.{cc,h}
+src/internet/model/tcp-rx-buffer.{cc,h}
+src/internet/model/tcp-rfc793.{cc,h}
+src/internet/model/tcp-tahoe.{cc,h}
+src/internet/model/tcp-reno.{cc,h}
+src/internet/model/tcp-newreno.{cc,h}
+src/internet/model/rtt-estimator.{cc,h}
+src/network/model/sequence-number.{cc,h}</pre>
+</div>
+<p>Different variants of TCP congestion control are supported by subclassing
+the common base class <tt class="xref cpp cpp-class docutils literal"><span class="pre">TcpSocketBase</span></tt>.  Several variants
+are supported, including RFC 793 (no congestion control), Tahoe, Reno,
+and NewReno.  NewReno is used by default.</p>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>In many cases, usage of TCP is set at the application layer by telling
+the <em>ns-3</em> application which kind of socket factory to use.</p>
+<p>Using the helper functions defined in <tt class="docutils literal"><span class="pre">src/applications/helper</span></tt> and
+<tt class="docutils literal"><span class="pre">src/network/helper</span></tt>, here is how one would create a TCP receiver::</p>
+<div class="highlight-python"><pre>// Create a packet sink on the star "hub" to receive these packets
+uint16_t port = 50000;
+Address sinkLocalAddress(InetSocketAddress (Ipv4Address::GetAny (), port));
+PacketSinkHelper sinkHelper ("ns3::TcpSocketFactory", sinkLocalAddress);
+ApplicationContainer sinkApp = sinkHelper.Install (serverNode);
+sinkApp.Start (Seconds (1.0));
+sinkApp.Stop (Seconds (10.0));</pre>
+</div>
+<p>Similarly, the below snippet configures OnOffApplication traffic source to use
+TCP::</p>
+<div class="highlight-python"><pre>// Create the OnOff applications to send TCP to the server
+OnOffHelper clientHelper ("ns3::TcpSocketFactory", Address ());</pre>
+</div>
+<p>The careful reader will note above that we have specified the TypeId of an
+abstract base class <tt class="xref cpp cpp-class docutils literal"><span class="pre">TcpSocketFactory</span></tt>. How does the script tell
+<em>ns-3</em> that it wants the native <em>ns-3</em> TCP vs. some other one?  Well, when
+internet stacks are added to the node, the default TCP implementation that is
+aggregated to the node is the <em>ns-3</em> TCP.  This can be overridden as we show
+below when using Network Simulation Cradle. So, by default, when using the <em>ns-3</em>
+helper API, the TCP that is aggregated to nodes with an Internet stack is the
+native <em>ns-3</em> TCP.</p>
+<p>To configure behavior of TCP, a number of parameters are exported through the
+<em>ns-3</em> attribute system. These are documented in the <cite>Doxygen
+&lt;http://www.nsnam.org/doxygen/classns3_1_1_tcp_socket.html&gt;</cite> for class
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">TcpSocket</span></tt>.  For example, the maximum segment size is a
+settable attribute.</p>
+<p>To set the default socket type before any internet stack-related objects are
+created, one may put the following statement at the top of the simulation
+program::</p>
+<div class="highlight-python"><pre>Config::SetDefault ("ns3::TcpL4Protocol::SocketType", StringValue ("ns3::TcpTahoe"));</pre>
+</div>
+<p>For users who wish to have a pointer to the actual socket (so that
+socket operations like Bind(), setting socket options, etc. can be
+done on a per-socket basis), Tcp sockets can be created by using the
+<tt class="docutils literal"><span class="pre">Socket::CreateSocket()</span></tt> method.  The TypeId passed to CreateSocket()
+must be of type <tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::SocketFactory</span></tt>, so configuring the underlying
+socket type must be done by twiddling the attribute associated with the
+underlying TcpL4Protocol object.  The easiest way to get at this would be
+through the attribute configuration system.  In the below example,
+the Node container &#8220;n0n1&#8221; is accessed
+to get the zeroth element, and a socket is created on this node::</p>
+<div class="highlight-python"><pre>// Create and bind the socket...
+TypeId tid = TypeId::LookupByName ("ns3::TcpTahoe");
+Config::Set ("/NodeList/*/$ns3::TcpL4Protocol/SocketType", TypeIdValue (tid));
+Ptr&lt;Socket&gt; localSocket =
+  Socket::CreateSocket (n0n1.Get (0), TcpSocketFactory::GetTypeId ());</pre>
+</div>
+<p>Above, the &#8220;*&#8221; wild card for node number is passed to the attribute
+configuration system, so that all future sockets on all nodes are set to
+Tahoe, not just on node &#8216;n0n1.Get (0)&#8217;.  If one wants to limit it to just
+the specified node, one would have to do something like::</p>
+<div class="highlight-python"><pre>// Create and bind the socket...
+TypeId tid = TypeId::LookupByName ("ns3::TcpTahoe");
+std::stringstream nodeId;
+nodeId &lt;&lt; n0n1.Get (0)-&gt;GetId ();
+std::string specificNode = "/NodeList/" + nodeId.str () + "/$ns3::TcpL4Protocol/SocketType";
+Config::Set (specificNode, TypeIdValue (tid));
+Ptr&lt;Socket&gt; localSocket =
+  Socket::CreateSocket (n0n1.Get (0), TcpSocketFactory::GetTypeId ());</pre>
+</div>
+<p>Once a TCP socket is created, one will want to follow conventional socket logic
+and either connect() and send() (for a TCP client) or bind(), listen(), and
+accept() (for a TCP server). See <a class="reference internal" href="sockets-api.html#sockets-apis"><em>Sockets APIs</em></a> for a review of
+how sockets are used in <em>ns-3</em>.</p>
+</div>
+<div class="section" id="validation">
+<h3>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h3>
+<p>Several TCP validation test results can be found in the
+<a class="reference external" href="http://www.nsnam.org/wiki/index.php/New_TCP_Socket_Architecture">wiki page</a>
+describing this implementation.</p>
+</div>
+<div class="section" id="current-limitations">
+<h3>Current limitations<a class="headerlink" href="#current-limitations" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Only IPv4 is supported</li>
+<li>Neither the Nagle algorithm nor SACK are supported</li>
+</ul>
+</div>
+</div>
+<div class="section" id="network-simulation-cradle">
+<h2>Network Simulation Cradle<a class="headerlink" href="#network-simulation-cradle" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://www.wand.net.nz/~stj2/nsc/">Network Simulation Cradle (NSC)</a> is a
+framework for wrapping real-world network code into simulators, allowing
+simulation of real-world behavior at little extra cost. This work has been
+validated by comparing situations using a test network with the same situations
+in the simulator. To date, it has been shown that the NSC is able to produce
+extremely accurate results.  NSC supports four real world stacks: FreeBSD,
+OpenBSD, lwIP and Linux. Emphasis has been placed on not changing any of the
+network stacks by hand. Not a single line of code has been changed in the
+network protocol implementations of any of the above four stacks. However, a
+custom C parser was built to programmatically change source code.</p>
+<p>NSC has previously been ported to <em>ns-2</em> and OMNeT++, and recently
+was added to <em>ns-3</em>.  This section describes the <em>ns-3</em> port of NSC and
+how to use it.</p>
+<div class="section" id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
+<p>Presently, NSC has been tested and shown to work on these platforms:
+Linux i386 and Linux x86-64. NSC does not support powerpc.</p>
+<p>Building NSC requires the packages flex and bison.</p>
+</div>
+<div class="section" id="configuring-and-downloading">
+<h3>Configuring and Downloading<a class="headerlink" href="#configuring-and-downloading" title="Permalink to this headline">¶</a></h3>
+<p>Using the <tt class="docutils literal"><span class="pre">build.py</span></tt> script in ns-3-allinone directory, NSC will be enabled by
+default unless the platform does not support it. To disable it when building
+<em>ns-3</em>, type::</p>
+<div class="highlight-python"><pre>./waf configure --enable-examples --enable-tests --disable-nsc</pre>
+</div>
+</div>
+<div class="section" id="building-and-validating">
+<h3>Building and validating<a class="headerlink" href="#building-and-validating" title="Permalink to this headline">¶</a></h3>
+<p>Building <em>ns-3</em> with nsc support is the same as building it without; no
+additional arguments are needed for waf. Building nsc may take some time
+compared to <em>ns-3</em>; it is interleaved in the <em>ns-3</em> building process.</p>
+<p>Try running the following ns-3 test suite::</p>
+<div class="highlight-python"><pre>./test.py -s ns3-tcp-interoperability</pre>
+</div>
+<p>If NSC has been successfully built, the following test should show up
+in the results::</p>
+<div class="highlight-python"><pre>PASS TestSuite ns3-tcp-interoperability</pre>
+</div>
+<p>This confirms that NSC is ready to use.</p>
+</div>
+<div class="section" id="id2">
+<h3>Usage<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>There are a few example files.  Try:</p>
+<div class="highlight-python"><pre>./waf --run tcp-nsc-zoo
+./waf --run tcp-nsc-lfn</pre>
+</div>
+<p>These examples will deposit some <tt class="docutils literal"><span class="pre">.pcap</span></tt> files in your directory,
+which can be examined by tcpdump or wireshark.</p>
+<p>Let&#8217;s look at the <tt class="docutils literal"><span class="pre">examples/tcp/tcp-nsc-zoo.cc</span></tt> file for some typical
+usage. How does it differ from using native <em>ns-3</em> TCP? There is one main
+configuration line, when using NSC and the <em>ns-3</em> helper API, that needs to be
+set::</p>
+<div class="highlight-python"><pre>InternetStackHelper internetStack;
+
+internetStack.SetNscStack ("liblinux2.6.26.so");
+// this switches nodes 0 and 1 to NSCs Linux 2.6.26 stack.
+internetStack.Install (n.Get(0));
+internetStack.Install (n.Get(1));</pre>
+</div>
+<p>The key line is the <tt class="docutils literal"><span class="pre">SetNscStack</span></tt>.  This tells the InternetStack
+helper to aggregate instances of NSC TCP instead of native <em>ns-3</em> TCP
+to the remaining nodes.  It is important that this function be called
+<strong>before</strong> calling the <tt class="docutils literal"><span class="pre">Install()</span></tt> function, as shown above.</p>
+<p>Which stacks are available to use? Presently, the focus has been on
+Linux 2.6.18 and Linux 2.6.26 stacks for <em>ns-3</em>. To see which stacks
+were built, one can execute the following find command at the <em>ns-3</em> top level
+directory::</p>
+<div class="highlight-python"><pre>~/ns-3.10&gt; find nsc -name "*.so" -type f
+nsc/linux-2.6.18/liblinux2.6.18.so
+nsc/linux-2.6.26/liblinux2.6.26.so</pre>
+</div>
+<p>This tells us that we may either pass the library name liblinux2.6.18.so or
+liblinux2.6.26.so to the above configuration step.</p>
+</div>
+<div class="section" id="stack-configuration">
+<h3>Stack configuration<a class="headerlink" href="#stack-configuration" title="Permalink to this headline">¶</a></h3>
+<p>NSC TCP shares the same configuration attributes that are common across TCP
+sockets, as described above and documented in <a class="reference external" href="http://www.nsnam.org/doxygen/classns3_1_1_tcp_socket.html">Doxygen</a></p>
+<p>Additionally, NSC TCP exports a lot of configuration variables into the
+<em>ns-3</em> attributes system, via a <a class="reference external" href="http://en.wikipedia.org/wiki/Sysctl">sysctl</a>-like interface. In the <tt class="docutils literal"><span class="pre">examples/tcp/tcp-nsc-zoo</span></tt> example, you
+can see the following configuration::</p>
+<div class="highlight-python"><pre>// this disables TCP SACK, wscale and timestamps on node 1 (the attributes
+  represent sysctl-values).
+Config::Set ("/NodeList/1/$ns3::Ns3NscStack&lt;linux2.6.26&gt;/net.ipv4.tcp_sack",
+  StringValue ("0"));
+Config::Set ("/NodeList/1/$ns3::Ns3NscStack&lt;linux2.6.26&gt;/net.ipv4.tcp_timestamps",
+StringValue ("0"));
+Config::Set ("/NodeList/1/$ns3::Ns3NscStack&lt;linux2.6.26&gt;/net.ipv4.tcp_window_scaling",
+StringValue ("0"));</pre>
+</div>
+<p>These additional configuration variables are not available to native <em>ns-3</em> TCP.</p>
+</div>
+<div class="section" id="nsc-api">
+<h3>NSC API<a class="headerlink" href="#nsc-api" title="Permalink to this headline">¶</a></h3>
+<p>This subsection describes the API that NSC presents to <em>ns-3</em> or any other
+simulator. NSC provides its API in the form of a number of classes that are
+defined in <tt class="docutils literal"><span class="pre">sim/sim_interface.h</span></tt> in the nsc directory.</p>
+<ul class="simple">
+<li><strong>INetStack</strong> INetStack contains the &#8216;low level&#8217; operations for the operating
+system network stack, e.g. in and output functions from and to the network
+stack (think of this as the &#8216;network driver interface&#8217;. There are also
+functions to create new TCP or UDP sockets.</li>
+<li><strong>ISendCallback</strong> This is called by NSC when a packet should be sent out to
+the network. This simulator should use this callback to re-inject the packet
+into the simulator so the actual data can be delivered/routed to its
+destination, where it will eventually be handed into Receive() (and eventually
+back to the receivers NSC instance via INetStack-&gt;if_receive() ).</li>
+<li><strong>INetStreamSocket</strong> This is the structure defining a particular connection
+endpoint (file descriptor). It contains methods to operate on this endpoint,
+e.g. connect, disconnect, accept, listen, send_data/read_data, ...</li>
+<li><strong>IInterruptCallback</strong> This contains the wakeup callback, which is called by
+NSC whenever something of interest happens. Think of wakeup() as a replacement
+of the operating systems wakeup function: Whenever the operating system would
+wake up a process that has been waiting for an operation to complete (for
+example the TCP handshake during connect()), NSC invokes the wakeup() callback
+to allow the simulator to check for state changes in its connection endpoints.</li>
+</ul>
+</div>
+<div class="section" id="ns-3-implementation">
+<h3>ns-3 implementation<a class="headerlink" href="#ns-3-implementation" title="Permalink to this headline">¶</a></h3>
+<p>The <em>ns-3</em> implementation makes use of the above NSC API, and is implemented as
+follows.</p>
+<p>The three main parts are:</p>
+<ul class="simple">
+<li><tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::NscTcpL4Protocol</span></tt>:  a subclass of Ipv4L4Protocol (and two nsc
+classes: ISendCallback and IInterruptCallback)</li>
+<li><tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::NscTcpSocketImpl</span></tt>: a subclass of TcpSocket</li>
+<li><tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::NscTcpSocketFactoryImpl</span></tt>:  a factory to create new NSC
+sockets</li>
+</ul>
+<p><tt class="docutils literal"><span class="pre">src/internet/model/nsc-tcp-l4-protocol</span></tt> is the main class. Upon
+Initialization, it loads an nsc network stack to use (via dlopen()). Each
+instance of this class may use a different stack. The stack (=shared library) to
+use is set using the SetNscLibrary() method (at this time its called indirectly
+via the internet stack helper). The nsc stack is then set up accordingly (timers
+etc). The NscTcpL4Protocol::Receive() function hands the packet it receives
+(must be a complete tcp/ip packet) to the nsc stack for further processing.  To
+be able to send packets, this class implements the nsc send_callback method.
+This method is called by nsc whenever the nsc stack wishes to send a packet out
+to the network. Its arguments are a raw buffer, containing a complete TCP/IP
+packet, and a length value. This method therefore has to convert the raw data to
+a Ptr&lt;Packet&gt; usable by <em>ns-3</em>. In order to avoid various ipv4 header issues,
+the nsc ip header is not included. Instead, the tcp header and the actual
+payload are put into the Ptr&lt;Packet&gt;, after this the Packet is passed down to
+layer 3 for sending the packet out (no further special treatment is needed in
+the send code path).</p>
+<p>This class calls <tt class="docutils literal"><span class="pre">ns3::NscTcpSocketImpl</span></tt> both from the nsc wakeup() callback
+and from the Receive path (to ensure that possibly queued data is scheduled for
+sending).</p>
+<p><tt class="docutils literal"><span class="pre">src/internet/model/nsc-tcp-socket-impl</span></tt> implements the nsc socket interface.
+Each instance has its own nscTcpSocket. Data that is Send() will be handed to
+the nsc stack via m_nscTcpSocket-&gt;send_data(). (and not to nsc-tcp-l4, this is
+the major difference compared to <em>ns-3</em> TCP). The class also queues up data that
+is Send() before the underlying descriptor has entered an ESTABLISHED state.
+This class is called from the nsc-tcp-l4 class, when the nsc-tcp-l4 wakeup()
+callback is invoked by nsc. nsc-tcp-socket-impl then checks the current
+connection state (SYN_SENT, ESTABLISHED, LISTEN...) and schedules appropriate
+callbacks as needed, e.g. a LISTEN socket will schedule Accept to see if a new
+connection must be accepted, an ESTABLISHED socket schedules any pending data
+for writing, schedule a read callback, etc.</p>
+<p>Note that <tt class="docutils literal"><span class="pre">ns3::NscTcpSocketImpl</span></tt> does not interact with nsc-tcp directly:
+instead, data is redirected to nsc. nsc-tcp calls the nsc-tcp-sockets of a node
+when its wakeup callback is invoked by nsc.</p>
+</div>
+<div class="section" id="limitations">
+<h3>Limitations<a class="headerlink" href="#limitations" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>NSC only works on single-interface nodes; attempting to run it on a
+multi-interface node will cause a program error.</li>
+<li>Cygwin and OS X PPC are not supported</li>
+<li>The non-Linux stacks of NSC are not supported in <em>ns-3</em></li>
+<li>Not all socket API callbacks are supported</li>
+</ul>
+<p>For more information, see <a class="reference external" href="http://www.nsnam.org/wiki/index.php/Network_Simulation_Cradle_Integration">this wiki page</a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">TCP models in ns-3</a><ul>
+<li><a class="reference internal" href="#generic-support-for-tcp">Generic support for TCP</a></li>
+<li><a class="reference internal" href="#ns-3-tcp">ns-3 TCP</a><ul>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
+<li><a class="reference internal" href="#current-limitations">Current limitations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#network-simulation-cradle">Network Simulation Cradle</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#configuring-and-downloading">Configuring and Downloading</a></li>
+<li><a class="reference internal" href="#building-and-validating">Building and validating</a></li>
+<li><a class="reference internal" href="#id2">Usage</a></li>
+<li><a class="reference internal" href="#stack-configuration">Stack configuration</a></li>
+<li><a class="reference internal" href="#nsc-api">NSC API</a></li>
+<li><a class="reference internal" href="#ns-3-implementation">ns-3 implementation</a></li>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="routing-overview.html"
+                        title="previous chapter">Routing overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lte.html"
+                        title="next chapter">LTE Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/tcp.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="lte.html" title="LTE Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="routing-overview.html" title="Routing overview"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="internet-models.html" >Internet Models</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

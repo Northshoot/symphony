@@ -1,0 +1,1535 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Design Documentation &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="LTE Module" href="lte.html" />
+    <link rel="next" title="User Documentation" href="lte-user.html" />
+    <link rel="prev" title="LTE Module" href="lte.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="lte-user.html" title="User Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lte.html" title="LTE Module"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="lte.html" accesskey="U">LTE Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="design-documentation">
+<h1>Design Documentation<a class="headerlink" href="#design-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overall-architecture">
+<h2>Overall Architecture<a class="headerlink" href="#overall-architecture" title="Permalink to this headline">¶</a></h2>
+<p>The overall architecture of the LENA simulation model is depicted in
+the figure <a class="reference internal" href="#fig-epc-topology"><em>Overall architecture of the LTE-EPC simulation model</em></a>. There are two main components:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the LTE Model. This model includes the LTE Radio Protocol
+stack (RRC, PDCP, RLC, MAC, PHY). These entities reside entirely within the
+UE and the eNB nodes.</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>the EPC Model. This models includes core network
+interfaces, protocols and entities. These entities and protocols
+reside within the SGW, PGW and MME nodes, and partially within the
+eNB nodes.</li>
+</ul>
+<p>Each component of the overall architecture is explained in detail in
+the following subsections.</p>
+<div class="figure align-center" id="fig-epc-topology">
+<img alt="_images/epc-topology.png" src="_images/epc-topology.png" />
+<p class="caption">Overall architecture of the LTE-EPC simulation model</p>
+</div>
+</div>
+<div class="section" id="lte-model">
+<h2>LTE Model<a class="headerlink" href="#lte-model" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="design-criteria">
+<h3>Design Criteria<a class="headerlink" href="#design-criteria" title="Permalink to this headline">¶</a></h3>
+<p>The LTE model has been designed to support the evaluation of the following aspects of LTE systems:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Radio Resource Management</li>
+<li>QoS-aware Packet Scheduling</li>
+<li>Inter-cell Interference Coordination</li>
+<li>Dynamic Spectrum Access</li>
+</ul>
+</div></blockquote>
+<p>In order to model LTE systems to a level of detail that is sufficient to allow a
+correct evaluation of the above mentioned aspects, the following requirements
+have been considered:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>At the radio level, the granularity of the model should be at least that
+of the Resource Block (RB). In fact, this is the fundamental unit being used for
+resource allocation. Without this minimum level of granularity, it is not
+possible to model accurately packet scheduling and
+inter-cell-interference.
+The reason is that, since packet scheduling is done on
+a per-RB basis, an eNB might transmit on a subset only of all the available
+RBs, hence interfering with other eNBs only on those RBs where it is
+trasmitting.
+Note that this requirement rules out the adoption of a system level simulation
+approach, which evaluates resource allocation only at the granularity of
+call/bearer establishment.</li>
+<li>The simulator should scale up to tens of eNBs and hundreds of User
+Equipments (UEs). This
+rules out the use of a link level simulator, i.e., a simulator whose radio
+interface is modeled with a granularity up to the symbol level. This is because
+to have a symbol level model it is necessary to implement all the PHY
+layer signal processing, whose huge computational complexity severely limits
+simulation. In fact, link-level simulators are normally limited to a single eNB
+and one or a few UEs.</li>
+<li>It should be possible within the simulation to configure different cells
+so that they use different carrier frequencies and system bandwidths. The
+bandwidth used by different cells should be allowed to overlap, in order to
+support dynamic spectrum licensing solutions such as those described
+in <a class="reference internal" href="lte-references.html#ofcom2600mhz">[Ofcom2600MHz]</a> and <a class="reference internal" href="lte-references.html#realwireless">[RealWireless]</a>. The calculation of interference should
+handle appropriately this case.</li>
+<li>To be more representative of the LTE standard, as well as to be as
+close as possible to real-world implementations, the simulator
+should support the MAC Scheduler API published by the FemtoForum
+<a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a>. This interface is expected to be used by femtocell manufacturers
+for the implementation of scheduling and Radio Resource Management
+(RRM) algorithms. By introducing support for this interface in the
+simulator, we make it possible for LTE equipment vendors and
+operators to test in a simulative environment exactly the same
+algorithms that would be deployed in a real system.</li>
+<li>The LTE simulation model should contain its own implementation of
+the API defined in <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a>. Neither
+binary nor data structure compatibility with vendor-specific implementations
+of the same interface are expected; hence, a compatibility layer should be
+interposed whenever a vendor-specific MAC scheduler is to be used
+with the simulator. This requirement is necessary to allow the
+simulator to be independent from vendor-specific implementations of this
+interface specification. We note that <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a> is a logical
+specification only, and its implementation (e.g., translation to some specific
+programming language) is left to the vendors.</li>
+<li>The model is to be used to simulate the transmission of IP packets
+by the upper layers. With this respect, it shall be considered
+that in LTE the Scheduling and Radio Resource Management do not
+work with IP packets directly, but rather with RLC PDUs, which are
+obtained by segmentation and concatenation of IP packets done by
+the RLC entities. Hence, these functionalities of the RLC layer
+should be modeled accurately.</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="architecture">
+<h3>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h3>
+<p>For the sake of an easier explanation, we further divide the LTE model
+in two separate parts, which are described in the following.</p>
+<p>The overall architecture of the LTE module is represented in the following figures.</p>
+<p>The first part is the lower LTE radio protocol stack, which is
+represented in the figures
+<a class="reference internal" href="#fig-lte-enb-architecture"><em>Lower LTE radio protocol stack architecture for the eNB</em></a> and <a class="reference internal" href="#fig-lte-ue-architecture"><em>Lower LTE radio protocol stack architecture for the UE</em></a>,
+which deal respectively with the eNB and the UE.</p>
+<div class="figure align-center" id="fig-lte-enb-architecture">
+<img alt="_images/lte-enb-architecture.png" src="_images/lte-enb-architecture.png" />
+<p class="caption">Lower LTE radio protocol stack architecture for the eNB</p>
+</div>
+<div class="figure align-center" id="fig-lte-ue-architecture">
+<img alt="_images/lte-ue-architecture.png" src="_images/lte-ue-architecture.png" />
+<p class="caption">Lower LTE radio protocol stack architecture for the UE</p>
+</div>
+<p>The LTE lower radio stack model includes in particular the PHY and the MAC layers;
+additionally, also the Scheduler is included (which is commonly
+associated with the MAC layer). The most important difference between
+the eNB and the UE is the presence of the Scheduler in the eNB, which
+is in charge of assigning radio resources to all UEs and Radio Bearers
+both in uplink and downlink. This component is not present within the
+UE.</p>
+<p>The second part is the upper LTE radio stack, which is represented in
+the figure <a class="reference internal" href="#fig-lte-arch-data-rrc-pdcp-rlc"><em>Architecture of the upper LTE radio stack</em></a>.</p>
+<div class="figure align-center" id="fig-lte-arch-data-rrc-pdcp-rlc">
+<img alt="_images/lte-arch-data-rrc-pdcp-rlc.png" src="_images/lte-arch-data-rrc-pdcp-rlc.png" />
+<p class="caption">Architecture of the upper LTE radio stack</p>
+</div>
+<p>This part includes the RRC, PDCP and RLC protocols. The architecture
+is very similar between the eNB and the UE: in fact, in
+both cases there is a single MAC instance and a single RRC instance,
+that work together with pairs of RLC and PDCP instances (one RLC and
+one PDCP instance per radio bearer).</p>
+<p>We note that in the current version of the simulator the data
+plane of the upper LTE radio protocol stack is modeled accurately; in
+particular, the RLC and PDCP protocol are implemented with actual
+protocol headers that match those specified by the 3GPP standard.
+On the other hand, the functionality of the control plane (which for
+the upper LTE radio protocol stack involves mainly the RRC) is modeled in a
+significantly simplified fashion.</p>
+</div>
+</div>
+<div class="section" id="epc-model">
+<h2>EPC Model<a class="headerlink" href="#epc-model" title="Permalink to this headline">¶</a></h2>
+<p>The EPC model provides means for the simulation of end-to-end IP
+connectivity over the LTE model. In particular, it supports for the
+interconnection of multiple UEs to the internet, via a radio access
+network of multiple eNBs connected to a single SGW/PGW node. This
+network topology is depicted in Figure <a class="reference internal" href="#fig-epc-topology"><em>Overall architecture of the LTE-EPC simulation model</em></a>.</p>
+<div class="section" id="id6">
+<h3>Design Criteria<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>The following design choices have been made for the EPC model:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>The only Packet Data Network (PDN) type supported is IPv4.</li>
+<li>The SGW and PGW functional entities are implemented within a single
+node, which is hence referred to as the SGW/PGW node.</li>
+<li>The scenarios with inter-SGW mobility are not of interests. Hence, a
+single SGW/PGW node will be present in all simulations scenarios</li>
+<li>A requirement for the EPC model is that it can be used to simulate the
+end-to-end performance of realistic applications. Hence, it should
+be possible to use with the EPC model any regular ns-3 application
+working on top of TCP or UDP.</li>
+<li>Another requirement is the possibility of simulating network topologies
+with the presence of multiple eNBs, some of which might be
+equipped with a backhaul connection with limited capabilities. In
+order to simulate such scenarios, the user data plane
+protocols being used between the eNBs and the SGW/PGW should be
+modeled accurately.</li>
+<li>It should be possible for a single UE to use different applications
+with different QoS profiles. Hence, multiple EPS bearers should be
+supported for each UE. This includes the necessary classification
+of TCP/UDP traffic over IP done at the UE in the uplink and at the
+PGW in the downlink.</li>
+<li>The focus of the EPC model is mainly on the EPC data plane. The
+accurate modeling of the EPC control plane is,
+for the time being, not a requirement; hence, the necessary control plane
+interactions can be modeled in a simplified way by leveraging on direct
+interaction among the different simulation objects via the
+provided helper objects.</li>
+<li>The focus of the EPC model is on simulations of active users in ECM
+connected mode. Hence, all the functionality that is only relevant
+for ECM idle mode (in particular, tracking area update and paging)
+are not modeled at all.</li>
+<li>While handover support is not a current requirement, it is
+planned to be considered in the near future. Hence, the management
+of EPS bearers by the eNBs and the SGW/PGW should be implemented in such
+a way that it can be re-used when handover support is eventually
+added.</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="id7">
+<h3>Architecture<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>The focus of the EPC model is currently on the EPC data plane. To
+understand the architecture of this model, we first look at Figure
+<a class="reference internal" href="#fig-lte-epc-e2e-data-protocol-stack"><em>LTE-EPC data plane protocol stack</em></a>, where we represent the
+end-to-end LTE-EPC protocol stack as it is
+implemented in the simulator. From the figure, it is evident that the
+biggest simplification introduced in the EPC model for the data plane
+is the inclusion of the SGW and PGW functionality within a single
+SGW/PGW node, which removes the need for the S5 or S8 interfaces
+specified by 3GPP. On the other hand, for both the S1-U protocol stack and
+the LTE radio protocol stack all the protocol layers specified by 3GPP
+are present.</p>
+<div class="figure align-center" id="fig-lte-epc-e2e-data-protocol-stack">
+<img alt="_images/lte-epc-e2e-data-protocol-stack.png" src="_images/lte-epc-e2e-data-protocol-stack.png" />
+<p class="caption">LTE-EPC data plane protocol stack</p>
+</div>
+<p>As shown in the figure,  there are two different layers of
+IP networking. The first one is the end-to-end layer, which provides end-to-end
+connectivity to the users; this layers involves the UEs, the PGW and
+the remote host (including eventual internet routers and hosts in
+between), but does not involve the eNB. By default, UEs are assigned a public IPv4 address in the 7.0.0.0/8
+network, and the PGW gets the address 7.0.0.1, which is used by all
+UEs as the gateway to reach the internet.</p>
+<p>The second layer of IP networking is the EPC local area network. This
+involves all eNB nodes and the SGW/PGW node. This network is
+implemented as a set of point-to-point links which connect each eNB
+with the SGW/PGW node; thus, the SGW/PGW has a set of point-to-point
+devices, each providing connectivity to a different eNB. By default, a
+10.x.y.z/30 subnet is assigned to each point-to-point link (a /30
+subnet is the smallest subnet that allows for two distinct host
+addresses).</p>
+<p>As specified by 3GPP, the end-to-end IP
+communications is tunneled over the local EPC IP network using
+GTP/UDP/IP. In the following, we explain how this tunneling is
+implemented in the EPC model. The explanation is done by discussing the
+end-to-end flow of data packets.</p>
+<div class="figure align-center" id="fig-epc-data-flow-dl">
+<img alt="_images/epc-data-flow-dl.png" src="_images/epc-data-flow-dl.png" />
+<p class="caption">Data flow in the dowlink between the internet and the UE</p>
+</div>
+<p>To begin with, we consider the case of the downlink, which is depicted
+in Figure <a class="reference internal" href="#fig-epc-data-flow-dl"><em>Data flow in the dowlink between the internet and the UE</em></a>.
+Downlink Ipv4 packets are generated from a generic remote host, and
+addressed to one of the UE device. Internet routing will take care of
+forwarding the packet to the generic NetDevice of the SGW/PGW node
+which is connected to the internet (this is the Gi interface according
+to 3GPP terminology). The SGW/PGW has a VirtualNetDevice which is
+assigned the gateway IP address of the UE subnet; hence, static
+routing rules will cause the incoming packet from the internet to be
+routed through this VirtualNetDevice. Such device starts the
+GTP/UDP/IP tunneling procedure, by forwarding the packet to a
+dedicated application in the SGW/PGW  node which is called
+EpcSgwPgwApplication. This application does the following operations:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>it determines the eNB node to which the UE is attached, by looking
+at the IP destination address (which is the address of the UE);</li>
+<li>it classifies the packet using Traffic Flow Templates (TFTs) to
+identify to which EPS Bearer it belongs. EPS bearers have a
+one-to-one mapping to S1-U Bearers, so this operation returns the
+GTP-U Tunnel Endpoint Identifier  (TEID) to which the packet
+belongs;</li>
+<li>it adds the corresponding GTP-U protocol header to the packet;</li>
+<li>finally, it sends the packet over an UDP socket to the S1-U
+point-to-point NetDevice, addressed to the eNB to which the UE is
+attached.</li>
+</ol>
+</div></blockquote>
+<p>As a consequence, the end-to-end IP packet with newly added IP, UDP
+and GTP headers is sent through one of the S1 links to the eNB, where
+it is received and delivered locally (as the destination address of
+the outmost IP header matches the eNB IP address). The local delivery
+process will forward the packet, via an UDP socket, to a dedicated
+application called EpcEnbApplication. This application then performs
+the following operations:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>it removes the GTP header and retrieves the TEID which is
+contained in it;</li>
+<li>leveraging on the one-to-one mapping between S1-U bearers and
+Radio Bearers (which is a 3GPP requirement), it determines the Radio
+Bearer ID (RBID) to which the packet belongs;</li>
+<li>it records the RBID in a dedicated tag called LteRadioBearerTag,
+which is added to the packet;</li>
+<li>it forwards the packet to the LteEnbNetDevice of the eNB node via
+a raw packet socket</li>
+</ol>
+</div></blockquote>
+<p>Note that, at this point, the outmost header of the packet is the
+end-to-end IP header, since the IP/UDP/GTP headers of the S1 protocol
+stack have already been stripped. Upon reception of
+the packet from the EpcEnbApplication, the LteEnbNetDevice will
+retrieve the RBID from the LteRadioBearerTag, and based on the RBID
+will determine the Radio Bearer instance (and the corresponding PDCP
+and RLC protocol instances) which are then used to forward the packet
+to the UE over the LTE radio interface. Finally, the LteUeNetDevice of
+the UE will receive the packet, and delivery it locally to the IP
+protocol stack, which will in turn delivery it to the application of
+the UE, which is the end point of the downlink communication.</p>
+<div class="figure align-center" id="fig-epc-data-flow-ul">
+<img alt="_images/epc-data-flow-ul.png" src="_images/epc-data-flow-ul.png" />
+<p class="caption">Data flow in the uplink between the UE and the internet</p>
+</div>
+<p>The case of the uplink is depicted in Figure <a class="reference internal" href="#fig-epc-data-flow-ul"><em>Data flow in the uplink between the UE and the internet</em></a>.
+Uplink IP packets are generated by a generic application inside the UE,
+and forwarded by the local TCP/IP stack to the LteUeNetDevice of the
+UE. The LteUeNetDevice then performs the following operations:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>it classifies the packet using TFTs and determines the
+Radio Bearer to which the packet belongs (and the corresponding
+RBID);</li>
+<li>it identifies the corresponding PDCP protocol instance, which is
+the entry point of the LTE Radio Protocol stack for this packet;</li>
+<li>it sends the packet to the eNB over the LTE Radio Protocol stack.</li>
+</ol>
+</div></blockquote>
+<p>The eNB receives the packet via its LteEnbNetDevice. Since there is a
+single PDCP and RLC protocol instance for each Radio Bearer, the
+LteEnbNetDevice is able to determine the RBID of the packet. This RBID
+is then recorded onto an LteRadioBearerTag, which is added to the
+packet. The LteEnbNetDevice then forwards the packet to the
+EpcEnbApplication via a raw packet socket.</p>
+<p>Upon receiving the packet, the EpcEnbApplication performs the
+following operations:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>it retrieves the RBID from the LteRadioBearerTag in the packet;</li>
+<li>it determines the corresponding EPS Bearer instance and GTP-U TEID by
+leveraging on the one-to-one mapping between S1-U bearers and Radio
+Bearers;</li>
+<li>it adds a GTP-U header on the packet, including the TEID
+determined previously;</li>
+<li>it sends the packet to the SGW/PGW node via the UDP socket
+connected to the S1-U point-to-point net device.</li>
+</ol>
+</div></blockquote>
+<p>At this point, the packet contains the S1-U IP, UDP and GTP headers in
+addition to the original end-to-end IP header. When the packet is
+received by the corresponding S1-U point-to-point NetDevice of the
+SGW/PGW node, it is delivered locally (as the destination address of
+the outmost IP header matches the address of the point-to-point net
+device). The local delivery process will forward the packet to the
+EpcSgwPgwApplication via the correponding UDP socket. The
+EpcSgwPgwApplication then removes the GTP header and forwards the
+packet to the VirtualNetDevice. At this point, the outmost header
+of the packet is the end-to-end IP header. Hence, if the destination
+address within this header is a remote host on the internet, the
+packet is sent to the internet via the corresponding NetDevice of the
+SGW/PGW. In the event that the packet is addressed to another UE, the
+IP stack of the SGW/PGW will redirect the packet again to the
+VirtualNetDevice, and the packet will go through the dowlink delivery
+process in order to reach its destination UE.</p>
+</div>
+</div>
+<div class="section" id="detailed-description-of-protocol-elements">
+<h2>Detailed description of protocol elements<a class="headerlink" href="#detailed-description-of-protocol-elements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mac">
+<h3>MAC<a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="the-femtoforum-mac-scheduler-interface">
+<h4>The FemtoForum MAC Scheduler Interface<a class="headerlink" href="#the-femtoforum-mac-scheduler-interface" title="Permalink to this headline">¶</a></h4>
+<p>This section describes the ns-3 specific version of the LTE MAC
+Scheduler Interface Specification published by the FemtoForum <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a>.</p>
+<p>We implemented the ns-3 specific version of the FemtoForum MAC Scheduler
+Interface <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a> as a set of C++ abstract
+classes; in particular, each primitive is translated to a C++ method of a
+given class. The term <em>implemented</em> here is used with the same
+meaning adopted in <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a>, and hence refers to the process of translating
+the logical interface specification to a particular programming language.
+The primitives in <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a> are grouped in two groups: the CSCHED
+primitives, which deal with scheduler configuration, and the SCHED primitives,
+which deal with the execution of the scheduler. Furthermore, <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a>
+defines primitives of two different kinds: those of type REQ go from the MAC to
+the Scheduler, and those of type IND/CNF go from the scheduler to the MAC. To
+translate these characteristics into C++, we define the following abstract
+classes that implement Service Access Points (SAPs) to be used to issue the
+primitives:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the <tt class="docutils literal"><span class="pre">FfMacSchedSapProvider</span></tt> class defines all the C++ methods that
+correspond to SCHED primitives of type REQ;</li>
+<li>the <tt class="docutils literal"><span class="pre">FfMacSchedSapUser</span></tt> class defines all the C++ methods that
+correspond to SCHED primitives of type CNF/IND;</li>
+<li>the <tt class="docutils literal"><span class="pre">FfMacCschedSapProvider</span></tt> class defines all the C++ methods that
+correspond to CSCHED primitives of type REQ;</li>
+<li>the <tt class="docutils literal"><span class="pre">FfMacCschedSapUser</span></tt> class defines all the C++ methods that
+correspond to CSCHED primitives of type CNF/IND;</li>
+</ul>
+</div></blockquote>
+<p>There are 3 blocks involved in the MAC Scheduler interface: Control block,
+Subframe block and Scheduler block. Each of these blocks provide one part of the
+MAC Scheduler interface. The figure below shows the relationship
+between the blocks and the SAPs defined in our implementation of the MAC
+Scheduler Interface.</p>
+<div class="figure align-center">
+<img alt="_images/ff-mac-saps.png" src="_images/ff-mac-saps.png" />
+</div>
+<p>In addition to the above principles, the following design choices have been
+taken:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The definition of the MAC Scheduler interface classes follows the naming
+conventions of the <em>ns-3</em> Coding Style. In particular, we follow the
+CamelCase convention for the primitive names. For example, the primitive
+<tt class="docutils literal"><span class="pre">CSCHED_CELL_CONFIG_REQ</span></tt> is translated to <tt class="docutils literal"><span class="pre">CschedCellConfigReq</span></tt>
+in the <em>ns-3</em> code.</li>
+<li>The same naming conventions are followed for the primitive parameters. As
+the primitive parameters are member variables of classes, they are also prefixed
+with a <tt class="docutils literal"><span class="pre">m_</span></tt>.</li>
+<li>regarding the use of vectors and lists in data structures, we note
+that <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a> is a pretty much C-oriented API. However, considered that
+C++ is used in ns-3, and that the use of C arrays is discouraged, we used STL
+vectors (<tt class="docutils literal"><span class="pre">std::vector</span></tt>) for the implementation of the MAC Scheduler
+Interface, instead of using C arrays as implicitly suggested by the
+way <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a> is written.</li>
+<li>In C++, members with constructors and destructors are not allow in
+<tt class="docutils literal"><span class="pre">unions</span></tt>. Hence all those data structures that are said to be
+<tt class="docutils literal"><span class="pre">unions</span></tt> in <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a> have been defined as <tt class="docutils literal"><span class="pre">structs</span></tt> in our code.</li>
+</ul>
+</div></blockquote>
+<p>The figure below shows how the MAC Scheduler Interface is
+used within the eNB.</p>
+<div class="figure align-center">
+<img alt="_images/ff-example.png" src="_images/ff-example.png" />
+</div>
+<p>The User side of both the CSCHED SAP and the SCHED SAP are
+implemented within the eNB MAC, i.e., in the file <tt class="docutils literal"><span class="pre">lte-enb-mac.cc</span></tt>.
+The eNB MAC can be used with different scheduler implementations without
+modifications. The same figure also shows, as an example, how the Round Robin
+Scheduler is implemented: to interact with the MAC of the eNB, the Round Robin
+scheduler implements the Provider side of the SCHED SAP and CSCHED
+SAP interfaces. A similar approach can be used to implement other schedulers as
+well. A description of all the scheduler implementations that we provide as
+part of our LTE simulation module will be given in
+the following.</p>
+</div>
+<div class="section" id="resource-allocation-model">
+<h4>Resource Allocation Model<a class="headerlink" href="#resource-allocation-model" title="Permalink to this headline">¶</a></h4>
+<p>We now briefly describe how resource allocation is handled in LTE,
+clarifying how it is implemented in the simulator. The scheduler is in
+charge of generating specific structures calles Data Control Indication (DCI)
+which are then transmitted by the PHY of the eNB to the connected UEs, in order
+to inform them of the resource allocation on a per subframe basis. In doing this
+in the downlink direction, the scheduler has to fill some specific fields of the
+DCI structure with all the information, such as: the Modulation and Coding
+Scheme (MCS) to be used, the MAC Transport Block (TB) size, and the allocation
+bitmap which identifies which RBs will contain the data
+transmitted by the eNB to each user.</p>
+<p>For the mapping of resources to
+physical RBs, we adopt a <em>localized mapping</em> approach
+(see <a class="reference internal" href="lte-references.html#sesia2009">[Sesia2009]</a>, Section 9.2.2.1);
+hence in a given subframe each RB is always allocated to the same user in both
+slots.
+The allocation bitmap can be coded in
+different formats; in this implementation, we considered the <em>Allocation
+Type 0</em> defined in <a class="reference internal" href="lte-references.html#ts36213">[TS36213]</a>, according to which the RBs are grouped in
+Resource Block Groups (RBG) of different size determined as a function of the
+Transmission Bandwidth Configuration in use.</p>
+<p>For certain bandwidth
+values not all the RBs are usable, since the
+group size is not a common divisor of the group. This is for instance the case
+when the bandwith is equal to 25 RBs, which results in a RBG size of 2 RBs, and
+therefore 1 RB will result not addressable.
+In uplink the format of the DCIs is different, since only adjacent RBs
+can be used because of the SC-FDMA modulation. As a consequence, all
+RBs can be allocated by the eNB regardless of the bandwidth
+configuration.</p>
+</div>
+<div class="section" id="adaptive-modulation-and-coding">
+<span id="sec-lte-amc"></span><h4>Adaptive Modulation and Coding<a class="headerlink" href="#adaptive-modulation-and-coding" title="Permalink to this headline">¶</a></h4>
+<p>The simulator provides two Adaptive Modulation and Coding (AMC) models: one based on the GSoC model <a class="reference internal" href="lte-references.html#piro2011">[Piro2011]</a> and one based on the physical error model (described in the following sections).</p>
+<p>The former model is a modified version of the model described in <a class="reference internal" href="lte-references.html#piro2011">[Piro2011]</a>,
+which in turn is inspired from <a class="reference internal" href="lte-references.html#seo2004">[Seo2004]</a>. Our version is described in the
+following. Let <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> denote the
+generic user, and let <img class="math" src="_images/math/08090c52f275458c98d6e3fd1f9baf8bfd91cfe9.png" alt="\gamma_i"/> be its SINR. We get the spectral efficiency
+<img class="math" src="_images/math/846c0e79262df1f01ac9ce2b99151e90f4edb052.png" alt="\eta_i"/> of user <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> using the following equations:</p>
+<div class="math">
+<p><img src="_images/math/764f1a5a57cf09a74e0aa77f03777af4044843e0.png" alt="\mathrm{BER} = 0.00005
+
+\Gamma = \frac{ -\ln{ (5 * \mathrm{BER}) } }{ 1.5}
+
+\eta_i = \log_2 { \left( 1 + \frac{ {\gamma}_i }{ \Gamma } \right)}"/></p>
+</div><p>The procedure described in <a class="reference internal" href="lte-references.html#r1-081483">[R1-081483]</a> is used to get
+the corresponding MCS scheme. The spectral efficiency is quantized based on the
+channel quality indicator (CQI), rounding to the lowest value, and is mapped to the corresponding MCS
+scheme.</p>
+<p>Finally, we note that there are some discrepancies between the MCS index
+in <a class="reference internal" href="lte-references.html#r1-081483">[R1-081483]</a>
+and that indicated by the standard:  <a class="reference internal" href="lte-references.html#ts36213">[TS36213]</a> Table
+7.1.7.1-1 says that the MCS index goes from 0 to 31, and 0 appears to be a valid
+MCS scheme (TB size is not 0) but in <a class="reference internal" href="lte-references.html#r1-081483">[R1-081483]</a> the first useful MCS
+index
+is 1. Hence to get the value as intended by the standard we need to subtract 1
+from the index reported in <a class="reference internal" href="lte-references.html#r1-081483">[R1-081483]</a>.</p>
+<p>The alternative model is based on the physical error model developed for this simulator and explained in the following subsections. This scheme is able to adapt the MCS selection to the actual PHY layer performance according to the specific CQI report. According to their definition, a CQI index is assigned when a single PDSCH TB with the modulation coding scheme and code rate correspondent to that CQI index in table 7.2.3-1 of <a class="reference internal" href="lte-references.html#ts36213">[TS36213]</a> can be received with an error probability less than 0.1. In case of wideband CQIs, the reference TB includes all the RBGs available in order to have a reference based on the whole available resources; while, for subband CQIs, the reference TB is sized as the RBGs.</p>
+</div>
+<div class="section" id="round-robin-rr-scheduler">
+<h4>Round Robin (RR) Scheduler<a class="headerlink" href="#round-robin-rr-scheduler" title="Permalink to this headline">¶</a></h4>
+<p>The Round Robin (RR) scheduler is probably the simplest scheduler found in the literature. It works by dividing the
+available resources among the active flows, i.e., those logical channels which have a non-empty RLC queue. If the number of RBGs is greater than the number of active flows, all the flows can be allocated in the same subframe. Otherwise, if the number of active flows is greater than the number of RBGs, not all the flows can be scheduled in a given subframe; then, in the next subframe the allocation will start from the last flow that was not allocated.  The MCS to be adopted for each user is done according to the received wideband CQIs.</p>
+</div>
+<div class="section" id="proportional-fair-pf-scheduler">
+<h4>Proportional Fair (PF) Scheduler<a class="headerlink" href="#proportional-fair-pf-scheduler" title="Permalink to this headline">¶</a></h4>
+<p>The Proportional Fair (PF) scheduler <a class="reference internal" href="lte-references.html#sesia2009">[Sesia2009]</a> works by scheduling a user
+when its
+instantaneous channel quality is high relative to its own average channel
+condition over time. Let <img class="math" src="_images/math/01d9dbe8588e6243350fc642973b9365304100da.png" alt="i,j"/> denote generic users; let <img class="math" src="_images/math/e0d2bf360290fd61d1c1557e763f2622363b3d35.png" alt="t"/> be the
+subframe index, and <img class="math" src="_images/math/8c325612684d41304b9751c175df7bcc0f61f64f.png" alt="k"/> be the resource block index; let <img class="math" src="_images/math/70514d20eb912267100522566ac707aee1df87f8.png" alt="M_{i,k}(t)"/> be MCS
+usable by user <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> on resource block <img class="math" src="_images/math/8c325612684d41304b9751c175df7bcc0f61f64f.png" alt="k"/> according to what reported by the AMC
+model (see <a class="reference internal" href="#adaptive-modulation-and-coding">Adaptive Modulation and Coding</a>); finally, let <img class="math" src="_images/math/9d110f4e481adc606eb28ceabf1873ecf0c58d51.png" alt="S(M, B)"/> be the TB
+size in bits as defined in <a class="reference internal" href="lte-references.html#ts36213">[TS36213]</a> for the case where a number <img class="math" src="_images/math/ff5fb3d775862e2123b007eb4373ff6cc1a34d4e.png" alt="B"/> of
+resource blocks is used. The achievable rate <img class="math" src="_images/math/33cbaf530155fbd0a2cfe99d7d7acdcbb01c20f0.png" alt="R_{i}(k,t)"/> in bit/s for user <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/>
+on resource block group <img class="math" src="_images/math/8c325612684d41304b9751c175df7bcc0f61f64f.png" alt="k"/> at subframe <img class="math" src="_images/math/e0d2bf360290fd61d1c1557e763f2622363b3d35.png" alt="t"/> is defined as</p>
+<div class="math">
+<p><img src="_images/math/000fcbe9273c1180764c647e1a8aa4706ab049aa.png" alt="R_{i}(k,t) =  \frac{S\left( M_{i,k}(t), 1\right)}{\tau}"/></p>
+</div><p>where <img class="math" src="_images/math/1dc1c0119a604b91be9142370dc3159b6a9bbcb9.png" alt="\tau"/> is the TTI duration.
+At the start of each subframe <img class="math" src="_images/math/e0d2bf360290fd61d1c1557e763f2622363b3d35.png" alt="t"/>, each RBG is assigned to a certain user.
+In detail, the index <img class="math" src="_images/math/871b09140cd4bb5dbd964b7189f5f122f73d99b2.png" alt="\widehat{i}_{k}(t)"/> to which RBG <img class="math" src="_images/math/8c325612684d41304b9751c175df7bcc0f61f64f.png" alt="k"/> is assigned at time
+<img class="math" src="_images/math/e0d2bf360290fd61d1c1557e763f2622363b3d35.png" alt="t"/> is determined as</p>
+<div class="math">
+<p><img src="_images/math/2c5b1939154e99fcba1536d94df238593c6b5067.png" alt="\widehat{i}_{k}(t) = \underset{j=1,...,N}{\operatorname{argmax}}
+ \left( \frac{ R_{j}(k,t) }{ T_\mathrm{j}(t) } \right)"/></p>
+</div><p>where <img class="math" src="_images/math/e563884e0ae675fd32e8f592b3b2652427871f20.png" alt="T_{j}(t)"/> is the past througput performance perceived by the
+user <img class="math" src="_images/math/8122aa89ea6e80784c6513d22787ad86e36ad0cc.png" alt="j"/>.
+According to the above scheduling algorithm, a user can be allocated to
+different RBGs, which can be either adjacent or not, depending on the current
+condition of the channel and the past throughput performance <img class="math" src="_images/math/e563884e0ae675fd32e8f592b3b2652427871f20.png" alt="T_{j}(t)"/>. The
+latter is determined at the end of the subframe <img class="math" src="_images/math/e0d2bf360290fd61d1c1557e763f2622363b3d35.png" alt="t"/> using the following
+exponential moving average approach:</p>
+<div class="math">
+<p><img src="_images/math/85ca7728951f8829a33ba6d1c5c98b398e80166c.png" alt="T_{j}(t) =
+(1-\frac{1}{\alpha})T_{j}(t-1)
++\frac{1}{\alpha} \widehat{T}_{j}(t)"/></p>
+</div><p>where <img class="math" src="_images/math/10f32377ac67d94f764f12a15ea987e88c85d3e1.png" alt="\alpha"/> is the time constant (in number of subframes) of
+the exponential moving average, and <img class="math" src="_images/math/1b5d723af08ab3a8810302699c9886224eca81bf.png" alt="\widehat{T}_{j}(t)"/> is the actual
+throughput achieved by the user <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> in the subframe <img class="math" src="_images/math/e0d2bf360290fd61d1c1557e763f2622363b3d35.png" alt="t"/>. <img class="math" src="_images/math/1b5d723af08ab3a8810302699c9886224eca81bf.png" alt="\widehat{T}_{j}(t)"/>
+is measured according to the following procedure. First we
+determine the MCS <img class="math" src="_images/math/820105cd3f1f2f65176028d8f38f8013d8c9a4f3.png" alt="\widehat{M}_j(t)"/> actually used by user
+<img class="math" src="_images/math/8122aa89ea6e80784c6513d22787ad86e36ad0cc.png" alt="j"/>:</p>
+<div class="math">
+<p><img src="_images/math/fafb1aecb5957d1e9dd26fbd6ed84b602426fd60.png" alt="\widehat{M}_j(t) = \min_{k: \widehat{i}_{k}(t) = j}{M_{j,k}(t)}"/></p>
+</div><p>then we determine the total number <img class="math" src="_images/math/23bf40ea68132fa54355d6dd3706bdf699223bc0.png" alt="\widehat{B}_j(t)"/> of RBGs allocated to user
+<img class="math" src="_images/math/8122aa89ea6e80784c6513d22787ad86e36ad0cc.png" alt="j"/>:</p>
+<div class="math">
+<p><img src="_images/math/988d1452624b886920cc776aaab02751e59d0c7f.png" alt="\widehat{B}_j(t) = \left| \{ k :  \widehat{i}_{k}(t) = j \} \right|"/></p>
+</div><p>where <img class="math" src="_images/math/dd8d59296392ea2d3ac5c03686b0d5ef858d86b5.png" alt="|\cdot|"/> indicates the cardinality of the set; finally,</p>
+<div class="math">
+<p><img src="_images/math/6c09dead1257736a19beddc7ed55ed3a5ebf377c.png" alt="\widehat{T}_{j}(t) = \frac{S\left( \widehat{M}_j(t), \widehat{B}_j(t)
+\right)}{\tau}"/></p>
+</div></div>
+<div class="section" id="transport-blocks">
+<h4>Transport Blocks<a class="headerlink" href="#transport-blocks" title="Permalink to this headline">¶</a></h4>
+<p>The implementation of the MAC Transport Blocks (TBs) is simplified with
+respect to the 3GPP specifications. In particular, a simulator-specific class (PacketBurst) is used to aggregate
+MAC SDUs in order to achieve the simulator&#8217;s equivalent of a TB,
+without the corresponding implementation complexity.
+The multiplexing of different logical channels to and from the RLC
+layer is performed using a dedicated packet tag (LteRadioBearerTag), which
+performs a functionality which is partially equivalent to that of the
+MAC headers specified by 3GPP.</p>
+</div>
+</div>
+<div class="section" id="rlc-and-pdcp">
+<h3>RLC and PDCP<a class="headerlink" href="#rlc-and-pdcp" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="overview">
+<h4>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h4>
+<p>The RLC entity is specified in the 3GPP technical specification
+<a class="reference internal" href="lte-references.html#ts36322">[TS36322]</a>, and comprises three different types of RLC: Transparent
+Mode (TM), Unacknowledge Mode (UM) and Acknowledged Mode (AM). We
+implement only the UM and the AM RLC entities.</p>
+<p>The RLC entities provide the RLC service interface to the upper PDCP layer and the MAC service interface
+to the lower MAC layer. The RLC entities use the PDCP service interface from the upper PDCP layer and
+the MAC service interface from the lower MAC layer.</p>
+<p>Figure <a class="reference internal" href="#fig-lte-rlc-implementation-model"><em>Implementation Model of PDCP, RLC and MAC entities and SAPs</em></a> shows the
+implementation model of the RLC entities and its relationship
+with all the other entities and services in the protocol stack.</p>
+<div class="figure" id="fig-lte-rlc-implementation-model">
+<img alt="_images/lte-rlc-implementation-model.png" src="_images/lte-rlc-implementation-model.png" style="width: 800px;" />
+<p class="caption">Implementation Model of PDCP, RLC and MAC entities and SAPs</p>
+</div>
+</div>
+<div class="section" id="service-interfaces">
+<h4>Service Interfaces<a class="headerlink" href="#service-interfaces" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="pdcp-service-interface">
+<h5>PDCP Service Interface<a class="headerlink" href="#pdcp-service-interface" title="Permalink to this headline">¶</a></h5>
+<p>The PDCP service interface is divided into two parts:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the <tt class="docutils literal"><span class="pre">PdcpSapProvider</span></tt> part is provided by the PDCP layer and used by the upper layer and</li>
+<li>the <tt class="docutils literal"><span class="pre">PdcpSapUser</span></tt> part is provided by the upper layer and used by the PDCP layer.</li>
+</ul>
+</div></blockquote>
+<div class="section" id="pdcp-service-primitives">
+<h6>PDCP Service Primitives<a class="headerlink" href="#pdcp-service-primitives" title="Permalink to this headline">¶</a></h6>
+<p>The following list specifies which service primitives are provided by the PDCP service interfaces:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PdcpSapProvider::TransmitRrcPdu</span></tt></p>
+<blockquote>
+<div><ul class="simple">
+<li>The RRC entity uses this primitive to send an RRC PDU to the lower PDCP entity
+in the transmitter peer</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">PdcpSapUser::ReceiveRrcPdu</span></tt></p>
+<blockquote>
+<div><ul class="simple">
+<li>The PDCP entity uses this primitive to send an RRC PDU to the upper RRC entity
+in the receiver peer</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="rlc-service-interface">
+<h5>RLC Service Interface<a class="headerlink" href="#rlc-service-interface" title="Permalink to this headline">¶</a></h5>
+<p>The RLC service interface is divided into two parts:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the <tt class="docutils literal"><span class="pre">RlcSapProvider</span></tt> part is provided by the RLC layer and used by the upper PDCP layer and</li>
+<li>the <tt class="docutils literal"><span class="pre">RlcSapUser</span></tt> part is provided by the upper PDCP layer and used by the RLC layer.</li>
+</ul>
+</div></blockquote>
+<p>Both the UM and the AM RLC entities provide the same RLC service interface to the upper PDCP layer.</p>
+<div class="section" id="rlc-service-primitives">
+<h6>RLC Service Primitives<a class="headerlink" href="#rlc-service-primitives" title="Permalink to this headline">¶</a></h6>
+<p>The following list specifies which service primitives are provided by the RLC service interfaces:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RlcSapProvider::TransmitPdcpPdu</span></tt></p>
+<blockquote>
+<div><ul class="simple">
+<li>The PDCP entity uses this primitive to send a PDCP PDU to the lower RLC entity
+in the transmitter peer</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">RlcSapUser::ReceivePdcpPdu</span></tt></p>
+<blockquote>
+<div><ul class="simple">
+<li>The RLC entity uses this primitive to send a PDCP PDU to the upper PDCP entity
+in the receiver peer</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="mac-service-interface">
+<h5>MAC Service Interface<a class="headerlink" href="#mac-service-interface" title="Permalink to this headline">¶</a></h5>
+<p>The MAC service interface is divided into two parts:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the <tt class="docutils literal"><span class="pre">MacSapProvider</span></tt> part is provided by the MAC layer and used by the upper RLC layer and</li>
+<li>the <tt class="docutils literal"><span class="pre">MacSapUser</span></tt>  part is provided by the upper RLC layer and used by the MAC layer.</li>
+</ul>
+</div></blockquote>
+<div class="section" id="mac-service-primitives">
+<h6>MAC Service Primitives<a class="headerlink" href="#mac-service-primitives" title="Permalink to this headline">¶</a></h6>
+<p>The following list specifies which service primitives are provided by the MAC service interfaces:</p>
+<blockquote>
+<div><ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">MacSapProvider::TransmitPdu</span></tt></p>
+<blockquote>
+<div><ul class="simple">
+<li>The RLC entity uses this primitive to send a RLC PDU to the lower MAC entity
+in the transmitter peer</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">MacSapProvider::ReportBufferStatus</span></tt></p>
+<blockquote>
+<div><ul class="simple">
+<li>The RLC entity uses this primitive to report the MAC entity the size of pending buffers
+in the transmitter peer</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">MacSapUser::NotifyTxOpportunity</span></tt></p>
+<blockquote>
+<div><ul class="simple">
+<li>The MAC entity uses this primitive to nofify the RLC entity a transmission opportunity</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">MacSapUser::ReceivePdu</span></tt></p>
+<blockquote>
+<div><ul class="simple">
+<li>The MAC entity uses this primitive to send an RLC PDU to the upper RLC entity
+in the receiver peer</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+<div class="section" id="interactions-between-entities-and-services">
+<h4>Interactions between entities and services<a class="headerlink" href="#interactions-between-entities-and-services" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="transmit-operations-in-downlink">
+<h5>Transmit operations in downlink<a class="headerlink" href="#transmit-operations-in-downlink" title="Permalink to this headline">¶</a></h5>
+<p>The following sequence diagram shows the interactions between the
+different entities (RRC, PDCP, AM RLC, MAC and MAC scheduler) of the
+eNB in the downlink to perform data communications.</p>
+<p>Figure <a class="reference internal" href="#fig-lte-rlc-data-txon-dl"><em>Sequence diagram of data PDU transmission in downlink</em></a> shows how the upper layers send
+data PDUs and how the data flow is processed by the different
+entities/services of the LTE protocol stack. We will explain in detail
+only the processing related to the AM RLC entity, which is the most
+complex.</p>
+<div class="figure" id="fig-lte-rlc-data-txon-dl">
+<img alt="_images/lte-rlc-data-txon-dl.png" src="_images/lte-rlc-data-txon-dl.png" style="width: 800px;" />
+<p class="caption">Sequence diagram of data PDU transmission in downlink</p>
+</div>
+<p>The PDCP entity calls the <tt class="docutils literal"><span class="pre">Transmit_PDCP_PDU</span> <span class="pre">service</span> <span class="pre">primitive</span></tt> in
+order to send a data PDU. The AM RLC entity processes this service
+primitive according to the AM data transfer procedures defined in
+section 5.1.3 of <a class="reference internal" href="lte-references.html#ts36322">[TS36322]</a>.</p>
+<p>When the <tt class="docutils literal"><span class="pre">Transmit_PDCP_PDU</span></tt> service primitive is called, the AM RLC
+entity performs the following operations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Put the data SDU in the Transmission Buffer.</li>
+<li>Compute the size of the buffers (how the size of buffers is
+computed will be explained afterwards).</li>
+<li>Call the <tt class="docutils literal"><span class="pre">Report_Buffer_Status</span></tt> service primitive of the eNB
+MAC entity in order to notify to the eNB MAC
+entity the sizes of the buffers of the AM RLC entity. Then, the
+eNB MAC entity updates the buffer status in the MAC scheduler
+using the SchedDlRlcBufferReq service primitive of the FF MAC
+Scheduler API.</li>
+</ul>
+</div></blockquote>
+<p>Afterwards, when the MAC scheduler decides that some data can be sent,
+the MAC entity notifies it to the RLC entity, i.e. it calls the
+<tt class="docutils literal"><span class="pre">Notify_Tx_Opportunity</span></tt> service primitive, then the AM RLC entity
+does the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Create a single data PDU by segmenting and/or concatenating the
+SDUs in the Transmission Buffer.</li>
+<li>Move the data PDU from the Transmission Buffer to the
+Transmitted PDUs Buffer.</li>
+<li>Update state variables according section 5.1.3.1.1 of
+<a class="reference internal" href="lte-references.html#ts36322">[TS36322]</a>.</li>
+<li>Call the <tt class="docutils literal"><span class="pre">Transmit_PDU</span></tt> primitive in order to send the data
+PDU to the MAC entity.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="retransmission-in-downlink">
+<h5>Retransmission in downlink<a class="headerlink" href="#retransmission-in-downlink" title="Permalink to this headline">¶</a></h5>
+<p>The sequence diagram of Figure <a class="reference internal" href="#fig-lte-rlc-data-retx-dl"><em>Sequence diagram of data PDU retransmission in downlink</em></a> shows
+the interactions between the different entities (AM RLC, MAC and MAC
+scheduler) of the eNB in downlink when data PDUs must be retransmitted
+by the AM RLC entity.</p>
+<div class="figure" id="fig-lte-rlc-data-retx-dl">
+<img alt="_images/lte-rlc-data-retx-dl.png" src="_images/lte-rlc-data-retx-dl.png" style="width: 500px;" />
+<p class="caption">Sequence diagram of data PDU retransmission in downlink</p>
+</div>
+<p>The transmitting AM RLC entity can receive STATUS PDUs from the peer AM RLC entity. STATUS PDUs are
+sent according section 5.3.2 of <a class="reference internal" href="lte-references.html#ts36322">[TS36322]</a> and the processing of reception is made according
+section 5.2.1 of <a class="reference internal" href="lte-references.html#ts36322">[TS36322]</a>.</p>
+<p>When a data PDUs is retransmitted from the Transmitted PDUs Buffer, it is also moved to the
+Retransmission Buffer.</p>
+</div>
+<div class="section" id="transmit-operations-in-uplink">
+<h5>Transmit operations in uplink<a class="headerlink" href="#transmit-operations-in-uplink" title="Permalink to this headline">¶</a></h5>
+<p>The sequence diagram of Figure <a class="reference internal" href="#fig-lte-rlc-data-txon-ul"><em>Sequence diagram of data PDU transmission in uplink</em></a> shows
+the interactions between the different entities of the UE (RRC, PDCP,
+RLC and MAC) and the eNB (MAC and Scheduler) in uplink when data PDUs
+are sent by the upper layers.</p>
+<div class="figure" id="fig-lte-rlc-data-txon-ul">
+<img alt="_images/lte-rlc-data-txon-ul.png" src="_images/lte-rlc-data-txon-ul.png" style="width: 800px;" />
+<p class="caption">Sequence diagram of data PDU transmission in uplink</p>
+</div>
+<p>It is similar to the sequence diagram in downlink; the main difference
+is that in this case the Report_Buffer_Status is sent from the UE MAC
+to the MAC Scheduler in the eNB over the air using the control
+channel.</p>
+</div>
+<div class="section" id="retransmission-in-uplink">
+<h5>Retransmission in uplink<a class="headerlink" href="#retransmission-in-uplink" title="Permalink to this headline">¶</a></h5>
+<p>The sequence diagram of Figure <a class="reference internal" href="#fig-lte-rlc-data-retx-ul"><em>Sequence diagram of data PDU retransmission in uplink</em></a> shows
+the interactions between the different entities of the UE (AM RLC and
+MAC) and the eNB (MAC) in uplink when data PDUs must be retransmitted
+by the AM RLC entity.</p>
+<div class="figure" id="fig-lte-rlc-data-retx-ul">
+<img alt="_images/lte-rlc-data-retx-ul.png" src="_images/lte-rlc-data-retx-ul.png" style="width: 500px;" />
+<p class="caption">Sequence diagram of data PDU retransmission in uplink</p>
+</div>
+</div>
+</div>
+<div class="section" id="am-data-transfer">
+<h4>AM data transfer<a class="headerlink" href="#am-data-transfer" title="Permalink to this headline">¶</a></h4>
+<p>The processing of the data transfer in the AM RLC entity is explained in section 5.1.3 of <a class="reference internal" href="lte-references.html#ts36322">[TS36322]</a>.
+In this section we describe some details of the implementation of the RLC entity.</p>
+<div class="section" id="management-of-buffers-in-transmit-operations">
+<h5>Management of buffers in transmit operations<a class="headerlink" href="#management-of-buffers-in-transmit-operations" title="Permalink to this headline">¶</a></h5>
+<p>The AM RLC entity manages 3 buffers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><strong>Transmission Buffer</strong>: it is the RLC SDU queue.
+When the AM RLC entity receives a SDU in the TransmitPdcpPdu service primitive from the
+upper PDCP entity, it enqueues it in the Transmission Buffer. We
+put a limit on the RLC buffer size and just silently drop SDUs
+when the buffer is full.</li>
+<li><strong>Transmitted PDUs Buffer</strong>: it is the queue of transmitted RLC PDUs for which an ACK/NACK has not
+been received yet. When the AM RLC entity sends a PDU to the MAC
+entity, it also puts a copy of the transmitted PDU in the Transmitted PDUs Buffer.</li>
+<li><strong>Retransmission Buffer</strong>: it is the queue of RLC PDUs which are considered for retransmission
+(i.e., they have been NACKed). The AM RLC entity moves this PDU to the Retransmission Buffer,
+when it retransmits a PDU from the Transmitted Buffer.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="calculation-of-the-buffer-size">
+<h5>Calculation of the buffer size<a class="headerlink" href="#calculation-of-the-buffer-size" title="Permalink to this headline">¶</a></h5>
+<p>The Transmission Buffer contains RLC SDUs. A RLC PDU is one or more SDU segments plus an RLC header.
+The size of the RLC header of one RLC PDU depends on the number of SDU segments the PDU contains.</p>
+<p>The 3GPP standard  (section 6.1.3.1 of <a class="reference internal" href="lte-references.html#ts36321">[TS36321]</a>) says clearly that,
+for the uplink, the RLC and MAC headers are not considered in the
+buffer size that is to be report as part of the Buffer Status Report.
+For the downlink, the behavior is not specified. Neither <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a> specifies
+how to do it. Our RLC model works by assuming that the calculation of
+the buffer size in the downlink is done exactly as in the uplink,
+i.e., not considering the RLC and MAC header size.</p>
+<p>We note that this choice affects the interoperation with the
+MAC scheduler, since, in response to the
+<tt class="docutils literal"><span class="pre">Notify_Tx_Opportunity</span></tt> service primitive, the RLC is expected to
+create a PDU of no more than the size requested by the MAC, including
+RLC overhead. Hence, unneeded fragmentation can occur if (for example)
+the MAC notifies a transmission exactly equal to the buffer size
+previously reported by the RLC. We assume that it is left to the Scheduler
+to implement smart strategies for the selection of the size of the
+transmission opportunity, in order to eventually avoid the inefficiency
+of unneeded fragmentation.</p>
+</div>
+<div class="section" id="concatenation-and-segmentation">
+<h5>Concatenation and Segmentation<a class="headerlink" href="#concatenation-and-segmentation" title="Permalink to this headline">¶</a></h5>
+<p>The AM RLC entity generates and sends exactly one RLC PDU for each transmission opportunity even
+if it is smaller than the size reported by the transmission opportunity. So for instance, if a
+STATUS PDU is to be sent, then only this PDU will be sent in that transmission opportunity.</p>
+<p>The segmentation and concatenation for the SDU queue of the AM RLC entity follows the same philosophy
+as the same procedures of the UM RLC entity but there are new state variables (see section 7.1) only
+present in the AM RLC entity.</p>
+<p>It is noted that, according to the 3GPP specs, there is no concatenation for the Retransmission Buffer.</p>
+</div>
+<div class="section" id="re-segmentation">
+<h5>Re-segmentation<a class="headerlink" href="#re-segmentation" title="Permalink to this headline">¶</a></h5>
+<p>The current model of the AM RLC entity does not support the
+re-segmentation of the retransmission buffer. Rather, the AM RLC
+entity just expects to receive a big enough transmission
+opportunity. An assertion fails if a too small transmission opportunity is
+received.</p>
+</div>
+<div class="section" id="unsupported-features">
+<h5>Unsupported features<a class="headerlink" href="#unsupported-features" title="Permalink to this headline">¶</a></h5>
+<p>We do not support the following procedures of <a class="reference internal" href="lte-references.html#ts36322">[TS36322]</a> :</p>
+<blockquote>
+<div><ul class="simple">
+<li>“Send an indication of successful delivery of RLC SDU” (See section 5.1.3.1.1)</li>
+<li>“Indicate to upper layers that max retransmission has been reached” (See section 5.2.1)</li>
+<li>“SDU discard procedures” (See section 5.3)</li>
+<li>“Re-establishment procedure” (See section 5.4)</li>
+</ul>
+</div></blockquote>
+<p>We do not support any of the additional primitives of RLC SAP for AM RLC entity. In particular:</p>
+<blockquote>
+<div><ul class="simple">
+<li>no SDU discard notified by PDCP</li>
+<li>no notification of successful / failed delivery by AM RLC entity to PDCP entity</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="rlc-sm">
+<h4>RLC/SM<a class="headerlink" href="#rlc-sm" title="Permalink to this headline">¶</a></h4>
+<p>In addition to the full-fledged RLC/UM and RLC/AM implementations,
+a simplified RLC model is provided, which is denoted RLC/SM. This RLC model does not accepts
+PDUs from any above layer (such as PDCP); rather, RLC/SM takes care of the
+generation of RLC PDUs in response to
+the notification of transmission opportunities notified by the MAC.
+In other words, RLC/SM simulates saturation conditions, i.e., it
+assumes that the RLC buffer is always full and can generate a new PDU
+whenever notified by the scheduler. In fact, the &#8220;SM&#8221; in the name of
+the model stands for &#8220;Saturation Mode&#8221;.</p>
+<p>RLC/SM is used for simplified simulation scenarios in which only the
+LTE Radio model is used, without the EPC and hence without any IP
+networking support. We note that, although RLC/SM is an
+unrealistic traffic model, it still allows for the correct simulation
+of scenarios with multiple flows belonging to different (non real-time)
+QoS classes, in order to test the QoS performance obtained by different
+schedulers. This can be
+done since it is the task of the Scheduler to assign transmission
+resources based on the characteristics of each Radio Bearer which are
+specified upon the creation of each Bearer at the start of the
+simulation.</p>
+<p>As for schedulers designed to work with real-time QoS
+traffic that has delay constraints, RLC/SM is probably not an appropriate choice.
+This is because the absence of actual RLC SDUs (replaced by the artificial
+generation of Buffer Status Reports) makes it not possible to provide
+the Scheduler with meaningful head-of-line-delay information, which is
+normally the metric of choice for the implementation of scheduling
+policies for real-time traffic flows. For the simulation and testing
+of such schedulers, it is advisable to use one of the realistic RLC
+implementations (RLC/UM or RLC/AM).</p>
+</div>
+<div class="section" id="pdcp">
+<h4>PDCP<a class="headerlink" href="#pdcp" title="Permalink to this headline">¶</a></h4>
+<p>The reference document for the specification of the PDCP entity is
+<a class="reference internal" href="lte-references.html#ts36323">[TS36323]</a>. With respect to this specification, the PDCP model
+implemented in the simulator supports only the following features:</p>
+<blockquote>
+<div><ul class="simple">
+<li>transfer of data (user plane or control plane);</li>
+<li>maintenance of PDCP SNs;</li>
+</ul>
+</div></blockquote>
+<p>The following features are currently not supported:</p>
+<blockquote>
+<div><ul class="simple">
+<li>header compression and decompression of IP data flows using the ROHC protocol;</li>
+<li>in-sequence delivery of upper layer PDUs at re-establishment of lower layers;</li>
+<li>duplicate elimination of lower layer SDUs at re-establishment of lower layers for radio bearers mapped on RLC AM;</li>
+<li>ciphering and deciphering of user plane data and control plane data;</li>
+<li>integrity protection and integrity verification of control plane data;</li>
+<li>timer based discard;</li>
+<li>duplicate discarding.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="rrc">
+<h3>RRC<a class="headerlink" href="#rrc" title="Permalink to this headline">¶</a></h3>
+<p>At the time of this writing, the RRC model implemented in the
+simulator is not comprehensive of all the funcionalities defined
+by the 3GPP standard.
+In particular, RRC messaging over signaling
+radio bearer is not implemented; the corresponding control
+functionality is performed via direct function calls among the
+relevant eNB and UE protocol entities and the helper objects.</p>
+<p>The RRC implements the procedures for
+managing the connection of the UEs to the eNBs, and to setup and
+release the Radio Bearers. The RRC entity also takes care of multiplexing
+data packets coming from the upper layers into the appropriate radio
+bearer. In the UE, this is performed in the uplink by using the
+Traffic Flow Template classifier (TftClassifier). In the eNB, this is
+done for downlink traffic, by leveraging on the one-to-one mapping
+between S1-U bearers and Radio Bearers, which is required by the 3GPP
+specifications.</p>
+</div>
+<div class="section" id="phy">
+<h3>PHY<a class="headerlink" href="#phy" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id39">
+<h4>Overview<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
+<p>The physical layer model provided in this LTE simulator is based on
+the one described in <a class="reference internal" href="lte-references.html#piro2011">[Piro2011]</a>, with the following modifications.  The model now includes the
+inter cell intereference calculation and the simulation of uplink traffic, including both packet transmission and CQI generation.</p>
+<div class="section" id="mac-to-channel-delay">
+<h5>MAC to Channel delay<a class="headerlink" href="#mac-to-channel-delay" title="Permalink to this headline">¶</a></h5>
+<p>To model the latency of real MAC and PHY implementations, the PHY model simulates a MAC-to-channel delay in multiples of TTIs (1ms). The transmission of both data and control packets are delayed by this amount.</p>
+</div>
+<div class="section" id="cqi-feedback">
+<h5>CQI feedback<a class="headerlink" href="#cqi-feedback" title="Permalink to this headline">¶</a></h5>
+<p>The generation of CQI feedback is done accordingly to what specified in <a class="reference internal" href="lte-references.html#ffapi">[FFAPI]</a>. In detail, we considered the generation
+of periodic wideband CQI (i.e., a single value of channel state that is deemed representative of all RBs
+in use) and inband CQIs (i.e., a set of value representing the channel state for each RB).</p>
+<p>The CQI feedbacks are currently evaluated according to the SINR perceived by data transmissions (i.e., PDSHC for downlink and PUSCH for uplink) instead of the one based on reference signals (i.e., RS for downlink and SRS for uplink) since that signals are not implemented in the current version of the PHY layer. This implies that a UE has to transmit some data in order to have CQI feedbacks. This assumption is based on the fact that the reference signals defined in LTE are usually multiplexed within the data transmissions resources.</p>
+</div>
+<div class="section" id="interference-model">
+<h5>Interference Model<a class="headerlink" href="#interference-model" title="Permalink to this headline">¶</a></h5>
+<p>The PHY model is based on the well-known Gaussian interference models, according to which the powers of interfering signals (in linear units) are summed up together to determine the overall interference power.</p>
+<p>The sequence diagram of Figure <a class="reference internal" href="#fig-lte-phy-interference"><em>Sequence diagram of the PHY interference calculation procedure</em></a> shows how interfering signals are processed to calculate the SINR, and how SINR is then used for the generation of CQI feedback.</p>
+<div class="figure align-center" id="fig-lte-phy-interference">
+<img alt="_images/lte-phy-interference.png" src="_images/lte-phy-interference.png" />
+<p class="caption">Sequence diagram of the PHY interference calculation procedure</p>
+</div>
+</div>
+<div class="section" id="lte-spectrum-model">
+<h5>LTE Spectrum Model<a class="headerlink" href="#lte-spectrum-model" title="Permalink to this headline">¶</a></h5>
+<p>The usage of the radio spectrum by eNBs and UEs in LTE is described in
+<a class="reference internal" href="lte-references.html#ts36101">[TS36101]</a>. In the simulator, radio spectrum usage is modeled as follows.
+Let <img class="math" src="_images/math/5190caf4999f2c15c41331f1172ce648ecd030fa.png" alt="f_c"/> denote the  LTE Absolute Radio Frequency Channel Number, which
+identifies the carrier frequency on a 100 kHz raster; furthermore, let <img class="math" src="_images/math/ff5fb3d775862e2123b007eb4373ff6cc1a34d4e.png" alt="B"/> be
+the Transmission Bandwidth Configuration in number of Resource Blocks. For every
+pair <img class="math" src="_images/math/4e6cd121cdde5b9577a81e4d9aa7c0f4ed7f0a59.png" alt="(f_c,B)"/> used in the simulation we define a corresponding spectrum
+model using the Spectrum framework described
+in <a class="reference internal" href="lte-references.html#baldo2009">[Baldo2009]</a>.  <img class="math" src="_images/math/5190caf4999f2c15c41331f1172ce648ecd030fa.png" alt="f_c"/> and <img class="math" src="_images/math/ff5fb3d775862e2123b007eb4373ff6cc1a34d4e.png" alt="B"/> can be configured for every eNB instantiated
+in the simulation; hence, each eNB can use a different spectrum model. Every UE
+will automatically use the spectrum model of the eNB it is attached to. Using
+the MultiModelSpectrumChannel described in <a class="reference internal" href="lte-references.html#baldo2009">[Baldo2009]</a>, the interference
+among eNBs that use different spectrum models is properly accounted for.
+This allows to simulate dynamic spectrum access policies, such as for
+example the spectrum licensing policies that are
+discussed in <a class="reference internal" href="lte-references.html#ofcom2600mhz">[Ofcom2600MHz]</a>.</p>
+</div>
+</div>
+<div class="section" id="phy-error-model">
+<h4>PHY Error Model<a class="headerlink" href="#phy-error-model" title="Permalink to this headline">¶</a></h4>
+<p>The simulator includes an error model of the data plane (i.e., PDSCH) according to the standard link-to-system mapping (LSM) techniques. The choice is aligned with the standard system simulation methodology of OFDMA  radio transmission technology. Thanks to LSM we are able to maintain a good level of accuracy and at the same time limiting the computational complexity increase. It is based on the mapping of single link layer performance obtained by means of link level simulators to system (in our case network) simulators. In particular link the layer simulator is used for generating the performance of a single link from a PHY layer perspective, usually in terms of code block error rate (BLER), under specific static conditions. LSM allows the usage of these parameters in more complex scenarios, typical of system/network simulators, where we have more links, interference and &#8220;colored&#8221; channel propagation phenomena (e.g., frequency selective fading).</p>
+<p>To do this the Vienna LTE Simulator <a class="reference internal" href="lte-references.html#viennaltesim">[ViennaLteSim]</a> has been used for what concerns the extraction of link layer performance and the Mutual Information Based Effective SINR (MIESM) as LSM mapping function using part of the work recently published by the Signet Group of University of Padua <a class="reference internal" href="lte-references.html#paduapem">[PaduaPEM]</a>.</p>
+<div class="section" id="miesm">
+<h5>MIESM<a class="headerlink" href="#miesm" title="Permalink to this headline">¶</a></h5>
+<p>The specific LSM method adopted is the one based on the usage of a mutual information metric, commonly referred to as the mutual information per per coded bit (MIB or MMIB when a mean of multiples MIBs is involved). Another option would be represented by the Exponential ESM (EESM); however, recent studies demonstrate that MIESM outperforms EESM in terms of accuracy <a class="reference internal" href="lte-references.html#lozanocost">[LozanoCost]</a>.
+Moreover, from an HARQ perspective, the MIESM has more flexibility in managing the combinations of the HARQ blocks. In fact, by working in the MI field, the formulas for evaluating both the chase combining (CC) and the incremental redundancy (IR) schemes work in the MI field as well, where there is no dependency respect to the MCS. On the contrary, the HARQ model of EESM works in the effective SINR field, which is MCS dependent, and does not allow the combination of HARQ blocks using different MCSs <a class="reference internal" href="lte-references.html#wimaxemd">[wimaxEmd]</a>.</p>
+<div class="figure align-center" id="fig-miesm-architecture">
+<img alt="_images/miesm_scheme.png" src="_images/miesm_scheme.png" />
+<p class="caption">MIESM computational procedure diagram</p>
+</div>
+<p>The mutual information (MI) is dependent on the constellation mapping and can be calculated per transport block (TB) basis, by evaluating the MI over the symbols and the subcarrier. However, this would be too complex for a network simulator. Hence, in our implementation a flat channel response within the RB has been considered; therefore the overall MI of a TB is calculated averaging the MI evaluated per each RB used in the TB. In detail, the implemented scheme is depicted in Figure <a class="reference internal" href="#fig-miesm-architecture"><em>MIESM computational procedure diagram</em></a>, where we see that the model starts by evaluating the MI value for each RB, represented in the figure by the SINR samples. Then the equivalent MI is evaluated per TB basis by averaging the MI values. Finally, a further step has to be done since the link level simulator returns the performance of the link in terms of block error rate (BLER) in a addive white guassian noise  (AWGN) channel, where the blocks are the code blocks (CBs) independently encoded/decoded by the turbo encoder. On this matter the standard 3GPP segmentation scheme has been used for estimating the actual CB size (described in section 5.1.2 of <a class="reference internal" href="lte-references.html#ts36212">[TS36212]</a>). This scheme divides the the TB in <img class="math" src="_images/math/47d1f4d60eacaa001e02e9f7e05e32443260235e.png" alt="N_{K_-}"/> blocks of size <img class="math" src="_images/math/f3e932980267d49191381fbc166d393c8104d41f.png" alt="K_-"/> and <img class="math" src="_images/math/dbc5e4796440f8aea041350eb4816afb60f33240.png" alt="N_{K+}"/> blocks of size <img class="math" src="_images/math/c8672121b070412f58db8a4542f5ecc9d831ffa8.png" alt="K_+"/>. Therefore the overall TB BLER (TBLER) can be expressed as</p>
+<div class="math">
+<p><img src="_images/math/adf3f0b16f1f38747b44fb1cb4dc5e2cf419b36d.png" alt="TBLER = 1- \prod\limits_{i=1}^{C}(1-CBLER_i)"/></p>
+</div><p>where the <img class="math" src="_images/math/18f53612c46b62037e3c7cc60c54d9d7274e9d34.png" alt="CBLER_i"/> is the BLER of the CB <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> obtained according to the link level simulator CB BLER curves.
+For estimating the <img class="math" src="_images/math/18f53612c46b62037e3c7cc60c54d9d7274e9d34.png" alt="CBLER_i"/>, the MI evaluation has been implemented according to its numerical approximation defined in <a class="reference internal" href="lte-references.html#wimaxemd">[wimaxEmd]</a>. Moreover, for reducing the complexity of the computation, the approximation has been converted into lookup tables. In detail, Gaussian cumulative model has been used for approximating the AWGN BLER curves with three parameters which provides a close fit to the standard AWGN performances, in formula:</p>
+<div class="math">
+<p><img src="_images/math/c67a23d92ea8d111d9b02d8a7610388a7074b054.png" alt="CBLER_i = \frac{1}{2}\left[1-erf\left(\frac{x-b_{ECR}}{\sqrt{2}c_{ECR}} \right) \right]"/></p>
+</div><p>where <img class="math" src="_images/math/26eeb5258ca5099acf8fe96b2a1049c48c89a5e6.png" alt="x"/> is the MI of the TB, <img class="math" src="_images/math/fae2ca412319c5aedc27a32d7f8e8b2ccac659ba.png" alt="b_{ECR}"/> represents the &#8220;transition center&#8221; and <img class="math" src="_images/math/c3c22bdaa84548fd358b2727164bb67038c4085a.png" alt="c_{ECR}"/> is related to the &#8220;transition width&#8221; of the Gaussian cumulative distribution for each Effective Code Rate (ECR) which is the actual transmission rate according to the channel coding and MCS. For limiting the computational complexity of the model we considered only a subset of the possible ECRs in fact we would have potentially 5076 possible ECRs (i.e., 27 MCSs and 188 CB sizes). On this respect, we will limit the CB sizes to some representative values (i.e., 40, 140, 160, 256, 512, 1024, 2048, 4032, 6144), while for the others the worst one approximating the real one will be used (i.e., the smaller CB size value available respect to the real one). This choice is aligned to the typical performance of turbo codes, where the CB size is not strongly impacting on the BLER. However, it is to be notes that for CB sizes lower than 1000 bits the effect might be relevant (i.e., till 2 dB); therefore, we adopt this unbalanced sampling interval for having more precision where it is necessary. This behaviour is confirmed by the figures presented in the Annes Section.</p>
+</div>
+<div class="section" id="bler-curves">
+<h5>BLER Curves<a class="headerlink" href="#bler-curves" title="Permalink to this headline">¶</a></h5>
+<p>On this respect, we reused part of the curves obtained within <a class="reference internal" href="lte-references.html#paduapem">[PaduaPEM]</a>. In detail, we introduced the CB size dependency to the CB BLER curves with the support of the developers of <a class="reference internal" href="lte-references.html#paduapem">[PaduaPEM]</a> and of the LTE Vienna Simulator. In fact, the module released provides the link layer performance only for what concerns the MCSs (i.e, with a given fixed ECR). In detail the new error rate curves for each has been evaluated with a simulation campaign with the link layer simulator for a single link with AWGN noise and for CB size of 104, 140, 256, 512, 1024, 2048, 4032 and 6144. These curves has been mapped with the Gaussian cumulative model formula presented above for obtaining the correspondents <img class="math" src="_images/math/fae2ca412319c5aedc27a32d7f8e8b2ccac659ba.png" alt="b_{ECR}"/> and <img class="math" src="_images/math/c3c22bdaa84548fd358b2727164bb67038c4085a.png" alt="c_{ECR}"/> parameters.</p>
+<p>The BLER perfomance of all MCS obtained with the link level simulator are plotted in the following figures (blue lines) together with their correspondent mapping to the Gaussian cumulative distribution (red dashed lines).</p>
+<div class="figure align-center" id="fig-mcs-1-4-ber">
+<img alt="_images/MCS_1_4.png" src="_images/MCS_1_4.png" style="width: 900px; height: 700px;" />
+<p class="caption">BLER for MCS 1, 2, 3 and 4.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-5-8-ber">
+<img alt="_images/MCS_5_8.png" src="_images/MCS_5_8.png" style="width: 900px; height: 700px;" />
+<p class="caption">BLER for MCS 5, 6, 7 and 8.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-9-12-ber">
+<img alt="_images/MCS_9_12.png" src="_images/MCS_9_12.png" style="width: 900px; height: 700px;" />
+<p class="caption">BLER for MCS 9, 10, 11 and 12.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-13-16-ber">
+<img alt="_images/MCS_13_16.png" src="_images/MCS_13_16.png" style="width: 900px; height: 700px;" />
+<p class="caption">BLER for MCS 13, 14, 15 and 16.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-17-20-ber">
+<img alt="_images/MCS_17_20.png" src="_images/MCS_17_20.png" style="width: 900px; height: 700px;" />
+<p class="caption">BLER for MCS 17, 17, 19 and 20.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-21-24-ber">
+<img alt="_images/MCS_21_24.png" src="_images/MCS_21_24.png" style="width: 900px; height: 700px;" />
+<p class="caption">BLER for MCS 21, 22, 23 and 24.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-25-28-ber">
+<img alt="_images/MCS_25_28.png" src="_images/MCS_25_28.png" style="width: 900px; height: 700px;" />
+<p class="caption">BLER for MCS 25, 26, 27 and 28.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-29-29-ber">
+<img alt="_images/MCS_29_29.png" src="_images/MCS_29_29.png" style="width: 900px; height: 700px;" />
+<p class="caption">BLER for MCS 29.</p>
+</div>
+</div>
+<div class="section" id="integration-of-the-bler-curves-in-the-ns-3-lte-module">
+<h5>Integration of the BLER curves in the ns-3 LTE module<a class="headerlink" href="#integration-of-the-bler-curves-in-the-ns-3-lte-module" title="Permalink to this headline">¶</a></h5>
+<p>The model implemented uses the curves for the LSM of the recently LTE PHY Error Model released in the ns3 community by the Signet Group <a class="reference internal" href="lte-references.html#paduapem">[PaduaPEM]</a> and the new ones generated for different CB sizes. The <tt class="docutils literal"><span class="pre">LteSpectrumPhy</span></tt> class is in charge of evaluating the TB BLER thanks to the methods provided by the <tt class="docutils literal"><span class="pre">LteMiErrorModel</span></tt> class, which is in charge of evaluating the TB BLER according to the vector of the perceived SINR per RB, the MCS and the size in order to proper model the segmentation of the TB in CBs. In order to obtain the vector of the perceived SINR two instances of <tt class="docutils literal"><span class="pre">LtePemSinrChunkProcessor</span></tt> (child of <tt class="docutils literal"><span class="pre">LteSinrChunkProcessor</span></tt> dedicated to evaluate the SINR for obtaining physical error performance) have been attached to UE downlink and eNB uplink <tt class="docutils literal"><span class="pre">LteSpectrumPhy</span></tt> modules for evaluating the error model distribution respectively of PDSCH (UE side) and ULSCH (eNB side).</p>
+<p>The model can be disabled for working with a zero-losses channel by setting the <tt class="docutils literal"><span class="pre">PemEnabled</span></tt> attribute of the <tt class="docutils literal"><span class="pre">LteSpectrumPhy</span></tt> class (by default is active). This can be done according to the standard ns3 attribute system procedure, that is:</p>
+<div class="highlight-python"><pre>Config::SetDefault ("ns3::LteSpectrumPhy::PemEnabled", BooleanValue (false));</pre>
+</div>
+</div>
+</div>
+<div class="section" id="mimo-model">
+<h4>MIMO Model<a class="headerlink" href="#mimo-model" title="Permalink to this headline">¶</a></h4>
+<p>The use of multiple antennas both at transmitter and receiver side, known as multiple-input and multiple-output (MIMO), is a problem well studied in literature during the past years. Most of the work concentrate on evaluating analytically the gain that the different MIMO schemes might have in term of capacity; however someones provide also information of the gain in terms of received power _[CatreuxMIMO].</p>
+<p>According to the considerations above, a model more flexible can be obtained considering the gain that MIMO schemes bring in the system from a statistical point of view. As highlighted before, _[CatreuxMIMO] presents the statistical gain of several MIMO solutions respect to the SISO one in case of no correlation between the antennas. In the work the gain is presented as the cumulative distribution function (CDF) of the output SINR for what concern SISO, MIMO-Alamouti, MIMO-MMSE, MIMO-OSIC-MMSE and MIMO-ZF schemes. Elaborating the results, the output SINR distribution can be approximated with a log-normal one with different mean and variance as function of the scheme considered. However, the variances are not so different and they are approximatively equal to the one of the SISO mode already included in the shadowing component of the <tt class="docutils literal"><span class="pre">BuildingsPropagationLossModel</span></tt>, in detail:</p>
+<blockquote>
+<div><ul class="simple">
+<li>SISO: <img class="math" src="_images/math/bdcecf933e8f0156c51d5ed628d0a1d4a131a0fe.png" alt="\mu = 13.5"/> and <img class="math" src="_images/math/c4f6ab552e60d0fe1c01a2d23242f94abf3ce265.png" alt="\sigma = 20"/> [dB].</li>
+<li>MIMO-Alamouti: <img class="math" src="_images/math/9fe20003f476ad1cd7653952d253104c9fe91f8e.png" alt="\mu = 17.7"/> and <img class="math" src="_images/math/8ff49e61d2da3d702bf78806488b17af6f0371a4.png" alt="\sigma = 11.1"/> [dB].</li>
+<li>MIMO-MMSE: <img class="math" src="_images/math/f8ce9f90d92f040705090fdeb47f22cf05870b93.png" alt="\mu = 10.7"/> and <img class="math" src="_images/math/38bbac87fad332d0e55545285b07f1812f8b3d42.png" alt="\sigma = 16.6"/> [dB].</li>
+<li>MIMO-OSIC-MMSE: <img class="math" src="_images/math/0f29f18709596df18f27c3e4b0e4335e203f2e5e.png" alt="\mu = 12.6"/> and <img class="math" src="_images/math/94db5482e79610cc146b7364cd36bc8ec3d710d5.png" alt="\sigma = 15.5"/> [dB].</li>
+<li>MIMO-ZF: <img class="math" src="_images/math/a06718d11cecdd5288239cac1088a8a2946485bb.png" alt="\mu = 10.3"/> and <img class="math" src="_images/math/2526379cc80e15fdf52d1f4fb728364fb4fbe0f5.png" alt="\sigma = 12.6"/> [dB].</li>
+</ul>
+</div></blockquote>
+<p>Therefore the PHY layer implements the MIMO model as the gain perceived by the receiver when using a MIMO scheme respect to the one obtained using SISO one. We note that, these gains referred to a case where there is no correlation between the antennas in MIMO scheme; therefore do not model degradation due to paths correlation.</p>
+</div>
+</div>
+</div>
+<div class="section" id="channel-and-propagation">
+<h2>Channel and Propagation<a class="headerlink" href="#channel-and-propagation" title="Permalink to this headline">¶</a></h2>
+<p>The LTE module works with the channel objects provided by the Spectrum module, i.e., either SingleModelSpectrumChannel or MultiModelSpectrumChannel. Because of these, all the propagation models supported by these objecs can be used within the LTE module.</p>
+<div class="section" id="use-of-the-buildings-model-with-lte">
+<h3>Use of the Buildings model with LTE<a class="headerlink" href="#use-of-the-buildings-model-with-lte" title="Permalink to this headline">¶</a></h3>
+<p>The recommended propagation model to be used with the LTE
+module is the one provided by the Buildings module, which was in fact
+designed specifically with LTE (though it can be used with other
+wireless technologies as well). Please refer to the documentation of
+the Buildings module for generic information on the propagation model
+it provides.</p>
+<p>In this section we will highlight some considerations that
+specifically apply when the Buildings module is used together with the
+LTE module.</p>
+<p>The naming convention used in the following will be:</p>
+<blockquote>
+<div><ul class="simple">
+<li>User equipment:  UE</li>
+<li>Macro Base Station: MBS</li>
+<li>Small cell Base Station (e.g., pico/femtocell): SC</li>
+</ul>
+</div></blockquote>
+<p>The LTE module considers FDD only, and implements downlink and uplink propagation separately. As a consequence, the following pathloss computations are performed</p>
+<blockquote>
+<div><ul class="simple">
+<li>MBS &lt;-&gt; UE (indoor and outdoor)</li>
+<li>SC (indoor and outdoor) &lt;-&gt; UE (indoor and outdoor)</li>
+</ul>
+</div></blockquote>
+<p>The LTE model does not provide the following pathloss computations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>UE &lt;-&gt; UE</li>
+<li>MBS &lt;-&gt; MBS</li>
+<li>MBS &lt;-&gt; SC</li>
+<li>SC &lt;-&gt; SC</li>
+</ul>
+</div></blockquote>
+<p>The Buildings model does not know the actual type of the node; i.e.,
+it is not aware of whether a transmitter node is a UE, a MBS, or a
+SC. Rather, the Buildings model only cares about the position of the
+node: whether it is indoor and outdoor, and what is its z-axis respect
+to the rooftop level. As a consequence, for an eNB node that is placed
+outdoor and at a z-coordinate above the rooftop level, the propagation
+models typical of MBS will be used by the Buildings
+module. Conversely, for an eNB that is placed outdoor but below the
+rooftop,  or indoor, the propagation models typical of pico and
+femtocells will be used.</p>
+<p>For communications involving at least one indoor node, the
+corresponding wall penetration losses will be calculated by the
+Buildings model. This covers the following use cases:</p>
+<blockquote>
+<div><ul class="simple">
+<li>MBS &lt;-&gt; indoor UE</li>
+<li>outdoor SC &lt;-&gt; indoor UE</li>
+<li>indoor SC &lt;-&gt; indoor UE</li>
+<li>indoor SC &lt;-&gt; outdoor UE</li>
+</ul>
+</div></blockquote>
+<p>Please refer to the documentation of the Buildings module for details
+on the actual models used in each case.</p>
+</div>
+<div class="section" id="fading-model">
+<h3>Fading Model<a class="headerlink" href="#fading-model" title="Permalink to this headline">¶</a></h3>
+<p>The LTE module includes a trace-based fading model derived from the one developed during the GSoC 2010 <a class="reference internal" href="lte-references.html#piro2011">[Piro2011]</a>. The main characteristic of this model is the fact that the fading evaluation during simulation run-time is based on per-calculated traces. This is done to limit the computational complexity of the simulator. On the other hand, it needs huge structures for storing the traces; therefore, a trade-off between the number of possible parameters and the memory occupancy has to be found. The most important ones are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>users&#8217; speed: relative speed between users (affects the Doppler frequency, which in turns affects the time-variance property of the fading)</li>
+<li>number of taps (and relative power): number of multiple paths considered, which affects the frequency property of the fading.</li>
+<li>time granularity of the trace: sampling time of the trace.</li>
+<li>frequency granularity of the trace: number of values in frequency to be evaluated.</li>
+<li>length of trace: ideally large as the simulation time, might be reduced by windowing mechanism.</li>
+<li>number of users: number of independent traces to be used (ideally one trace per user).</li>
+</ul>
+</div></blockquote>
+<p>With respect to the mathematical channel propagation model, we suggest the one provided by the <tt class="docutils literal"><span class="pre">rayleighchan</span></tt> function of Matlab, since it provides a well accepted channel modelization both in time and frequency domain. For more information, the reader is referred to  <a class="reference internal" href="lte-references.html#mathworks">[mathworks]</a>.</p>
+<p>The simulator provides a matlab script (<tt class="docutils literal"><span class="pre">/lte/model/JakesTraces/fading-trace-generator.m</span></tt>) for generating traces based on the format used by the simulator.
+In detail, the channel object created with the rayleighchan function is used for filtering a discrete-time impulse signal in order to obtain the channel impulse response. The filtering is repeated for different TTI, thus yielding subsequent time-correlated channel responses (one per TTI). The channel response is then processed with the <tt class="docutils literal"><span class="pre">pwelch</span></tt> function for obtaining its power spectral density values, which are then saved in a file with the proper format compatible with the simulator model.</p>
+<p>Since the number of variable it is pretty high, generate traces considering all of them might produce a high number of traces of huge size. On this matter, we considered the following assumptions of the parameters based on the 3GPP fading propagation conditions (see Annex B.2 of <a class="reference internal" href="lte-references.html#ts36104">[TS36104]</a>):</p>
+<blockquote>
+<div><ul class="simple">
+<li>users&#8217; speed: typically only a few discrete values are considered, i.e.:<ul>
+<li>0 and 3 kmph for pedestrian scenarios</li>
+<li>30 and 60 kmph for vehicular scenarios</li>
+<li>0, 3, 30 and 60 for urban scenarios</li>
+</ul>
+</li>
+<li>channel taps: only a limited number of sets of channel taps are normally considered, for example three models are mentioned in Annex B.2 of <a class="reference internal" href="lte-references.html#ts36104">[TS36104]</a>.</li>
+<li>time granularity: we need one fading value per TTI, i.e., every 1 ms (as this is the granularity in time of the ns-3 LTE PHY model).</li>
+<li>frequency granularity: we need one fading value per RB (which is the frequency granularity of the spectrum model used by the ns-3 LTE model).</li>
+<li>length of the trace: the simulator includes the windowing mechanism implemented during the GSoC 2011, which consists of picking up a window of the trace each window length in a random fashion.</li>
+<li>per-user fading process: users share the same fading trace, but for each user a different starting point in the trace is randomly picked up. This choice was made to avoid the need to provide one fading trace per user.</li>
+</ul>
+</div></blockquote>
+<p>According to the parameters we considered, the following formula express in detail the total size <img class="math" src="_images/math/c93f72100c91d0b0b93acd28e04a45693a14901b.png" alt="S_{traces}"/> of the fading traces:</p>
+<div class="math">
+<p><img src="_images/math/ae405135ea7b6d064554d9157ab14f83d706ba70.png" alt="S_{traces} = S_{sample} \times N_{RB} \times \frac{T_{trace}}{T_{sample}} \times N_{scenarios} \mbox{ [bytes]}"/></p>
+</div><p>where <img class="math" src="_images/math/83bc71b9926081dc234c8d1a82cf40093d5f699e.png" alt="S_{sample}"/> is the size in bytes of the sample (e.g., 8 in case of double precision, 4 in case of float precision), <img class="math" src="_images/math/1b904931e0846977647051415a07a84b5331fea2.png" alt="N_{RB}"/> is the number of RB or set of RBs to be considered, <img class="math" src="_images/math/1f1007b1c1b45769aa745e3c7bad5d767c578061.png" alt="T_{trace}"/> is the total length of the trace, <img class="math" src="_images/math/6e36291ed4468aaf103815f469b8cd3ec42bf9e3.png" alt="T_{sample}"/> is the time resolution of the trace (1 ms), and <img class="math" src="_images/math/72a0b819024a79f1d280424845c34f16be605a66.png" alt="N_{scenarios}"/> is the number of fading scenarios that are desired (i.e., combinations of different sets of channel taps and user speed values). We provide traces for 3 different scenarios one for each taps configuration defined in Annex B.2 of <a class="reference internal" href="lte-references.html#ts36104">[TS36104]</a>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Pedestrian: with nodes&#8217; speed of 3 kmph.</li>
+<li>Vehicular: with nodes&#8217; speed of 60 kmph.</li>
+<li>Urban: with nodes&#8217; speed of 3 kmph.</li>
+</ul>
+</div></blockquote>
+<p>hence <img class="math" src="_images/math/d294e6bb973beecafec97e15f7ea10fffb680314.png" alt="N_{scenarios} = 3"/>. All traces have <img class="math" src="_images/math/7fb9290d72b58cb0be05e9a2810a52618150c35e.png" alt="T_{trace} = 10"/> s and <img class="math" src="_images/math/52f241d0a817e68e3108439506a63bc191f8e1ec.png" alt="RB_{NUM} = 100"/>. This results in a total 24 MB bytes of traces.</p>
+</div>
+<div class="section" id="antennas">
+<h3>Antennas<a class="headerlink" href="#antennas" title="Permalink to this headline">¶</a></h3>
+<p>Being based on the SpectrumPhy, the LTE PHY model supports antenna
+modeling via the ns-3 AntennaModel class. Hence, any model based on
+this class can be associated with any eNB or UE instance. For
+instance, the use of the CosineAntennaModel associated with an eNB
+device allows to model one sector of a macro base station. By default,
+the IsotropicAntennaModel is used for both eNBs and UEs.</p>
+</div>
+</div>
+<div class="section" id="helpers">
+<h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
+<p>Two helper objects are use to setup simulations and configure the
+various components. These objects are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>LteHelper, which takes care of the configuration of the LTE radio
+access network, as well as of coordinating the setup and release of
+EPS bearers</li>
+<li>EpcHelper, which takes care of the configuratio of the Evolved
+Packet Core</li>
+</ul>
+</div></blockquote>
+<p>It is possible to create a simple LTE-only simulations by
+using LteHelper alone, or to create complete LTE-EPC simulations by
+using both LteHelper and EpcHelper. When both helpers are used, they
+interact in a master-slave fashion, with LteHelper being the Master
+that interacts directly with the user program, and EpcHelper working
+&#8220;under the hood&#8221; to configure the EPC upon explicit methods called by
+LteHelper. The exact interactions are displayed in the Figure <a class="reference internal" href="#fig-helpers"><em>Sequence diagram of the interaction between LteHelper and EpcHelper</em></a>.</p>
+<div class="figure align-center" id="fig-helpers">
+<img alt="_images/helpers.png" src="_images/helpers.png" />
+<p class="caption">Sequence diagram of the interaction between LteHelper and EpcHelper</p>
+</div>
+<p>A few notes on the above diagram:</p>
+<blockquote>
+<div><ul class="simple">
+<li>the role of the MME is taken by the EpcHelper, since we don&#8217;t have
+an MME at the moment (the current code supports data plane only);</li>
+<li>in a real LTE/EPC system, the setup of the RadioBearer comes after
+the setup of the S1 bearer, but here due to the use of Helpers
+instead of S1-AP messages we do it the other way around
+(RadioBearers first, then S1 bearer) because of easier
+implementation. This is fine to do since the current code focuses
+on control plane only.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Design Documentation</a><ul>
+<li><a class="reference internal" href="#overall-architecture">Overall Architecture</a></li>
+<li><a class="reference internal" href="#lte-model">LTE Model</a><ul>
+<li><a class="reference internal" href="#design-criteria">Design Criteria</a></li>
+<li><a class="reference internal" href="#architecture">Architecture</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#epc-model">EPC Model</a><ul>
+<li><a class="reference internal" href="#id6">Design Criteria</a></li>
+<li><a class="reference internal" href="#id7">Architecture</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#detailed-description-of-protocol-elements">Detailed description of protocol elements</a><ul>
+<li><a class="reference internal" href="#mac">MAC</a><ul>
+<li><a class="reference internal" href="#the-femtoforum-mac-scheduler-interface">The FemtoForum MAC Scheduler Interface</a></li>
+<li><a class="reference internal" href="#resource-allocation-model">Resource Allocation Model</a></li>
+<li><a class="reference internal" href="#adaptive-modulation-and-coding">Adaptive Modulation and Coding</a></li>
+<li><a class="reference internal" href="#round-robin-rr-scheduler">Round Robin (RR) Scheduler</a></li>
+<li><a class="reference internal" href="#proportional-fair-pf-scheduler">Proportional Fair (PF) Scheduler</a></li>
+<li><a class="reference internal" href="#transport-blocks">Transport Blocks</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rlc-and-pdcp">RLC and PDCP</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#service-interfaces">Service Interfaces</a><ul>
+<li><a class="reference internal" href="#pdcp-service-interface">PDCP Service Interface</a><ul>
+<li><a class="reference internal" href="#pdcp-service-primitives">PDCP Service Primitives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rlc-service-interface">RLC Service Interface</a><ul>
+<li><a class="reference internal" href="#rlc-service-primitives">RLC Service Primitives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mac-service-interface">MAC Service Interface</a><ul>
+<li><a class="reference internal" href="#mac-service-primitives">MAC Service Primitives</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#interactions-between-entities-and-services">Interactions between entities and services</a><ul>
+<li><a class="reference internal" href="#transmit-operations-in-downlink">Transmit operations in downlink</a></li>
+<li><a class="reference internal" href="#retransmission-in-downlink">Retransmission in downlink</a></li>
+<li><a class="reference internal" href="#transmit-operations-in-uplink">Transmit operations in uplink</a></li>
+<li><a class="reference internal" href="#retransmission-in-uplink">Retransmission in uplink</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#am-data-transfer">AM data transfer</a><ul>
+<li><a class="reference internal" href="#management-of-buffers-in-transmit-operations">Management of buffers in transmit operations</a></li>
+<li><a class="reference internal" href="#calculation-of-the-buffer-size">Calculation of the buffer size</a></li>
+<li><a class="reference internal" href="#concatenation-and-segmentation">Concatenation and Segmentation</a></li>
+<li><a class="reference internal" href="#re-segmentation">Re-segmentation</a></li>
+<li><a class="reference internal" href="#unsupported-features">Unsupported features</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rlc-sm">RLC/SM</a></li>
+<li><a class="reference internal" href="#pdcp">PDCP</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rrc">RRC</a></li>
+<li><a class="reference internal" href="#phy">PHY</a><ul>
+<li><a class="reference internal" href="#id39">Overview</a><ul>
+<li><a class="reference internal" href="#mac-to-channel-delay">MAC to Channel delay</a></li>
+<li><a class="reference internal" href="#cqi-feedback">CQI feedback</a></li>
+<li><a class="reference internal" href="#interference-model">Interference Model</a></li>
+<li><a class="reference internal" href="#lte-spectrum-model">LTE Spectrum Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#phy-error-model">PHY Error Model</a><ul>
+<li><a class="reference internal" href="#miesm">MIESM</a></li>
+<li><a class="reference internal" href="#bler-curves">BLER Curves</a></li>
+<li><a class="reference internal" href="#integration-of-the-bler-curves-in-the-ns-3-lte-module">Integration of the BLER curves in the ns-3 LTE module</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#mimo-model">MIMO Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#channel-and-propagation">Channel and Propagation</a><ul>
+<li><a class="reference internal" href="#use-of-the-buildings-model-with-lte">Use of the Buildings model with LTE</a></li>
+<li><a class="reference internal" href="#fading-model">Fading Model</a></li>
+<li><a class="reference internal" href="#antennas">Antennas</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#helpers">Helpers</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lte.html"
+                        title="previous chapter">LTE Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lte-user.html"
+                        title="next chapter">User Documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/lte-design.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="lte-user.html" title="User Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lte.html" title="LTE Module"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="lte.html" >LTE Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,537 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Statistical Framework &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="next" title="Topology Input Readers" href="topology.html" />
+    <link rel="prev" title="Propagation" href="propagation.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="topology.html" title="Topology Input Readers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="propagation.html" title="Propagation"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="statistical-framework">
+<h1>Statistical Framework<a class="headerlink" href="#statistical-framework" title="Permalink to this headline">¶</a></h1>
+<p>This chapter outlines work on simulation data collection and the
+statistical framework for ns-3.</p>
+<p>The source code for the statistical framework lives in the directory
+<tt class="docutils literal"><span class="pre">src/stats</span></tt>.</p>
+<div class="section" id="goals">
+<h2>Goals<a class="headerlink" href="#goals" title="Permalink to this headline">¶</a></h2>
+<p>Primary objectives for this effort are the following:</p>
+<ul class="simple">
+<li>Provide functionality to record, calculate, and present data and statistics for analysis of network simulations.</li>
+<li>Boost simulation performance by reducing the need to generate extensive trace logs in order to collect data.</li>
+<li>Enable simulation control via online statistics, e.g. terminating simulations or repeating trials.</li>
+</ul>
+<p>Derived sub-goals and other target features include the following:</p>
+<ul class="simple">
+<li>Integration with the existing ns-3 tracing system as the basic instrumentation framework of the internal simulation engine, e.g. network stacks, net devices, and channels.</li>
+<li>Enabling users to utilize the statistics framework without requiring use of the tracing system.</li>
+<li>Helping users create, aggregate, and analyze data over multiple trials.</li>
+<li>Support for user created instrumentation, e.g. of application specific events and measures.</li>
+<li>Low memory and CPU overhead when the package is not in use.</li>
+<li>Leveraging existing analysis and output tools as much as possible.  The framework may provide some basic statistics, but the focus is on collecting data and making it accessible for manipulation in established tools.</li>
+<li>Eventual support for distributing independent replications is important but not included in the first round of features.</li>
+</ul>
+</div>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The statistics framework includes the following features:</p>
+<ul class="simple">
+<li>The core framework and two basic data collectors: A counter, and a min/max/avg/total observer.</li>
+<li>Extensions of those to easily work with times and packets.</li>
+<li>Plaintext output formatted for omnetpp.</li>
+<li>Database output using sqlite3, a standalone, lightweight, high performance SQL engine.</li>
+<li>Mandatory and open ended metadata for describing and working with runs.</li>
+<li>An example based on the notional experiment of examining the properties of NS-3&#8217;s default ad hoc WiFi performance.  It incorporates the following:<ul>
+<li>Constructs of a two node ad hoc WiFi network, with the nodes a parameterized distance apart.</li>
+<li>UDP traffic source and sink applications with slightly different behavior and measurement hooks than the stock classes.</li>
+<li>Data collection from the NS-3 core via existing trace signals, in particular data on frames transmitted and received by the WiFi MAC objects.</li>
+<li>Instrumentation of custom applications by connecting new trace signals to the stat framework, as well as via direct updates.  Information is recorded about total packets sent and received, bytes transmitted, and end-to-end delay.</li>
+<li>An example of using packet tags to track end-to-end delay.</li>
+<li>A simple control script which runs a number of trials of the experiment at varying distances and queries the resulting database to produce a graph using GNUPlot.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="to-do">
+<h2>To-Do<a class="headerlink" href="#to-do" title="Permalink to this headline">¶</a></h2>
+<p>High priority items include:</p>
+<ul class="simple">
+<li>Inclusion of online statistics code, e.g. for memory efficient confidence intervals.</li>
+<li>Provisions in the data collectors for terminating runs, i.e. when a threshold or confidence is met.</li>
+<li>Data collectors for logging samples over time, and output to the various formats.</li>
+<li>Demonstrate writing simple cyclic event glue to regularly poll some value.</li>
+</ul>
+<p>Each of those should prove straightforward to incorporate in the current framework.</p>
+</div>
+<div class="section" id="approach">
+<h2>Approach<a class="headerlink" href="#approach" title="Permalink to this headline">¶</a></h2>
+<p>The framework is based around the following core principles:</p>
+<ul class="simple">
+<li>One experiment trial is conducted by one instance of a simulation program, whether in parallel or serially.</li>
+<li>A control script executes instances of the simulation, varying parameters as necessary.</li>
+<li>Data is collected and stored for plotting and analysis using external scripts and existing tools.</li>
+<li>Measures within the ns-3 core are taken by connecting the stat framework to existing trace signals.</li>
+<li>Trace signals or direct manipulation of the framework may be used to instrument custom simulation code.</li>
+</ul>
+<p>Those basic components of the framework and their interactions are depicted in the following figure.</p>
+<img alt="_images/Stat-framework-arch.png" src="_images/Stat-framework-arch.png" />
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>This section goes through the process of constructing an experiment in the framework and producing data for analysis (graphs) from it, demonstrating the structure and API along the way.</p>
+<div class="section" id="question">
+<h3>Question<a class="headerlink" href="#question" title="Permalink to this headline">¶</a></h3>
+<p>&#8216;&#8217;What is the (simulated) performance of ns-3&#8217;s WiFi NetDevices (using the default settings)?  How far apart can wireless nodes be in a simulation before they cannot communicate reliably?&#8217;&#8216;</p>
+<ul class="simple">
+<li>Hypothesis: Based on knowledge of real life performance, the nodes should communicate reasonably well to at least 100m apart.  Communication beyond 200m shouldn&#8217;t be feasible.</li>
+</ul>
+<p>Although not a very common question in simulation contexts, this is an important property of which simulation developers should have a basic understanding.  It is also a common study done on live hardware.</p>
+</div>
+<div class="section" id="simulation-program">
+<h3>Simulation Program<a class="headerlink" href="#simulation-program" title="Permalink to this headline">¶</a></h3>
+<p>The first thing to do in implementing this experiment is developing the simulation program.  The code for this example can be found in <tt class="docutils literal"><span class="pre">examples/stats/wifi-example-sim.cc</span></tt>.  It does the following main steps.</p>
+<ul>
+<li><p class="first">Declaring parameters and parsing the command line using <tt class="docutils literal"><span class="pre">ns3::CommandLine</span></tt>.</p>
+<div class="highlight-python"><pre>CommandLine cmd;
+cmd.AddValue("distance", "Distance apart to place nodes (in meters).",
+             distance);
+cmd.AddValue("format", "Format to use for data output.",
+             format);
+cmd.AddValue("experiment", "Identifier for experiment.",
+             experiment);
+cmd.AddValue("strategy", "Identifier for strategy.",
+             strategy);
+cmd.AddValue("run", "Identifier for run.",
+             runID);
+cmd.Parse (argc, argv);</pre>
+</div>
+</li>
+<li><p class="first">Creating nodes and network stacks using <tt class="docutils literal"><span class="pre">ns3::NodeContainer</span></tt>, <tt class="docutils literal"><span class="pre">ns3::WiFiHelper</span></tt>, and <tt class="docutils literal"><span class="pre">ns3::InternetStackHelper</span></tt>.</p>
+<div class="highlight-python"><pre>NodeContainer nodes;
+nodes.Create(2);
+
+WifiHelper wifi;
+wifi.SetMac("ns3::AdhocWifiMac");
+wifi.SetPhy("ns3::WifiPhy");
+NetDeviceContainer nodeDevices = wifi.Install(nodes);
+
+InternetStackHelper internet;
+internet.Install(nodes);
+Ipv4AddressHelper ipAddrs;
+ipAddrs.SetBase("192.168.0.0", "255.255.255.0");
+ipAddrs.Assign(nodeDevices);</pre>
+</div>
+</li>
+<li><p class="first">Positioning the nodes using <tt class="docutils literal"><span class="pre">ns3::MobilityHelper</span></tt>.  By default the nodes have static mobility and won&#8217;t move, but must be positioned the given distance apart.  There are several ways to do this; it is done here using <tt class="docutils literal"><span class="pre">ns3::ListPositionAllocator</span></tt>, which draws positions from a given list.</p>
+<div class="highlight-python"><pre>MobilityHelper mobility;
+Ptr&lt;ListPositionAllocator&gt; positionAlloc =
+  CreateObject&lt;ListPositionAllocator&gt;();
+positionAlloc-&gt;Add(Vector(0.0, 0.0, 0.0));
+positionAlloc-&gt;Add(Vector(0.0, distance, 0.0));
+mobility.SetPositionAllocator(positionAlloc);
+mobility.Install(nodes);</pre>
+</div>
+</li>
+<li><p class="first">Installing a traffic generator and a traffic sink.  The stock <tt class="docutils literal"><span class="pre">Applications</span></tt> could be used, but the example includes custom objects in <tt class="docutils literal"><span class="pre">src/test/test02-apps.(cc|h)</span></tt>.  These have a simple behavior, generating a given number of packets spaced at a given interval.  As there is only one of each they are installed manually; for a larger set the <tt class="docutils literal"><span class="pre">ns3::ApplicationHelper</span></tt> class could be used.  The commented-out <tt class="docutils literal"><span class="pre">Config::Set</span></tt> line changes the destination of the packets, set to broadcast by default in this example.  Note that in general WiFi may have different performance for broadcast and unicast frames due to different rate control and MAC retransmission policies.</p>
+<div class="highlight-python"><pre>Ptr&lt;Node&gt; appSource = NodeList::GetNode(0);
+Ptr&lt;Sender&gt; sender = CreateObject&lt;Sender&gt;();
+appSource-&gt;AddApplication(sender);
+sender-&gt;Start(Seconds(1));
+
+Ptr&lt;Node&gt; appSink = NodeList::GetNode(1);
+Ptr&lt;Receiver&gt; receiver = CreateObject&lt;Receiver&gt;();
+appSink-&gt;AddApplication(receiver);
+receiver-&gt;Start(Seconds(0));
+
+//  Config::Set("/NodeList/*/ApplicationList/*/$Sender/Destination",
+//              Ipv4AddressValue("192.168.0.2"));</pre>
+</div>
+</li>
+<li><p class="first">Configuring the data and statistics to be collected.  The basic paradigm is that an <tt class="docutils literal"><span class="pre">ns3::DataCollector</span></tt> object is created to hold information about this particular run, to which observers and calculators are attached to actually generate data.  Importantly, run information includes labels for the &#8216;&#8217;experiment&#8217;&#8216;, &#8216;&#8217;strategy&#8217;&#8216;, &#8216;&#8217;input&#8217;&#8216;, and &#8216;&#8217;run&#8217;&#8216;.  These are used to later identify and easily group data from multiple trials.</p>
+<ul class="simple">
+<li>The experiment is the study of which this trial is a member.  Here it is on WiFi performance and distance.</li>
+<li>The strategy is the code or parameters being examined in this trial.  In this example it is fixed, but an obvious extension would be to investigate different WiFi bit rates, each of which would be a different strategy.</li>
+<li>The input is the particular problem given to this trial.  Here it is simply the distance between the two nodes.</li>
+<li>The runID is a unique identifier for this trial with which it&#8217;s information is tagged for identification in later analysis.  If no run ID is given the example program makes a (weak) run ID using the current time.</li>
+</ul>
+<p>Those four pieces of metadata are required, but more may be desired.  They may be added to the record using the <tt class="docutils literal"><span class="pre">ns3::DataCollector::AddMetadata()</span></tt> method.</p>
+<div class="highlight-python"><pre>DataCollector data;
+data.DescribeRun(experiment,
+                 strategy,
+                 input,
+                 runID);
+data.AddMetadata("author", "tjkopena");</pre>
+</div>
+<p>Actual observation and calculating is done by <tt class="docutils literal"><span class="pre">ns3::DataCalculator</span></tt> objects, of which several different types exist.  These are created by the simulation program, attached to reporting or sampling code, and then registered with the <tt class="docutils literal"><span class="pre">ns3::DataCollector</span></tt> so they will be queried later for their output.  One easy observation mechanism is to use existing trace sources, for example to instrument objects in the ns-3 core without changing their code.  Here a counter is attached directly to a trace signal in the WiFi MAC layer on the target node.</p>
+<div class="highlight-python"><pre>Ptr&lt;PacketCounterCalculator&gt; totalRx =
+  CreateObject&lt;PacketCounterCalculator&gt;();
+totalRx-&gt;SetKey("wifi-rx-frames");
+Config::Connect("/NodeList/1/DeviceList/*/$ns3::WifiNetDevice/Rx",
+                MakeCallback(&amp;PacketCounterCalculator::FrameUpdate,
+                                  totalRx));
+data.AddDataCalculator(totalRx);</pre>
+</div>
+<p>Calculators may also be manipulated directly.  In this example, a counter is created and passed to the traffic sink application to be updated when packets are received.</p>
+<div class="highlight-python"><pre>Ptr&lt;CounterCalculator&lt;&gt; &gt; appRx =
+  CreateObject&lt;CounterCalculator&lt;&gt; &gt;();
+appRx-&gt;SetKey("receiver-rx-packets");
+receiver-&gt;SetCounter(appRx);
+data.AddDataCalculator(appRx);</pre>
+</div>
+<p>To increment the count, the sink&#8217;s packet processing code then calls one of the calculator&#8217;s update methods.</p>
+<div class="highlight-python"><pre>m_calc-&gt;Update();</pre>
+</div>
+<p>The program includes several other examples as well, using both the primitive calculators such as <tt class="docutils literal"><span class="pre">ns3::CounterCalculator</span></tt> and those adapted for observing packets and times.  In <tt class="docutils literal"><span class="pre">src/test/test02-apps.(cc|h)</span></tt> it also creates a simple custom tag which it uses to track end-to-end delay for generated packets, reporting results to a <tt class="docutils literal"><span class="pre">ns3::TimeMinMaxAvgTotalCalculator</span></tt> data calculator.</p>
+</li>
+<li><p class="first">Running the simulation, which is very straightforward once constructed.</p>
+<div class="highlight-python"><pre>Simulator::Run();</pre>
+</div>
+</li>
+<li><p class="first">Generating either omnetpp or sqlite output, depending on the command line arguments.  To do this a <tt class="docutils literal"><span class="pre">ns3::DataOutputInterface</span></tt> object is created and configured.  The specific type of this will determine the output format.  This object is then given the <tt class="docutils literal"><span class="pre">ns3::DataCollector</span></tt> object which it interrogates to produce the output.</p>
+<div class="highlight-python"><pre>Ptr&lt;DataOutputInterface&gt; output;
+if (format == "omnet") {
+  NS_LOG_INFO("Creating omnet formatted data output.");
+  output = CreateObject&lt;OmnetDataOutput&gt;();
+} else {
+  #ifdef STAT_USE_DB
+    NS_LOG_INFO("Creating sqlite formatted data output.");
+    output = CreateObject&lt;SqliteDataOutput&gt;();
+  #endif
+}
+
+output-&gt;Output(data);</pre>
+</div>
+</li>
+<li><p class="first">Freeing any memory used by the simulation.  This should come at the end of the main function for the example.</p>
+<div class="highlight-python"><pre>Simulator::Destroy();</pre>
+</div>
+</li>
+</ul>
+<div class="section" id="logging">
+<h4>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h4>
+<p>To see what the example program, applications, and stat framework are doing in detail, set the <tt class="docutils literal"><span class="pre">NS_LOG</span></tt> variable appropriately.  The following will provide copious output from all three.</p>
+<div class="highlight-python"><pre>export NS_LOG=StatFramework:WiFiDistanceExperiment:WiFiDistanceApps</pre>
+</div>
+<p>Note that this slows down the simulation extraordinarily.</p>
+</div>
+<div class="section" id="sample-output">
+<h4>Sample Output<a class="headerlink" href="#sample-output" title="Permalink to this headline">¶</a></h4>
+<p>Compiling and simply running the test program will append omnet++ formatted output such as the following to <tt class="docutils literal"><span class="pre">data.sca</span></tt>.</p>
+<div class="highlight-python"><pre>run run-1212239121
+
+attr experiment "wifi-distance-test"
+attr strategy "wifi-default"
+attr input "50"
+attr description ""
+
+attr "author" "tjkopena"
+
+scalar wifi-tx-frames count 30
+scalar wifi-rx-frames count 30
+scalar sender-tx-packets count 30
+scalar receiver-rx-packets count 30
+scalar tx-pkt-size count 30
+scalar tx-pkt-size total 1920
+scalar tx-pkt-size average 64
+scalar tx-pkt-size max 64
+scalar tx-pkt-size min 64
+scalar delay count 30
+scalar delay total 5884980ns
+scalar delay average 196166ns
+scalar delay max 196166ns
+scalar delay min 196166ns</pre>
+</div>
+</div>
+</div>
+<div class="section" id="control-script">
+<h3>Control Script<a class="headerlink" href="#control-script" title="Permalink to this headline">¶</a></h3>
+<p>In order to automate data collection at a variety of inputs (distances), a simple Bash script is used to execute a series of simulations.  It can be found at <tt class="docutils literal"><span class="pre">examples/stats/wifi-example-db.sh</span></tt>.  The script runs through a set of distances, collecting the results into an sqlite3 database.  At each distance five trials are conducted to give a better picture of expected performance.  The entire experiment takes only a few dozen seconds to run on a low end machine as there is no output during the simulation and little traffic is generated.</p>
+<div class="highlight-python"><pre>#!/bin/sh
+
+DISTANCES="25 50 75 100 125 145 147 150 152 155 157 160 162 165 167 170 172 175 177 180"
+TRIALS="1 2 3 4 5"
+
+echo WiFi Experiment Example
+
+if [ -e data.db ]
+then
+  echo Kill data.db?
+  read ANS
+  if [ "$ANS" = "yes" -o "$ANS" = "y" ]
+  then
+    echo Deleting database
+    rm data.db
+  fi
+fi
+
+for trial in $TRIALS
+do
+  for distance in $DISTANCES
+  do
+    echo Trial $trial, distance $distance
+    ./bin/test02 --format=db --distance=$distance --run=run-$distance-$trial
+  done
+done</pre>
+</div>
+</div>
+<div class="section" id="analysis-and-conclusion">
+<h3>Analysis and Conclusion<a class="headerlink" href="#analysis-and-conclusion" title="Permalink to this headline">¶</a></h3>
+<p>Once all trials have been conducted, the script executes a simple SQL query over the database using the sqlite3 command line program.  The query computes average packet loss in each set of trials associated with each distance.  It does not take into account different strategies, but the information is present in the database to make some simple extensions and do so.  The collected data is then passed to GNUPlot for graphing.</p>
+<div class="highlight-python"><pre>CMD="select exp.input,avg(100-((rx.value*100)/tx.value)) \
+    from Singletons rx, Singletons tx, Experiments exp \
+    where rx.run = tx.run AND \
+          rx.run = exp.run AND \
+          rx.name='receiver-rx-packets' AND \
+          tx.name='sender-tx-packets' \
+    group by exp.input \
+    order by abs(exp.input) ASC;"
+
+sqlite3 -noheader data.db "$CMD" &gt; wifi-default.data
+sed -i "s/|/   /" wifi-default.data
+gnuplot wifi-example.gnuplot</pre>
+</div>
+<p>The GNUPlot script found at <tt class="docutils literal"><span class="pre">examples/stats/wifi-example.gnuplot</span></tt> simply defines the output format and some basic formatting for the graph.</p>
+<div class="highlight-python"><pre>set terminal postscript portrait enhanced lw 2 "Helvetica" 14
+
+set size 1.0, 0.66
+
+#-------------------------------------------------------
+set out "wifi-default.eps"
+#set title "Packet Loss Over Distance"
+set xlabel "Distance (m) --- average of 5 trials per point"
+set xrange [0:200]
+set ylabel "% Packet Loss"
+set yrange [0:110]
+
+plot "wifi-default.data" with lines title "WiFi Defaults"</pre>
+</div>
+<div class="section" id="end-result">
+<h4>End Result<a class="headerlink" href="#end-result" title="Permalink to this headline">¶</a></h4>
+<p>The resulting graph provides no evidence that the default WiFi model&#8217;s performance is necessarily unreasonable and lends some confidence to an at least token faithfulness to reality.  More importantly, this simple investigation has been carried all the way through using the statistical framework.  Success!</p>
+<img alt="_images/Wifi-default.png" src="_images/Wifi-default.png" />
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Statistical Framework</a><ul>
+<li><a class="reference internal" href="#goals">Goals</a></li>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#to-do">To-Do</a></li>
+<li><a class="reference internal" href="#approach">Approach</a></li>
+<li><a class="reference internal" href="#example">Example</a><ul>
+<li><a class="reference internal" href="#question">Question</a></li>
+<li><a class="reference internal" href="#simulation-program">Simulation Program</a><ul>
+<li><a class="reference internal" href="#logging">Logging</a></li>
+<li><a class="reference internal" href="#sample-output">Sample Output</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#control-script">Control Script</a></li>
+<li><a class="reference internal" href="#analysis-and-conclusion">Analysis and Conclusion</a><ul>
+<li><a class="reference internal" href="#end-result">End Result</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="propagation.html"
+                        title="previous chapter">Propagation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="topology.html"
+                        title="next chapter">Topology Input Readers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/statistics.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="topology.html" title="Topology Input Readers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="propagation.html" title="Propagation"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

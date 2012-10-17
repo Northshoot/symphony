@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Testing Documentation &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="LTE Module" href="lte.html" />
+    <link rel="next" title="Profiling Documentation" href="lte-profiling.html" />
+    <link rel="prev" title="User Documentation" href="lte-user.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="lte-profiling.html" title="Profiling Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="lte-user.html" title="User Documentation"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="lte.html" accesskey="U">LTE Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="testing-documentation">
+<h1>Testing Documentation<a class="headerlink" href="#testing-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>To test and validate the ns-3 LTE module, several test suites are provided which are integrated with the ns-3 test framework.
+To run them, you need to have configured the build of the simulator in this way:</p>
+<div class="highlight-python"><pre>./waf configure --enable-tests --enable-modules=lte --enable-examples
+./test.py</pre>
+</div>
+<p>The above will run not only the test suites belonging to the LTE module, but also those belonging to all the other ns-3 modules on which the LTE module depends. See the ns-3 manual for generic information on the testing framework.</p>
+<p>You can get a more detailed report in HTML format in this way:</p>
+<div class="highlight-python"><pre>./test.py -w results.html</pre>
+</div>
+<p>After the above command has run, you can view the detailed result for each test by opening the file <tt class="docutils literal"><span class="pre">results.html</span></tt> with a web browser.</p>
+<p>You can run each test suite separately using this command:</p>
+<div class="highlight-python"><pre>./test.py -s test-suite-name</pre>
+</div>
+<p>For more details about <tt class="docutils literal"><span class="pre">test.py</span></tt> and the ns-3 testing framework, please refer to the ns-3 manual.</p>
+</div>
+<div class="section" id="description-of-the-test-suites">
+<h2>Description of the test suites<a class="headerlink" href="#description-of-the-test-suites" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="unit-tests">
+<h3>Unit Tests<a class="headerlink" href="#unit-tests" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="sinr-calculation-in-the-downlink">
+<h4>SINR calculation in the Downlink<a class="headerlink" href="#sinr-calculation-in-the-downlink" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-downlink-sinr</span></tt>
+checks that the SINR calculation in
+downlink is performed correctly. The SINR in the downlink is calculated for each
+RB assigned to data transmissions by dividing the power of the
+intended signal from the considered eNB by the sum of the noise power plus all
+the transmissions on the same RB coming from other eNBs (the interference
+signals):</p>
+<div class="math">
+<p><img src="_images/math/b2bc3451ffe31764d8a6c56a6eb2fa4035af741a.png" alt="\gamma = \frac{ P_\mathrm{signal} }{ P_\mathrm{noise} + \sum P_\mathrm{interference} }"/></p>
+</div><p>In general, different signals can be active during different periods
+of time. We define a <em>chunk</em> as the time interval between any two
+events of type either start or end of a waveform. In other words, a
+chunk identifies a time interval during which the set of active
+waveforms does not change. Let <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> be the generic chunk,
+<img class="math" src="_images/math/522e993eb314346e5a4bffbff12cf0dddf85f1f8.png" alt="T_i"/> its duration and <img class="math" src="_images/math/7a714f89ec2967ea98705d2ddbd843daf05eb727.png" alt="\mathrm{SINR_i}"/> its SINR,
+calculated with the above equation. The calculation of the average
+SINR <img class="math" src="_images/math/0a77e00ef67d55b00011e6199b6024e1b6afdde2.png" alt="\overline{\gamma}"/> to be used for CQI feedback reporting
+uses the following formula:</p>
+<div class="math">
+<p><img src="_images/math/b13c4a6a053f5262c6dfb19c8e3b00f3735449ff.png" alt="\overline{\gamma} = \frac{ \sum_i {\gamma}_i  T_i }{ \sum_i T_{i} }"/></p>
+</div><p>The test suite checks that the above calculation is performed
+correctly in the simulator. The test vectors are obtained offline by
+an Octave script that implements the above equation, and that
+recreates a number of random transmitted signals and interference
+signals that mimic a scenario where an UE is trying to decode a signal
+from an eNB while facing interference from other eNBs. The test passes
+if the calculated values are equal to the test vector within a
+tolerance of <img class="math" src="_images/math/7c310994f508e9ec12cf977cf64d55ca215d8d23.png" alt="10^{-7}"/>. The tolerance is meant to account for
+the approximation errors typical of floating point arithmetic.</p>
+</div>
+<div class="section" id="sinr-calculation-in-the-uplink">
+<h4>SINR calculation in the Uplink<a class="headerlink" href="#sinr-calculation-in-the-uplink" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-uplink-sinr</span></tt> checks that the SINR calculation in
+uplink is performed correctly. This test suite is identical to
+<tt class="docutils literal"><span class="pre">lte-downlink-sinr</span></tt> described in the previous section, with the
+difference than both the signal and the interference now refer to
+transmissions by the UEs, and reception is performed by the eNB.
+This test suite recreates a number of random transmitted signals and
+interference signals to mimic a scenario where an eNB is trying to
+decode the signal from several UEs simultaneously (the ones in the
+cell of the eNB) while facing interference from other UEs (the ones
+belonging to other cells).</p>
+<p>The test vectors are obtained by a dedicated Octave script. The test
+passes if the calculated values are equal to the test vector within a
+tolerance of <img class="math" src="_images/math/7c310994f508e9ec12cf977cf64d55ca215d8d23.png" alt="10^{-7}"/> which, as for the downlink SINR test,
+deals with floating point arithmetic approximation issues.</p>
+</div>
+<div class="section" id="e-utra-absolute-radio-frequency-channel-number-earfcn">
+<h4>E-UTRA Absolute Radio Frequency Channel Number (EARFCN)<a class="headerlink" href="#e-utra-absolute-radio-frequency-channel-number-earfcn" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-earfcn</span></tt> checks that the carrier frequency used
+by the LteSpectrumValueHelper class (which implements the LTE spectrum
+model) is done in compliance with <a class="reference internal" href="lte-references.html#ts36101">[TS36101]</a>, where the E-UTRA
+Absolute Radio Frequency Channel Number (EARFCN) is defined. The test
+vector for this test suite comprises a set of EARFCN values and the
+corresponding carrier frequency calculated by hand following the
+specification of <a class="reference internal" href="lte-references.html#ts36101">[TS36101]</a>. The test passes if the carrier frequency
+returned by LteSpectrumValueHelper is the same as the known value for
+each element in the test vector.</p>
+</div>
+</div>
+<div class="section" id="system-tests">
+<h3>System Tests<a class="headerlink" href="#system-tests" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="adaptive-modulation-and-coding-tests">
+<span id="sec-lte-amc-tests"></span><h4>Adaptive Modulation and Coding Tests<a class="headerlink" href="#adaptive-modulation-and-coding-tests" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-link-adaptation</span></tt> provides system tests recreating a
+scenario with a single eNB and a single UE. Different test cases are created
+corresponding to different SNR values perceived by the UE. The aim of the test
+is to check that in each test case the chosen MCS corresponds to some known
+reference values. These reference values are obtained by
+re-implementing in Octave (see <cite>src/lte/test/reference/lte_amc.m</cite>) the
+model described in Section <a class="reference internal" href="lte-design.html#sec-lte-amc"><em>Adaptive Modulation and Coding</em></a> for the calculation of the
+spectral efficiency, and determining the corresponding MCS index
+by manually looking up the tables in <a class="reference internal" href="lte-references.html#r1-081483">[R1-081483]</a>. The resulting test vector is
+represented in Figure <a class="reference internal" href="#fig-lte-mcs-index"><em>Test vector for Adaptive Modulation and Coding</em></a>.</p>
+<p>The MCS which is used by the simulator is measured by
+obtaining the tracing output produced by the scheduler after 4ms (this
+is needed to account for the initial delay in CQI reporting). The SINR
+which is calcualted by the simulator is also obtained using the
+<tt class="docutils literal"><span class="pre">LteSinrChunkProcessor</span></tt> interface. The test
+passes if both the following conditions are satisfied:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>the SINR calculated by the simulator correspond to the SNR
+of the test vector within an absolute tolerance of <img class="math" src="_images/math/7c310994f508e9ec12cf977cf64d55ca215d8d23.png" alt="10^{-7}"/>;</li>
+<li>the MCS index used by the simulator exactly corresponds to
+the one in the test vector.</li>
+</ol>
+</div></blockquote>
+<div class="figure align-center" id="fig-lte-mcs-index">
+<img alt="_images/lte-mcs-index.png" src="_images/lte-mcs-index.png" />
+<p class="caption">Test vector for Adaptive Modulation and Coding</p>
+</div>
+</div>
+<div class="section" id="inter-cell-interference-tests">
+<h4>Inter-cell Interference Tests<a class="headerlink" href="#inter-cell-interference-tests" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <cite>lte-interference`</cite> provides system tests recreating an
+inter-cell interference scenario with two eNBs, each having a single
+UE attached to it and employing Adaptive Modulation and Coding both in
+the downlink and in the uplink. The topology of the scenario
+is depicted in Figure <a class="reference internal" href="#fig-lte-interference-test-scenario"><em>Topology for the inter-cell interference test</em></a>. The
+<img class="math" src="_images/math/44612d9d6ec37da7f4edd0f205d65cdac5954dc0.png" alt="d_1"/> parameter represents the distance of each UE to the eNB it
+is attached to, whereas the <img class="math" src="_images/math/117778db99ba8932dc35128d085c2619f4f690a1.png" alt="d_2"/> parameter represent the
+interferer distance. We note that the scenario topology is such that
+the interferer distance is the same for uplink and downlink; still,
+the actual interference power perceived will be different, because of
+the different propagation loss in the uplink and downlink
+bands. Different test cases are obtained by varying the <img class="math" src="_images/math/44612d9d6ec37da7f4edd0f205d65cdac5954dc0.png" alt="d_1"/>
+and <img class="math" src="_images/math/117778db99ba8932dc35128d085c2619f4f690a1.png" alt="d_2"/> parameters.</p>
+<div class="figure align-center" id="fig-lte-interference-test-scenario">
+<img alt="_images/lte-interference-test-scenario.png" src="_images/lte-interference-test-scenario.png" />
+<p class="caption">Topology for the inter-cell interference test</p>
+</div>
+<p>The test vectors are obtained by use of a dedicated octave script
+(available in
+<cite>src/lte/test/reference/lte_link_budget_interference.m</cite>), which does
+the link budget calculations (including interference) corresponding to the topology of each
+test case, and outputs the resulting SINR and spectral efficiency. The
+latter is then used to determine (using the same procedure adopted for
+<a class="reference internal" href="#sec-lte-amc-tests"><em>Adaptive Modulation and Coding Tests</em></a>. We note that the test vector
+contains separate values for uplink and downlink.</p>
+</div>
+<div class="section" id="round-robin-scheduler-performance">
+<h4>Round Robin scheduler performance<a class="headerlink" href="#round-robin-scheduler-performance" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-rr-ff-mac-scheduler</span></tt> creates different test cases with
+a single eNB and several UEs, all having the same Radio Bearer specification. In
+each test case, the UEs see the same SINR from the eNB; different test cases are
+implemented by using different distance among UEs and the eNB (i.e., therefore
+having different SINR values) and different numbers of UEs. The test consists on
+checking that the obtained throughput performance is equal among users and
+matches a reference throughput value obtained according to the SINR perceived
+within a given tolerance.</p>
+<p>The test vector is obtained according to the values of transport block
+size reported in table 7.1.7.2.1-1 of <a class="reference internal" href="lte-references.html#ts36213">[TS36213]</a>, considering an
+equal distribution of the physical resource block among the users
+using Resource Allocation Type 0 as defined in Section 7.1.6.1 of
+<a class="reference internal" href="lte-references.html#ts36213">[TS36213]</a>.  Let <img class="math" src="_images/math/1dc1c0119a604b91be9142370dc3159b6a9bbcb9.png" alt="\tau"/> be the TTI duration, <img class="math" src="_images/math/fc97ef67268cd4e91bacdf12b8901d7036c9a056.png" alt="N"/> be the
+number of UEs, <img class="math" src="_images/math/ff5fb3d775862e2123b007eb4373ff6cc1a34d4e.png" alt="B"/> the transmission bandwidth configuration in
+number of RBs, <img class="math" src="_images/math/6e28ce12d49d39f160d5a0ef54077fc98e4b9d2b.png" alt="G"/> the RBG size, <img class="math" src="_images/math/5d1e4485dc90c450e8c76826516c1b2ccb8fce16.png" alt="M"/> the modulation and
+coding scheme in use at the given SINR and <img class="math" src="_images/math/9d110f4e481adc606eb28ceabf1873ecf0c58d51.png" alt="S(M, B)"/> be the
+transport block size in bits as defined by 3GPP TS 36.213. We first
+calculate the number <img class="math" src="_images/math/859ccf4cd60c7bc6b8fa1afc9a42dc811a826d6f.png" alt="L"/> of RBGs allocated to each user as</p>
+<div class="math">
+<p><img src="_images/math/f413f3fcd3ce4bb51bc03077394420a2e4f8c078.png" alt="L = \left\lfloor \frac{B}{NG} \right\rfloor"/></p>
+</div><p>The reference throughput <img class="math" src="_images/math/2554b6496c3b678897e9b060ef00aa9f0a7d7ece.png" alt="T"/> in bit/s achieved by each UE is then calculated as</p>
+<div class="math">
+<p><img src="_images/math/d2d7644f27b8ee53cb9be05613876e573d0bc983.png" alt="T =  \frac{S(M, L G)}{8 \; \tau}"/></p>
+</div><p>The test passes if the measured throughput matches with the reference throughput
+within a relative tolerance of 0.1. This tolerance is needed to account for the
+transient behavior at the beginning of the simulation (e.g., CQI feedback is
+only available after a few subframes) as well as for the accuracy of the
+estimator of the average throughput performance over the chosen simulation time
+(0.4s). This choice of the simulation time is justified by the need to
+follow the ns-3 guidelines of keeping the total execution time of the test
+suite low, in spite of the high number of test cases. In any case, we note that
+a lower value of the tolerance can be used when longer simulations are
+run.</p>
+<p>In Figure <a class="reference internal" href="#fig-lenathrtestcase1">fig-lenaThrTestCase1</a>, the curves labeled &#8220;RR&#8221; represent the test values
+calculated for the RR scheduler test, as a function of the number of UEs and of
+the MCS index being used in each test case.</p>
+<div class="figure align-center" id="fig-lenathrtestcase1">
+<img alt="_images/lenaThrTestCase1.png" src="_images/lenaThrTestCase1.png" />
+<p class="caption">Test vectors for the RR and PF Scheduler in the downlink in a
+scenario where all UEs use the same MCS.</p>
+</div>
+</div>
+<div class="section" id="proportional-fair-scheduler-performance">
+<h4>Proportional Fair scheduler performance<a class="headerlink" href="#proportional-fair-scheduler-performance" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-pf-ff-mac-scheduler</span></tt> creates different test cases with
+a single eNB, using the Proportional Fair (PF) scheduler, and several UEs, all
+having the same Radio Bearer specification. The test cases are grouped in two
+categories in order to evaluate the performance both in terms of the adaptation
+to the channel condition and from a fairness perspective.</p>
+<p>In the first category of test cases, the UEs are all placed at the
+same distance from the eNB, and hence all placed in order to have the
+same SINR. Different test cases are implemented by using a different
+SINR value and a different number of UEs. The test consists on
+checking that the obtained throughput performance matches with the
+known reference throughput up to a given tolerance. The expected
+behavior of the PF scheduler when all UEs have the same SNR is that
+each UE should get an equal fraction of the throughput obtainable by a
+single UE when using all the resources. We calculate the reference
+throughput value by dividing the throughput achievable by a single UE
+at the given SNR by the total number of UEs.
+Let <img class="math" src="_images/math/1dc1c0119a604b91be9142370dc3159b6a9bbcb9.png" alt="\tau"/> be the TTI duration, <img class="math" src="_images/math/ff5fb3d775862e2123b007eb4373ff6cc1a34d4e.png" alt="B"/> the transmission
+bandwidth configuration in number of RBs, <img class="math" src="_images/math/5d1e4485dc90c450e8c76826516c1b2ccb8fce16.png" alt="M"/> the modulation and
+coding scheme in use at the given SINR and <img class="math" src="_images/math/9d110f4e481adc606eb28ceabf1873ecf0c58d51.png" alt="S(M, B)"/> be the
+transport block size as defined in <a class="reference internal" href="lte-references.html#ts36213">[TS36213]</a>. The reference
+throughput <img class="math" src="_images/math/2554b6496c3b678897e9b060ef00aa9f0a7d7ece.png" alt="T"/> in bit/s achieved by each UE is calculated as</p>
+<div class="math">
+<p><img src="_images/math/be48915f12b2eb5bf4f6a5bd52bbe0a188bf5822.png" alt="T = \frac{S(M,B)}{\tau N}"/></p>
+</div><p>The curves labeled &#8220;PF&#8221; in Figure <a class="reference internal" href="#fig-lenathrtestcase1">fig-lenaThrTestCase1</a> represent the test values
+calculated for the PF scheduler tests of the first category, that we just described.</p>
+<p>The second category of tests aims at verifying the fairness of the PF
+scheduler in a more realistic simulation scenario where the UEs have a
+different SINR (constant for the whole simulation). In these conditions, the PF
+scheduler will give to each user a share of the system bandwidth that is
+proportional to the capacity achievable by a single user alone considered its
+SINR. In detail, let <img class="math" src="_images/math/50496bd204bbf34e209ecabe0729f4937fe69a1d.png" alt="M_i"/> be the modulation and coding scheme being used by
+each UE (which is a deterministic function of the SINR of the UE, and is hence
+known in this scenario). Based on the MCS, we determine the achievable
+rate <img class="math" src="_images/math/1ef7ab23d6fc7d336379d457f66aa6ed57d72ec9.png" alt="R_i"/> for each user <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> using the
+procedure described in Section~ref{sec:pfs}. We then define the
+achievable rate ratio <img class="math" src="_images/math/259fef03c22aa7065f225e9ba02ed2f56596ed9d.png" alt="\rho_{R,i}"/> of each user <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> as</p>
+<div class="math">
+<p><img src="_images/math/96dac77e28a643ed9b6c7703eab2c2b502fad6b9.png" alt="\rho_{R,i} = \frac{R_i}{\sum_{j=1}^N R_j}"/></p>
+</div><p>Let now <img class="math" src="_images/math/522e993eb314346e5a4bffbff12cf0dddf85f1f8.png" alt="T_i"/> be the throughput actually achieved by the UE <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> , which
+is obtained as part of the simulation output. We define the obtained throughput
+ratio <img class="math" src="_images/math/1920092d3e9b21e0ff006460d4a0ab68a68f8657.png" alt="\rho_{T,i}"/> of UE <img class="math" src="_images/math/34857b3ba74ce5cd8607f3ebd23e9015908ada71.png" alt="i"/> as</p>
+<div class="math">
+<p><img src="_images/math/57c55a5a650660579b90d2ba34abb9ed04ab5358.png" alt="\rho_{T,i} = \frac{T_i}{\sum_{j=1}^N T_j}"/></p>
+</div><p>The test consists of checking that the following condition is verified:</p>
+<div class="math">
+<p><img src="_images/math/29be427f103f67eb6ff26160ec8b0b876350e0bc.png" alt="\rho_{R,i} = \rho_{T,i}"/></p>
+</div><p>if so, it means that the throughput obtained by each UE over the whole
+simulation matches with the steady-state throughput expected by the PF scheduler
+according to the theory. This test can be derived from <a class="reference internal" href="lte-references.html#holtzman2000">[Holtzman2000]</a>
+as follows. From Section 3 of <a class="reference internal" href="lte-references.html#holtzman2000">[Holtzman2000]</a>, we know that</p>
+<div class="math">
+<p><img src="_images/math/b40fe864737b10c5b328f63f0a3dcdf1e5e4ab67.png" alt="\frac{T_i}{R_i} = c, \, \forall i"/></p>
+</div><p>where <img class="math" src="_images/math/3372c1cb6d68cf97c2d231acc0b47b95a9ed04cc.png" alt="c"/> is a constant. By substituting the above into the
+definition of <img class="math" src="_images/math/1920092d3e9b21e0ff006460d4a0ab68a68f8657.png" alt="\rho_{T,i}"/> given previously, we get</p>
+<div class="math">
+<p><img src="_images/math/0a622f13725a887f6821c6aeaaa611bd9fb3612a.png" alt="\frac{T_i}{\sum_{j=1}^N T_j} &amp;=  \frac{c R_i}{\sum_{j=1}^N c R_j} \\
+                             &amp;=  \frac{c R_i}{c \sum_{j=1}^N  R_j} \\
+                             &amp;=  \frac{R_i}{\sum_{j=1}^N  R_j}"/></p>
+</div><p>which is exactly the expression being used in the test.</p>
+<p>Figure <a class="reference internal" href="#fig-lenathrtestcase2"><em>Throughput ratio evaluation for the PF scheduler in a scenario
+where the UEs have MCS index </em></a> presents the results obtained in a test case with
+UEs <img class="math" src="_images/math/c65376b0e54bd760f7b018efce02f515ae002b3d.png" alt="i=1,\dots,5"/> that are located at a distance from the base
+station such that they will use respectively the MCS index <img class="math" src="_images/math/3f95ceffa03d1d744362c65984a2d666630b52cf.png" alt="28, 24, 16, 12,
+6"/>. From the figure, we note that, as expected, the obtained throughput is
+proportional to the achievable rate. In other words, the PF scheduler assign
+more resources to the users that use a higher MCS index.</p>
+<div class="figure align-center" id="fig-lenathrtestcase2">
+<img alt="_images/lenaThrTestCase2.png" src="_images/lenaThrTestCase2.png" />
+<p class="caption">Throughput ratio evaluation for the PF scheduler in a scenario
+where the UEs have MCS index <img class="math" src="_images/math/90d2a424ad775f35293cc40109fa6f5173a89f52.png" alt="28, 24, 16, 12, 6"/></p>
+</div>
+</div>
+<div class="section" id="building-propagation-loss-model">
+<h4>Building Propagation Loss Model<a class="headerlink" href="#building-propagation-loss-model" title="Permalink to this headline">¶</a></h4>
+<p>The aim of the system test is to verify the integration of the
+BuildingPathlossModel with the lte module. The test exploits a set of
+three pre calculated losses for generating the expected SINR at the
+receiver counting the transmission and the noise powers. These SINR
+values are compared with the results obtained from a LTE
+simulation that uses the BuildingPathlossModel. The reference loss values are
+calculated off-line with an Octave script
+(/test/reference/lte_pathloss.m). Each test case passes if the
+reference loss value is equal to the value calculated by the simulator
+within a tolerance of <img class="math" src="_images/math/07c927a5701e66c2ce5e47adc1b0ad17bddd4aba.png" alt="0.001"/> dB, which accouns for numerical
+errors in the calculations.</p>
+</div>
+<div class="section" id="physical-error-model">
+<h4>Physical Error Model<a class="headerlink" href="#physical-error-model" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-test-phy-error-model</span></tt> generates nine test cases with single eNB and a various number of UEs, all having the same Radio Bearer specification. Each test is designed for evaluating the error rate perceived by a specific TB size in order to verify that it corresponds to the expected values according to the BLER generated for CB size analog to the TB size. This means that, for instance, the test will check that the performance of a TB of <img class="math" src="_images/math/fc97ef67268cd4e91bacdf12b8901d7036c9a056.png" alt="N"/> bits is analogous to the one of a a CB size of <img class="math" src="_images/math/fc97ef67268cd4e91bacdf12b8901d7036c9a056.png" alt="N"/> bits by collecting the performance of a user which has been forced the generation of a such TB size according to the distance to eNB. In order to significantly test the BER at MAC level, we modified the Adaptive Modulation and Coding (AMC) module, the <tt class="docutils literal"><span class="pre">LteAmc</span></tt> class, for making it less robust to channel conditions by adding a configurable BER parameter (called <tt class="docutils literal"><span class="pre">Ber</span></tt> in the ns3 attribute system) which enable the selection of the desired BER at MAC level when choosing the MCS to be used. In detail, the AMC module has been forced to select the AMC considering a BER of 0.01 (instead of the standard value equal to 0.00005). We note that, these values do not reflect actual BER since they come from an analytical bound which do not consider all the transmission chain aspects; therefore the resulted BER might be different.</p>
+<p>The parameters of the nine test cases are reported in the following:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>4 UEs placed 1800 meters far from the eNB, which implies the use of MCS 2 (SINR of -5.51 dB) and a TB of 256 bits, that in turns produce a BER of 0.33 (see point A in figure <a class="reference internal" href="#fig-mcs-2-test"><em>BLER for tests 1, 2, 3.</em></a>).</li>
+<li>2 UEs placed 1800 meters far from the eNB, which implies the use of MCS 2 (SINR of -5.51 dB) and a TB of 528 bits, that in turns produce a BER of 0.11 (see point B in figure <a class="reference internal" href="#fig-mcs-2-test"><em>BLER for tests 1, 2, 3.</em></a>).</li>
+<li>1 UE placed 1800 meters far from the eNB, which implies the use of MCS 2 (SINR of -5.51 dB) and a TB of 1088 bits, that in turns produce a BER of 0.02 (see point C in figure <a class="reference internal" href="#fig-mcs-2-test"><em>BLER for tests 1, 2, 3.</em></a>).</li>
+<li>1 UE placed 600 meters far from the eNB, which implies the use of MCS 12 (SINR of 4.43 dB) and a TB of 4800 bits, that in turns produce a BER of 0.3 (see point D in figure <a class="reference internal" href="#fig-mcs-12-test"><em>BLER for tests 4, 5.</em></a>).</li>
+<li>3 UEs placed 600 meters far from the eNB, which implies the use of MCS 12 (SINR of 4.43 dB) and a TB of 1632 bits, that in turns produce a BER of 0.55 (see point E in figure <a class="reference internal" href="#fig-mcs-12-test"><em>BLER for tests 4, 5.</em></a>).</li>
+<li>1 UE placed 470 meters far from the eNB, which implies the use of MCS 16 (SINR of 8.48 dB) and a TB of 7272 bits (segmented in 2 CBs of 3648 and 3584 bits), that in turns produce a BER of 0.14, since each CB has CBLER equal to 0.075 (see point F in figure <a class="reference internal" href="#fig-mcs-14-test"><em>BLER for test 6.</em></a>).</li>
+</ol>
+</div></blockquote>
+<div class="figure align-center" id="fig-mcs-2-test">
+<img alt="_images/MCS_2_test.png" src="_images/MCS_2_test.png" />
+<p class="caption">BLER for tests 1, 2, 3.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-12-test">
+<img alt="_images/MCS_12_test.png" src="_images/MCS_12_test.png" />
+<p class="caption">BLER for tests 4, 5.</p>
+</div>
+<div class="figure align-center" id="fig-mcs-14-test">
+<img alt="_images/MCS_16_test.png" src="_images/MCS_16_test.png" />
+<p class="caption">BLER for test 6.</p>
+</div>
+<p>The test verifies that in each case the obtained number of packets received correctly falls within the 99.9% confidence interval (CI) of a Binomial distribution where the parameter <img class="math" src="_images/math/36f73fc1312ee0349b3f3a0f3bd9eb5504339011.png" alt="p"/> is equal to <img class="math" src="_images/math/05f1dcb98fb62b019b71c61bb8652ef0fea4f567.png" alt="1-BER"/>, the parameter <img class="math" src="_images/math/174fadd07fd54c9afe288e96558c92e0c1da733a.png" alt="n"/> is the total number of packets sent and the parameter <img class="math" src="_images/math/8c325612684d41304b9751c175df7bcc0f61f64f.png" alt="k"/> is the number of packets correctly received. The value of the CI has been chosen for guaranteeing a sufficient margin on the errors due to the quantization of the MI values in the tables.</p>
+</div>
+<div class="section" id="mimo-model">
+<h4>MIMO Model<a class="headerlink" href="#mimo-model" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-mimo</span></tt> aims at verifying both the effect of the gain considered for each Transmission Mode on the system performance and the Transmission Mode switching through the scheduler interface. The test consists on checking whether the amount of bytes received during a certain window of time (0.1 seconds in our case) corresponds to the expected ones according to the values of transport block
+size reported in table 7.1.7.2.1-1 of <a class="reference internal" href="lte-references.html#ts36213">[TS36213]</a>, similarly to what done for the tests of the schedulers.</p>
+<p>The test is performed both for Round Robin and Proportional Fair schedulers. The test passes if the measured throughput matches with the reference throughput within a relative tolerance of 0.1. This tolerance is needed to account for the
+transient behavior at the beginning of the simulation and the transition phase between the Transmission Modes.</p>
+</div>
+<div class="section" id="antenna-model-integration">
+<h4>Antenna Model integration<a class="headerlink" href="#antenna-model-integration" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <cite>lte-antenna</cite> checks that the AntennaModel integrated
+with the LTE model works correctly. This test suite recreates a
+simulation scenario with one eNB node at coordinates (0,0,0) and one
+UE node at coordinates (x,y,0). The eNB node is configured with an
+CosineAntennaModel having given orientation and beamwidth. The UE
+instead uses the default IsotropicAntennaModel. The test
+checks that the received power both in uplink and downlink account for
+the correct value of the antenna gain, which is determined
+offline; this is implemented by comparing the uplink and downlink SINR
+and checking that both match with the reference value up to a
+tolerance of <img class="math" src="_images/math/c61c5a1e7ecb8844cc11069bcbc3d592295c69f6.png" alt="10^{-6}"/> which accounts for numerical errors.
+Different test cases are provided by varying the x and y coordinates
+of the UE,  and the beamwidth and the orientation of the antenna of
+the eNB.</p>
+</div>
+<div class="section" id="rlc">
+<h4>RLC<a class="headerlink" href="#rlc" title="Permalink to this headline">¶</a></h4>
+<p>Two test suites <tt class="docutils literal"><span class="pre">lte-rlc-um-transmitter</span></tt> and
+<tt class="docutils literal"><span class="pre">lte-rlc-am-transmitter</span></tt> check that the UM RLC and the AM RLC
+implementation work correctly. Both these suites work by testing RLC
+instances connected to special test entities that play the role of the
+MAC and of the PDCP, implementing respectively the LteMacSapProvider
+and LteRlcSapUser interfaces. Different test cases (i.e., input test
+vector consisting of series of primitive calls by the MAC and the
+PDCP) are provided that check the behavior in the following cases:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>one SDU, one PDU: the MAC notifies a TX opportunity causes the creation of a PDU which exactly
+contains a whole SDU</li>
+<li>segmentation: the MAC notifies multiple TX opportunities that are smaller than the SDU
+size stored in the transmission buffer, which is then to be fragmented and hence
+multiple PDUs are generated;</li>
+<li>concatenation: the MAC notifies a TX opportunity that is bigger than the SDU, hence
+multiple SDUs are concatenated in the same PDU</li>
+<li>buffer status report: a series of new SDUs notifications by the
+PDCP is inteleaved with a series of TX opportunity notification in
+order to verify that the buffer status report procedure is
+correct.</li>
+</ol>
+</div></blockquote>
+<p>In all these cases, an output test vector is determine manually from
+knowledge of the input test vector and knowledge of the expected
+behavior. These test vector are specialized for UM RLC and
+AM RLC due to their different behavior. Each test case passes if the
+sequence of primitives triggered by the RLC instance being tested is
+exacly equal to the output test vector. In particular, for each PDU
+transmitted by the RLC instance, both the size and the content of the
+PDU are verified to check for an exact match with the test vector.</p>
+</div>
+<div class="section" id="gtp-u-protocol">
+<h4>GTP-U protocol<a class="headerlink" href="#gtp-u-protocol" title="Permalink to this headline">¶</a></h4>
+<p>The unit test suite <tt class="docutils literal"><span class="pre">epc-gtpu</span></tt> checks that the encoding and decoding of the GTP-U
+header is done correctly. The test fills in a header with a set of
+known values, adds the header to a packet, and then removes the header
+from the packet. The test fails if, upon removing, any of the fields
+in the GTP-U header is not decoded correctly. This is detected by
+comparing the decoded value from the known value.</p>
+</div>
+<div class="section" id="s1-u-interface">
+<h4>S1-U interface<a class="headerlink" href="#s1-u-interface" title="Permalink to this headline">¶</a></h4>
+<p>Two test suites (<tt class="docutils literal"><span class="pre">epc-s1u-uplink</span></tt> and <tt class="docutils literal"><span class="pre">epc-s1u-downlink</span></tt>) make
+sure that the S1-U interface implementation works correctly in
+isolation. This is achieved by creating a set of simulation scenarios
+where the EPC model alone is used, without the LTE model (i.e.,
+without the LTE radio protocol stack, which is replaced by simple CSMA
+devices). This checks that the
+interoperation between multiple EpcEnbApplication instances in
+multiple eNBs and the EpcSgwPgwApplication instance in the SGW/PGW
+node works correctly in a variety of scenarios, with varying numbers
+of end users (nodes with a CSMA device installed), eNBs, and different
+traffic patterns (packet sizes and number of total packets).
+Each test case works by injecting the chosen traffic pattern in the
+network (at the considered UE or at the remote host for in the uplink or the
+downlink test suite respectively) and checking that at the receiver
+(the remote host or each  considered UE, respectively) that exactly the same
+traffic patterns is received. If any mismatch in the transmitted and
+received traffic pattern is detected for any UE, the test fails.</p>
+</div>
+<div class="section" id="tft-classifier">
+<h4>TFT classifier<a class="headerlink" href="#tft-classifier" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">epc-tft-classifier</span></tt> checks in isolation that the
+behavior of the EpcTftClassifier class is correct. This is performed
+by creating different classifier instances where different TFT
+instances are activated, and testing for each classifier that an
+heterogeneous set of packets (including IP and TCP/UDP headers) is
+classified correctly. Several test cases are provided that check the
+different matching aspects of a TFT (e.g. local/remote IP address, local/remote port) both for uplink and
+downlink traffic.  Each test case corresponds to a specific packet and
+a specific classifier instance with a given set of TFTs. The test case
+passes if the bearer identifier returned by the classifier exactly
+matches with the one that is expected for the considered packet.</p>
+</div>
+<div class="section" id="end-to-end-lte-epc-data-plane-functionality">
+<h4>End-to-end LTE-EPC data plane functionality<a class="headerlink" href="#end-to-end-lte-epc-data-plane-functionality" title="Permalink to this headline">¶</a></h4>
+<p>The test suite <tt class="docutils literal"><span class="pre">lte-epc-e2e-data</span></tt> ensures the correct end-to-end
+functionality of the LTE-EPC data plane. For each test case in this
+suite, a complete LTE-EPC simulation
+scenario is created with the following characteristics:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a given number of eNBs</li>
+<li>for each eNB, a given number of UEs</li>
+<li>for each UE, a given number of active EPS bearers</li>
+<li>for each active EPS bearer, a given traffic pattern (number of UDP
+packets to be transmitted and packet size)</li>
+</ul>
+</div></blockquote>
+<p>Each test is executed by transmitting the given traffic pattern both
+in the uplink and in the downlink, at subsequent time intervals. The
+test passes if all the following conditions are satisfied:</p>
+<blockquote>
+<div><ul class="simple">
+<li>for each active EPS bearer, the transmitted and received traffic
+pattern (respectively  at the UE and the remote host for uplink,
+and vice versa for downlink) is exactly the same</li>
+<li>for each active EPS bearer and each direction (uplink or downlink),
+exactly the expected number of packet flows over the corresponding
+RadioBearer instance</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Testing Documentation</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#description-of-the-test-suites">Description of the test suites</a><ul>
+<li><a class="reference internal" href="#unit-tests">Unit Tests</a><ul>
+<li><a class="reference internal" href="#sinr-calculation-in-the-downlink">SINR calculation in the Downlink</a></li>
+<li><a class="reference internal" href="#sinr-calculation-in-the-uplink">SINR calculation in the Uplink</a></li>
+<li><a class="reference internal" href="#e-utra-absolute-radio-frequency-channel-number-earfcn">E-UTRA Absolute Radio Frequency Channel Number (EARFCN)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#system-tests">System Tests</a><ul>
+<li><a class="reference internal" href="#adaptive-modulation-and-coding-tests">Adaptive Modulation and Coding Tests</a></li>
+<li><a class="reference internal" href="#inter-cell-interference-tests">Inter-cell Interference Tests</a></li>
+<li><a class="reference internal" href="#round-robin-scheduler-performance">Round Robin scheduler performance</a></li>
+<li><a class="reference internal" href="#proportional-fair-scheduler-performance">Proportional Fair scheduler performance</a></li>
+<li><a class="reference internal" href="#building-propagation-loss-model">Building Propagation Loss Model</a></li>
+<li><a class="reference internal" href="#physical-error-model">Physical Error Model</a></li>
+<li><a class="reference internal" href="#mimo-model">MIMO Model</a></li>
+<li><a class="reference internal" href="#antenna-model-integration">Antenna Model integration</a></li>
+<li><a class="reference internal" href="#rlc">RLC</a></li>
+<li><a class="reference internal" href="#gtp-u-protocol">GTP-U protocol</a></li>
+<li><a class="reference internal" href="#s1-u-interface">S1-U interface</a></li>
+<li><a class="reference internal" href="#tft-classifier">TFT classifier</a></li>
+<li><a class="reference internal" href="#end-to-end-lte-epc-data-plane-functionality">End-to-end LTE-EPC data plane functionality</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lte-user.html"
+                        title="previous chapter">User Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="lte-profiling.html"
+                        title="next chapter">Profiling Documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/lte-testing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="lte-profiling.html" title="Profiling Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="lte-user.html" title="User Documentation"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="lte.html" >LTE Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

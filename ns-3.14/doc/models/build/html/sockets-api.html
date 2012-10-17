@@ -1,0 +1,405 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sockets APIs &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="Network Module" href="network.html" />
+    <link rel="next" title="Simple NetDevice" href="simple.html" />
+    <link rel="prev" title="Node and NetDevices Overview" href="network-overview.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="simple.html" title="Simple NetDevice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="network-overview.html" title="Node and NetDevices Overview"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="network.html" accesskey="U">Network Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sockets-apis">
+<span id="id1"></span><h1>Sockets APIs<a class="headerlink" href="#sockets-apis" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference external" href="http://en.wikipedia.org/wiki/Berkeley_sockets">sockets API</a>
+is a long-standing API used by user-space applications to access
+network services in the kernel.  A <em>socket</em> is an abstraction, like
+a Unix file handle, that allows applications to connect to other
+Internet hosts and exchange reliable byte streams and unreliable
+datagrams, among other services.</p>
+<p><em>ns-3</em> provides two types of sockets APIs, and it is important to
+understand the differences between them.  The first is a <em>native</em>
+<em>ns-3</em> API, while the second uses the services of the native API to
+provide a <a class="reference external" href="http://en.wikipedia.org/wiki/POSIX">POSIX-like</a>
+API as part of an overall application process.  Both APIs strive
+to be close to the typical sockets API that application writers
+on Unix systems are accustomed to, but the POSIX variant is much
+closer to a real system&#8217;s sockets API.</p>
+<div class="section" id="ns-3-sockets-api">
+<h2>ns-3 sockets API<a class="headerlink" href="#ns-3-sockets-api" title="Permalink to this headline">¶</a></h2>
+<p>The native sockets API for ns-3 provides an interface to various
+types of transport protocols (TCP, UDP) as well as to packet sockets
+and, in the future, Netlink-like sockets.  However, users are cautioned
+to understand that the semantics are <em>not</em> the exact same as
+one finds in a real system (for an API which is very much aligned
+to real systems, see the next section).</p>
+<p><tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::Socket</span></tt> is defined in <tt class="docutils literal"><span class="pre">src/network/model/socket.h</span></tt>.
+Readers will note that many public member functions are aligned
+with real sockets function calls, and all other things being equal,
+we have tried to align with a Posix sockets API.  However, note that:</p>
+<ul class="simple">
+<li>ns-3 applications handle a smart pointer to a Socket object, not
+a file descriptor;</li>
+<li>there is no notion of synchronous API or a <em>blocking</em> API;
+in fact, the model for interaction between application and socket is
+one of asynchronous I/O, which is not typically found in real systems
+(more on this below);</li>
+<li>the C-style socket address structures are not used;</li>
+<li>the API is not a complete sockets API, such as supporting
+all socket options or all function variants;</li>
+<li>many calls use <tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::Packet</span></tt> class to transfer data
+between application and socket.  This may seem peculiar to
+pass <em>Packets</em> across a stream socket API, but think
+of these packets as just fancy byte buffers at this level (more
+on this also below).</li>
+</ul>
+<div class="section" id="basic-operation-and-calls">
+<h3>Basic operation and calls<a class="headerlink" href="#basic-operation-and-calls" title="Permalink to this headline">¶</a></h3>
+<div class="figure" id="sockets-overview">
+<img alt="_images/sockets-overview.png" src="_images/sockets-overview.png" />
+<p class="caption">Implementation overview of native sockets API</p>
+</div>
+</div>
+<div class="section" id="creating-sockets">
+<h3>Creating sockets<a class="headerlink" href="#creating-sockets" title="Permalink to this headline">¶</a></h3>
+<p>An application that wants to use sockets must first create one.
+On real systems using a C-based API, this is accomplished by calling <tt class="xref c c-func docutils literal"><span class="pre">socket()</span></tt></p>
+<div class="highlight-python"><pre>int socket(int domain, int type, int protocol);</pre>
+</div>
+<p>which creates a socket in the system and returns an integer descriptor.</p>
+<p>In ns-3, we have no equivalent of a system call at the lower layers,
+so we adopt the following model.  There are certain <em>factory</em>
+objects that can create sockets.  Each factory is capable of creating
+one type of socket, and if sockets of a particular type are able to
+be created on a given node, then a factory that can create such sockets
+must be aggregated to the Node:</p>
+<div class="highlight-python"><pre>static Ptr&lt;Socket&gt; CreateSocket (Ptr&lt;Node&gt; node, TypeId tid);</pre>
+</div>
+<p>Examples of TypeIds to pass to this method are <tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::TcpSocketFactory</span></tt>,
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::PacketSocketFactory</span></tt>, and <tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::UdpSocketFactory</span></tt>.</p>
+<p>This method returns a smart pointer to a Socket object.  Here is an
+example:</p>
+<div class="highlight-python"><pre>Ptr&lt;Node&gt; n0;
+// Do some stuff to build up the Node's internet stack
+Ptr&lt;Socket&gt; localSocket =
+   Socket::CreateSocket (n0, TcpSocketFactory::GetTypeId ());</pre>
+</div>
+<p>In some ns-3 code, sockets will not be explicitly created by user&#8217;s
+main programs, if an ns-3 application does it.  For instance, for
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::OnOffApplication</span></tt>, the function <tt class="xref cpp cpp-func docutils literal"><span class="pre">ns3::OnOffApplication::StartApplication()</span></tt>
+performs the socket creation, and the application holds the socket
+pointer.</p>
+</div>
+<div class="section" id="using-sockets">
+<h3>Using sockets<a class="headerlink" href="#using-sockets" title="Permalink to this headline">¶</a></h3>
+<p>Below is a typical sequence of socket calls for a TCP client in a
+real implementation:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">sock</span> <span class="pre">=</span> <span class="pre">socket(PF_INET,</span> <span class="pre">SOCK_STREAM,</span> <span class="pre">IPPROTO_TCP);</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">bind(sock,</span> <span class="pre">...);</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">connect(sock,</span> <span class="pre">...);</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">send(sock,</span> <span class="pre">...);</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">recv(sock,</span> <span class="pre">...);</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">close(sock);</span></tt></li>
+</ul>
+<p>There are analogs to all of these calls in ns-3, but we will focus on
+two aspects here.  First, most usage of sockets in real systems
+requires a way to manage I/O between the application and kernel.
+These models include <em>blocking sockets</em>, <em>signal-based I/O</em>,
+and <em>non-blocking sockets</em> with polling.  In ns-3, we make use
+of the callback mechanisms to support a fourth mode, which is
+analogous to POSIX <em>asynchronous I/O</em>.</p>
+<p>In this model, on the sending side, if the <tt class="xref c c-func docutils literal"><span class="pre">send()</span></tt> call were to
+fail because of insufficient buffers, the application suspends the
+sending of more data until a function registered at the
+<tt class="xref cpp cpp-func docutils literal"><span class="pre">ns3::Socket::SetSendCallback()</span></tt> callback is invoked.
+An application can also ask the socket how much space is available
+by calling <tt class="xref cpp cpp-func docutils literal"><span class="pre">ns3::Socket::GetTxAvailable()</span></tt>.  A typical sequence
+of events for sending data (ignoring connection setup) might be::</p>
+<div class="highlight-python"><pre>* ``SetSendCallback (MakeCallback(&amp;HandleSendCallback));``
+* ``Send ();``
+* ``Send ();``
+* ...
+* Send fails because buffer is full
+* wait until :cpp:func:`HandleSendCallback` is called
+* :cpp:func:`HandleSendCallback` is called by socket, since space now available
+* ``Send (); // Start sending again``</pre>
+</div>
+<p>Similarly, on the receive side, the socket user does not block on
+a call to <tt class="docutils literal"><span class="pre">recv()</span></tt>.  Instead, the application sets a callback
+with <tt class="xref cpp cpp-func docutils literal"><span class="pre">ns3::Socket::SetRecvCallback()</span></tt> in which the socket will notify the
+application when (and how much) there is data to be read, and
+the application then calls <tt class="xref cpp cpp-func docutils literal"><span class="pre">ns3::Socket::Recv()</span></tt> to read the data until
+no more can be read.</p>
+</div>
+</div>
+<div class="section" id="packet-vs-buffer-variants">
+<h2>Packet vs. buffer variants<a class="headerlink" href="#packet-vs-buffer-variants" title="Permalink to this headline">¶</a></h2>
+<p>There are two basic variants of <tt class="docutils literal"><span class="pre">Send()</span></tt> and <tt class="docutils literal"><span class="pre">Recv()</span></tt> supported:</p>
+<div class="highlight-python"><pre>virtual int Send (Ptr&lt;Packet&gt; p) = 0;
+int Send (const uint8_t* buf, uint32_t size);
+
+Ptr&lt;Packet&gt; Recv (void);
+int Recv (uint8_t* buf, uint32_t size);</pre>
+</div>
+<p>The non-Packet variants are provided for legacy API reasons.  When calling
+the raw buffer variant of <tt class="xref cpp cpp-func docutils literal"><span class="pre">ns3::Socket::Send()</span></tt>, the buffer is immediately
+written into a Packet and the packet variant is invoked.</p>
+<p>Users may find it semantically odd to pass a Packet to a stream socket
+such as TCP.  However, do not let the name bother you; think of
+<tt class="xref cpp cpp-class docutils literal"><span class="pre">ns3::Packet</span></tt> to be a fancy byte buffer.  There are a few reasons why
+the Packet variants are more likely to be preferred in ns-3:</p>
+<ul class="simple">
+<li>Users can use the Tags facility of packets to, for example, encode
+a flow ID or other helper data at the application layer.</li>
+<li>Users can exploit the copy-on-write implementation to avoid
+memory copies (on the receive side, the conversion back to a
+<tt class="docutils literal"><span class="pre">uint8_t*</span> <span class="pre">buf</span></tt> may sometimes incur an additional copy).</li>
+<li>Use of Packet is more aligned with the rest of the ns-3 API</li>
+</ul>
+</div>
+<div class="section" id="sending-dummy-data">
+<h2>Sending dummy data<a class="headerlink" href="#sending-dummy-data" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, users want the simulator to just pretend that there is an
+actual data payload in the packet (e.g. to calculate transmission delay)
+but do not want to actually produce or consume the data.  This is
+straightforward to support in ns-3; have applications call
+<tt class="docutils literal"><span class="pre">Create&lt;Packet&gt;</span> <span class="pre">(size);</span></tt> instead of <tt class="docutils literal"><span class="pre">Create&lt;Packet&gt;</span> <span class="pre">(buffer,</span> <span class="pre">size);</span></tt>.
+Similarly, passing in a zero to the pointer argument in the raw buffer
+variants has the same effect.  Note that, if some subsequent code tries
+to read the Packet data buffer, the fake buffer will be converted to
+a real (zeroed) buffer on the spot, and the efficiency will be lost there.</p>
+</div>
+<div class="section" id="socket-options">
+<h2>Socket options<a class="headerlink" href="#socket-options" title="Permalink to this headline">¶</a></h2>
+<p><em>to be completed</em></p>
+</div>
+<div class="section" id="socket-errno">
+<h2>Socket errno<a class="headerlink" href="#socket-errno" title="Permalink to this headline">¶</a></h2>
+<p><em>to be completed</em></p>
+</div>
+<div class="section" id="example-programs">
+<h2>Example programs<a class="headerlink" href="#example-programs" title="Permalink to this headline">¶</a></h2>
+<p><em>to be completed</em></p>
+</div>
+<div class="section" id="posix-like-sockets-api">
+<h2>POSIX-like sockets API<a class="headerlink" href="#posix-like-sockets-api" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sockets APIs</a><ul>
+<li><a class="reference internal" href="#ns-3-sockets-api">ns-3 sockets API</a><ul>
+<li><a class="reference internal" href="#basic-operation-and-calls">Basic operation and calls</a></li>
+<li><a class="reference internal" href="#creating-sockets">Creating sockets</a></li>
+<li><a class="reference internal" href="#using-sockets">Using sockets</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#packet-vs-buffer-variants">Packet vs. buffer variants</a></li>
+<li><a class="reference internal" href="#sending-dummy-data">Sending dummy data</a></li>
+<li><a class="reference internal" href="#socket-options">Socket options</a></li>
+<li><a class="reference internal" href="#socket-errno">Socket errno</a></li>
+<li><a class="reference internal" href="#example-programs">Example programs</a></li>
+<li><a class="reference internal" href="#posix-like-sockets-api">POSIX-like sockets API</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="network-overview.html"
+                        title="previous chapter">Node and NetDevices Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="simple.html"
+                        title="next chapter">Simple NetDevice</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/sockets-api.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="simple.html" title="Simple NetDevice"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="network-overview.html" title="Node and NetDevices Overview"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="network.html" >Network Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

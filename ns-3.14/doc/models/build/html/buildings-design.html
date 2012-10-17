@@ -1,0 +1,458 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Design documentation &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="Buildings Module" href="buildings.html" />
+    <link rel="next" title="User Documentation" href="buildings-user.html" />
+    <link rel="prev" title="Buildings Module" href="buildings.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="buildings-user.html" title="User Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="buildings.html" title="Buildings Module"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="buildings.html" accesskey="U">Buildings Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <p>cd .. include:: replace.txt</p>
+<div class="section" id="design-documentation">
+<h1>Design documentation<a class="headerlink" href="#design-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Buildings module provides:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>a new class (<tt class="docutils literal"><span class="pre">Building</span></tt>) that models the presence of a building in a simulation scenario;</li>
+<li>a new mobility model (<tt class="docutils literal"><span class="pre">BuildingsMobilityModel</span></tt>) that allows to specify the location, size and characteristics of buildings present in the simulated area, and allows the placement of nodes inside those buildings;</li>
+<li>a container class with the definition of the most useful pathloss models and the correspondent variables called <tt class="docutils literal"><span class="pre">BuildingsPropagationLossModel</span></tt>.</li>
+<li>a new propagation model (<tt class="docutils literal"><span class="pre">HybridBuildingsPropagationLossModel</span></tt>) working with the mobility model just introduced, that allows to model the phenomenon of indoor/outdoor propagation in the presence of buildings.</li>
+<li>a simplified model working only with Okumura Hata (<tt class="docutils literal"><span class="pre">OhBuildingsPropagationLossModel</span></tt>) considering the phenomenon of indoor/outdoor propagation in the presence of buildings.</li>
+</ol>
+</div></blockquote>
+<p>The models have been designed with LTE in mind, though their implementation is in fact independent from any LTE-specific code, and can be used with other ns-3 wireless technologies as well (e.g., wifi, wimax).</p>
+<p>The <tt class="docutils literal"><span class="pre">HybridBuildingsPropagationLossModel</span></tt> pathloss model included is obtained through a combination of several well known pathloss models in order to mimic different environmental scenarios such as urban, suburban and open areas. Moreover, the model considers both outdoor and indoor indoor and outdoor communication has to be included since HeNB might be installed either within building and either outside. In case of indoor communication, the model has to consider also the type of building in outdoor &lt;-&gt; indoor communication according to some general criteria such as the wall penetration losses of the common materials; moreover it includes some general configuration for the internal walls in indoor communications.</p>
+<p>The <tt class="docutils literal"><span class="pre">OhBuildingsPropagationLossModel</span></tt> pathloss model has been created for simplifying the previous one removing the thresholds for switching from one model to other. For doing this it has been used only one propagation model from the one available (i.e., the Okumura Hata). The presence of building is still considered in the model; therefore all the considerations of above regarding the building type are still valid. The same consideration can be done for what concern the environmental scenario and frequency since both of them are parameters of the model considered.</p>
+</div>
+<div class="section" id="the-building-class">
+<h2>The Building class<a class="headerlink" href="#the-building-class" title="Permalink to this headline">¶</a></h2>
+<p>The model includes a specific class called <tt class="docutils literal"><span class="pre">Building</span></tt> which contains a ns3 <tt class="docutils literal"><span class="pre">Box</span></tt> class for defining the dimension of the building. In order to implements the characteristics of the pathloss models included, the <tt class="docutils literal"><span class="pre">Building</span></tt> class supports the following attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li>building type:<ul>
+<li>Residential (default value)</li>
+<li>Office</li>
+<li>Commercial</li>
+</ul>
+</li>
+<li>external walls type<ul>
+<li>Wood</li>
+<li>ConcreteWithWindows (default value)</li>
+<li>ConcreteWithoutWindows</li>
+<li>StoneBlocks</li>
+</ul>
+</li>
+<li>number of floors (default value 1, which means only ground-floor)</li>
+<li>number of rooms in x-axis (default value 1)</li>
+<li>number of rooms in y-axis (default value 1)</li>
+</ul>
+</div></blockquote>
+<p>The Building class is based on the following assumptions:</p>
+<blockquote>
+<div><ul class="simple">
+<li>a buildings is represented as a rectangular parallelepiped (i.e., a box)</li>
+<li>the walls are parallel to the x, y, and z axis</li>
+<li>a building is divided into a grid of rooms, identified by the following parameters:<ul>
+<li>number of floors</li>
+<li>number of rooms along the x-axis</li>
+<li>number of rooms along the y-axis</li>
+</ul>
+</li>
+<li>the z axis is the vertical axis, i.e., floor numbers increase for increasing z axis values</li>
+<li>the x and y room indices start from 1 and increase along the x and y axis respectively</li>
+<li>all rooms in a building have equal size</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="the-buildingsmobilitymodel-class">
+<h2>The BuildingsMobilityModel class<a class="headerlink" href="#the-buildingsmobilitymodel-class" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">BuildingsMobilityModel</span></tt> class, which inherits from the ns3 class <tt class="docutils literal"><span class="pre">MobilityModel</span></tt>, is in charge of managing the standard mobility functionalities plus providing information about the position of a node with respect to building. The information managed by <tt class="docutils literal"><span class="pre">BuildingsMobilityModel</span></tt> is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>whether the node is indoor or outdoor</li>
+<li>if indoor:<ul>
+<li>in which building the node is</li>
+<li>in which room the node is positioned (x, y and floor room indices)</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+<p>The class <tt class="docutils literal"><span class="pre">BuildingsMobilityModel</span></tt> is used by <tt class="docutils literal"><span class="pre">BuildingsPropagationLossModel</span></tt> class, which inherits from the ns3 class <tt class="docutils literal"><span class="pre">PropagationLossModel</span></tt> and manages the pathloss computation of the single components and their composition according to the nodes&#8217; positions. Moreover, it implements also the shadowing, that is the loss due to obstacles in the main path (i.e., vegetation, buildings, etc.).</p>
+</div>
+<div class="section" id="itur1238propagationlossmodel">
+<h2>ItuR1238PropagationLossModel<a class="headerlink" href="#itur1238propagationlossmodel" title="Permalink to this headline">¶</a></h2>
+<p>This class implements a building-dependent indoor propagation loss model based on the ITU P.1238 model, which includes losses due to type of building (i.e., residential, office and commercial).
+The analytical expression is given in the following.</p>
+<div class="math">
+<p><img src="_images/math/813059cb5c7dede10dfb9daf3503723ace601eca.png" alt="L_\mathrm{total} = 20\log f + N\log d + L_f(n)- 28 [dB]"/></p>
+</div><p>where:</p>
+<blockquote>
+<div><p><img class="math" src="_images/math/9244f3a2df6daad2fad835cd48259847ec1e6d63.png" alt="N = \left\{ \begin{array}{lll} 28 &amp; residential \\ 30 &amp; office \\ 22 &amp; commercial\end{array} \right."/> : power loss coefficient [dB]</p>
+<p><img class="math" src="_images/math/c345923ed4e7743830b3e4fd367eb85a4d7af5b9.png" alt="L_f = \left\{ \begin{array}{lll} 4n &amp; residential \\ 15+4(n-1) &amp; office \\ 6+3(n-1) &amp; commercial\end{array} \right."/></p>
+<p><img class="math" src="_images/math/174fadd07fd54c9afe288e96558c92e0c1da733a.png" alt="n"/> : number of floors between base station and mobile (<img class="math" src="_images/math/0965ac6a39c0b4d67771c31210b98312ae2e4f01.png" alt="n\ge 1"/>)</p>
+<p><img class="math" src="_images/math/bb2c93730dbb48558bb3c4738c956c4e8f816437.png" alt="f"/> : frequency [MHz]</p>
+<p><img class="math" src="_images/math/96ab646de7704969b91c76a214126b45f2b07b25.png" alt="d"/> : distance (where <img class="math" src="_images/math/97256277ca68f80f48c1e0b392e04f1b26d46bfe.png" alt="d &gt; 1"/>) [m]</p>
+</div></blockquote>
+</div>
+<div class="section" id="buildingspropagationlossmodel">
+<h2>BuildingsPropagationLossModel<a class="headerlink" href="#buildingspropagationlossmodel" title="Permalink to this headline">¶</a></h2>
+<p>The BuildingsPropagationLossModel provides an additional set of building-dependent pathloss model elements that are used to implement different pathloss logics. These pathloss model elements are described in the following subsections.</p>
+<div class="section" id="external-wall-loss-ewl">
+<h3>External Wall Loss (EWL)<a class="headerlink" href="#external-wall-loss-ewl" title="Permalink to this headline">¶</a></h3>
+<p>This component models the penetration loss through walls for indoor to outdoor communications and vice-versa. The values are taken from the <a class="reference internal" href="propagation.html#cost231">[cost231]</a> model.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Wood ~ 4 dB</li>
+<li>Concrete with windows (not metallized) ~ 7 dB</li>
+<li>Concrete without windows ~ 15 dB (spans between 10 and 20 in COST231)</li>
+<li>Stone blocks ~ 12 dB</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="internal-walls-loss-iwl">
+<h3>Internal Walls Loss (IWL)<a class="headerlink" href="#internal-walls-loss-iwl" title="Permalink to this headline">¶</a></h3>
+<p>This component models the penetration loss occurring in indoor-to-indoor communications within the same building. The total loss is calculated assuming that each single internal wall has a constant penetration loss <img class="math" src="_images/math/d37d6fec5355f9fd5ea8b3d587f9e0dd82e57a44.png" alt="L_{siw}"/>, and approximating the number of walls that are penetrated with the manhattan distance (in number of rooms) between the transmitter and the receiver. In detail, let <img class="math" src="_images/math/ccada11db7b2b90693e2fac4f887a57fce6f96bf.png" alt="x_1"/>, <img class="math" src="_images/math/4ae250d1bdd46e5677f27edcf5efb34587b6fc1a.png" alt="y_1"/>, <img class="math" src="_images/math/6a7d010bbff66a0c41e43310a51efbaa6bf63396.png" alt="x_2"/>, <img class="math" src="_images/math/0320ab2ddd4939f9072e5316fe8888b0cddee319.png" alt="y_2"/> denote the room number along the <img class="math" src="_images/math/26eeb5258ca5099acf8fe96b2a1049c48c89a5e6.png" alt="x"/> and <img class="math" src="_images/math/092e364e1d9d19ad5fffb0b46ef4cc7f2da02c1c.png" alt="y"/> axis respectively for user 1 and 2; the total loss <img class="math" src="_images/math/bab06e2f5aa0b47dbe74e635cba3af3e434d41c0.png" alt="L_{IWL}"/> is calculated as</p>
+<div class="math">
+<p><img src="_images/math/81094a43d0db4d0f494a8c9d9a44b46b2f7bf5e4.png" alt="L_{IWL} = L_{siw} (|x_1 -x_2| + |y_1 - y_2|)"/></p>
+</div></div>
+<div class="section" id="height-gain-model-hg">
+<h3>Height Gain Model (HG)<a class="headerlink" href="#height-gain-model-hg" title="Permalink to this headline">¶</a></h3>
+<p>This component model the gain due to the fact that the transmitting device is on a floor above the ground. In the literature <a class="reference internal" href="buildings-references.html#turkmani">[turkmani]</a> this gain has been evaluated as about 2 dB per floor. This gain can be applied to all the indoor to outdoor communications and vice-versa.</p>
+</div>
+<div class="section" id="shadowing-model">
+<h3>Shadowing Model<a class="headerlink" href="#shadowing-model" title="Permalink to this headline">¶</a></h3>
+<p>The shadowing is modeled according to a log-normal distribution with variable standard deviation as function of the connection characteristics. In the implementation we considered three main possible scenarios which correspond to three standard deviations (i.e., the mean is always 0), in detail:</p>
+<blockquote>
+<div><ul class="simple">
+<li>outdoor (<tt class="docutils literal"><span class="pre">m_shadowingSigmaOutdoor</span></tt>, defaul value of 7 dB) <img class="math" src="_images/math/45d10d1eb61c810482f062306fba48b2df8a280e.png" alt="\rightarrow X_\mathrm{O} \sim N(\mu_\mathrm{O}, \sigma_\mathrm{O}^2)"/>.</li>
+<li>indoor (<tt class="docutils literal"><span class="pre">m_shadowingSigmaIndoor</span></tt>, defaul value of 10 dB) <img class="math" src="_images/math/3f127c509360b91310cf7d807a4aa49902ac021d.png" alt="\rightarrow X_\mathrm{I} \sim N(\mu_\mathrm{I}, \sigma_\mathrm{I}^2)"/>.</li>
+<li>external walls penetration (<tt class="docutils literal"><span class="pre">m_shadowingSigmaExtWalls</span></tt>, default value 5 dB) <img class="math" src="_images/math/ced1748db73391447b53f9f8678d26094f524c65.png" alt="\rightarrow X_\mathrm{W} \sim N(\mu_\mathrm{W}, \sigma_\mathrm{W}^2)"/></li>
+</ul>
+</div></blockquote>
+<p>The simulator generates a shadowing value per each active link according to nodes&#8217; position the first time the link is used for transmitting. In case of transmissions from outdoor nodes to indoor ones, and vice-versa, the standard deviation (<img class="math" src="_images/math/22f3c77998cace8f4b4565064c8121938f70d672.png" alt="\sigma_\mathrm{IO}"/>) has to be calculated as the square root of the sum of the quadratic values of the standard deviatio in case of outdoor nodes and the one for the external walls penetration. This is due to the fact that that the components producing the shadowing are independent of each other; therefore, the variance of a distribution resulting from the sum of two independent normal ones is the sum of the variances.</p>
+<div class="math">
+<p><img src="_images/math/c2b5c9068831a2b7cbb6ebcc901a4a70eaec9d3a.png" alt="X \sim N(\mu,\sigma^2) \mbox{ and } Y \sim N(\nu,\tau^2)
+
+Z = X + Y \sim Z (\mu + \nu, \sigma^2 + \tau^2)
+
+\Rightarrow \sigma_\mathrm{IO} = \sqrt{\sigma_\mathrm{O}^2 + \sigma_\mathrm{W}^2}"/></p>
+</div></div>
+</div>
+<div class="section" id="pathloss-logics">
+<h2>Pathloss logics<a class="headerlink" href="#pathloss-logics" title="Permalink to this headline">¶</a></h2>
+<p>In the following we describe the different pathloss logic that are implemented by inheriting from BuildingsPropagationLossModel.</p>
+<div class="section" id="hybridbuildingspropagationlossmodel">
+<h3>HybridBuildingsPropagationLossModel<a class="headerlink" href="#hybridbuildingspropagationlossmodel" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">HybridBuildingsPropagationLossModel</span></tt> pathloss model included is obtained through a combination of several well known pathloss models in order to mimic different outdoor and indoor scenarios, as well as indoor-to-outdoor and outdoor-to-indoor scenarios. In detail, the class <tt class="docutils literal"><span class="pre">HybridBuildingsPropagationLossModel</span></tt> integrates the following pathloss models:</p>
+<blockquote>
+<div><ul class="simple">
+<li>OkumuraHataPropagationLossModel (OH) (at frequencies &gt; 2.3 GHz substituted by Kun2600MhzPropagationLossModel)</li>
+<li>ItuR1411LosPropagationLossModel and ItuR1411NlosOverRooftopPropagationLossModel (I1411)</li>
+<li>ItuR1238PropagationLossModel (I1238)</li>
+<li>the pathloss elements of the BuildingsPropagationLossModel (EWL, HG, IWL)</li>
+</ul>
+</div></blockquote>
+<p>The following pseudo-code illustrates how the different pathloss model elements described above are integrated in  <tt class="docutils literal"><span class="pre">HybridBuildingsPropagationLossModel</span></tt>:</p>
+<div class="highlight-python"><pre>if (txNode is outdoor)
+  then
+    if (rxNode is outdoor)
+      then
+        if (distance &gt; 1 km)
+          then
+            if (rxNode or txNode is below the rooftop)
+              then
+                L = I1411
+              else
+                L = OH
+          else
+            L = I1411
+      else (rxNode is indoor)
+        if (distance &gt; 1 km)
+          then
+            if (rxNode or txNode is below the rooftop)
+              L = I1411 + EWL + HG
+            else
+              L = OH + EWL + HG
+          else
+            L = I1411 + EWL + HG
+else (txNode is indoor)
+  if (rxNode is indoor)
+    then
+     if (same building)
+        then
+          L = I1238 + IWL
+        else
+          L = I1411 + 2*EWL
+   else (rxNode is outdoor)
+    if (distance &gt; 1 km)
+      then
+        if (rxNode or txNode is below the rooftop)
+              then
+                L = I1411 + EWL + HG
+              else
+                L = OH + EWL + HG
+      else
+        L = I1411 + EWL</pre>
+</div>
+<p>We note that, for the case of communication between two nodes below rooftop level with distance is greater then 1 km, we still consider the I1411 model, since OH is specifically designed for macro cells and therefore for antennas above the roof-top level.</p>
+<p>For the ITU-R P.1411 model we consider both the LOS and NLoS versions. In particular, we considers the LoS propagation for distances that are shorted than a tunable threshold (<tt class="docutils literal"><span class="pre">m_itu1411NlosThreshold</span></tt>). In case on NLoS propagation, the over the roof-top model is taken in consideration for modeling both macro BS and SC. In case on NLoS several parameters scenario dependent have been included, such as average street width, orientation, etc. The values of such parameters have to be properly set according to the scenario implemented, the model does not calculate natively their values. In case any values is provided, the standard ones are used, apart for the height of the mobile and BS, which instead their integrity is tested directly in the code (i.e., they have to be greater then zero).  In the following we give the expressions of the components of the model.</p>
+<p>We also note that the use of different propagation models (OH, I1411, I1238 with their variants) in HybridBuildingsPropagationLossModel can result in discontinuities of the pathloss with respect to distance. A proper tuning of the attributes (especially the distance threshold attributes) can avoid these discontinuities. However, since the behavior of each model depends on several other parameters (frequency, node heigth, etc), there is no default value of these thresholds that can avoid the discontinuities in all possible configurations. Hence, an appropriate tuning of these parameters is left to the user.</p>
+</div>
+<div class="section" id="ohbuildingspropagationlossmodel">
+<h3>OhBuildingsPropagationLossModel<a class="headerlink" href="#ohbuildingspropagationlossmodel" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">OhBuildingsPropagationLossModel</span></tt> class has been created as a simple means to solve the discontinuity problems of <tt class="docutils literal"><span class="pre">HybridBuildingsPropagationLossModel</span></tt> without doing scenario-specific  parameter tuning. The solution is to use only one propagation loss model (i.e., Okumura Hata), while retaining the structure of the pathloss logic for the calculation of other path loss components (such as wall penetration losses). The result is a model that is free of discontinuities (except those due to walls), but that is less realistic overall for a generic scenario with buildings and outdoor/indoor users, e.g., because Okumura Hata is not suitable neither for indoor communications nor for outdoor communications below rooftop level.</p>
+<p>In detail, the class <tt class="docutils literal"><span class="pre">OhBuildingsPropagationLossModel</span></tt> integrates the following pathloss models:</p>
+<blockquote>
+<div><ul class="simple">
+<li>OkumuraHataPropagationLossModel (OH)</li>
+<li>the pathloss elements of the BuildingsPropagationLossModel (EWL, HG, IWL)</li>
+</ul>
+</div></blockquote>
+<p>The following pseudo-code illustrates how the different pathloss model elements described above are integrated in <tt class="docutils literal"><span class="pre">OhBuildingsPropagationLossModel</span></tt>:</p>
+<div class="highlight-python"><pre>if (txNode is outdoor)
+  then
+    if (rxNode is outdoor)
+      then
+        L = OH
+      else (rxNode is indoor)
+        L = OH + EWL
+else (txNode is indoor)
+  if (rxNode is indoor)
+    then
+     if (same building)
+        then
+          L = OH + IWL
+        else
+          L = OH + 2*EWL
+   else (rxNode is outdoor)
+      L = OH + EWL</pre>
+</div>
+<p>We note that OhBuildingsPropagationLossModel is a significant simplification with respect to HybridBuildingsPropagationLossModel, due to the fact that OH is used always. While this gives a less accurate model in some scenarios (especially below rooftop and indoor), it effectively avoids the issue of pathloss discontinuities that affects HybridBuildingsPropagationLossModel.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Design documentation</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#the-building-class">The Building class</a></li>
+<li><a class="reference internal" href="#the-buildingsmobilitymodel-class">The BuildingsMobilityModel class</a></li>
+<li><a class="reference internal" href="#itur1238propagationlossmodel">ItuR1238PropagationLossModel</a></li>
+<li><a class="reference internal" href="#buildingspropagationlossmodel">BuildingsPropagationLossModel</a><ul>
+<li><a class="reference internal" href="#external-wall-loss-ewl">External Wall Loss (EWL)</a></li>
+<li><a class="reference internal" href="#internal-walls-loss-iwl">Internal Walls Loss (IWL)</a></li>
+<li><a class="reference internal" href="#height-gain-model-hg">Height Gain Model (HG)</a></li>
+<li><a class="reference internal" href="#shadowing-model">Shadowing Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pathloss-logics">Pathloss logics</a><ul>
+<li><a class="reference internal" href="#hybridbuildingspropagationlossmodel">HybridBuildingsPropagationLossModel</a></li>
+<li><a class="reference internal" href="#ohbuildingspropagationlossmodel">OhBuildingsPropagationLossModel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="buildings.html"
+                        title="previous chapter">Buildings Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="buildings-user.html"
+                        title="next chapter">User Documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/buildings-design.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="buildings-user.html" title="User Documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="buildings.html" title="Buildings Module"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="buildings.html" >Buildings Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

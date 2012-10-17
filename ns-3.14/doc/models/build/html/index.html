@@ -1,0 +1,375 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ns-3 Model Library &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="#" />
+    <link rel="next" title="Organization" href="organization.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="organization.html" title="Organization"
+             accesskey="N">next</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="#">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ns-3-model-library">
+<h1>ns-3 Model Library<a class="headerlink" href="#ns-3-model-library" title="Permalink to this headline">¶</a></h1>
+<p>This is the <em>ns-3 Model Library</em> documentation. Primary documentation for the ns-3 project is
+available in five forms:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.nsnam.org/doxygen/index.html">ns-3 Doxygen</a>: Documentation of the public APIs of the simulator</li>
+<li>Tutorial, Manual, and Model Library <em>(this document)</em> for the <a class="reference external" href="http://www.nsnam.org/documentation/latest/">latest release</a> and <a class="reference external" href="http://www.nsnam.org/ns-3-dev/documentation/">development tree</a></li>
+<li><a class="reference external" href="http://www.nsnam.org/wiki/index.php/Main_Page">ns-3 wiki</a></li>
+</ul>
+<p>This document is written in <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> for <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> and is maintained in the
+<tt class="docutils literal"><span class="pre">doc/models</span></tt> directory of ns-3&#8217;s source code.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="organization.html">Organization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="animation.html">Animation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="animation.html#netanim">NetAnim</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="antenna.html">Antenna Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="antenna-design.html">Design documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antenna-user.html">User Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="antenna-testing.html">Testing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="aodv.html">Ad Hoc On-Demand Distance Vector (AODV)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aodv.html#model-description">Model Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aodv.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="aodv.html#validation">Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="applications.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bridge.html">Bridge NetDevice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="buildings.html">Buildings Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="buildings-design.html">Design documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildings-user.html">User Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildings-testing.html">Testing Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="buildings-references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="click.html">Click Modular Router Integration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="click.html#model-description">Model Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="click.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="click.html#validation">Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="csma.html">CSMA NetDevice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="csma.html#overview-of-the-csma-model">Overview of the CSMA model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csma.html#csma-channel-model">CSMA Channel Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csma.html#csma-net-device-model">CSMA Net Device Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csma.html#using-the-csmanetdevice">Using the CsmaNetDevice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csma.html#csma-tracing">CSMA Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csma.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dsdv.html">DSDV Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dsdv.html#dsdv-routing-overview">DSDV Routing Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsdv.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dsr.html">DSR Routing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dsr.html#dsr-routing-overview">DSR Routing Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsr.html#dsr-instructions">DSR Instructions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsr.html#helper">Helper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsr.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsr.html#validation">Validation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dsr.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="emulation-overview.html">Emulation Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="emu.html">Emu NetDevice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tap.html">Tap NetDevice</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="energy.html">Energy Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="energy.html#model-description">Model Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="energy.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="flow-monitor.html">Flow Monitor</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internet-models.html">Internet Models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="internet-stack.html">Internet Stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipv4.html">IPv4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipv6.html">IPv6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="routing-overview.html">Routing overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tcp.html">TCP models in ns-3</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="lte.html">LTE Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="lte-design.html">Design Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lte-user.html">User Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lte-testing.html">Testing Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lte-profiling.html">Profiling Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lte-references.html">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mesh.html">Mesh NetDevice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="distributed.html">MPI for Distributed Simulation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="distributed.html#current-implementation-details">Current Implementation Details</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributed.html#running-distributed-simulations">Running Distributed Simulations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="distributed.html#tracing-during-distributed-simulations">Tracing During Distributed Simulations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mobility.html">Mobility</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="mobility.html#model-description">Model Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mobility.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mobility.html#validation">Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="network.html">Network Module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="packets.html">Packets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="network-overview.html">Node and NetDevices Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sockets-api.html">Sockets APIs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple.html">Simple NetDevice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="queue.html">Queues</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="olsr.html">Optimized Link State Routing (OLSR)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="olsr.html#model-description">Model Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="olsr.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="olsr.html#validation">Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="openflow-switch.html">OpenFlow switch support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="openflow-switch.html#model-description">Model Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openflow-switch.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="openflow-switch.html#validation">Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="point-to-point.html">PointToPoint NetDevice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="point-to-point.html#overview-of-the-pointtopoint-model">Overview of the PointToPoint model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="point-to-point.html#point-to-point-channel-model">Point-to-Point Channel Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="point-to-point.html#using-the-pointtopointnetdevice">Using the PointToPointNetDevice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="point-to-point.html#pointtopoint-tracing">PointToPoint Tracing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="propagation.html">Propagation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="propagation.html#propagationlossmodel">PropagationLossModel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="propagation.html#propagationdelaymodel">PropagationDelayModel</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="statistics.html">Statistical Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html#goals">Goals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html#to-do">To-Do</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html#approach">Approach</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistics.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topology.html">Topology Input Readers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uan.html">UAN Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uan.html#model-description">Model Description</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uan.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uan.html#validation">Validation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wifi.html">Wifi</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wifi.html#overview-of-the-model">Overview of the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi.html#using-the-wifinetdevice">Using the WifiNetDevice</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi.html#the-wifichannel-and-wifiphy-models">The WifiChannel and WifiPhy models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi.html#the-mac-model">The MAC model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi.html#wifi-attributes">Wifi Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi.html#wifi-tracing">Wifi Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wifi.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wimax.html">Wimax NetDevice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wimax.html#scope-of-the-model">Scope of the model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wimax.html#using-the-wimax-models">Using the Wimax models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wimax.html#wimax-attributes">Wimax Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wimax.html#wimax-tracing">Wimax Tracing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wimax.html#wimax-mac-model">Wimax MAC model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wimax.html#wimaxchannel-and-wimaxphy-models">WimaxChannel and WimaxPhy models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wimax.html#channel-model">Channel model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wimax.html#physical-model">Physical model</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="organization.html"
+                        title="next chapter">Organization</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="organization.html" title="Organization"
+             >next</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="#">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

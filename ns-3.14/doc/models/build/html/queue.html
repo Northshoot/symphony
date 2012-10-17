@@ -1,0 +1,373 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Queues &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="Network Module" href="network.html" />
+    <link rel="next" title="Optimized Link State Routing (OLSR)" href="olsr.html" />
+    <link rel="prev" title="Simple NetDevice" href="simple.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="olsr.html" title="Optimized Link State Routing (OLSR)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="simple.html" title="Simple NetDevice"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="network.html" accesskey="U">Network Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="queues">
+<h1>Queues<a class="headerlink" href="#queues" title="Permalink to this headline">¶</a></h1>
+<p>This section documents a few queue objects, typically associated with
+NetDevice models, that are maintained as part of the <tt class="docutils literal"><span class="pre">network</span></tt> module:</p>
+<ul class="simple">
+<li>DropTail</li>
+<li>Random Early Detection</li>
+</ul>
+<div class="section" id="model-description">
+<h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this headline">¶</a></h2>
+<p>The source code for the new module lives in the directory <tt class="docutils literal"><span class="pre">src/network/utils</span></tt>.</p>
+<p>ns-3 provides a couple of classic queue models and the ability to
+trace certain queue operations such as enqueuing, dequeuing, and dropping.
+These may be added to certain NetDevice objects that take a Ptr&lt;Queue&gt;
+pointer.</p>
+<p>Note that not all device models use these queue models.
+In particular, WiFi, WiMax, and LTE use specialized device queues.
+The queue models described here are more often used with simpler ns-3
+device models such as PointToPoint and Csma.</p>
+<div class="section" id="design">
+<h3>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h3>
+<p>An abstract base class, class Queue, is typically used and subclassed
+for specific scheduling and drop policies.  Common operations
+include:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">bool</span> <span class="pre">Enqueue</span> <span class="pre">(Ptr&lt;Packet&gt;</span> <span class="pre">p)</span></tt>:  Enqueue a packet</li>
+<li><tt class="docutils literal"><span class="pre">Ptr&lt;Packet&gt;</span> <span class="pre">Dequeue</span> <span class="pre">(void)</span></tt>:  Dequeue a packet</li>
+<li><tt class="docutils literal"><span class="pre">uint32_t</span> <span class="pre">GetNPackets</span> <span class="pre">(void)</span></tt>:  Get the queue depth, in packets</li>
+<li><tt class="docutils literal"><span class="pre">uint32_t</span> <span class="pre">GetNBytes</span> <span class="pre">(void)</span></tt>:  Get the queue depth, in packets</li>
+</ul>
+<p>as well as tracking some statistics on queue operations.</p>
+<p>There are three trace sources that may be hooked:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Enqueue</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Dequeue</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">Drop</span></tt></li>
+</ul>
+<div class="section" id="droptail">
+<h4>DropTail<a class="headerlink" href="#droptail" title="Permalink to this headline">¶</a></h4>
+<p>This is a basic first-in-first-out (FIFO) queue that performs a tail drop
+when the queue is full.</p>
+</div>
+<div class="section" id="random-early-detection">
+<h4>Random Early Detection<a class="headerlink" href="#random-early-detection" title="Permalink to this headline">¶</a></h4>
+<p>Random Early Detection (RED) is a queue variant that aims to provide
+early signals to transport protocol congestion control (e.g. TCP) that
+congestion is imminent, so that they back off their rate gracefully
+rather than with a bunch of tail-drop losses (possibly incurring
+TCP timeout).  The model in ns-3 is a port of Sally Floyd&#8217;s ns-2
+RED model.</p>
+</div>
+</div>
+<div class="section" id="scope-and-limitations">
+<h3>Scope and Limitations<a class="headerlink" href="#scope-and-limitations" title="Permalink to this headline">¶</a></h3>
+<p>The RED model just supports default RED.  Adaptive RED is not supported.</p>
+</div>
+<div class="section" id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<p>The RED queue aims to be close to the results cited in:
+S.Floyd, K.Fall <a class="reference external" href="http://icir.org/floyd/papers/redsims.ps">http://icir.org/floyd/papers/redsims.ps</a></p>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="helpers">
+<h3>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h3>
+<p>A typical usage pattern is to create a device helper and to configure
+the queue type and attributes from the helper, such as this example
+from <tt class="docutils literal"><span class="pre">src/network/examples/red-tests.cc</span></tt>:</p>
+<div class="highlight-python"><pre>PointToPointHelper p2p;
+
+p2p.SetQueue ("ns3::DropTailQueue");
+p2p.SetDeviceAttribute ("DataRate", StringValue ("10Mbps"));
+p2p.SetChannelAttribute ("Delay", StringValue ("2ms"));
+NetDeviceContainer devn0n2 = p2p.Install (n0n2);
+
+p2p.SetQueue ("ns3::DropTailQueue");
+p2p.SetDeviceAttribute ("DataRate", StringValue ("10Mbps"));
+p2p.SetChannelAttribute ("Delay", StringValue ("3ms"));
+NetDeviceContainer devn1n2 = p2p.Install (n1n2);
+
+p2p.SetQueue ("ns3::RedQueue", // only backbone link has RED queue
+              "LinkBandwidth", StringValue (redLinkDataRate),
+              "LinkDelay", StringValue (redLinkDelay));
+p2p.SetDeviceAttribute ("DataRate", StringValue (redLinkDataRate));
+p2p.SetChannelAttribute ("Delay", StringValue (redLinkDelay));
+NetDeviceContainer devn2n3 = p2p.Install (n2n3);</pre>
+</div>
+</div>
+<div class="section" id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this headline">¶</a></h3>
+<p>The RED queue contains a number of attributes that control the RED
+policies:</p>
+<ul class="simple">
+<li>Mode (bytes or packets)</li>
+<li>MeanPktSize</li>
+<li>IdlePktSize</li>
+<li>Wait (time)</li>
+<li>Gentle mode</li>
+<li>MinTh, MaxTh</li>
+<li>QueueLimit</li>
+<li>Queue weight</li>
+<li>LInterm</li>
+<li>LinkBandwidth</li>
+<li>LinkDelay</li>
+</ul>
+<p>Consult the ns-3 documentation for explanation of these attributes.</p>
+</div>
+<div class="section" id="output">
+<h3>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h3>
+<p>The ns-3 ascii trace helpers used by many of the NetDevices will hook
+the Enqueue, Dequeue, and Drop traces of these queues and print out
+trace statements, such as the following from <tt class="docutils literal"><span class="pre">examples/udp/udp-echo.cc</span></tt>:</p>
+<div class="highlight-python"><pre>+ 2 /NodeList/0/DeviceList/1/$ns3::CsmaNetDevice/TxQueue/Enqueue ns3::EthernetHeader
+( length/type=0x806, source=00:00:00:00:00:01, destination=ff:ff:ff:ff:ff:ff)
+ns3::ArpHeader (request source mac: 00-06-00:00:00:00:00:01 source ipv4: 10.1.1.1
+dest ipv4: 10.1.1.2) Payload (size=18) ns3::EthernetTrailer (fcs=0)
+- 2 /NodeList/0/DeviceList/1/$ns3::CsmaNetDevice/TxQueue/Dequeue ns3::EthernetHeader
+( length/type=0x806, source=00:00:00:00:00:01, destination=ff:ff:ff:ff:ff:ff)
+ns3::ArpHeader (request source mac: 00-06-00:00:00:00:00:01 source ipv4: 10.1.1.1
+dest ipv4: 10.1.1.2) Payload (size=18) ns3::EthernetTrailer (fcs=0)</pre>
+</div>
+<p>which shows an enqueue &#8220;+&#8221; and dequeue &#8220;-&#8221; event at time 2 seconds.</p>
+<p>Users are, of course, free to define and hook their own trace sinks to
+these trace sources.</p>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>The drop-tail queue is used in several examples, such as
+<tt class="docutils literal"><span class="pre">examples/udp/udp-echo.cc</span></tt>.  The RED queue example is found at
+<tt class="docutils literal"><span class="pre">src/network/examples/red-tests.cc</span></tt>.</p>
+</div>
+</div>
+<div class="section" id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h2>
+<p>The RED model has been validated and the report is currently stored
+at: <a class="reference external" href="https://github.com/downloads/talau/ns-3-tcp-red/report-red-ns3.pdf">https://github.com/downloads/talau/ns-3-tcp-red/report-red-ns3.pdf</a></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Queues</a><ul>
+<li><a class="reference internal" href="#model-description">Model Description</a><ul>
+<li><a class="reference internal" href="#design">Design</a><ul>
+<li><a class="reference internal" href="#droptail">DropTail</a></li>
+<li><a class="reference internal" href="#random-early-detection">Random Early Detection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scope-and-limitations">Scope and Limitations</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#helpers">Helpers</a></li>
+<li><a class="reference internal" href="#attributes">Attributes</a></li>
+<li><a class="reference internal" href="#output">Output</a></li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="simple.html"
+                        title="previous chapter">Simple NetDevice</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="olsr.html"
+                        title="next chapter">Optimized Link State Routing (OLSR)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/queue.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="olsr.html" title="Optimized Link State Routing (OLSR)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="simple.html" title="Simple NetDevice"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="network.html" >Network Module</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

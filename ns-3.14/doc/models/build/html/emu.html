@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Emu NetDevice &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="up" title="Emulation Overview" href="emulation-overview.html" />
+    <link rel="next" title="Tap NetDevice" href="tap.html" />
+    <link rel="prev" title="Emulation Overview" href="emulation-overview.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tap.html" title="Tap NetDevice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="emulation-overview.html" title="Emulation Overview"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="emulation-overview.html" accesskey="U">Emulation Overview</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="emu-netdevice">
+<h1>Emu NetDevice<a class="headerlink" href="#emu-netdevice" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="behavior">
+<h2>Behavior<a class="headerlink" href="#behavior" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">Emu</span></tt> net device allows a simulation node to send and receive packets over
+a real network. The emulated net device relies on a specified interface being in
+promiscuous mode. It opens a raw socket and binds to that interface.  We perform
+MAC spoofing to separate simulation network traffic from other
+network traffic that may be flowing to and from the host.</p>
+<p>One can use the <tt class="docutils literal"><span class="pre">Emu</span></tt> net device in a testbed situation where the host on
+which the simulation is running has a specific interface of interest which
+drives the testbed hardware. You would also need to set this specific interface
+into promiscuous mode and provide an appropriate device name to the <em>ns-3</em>
+emulated net device. An example of this environment is the ORBIT testbed as
+described above.</p>
+<p>The <tt class="docutils literal"><span class="pre">Emu</span></tt> net device only works if the underlying interface is up and in
+promiscuous mode. Packets will be sent out over the device, but we use MAC
+spoofing. The MAC addresses will be generated (by default) using the
+Organizationally Unique Identifier (OUI) 00:00:00 as a base. This vendor code is
+not assigned to any organization and so should not conflict with any real
+hardware.</p>
+<p>It is always up to the user to determine that using these MAC addresses is okay
+on your network and won&#8217;t conflict with anything else (including another
+simulation using <tt class="docutils literal"><span class="pre">Emu</span></tt> devices) on your network. If you are using the emulated
+net device in separate simulations you must consider global MAC address
+assignment issues and ensure that MAC addresses are unique across all
+simulations. The emulated net device respects the MAC address provided in the
+<tt class="docutils literal"><span class="pre">SetAddress</span></tt> method so you can do this manually. For larger simulations, you
+may want to set the OUI in the MAC address allocation function.</p>
+<p>IP addresses corresponding to the emulated net devices are the addresses
+generated in the simulation, which are generated in the usual way via helper
+functions. Since we are using MAC spoofing, there will not be a conflict between
+<em>ns-3</em> network stacks and any native network stacks.</p>
+<p>The emulated net device comes with a helper function as all <em>ns-3</em> devices do.
+One unique aspect is that there is no channel associated with the underlying
+medium. We really have no idea what this external medium is, and so have not
+made an effort to model it abstractly. The primary thing to be aware of is the
+implication this has for IPv4 global routing. The global router module attempts
+to walk the channels looking for adjacent networks. Since there is no channel,
+the global router will be unable to do this and you must then use a dynamic
+routing protocol such as OLSR to include routing in <tt class="docutils literal"><span class="pre">Emu</span></tt>-based networks.</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Any mixing of <em>ns-3</em> objects with real objects will typically require that
+<em>ns-3</em> compute checksums in its protocols. By default, checksums are not
+computed by <em>ns-3</em>. To enable checksums (e.g. UDP, TCP, IP), users must set
+the attribute <tt class="docutils literal"><span class="pre">ChecksumEnabled</span></tt> to true, such as follows::</p>
+<div class="highlight-python"><pre>GlobalValue::Bind ("ChecksumEnabled", BooleanValue (true));</pre>
+</div>
+<p>The usage of the <tt class="docutils literal"><span class="pre">Emu</span></tt> net device is straightforward once the network of
+simulations has been configured. Since most of the work involved in working with
+this device is in network configuration before even starting a simulation, you
+may want to take a moment to review a couple of HOWTO pages on the <em>ns-3</em> wiki
+that describe how to set up a virtual test network using VMware and how to run a
+set of example (client server) simulations that use <tt class="docutils literal"><span class="pre">Emu</span></tt> net devices.</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.nsnam.org/wiki/index.php/HOWTO_use_VMware_to_set_up_virtual_networks_(Windows)">http://www.nsnam.org/wiki/index.php/HOWTO_use_VMware_to_set_up_virtual_networks_(Windows)</a></li>
+<li><a class="reference external" href="http://www.nsnam.org/wiki/index.php/HOWTO_use_ns-3_scripts_to_drive_real_hardware_(experimental)">http://www.nsnam.org/wiki/index.php/HOWTO_use_ns-3_scripts_to_drive_real_hardware_(experimental)</a></li>
+</ul>
+<p>Once you are over the configuration hurdle, the script changes required to use
+an <tt class="docutils literal"><span class="pre">Emu</span></tt> device are trivial. The main structural difference is that you will
+need to create an <em>ns-3</em> simulation script for each node. In the case of the
+HOWTOs above, there is one client script and one server script. The only
+&#8220;challenge&#8221; is to get the addresses set correctly.</p>
+<p>Just as with all other <em>ns-3</em> net devices, we provide a helper class for the
+<tt class="docutils literal"><span class="pre">Emu</span></tt> net device. The following code snippet illustrates how one would declare
+an EmuHelper and use it to set the &#8220;DeviceName&#8221; attribute to &#8220;eth1&#8221; and install
+<tt class="docutils literal"><span class="pre">Emu</span></tt> devices on a group of nodes. You would do this on both the client and
+server side in the case of the HOWTO seen above.:</p>
+<div class="highlight-python"><pre>EmuHelper emu;
+emu.SetAttribute ("DeviceName", StringValue ("eth1"));
+NetDeviceContainer d = emu.Install (n);</pre>
+</div>
+<p>The only other change that may be required is to make sure that the address
+spaces (MAC and IP) on the client and server simulations are compatible. First
+the MAC address is set to a unique well-known value in both places (illustrated
+here for one side).:</p>
+<div class="highlight-python"><pre>//
+// We've got the devices in place.  Since we're using MAC address
+// spoofing under the sheets, we need to make sure that the MAC addresses
+// we have assigned to our devices are unique.  Ns-3 will happily
+// automatically assign the same MAC address to the devices in both halves
+// of our two-script pair, so let's go ahead and just manually change them
+// to something we ensure is unique.
+//
+Ptr&lt;NetDevice&gt; nd = d.Get (0);
+Ptr&lt;EmuNetDevice&gt; ed = nd-&gt;GetObject&lt;EmuNetDevice&gt; ();
+ed-&gt;SetAddress ("00:00:00:00:00:02");</pre>
+</div>
+<p>And then the IP address of the client or server is set in the usual way using
+helpers.:</p>
+<div class="highlight-python"><pre>//
+// We've got the "hardware" in place.  Now we need to add IP addresses.
+// This is the server half of a two-script pair.  We need to make sure
+// that the addressing in both of these applications is consistent, so
+// we use provide an initial address in both cases.  Here, the client
+// will reside on one machine running ns-3 with one node having ns-3
+// with IP address "10.1.1.2" and talk to a server script running in
+// another ns-3 on another computer that has an ns-3 node with IP
+// address "10.1.1.3"
+//
+Ipv4AddressHelper ipv4;
+ipv4.SetBase ("10.1.1.0", "255.255.255.0", "0.0.0.2");
+Ipv4InterfaceContainer i = ipv4.Assign (d);</pre>
+</div>
+<p>You will use application helpers to generate traffic exactly as you do in any
+<em>ns-3</em> simulation script. Note that the server address shown below in a snippet
+from the client, must correspond to the IP address assigned to the server node
+similarly to the snippet above.:</p>
+<div class="highlight-python"><pre>uint32_t packetSize = 1024;
+uint32_t maxPacketCount = 2000;
+Time interPacketInterval = Seconds (0.001);
+UdpEchoClientHelper client ("10.1.1.3", 9);
+client.SetAttribute ("MaxPackets", UintegerValue (maxPacketCount));
+client.SetAttribute ("Interval", TimeValue (interPacketInterval));
+client.SetAttribute ("PacketSize", UintegerValue (packetSize));
+ApplicationContainer apps = client.Install (n.Get (0));
+apps.Start (Seconds (1.0));
+apps.Stop (Seconds (2.0));</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">Emu</span></tt> net device and helper provide access to ASCII and pcap tracing
+functionality just as other <em>ns-3</em> net devices to. You enable tracing similarly
+to these other net devices::</p>
+<div class="highlight-python"><pre>EmuHelper::EnablePcapAll ("emu-udp-echo-client");</pre>
+</div>
+<p>For examples that use the <tt class="docutils literal"><span class="pre">Emu</span></tt> net device, see
+<tt class="docutils literal"><span class="pre">src/emu/examples/emu-udp-echo.cc</span></tt> and <tt class="docutils literal"><span class="pre">src/emu/examples/emu-ping.cc</span></tt>
+in the repository.</p>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>Perhaps the most unusual part of the <tt class="docutils literal"><span class="pre">Emu</span></tt> and <tt class="docutils literal"><span class="pre">Tap</span></tt> device implementation
+relates to the requirement for executing some of the code with super-user
+permissions. Rather than force the user to execute the entire simulation as
+root, we provide a small &#8220;creator&#8221; program that runs as root and does any
+required high-permission sockets work.</p>
+<p>We do a similar thing for both the <tt class="docutils literal"><span class="pre">Emu</span></tt> and the <tt class="docutils literal"><span class="pre">Tap</span></tt> devices.  The
+high-level view is that the <tt class="docutils literal"><span class="pre">CreateSocket</span></tt> method creates a local interprocess
+(Unix) socket, forks, and executes the small creation program. The small
+program, which runs as suid root, creates a raw socket and sends back the raw
+socket file descriptor over the Unix socket that is passed to it as a parameter.
+The raw socket is passed as a control message (sometimes called ancillary data)
+of type SCM_RIGHTS.</p>
+<p>The <tt class="docutils literal"><span class="pre">Emu</span></tt> net device uses the <em>ns-3</em> threading and multithreaded real-time
+scheduler extensions. The interesting work in the <tt class="docutils literal"><span class="pre">Emu</span></tt> device is done when
+the net device is started (<tt class="docutils literal"><span class="pre">EmuNetDevice::StartDevice</span> <span class="pre">()</span></tt>). An attribute
+(&#8220;Start&#8221;) provides a simulation time at which to spin up the net device. At this
+specified time (which defaults to t=0), the socket creation function is called
+and executes as described above. You may also specify a time at which to stop
+the device using the &#8220;Stop&#8221; attribute.</p>
+<p>Once the (promiscuous mode) socket is created, we bind it to an interface name
+also provided as an attribute (&#8220;DeviceName&#8221;) that is stored internally as
+<tt class="docutils literal"><span class="pre">m_deviceName</span></tt>::</p>
+<div class="highlight-python"><pre>struct ifreq ifr;
+bzero (&amp;ifr, sizeof(ifr));
+strncpy ((char *)ifr.ifr_name, m_deviceName.c_str (), IFNAMSIZ);
+
+int32_t rc = ioctl (m_sock, SIOCGIFINDEX, &amp;ifr);
+
+struct sockaddr_ll ll;
+bzero (&amp;ll, sizeof(ll));
+
+ll.sll_family = AF_PACKET;
+ll.sll_ifindex = m_sll_ifindex;
+ll.sll_protocol = htons(ETH_P_ALL);
+
+rc = bind (m_sock, (struct sockaddr *)&amp;ll, sizeof (ll));</pre>
+</div>
+<p>After the promiscuous raw socket is set up, a separate thread is spawned to do
+reads from that socket and the link state is set to <tt class="docutils literal"><span class="pre">Up</span></tt>.:</p>
+<div class="highlight-python"><pre>m_readThread = Create&lt;SystemThread&gt; (
+  MakeCallback (&amp;EmuNetDevice::ReadThread, this));
+m_readThread-&gt;Start ();
+
+NotifyLinkUp ();</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">EmuNetDevice::ReadThread</span></tt> function basically just sits in an infinite
+loop reading from the promiscuous mode raw socket and scheduling packet
+receptions using the real-time simulator extensions.:</p>
+<div class="highlight-python"><pre>for (;;)
+  {
+    ...
+
+    len = recvfrom (m_sock, buf, bufferSize, 0, (struct sockaddr *)&amp;addr,
+      &amp;addrSize);
+
+    ...
+
+    DynamicCast&lt;RealtimeSimulatorImpl&gt; (Simulator::GetImplementation ())-&gt;
+      ScheduleRealtimeNow (
+        MakeEvent (&amp;EmuNetDevice::ForwardUp, this, buf, len));
+
+    ...
+  }</pre>
+</div>
+<p>The line starting with our templated DynamicCast function probably deserves a
+comment. It gains access to the simulator implementation object using the
+<tt class="docutils literal"><span class="pre">Simulator::GetImplementation</span></tt> method and then casts to the real-time
+simulator implementation to use the real-time schedule method
+<tt class="docutils literal"><span class="pre">ScheduleRealtimeNow</span></tt>. This function will cause a handler for the  newly
+received packet to be scheduled for execution at the current real time clock
+value. This will, in turn cause the simulation clock to be advanced to that real
+time value when the scheduled event (<tt class="docutils literal"><span class="pre">EmuNetDevice::ForwardUp</span></tt>) is fired.</p>
+<p>The <tt class="docutils literal"><span class="pre">ForwardUp</span></tt> function operates as most other similar <em>ns-3</em> net device
+methods do. The packet is first filtered based on the destination address. In
+the case of the <tt class="docutils literal"><span class="pre">Emu</span></tt> device, the MAC destination address will be the address
+of the <tt class="docutils literal"><span class="pre">Emu</span></tt> device and not the hardware address of the real device. Headers
+are then stripped off and the trace hooks are hit. Finally, the packet is passed
+up the <em>ns-3</em> protocol stack using the receive callback function of the net
+device.</p>
+<p>Sending a packet is equally straightforward as shown below. The first thing we
+do is to add the ethernet header and trailer to the <em>ns-3</em> <tt class="docutils literal"><span class="pre">Packet</span></tt> we are
+sending. The source address corresponds to the address of the <tt class="docutils literal"><span class="pre">Emu</span></tt> device and
+not the underlying native device MAC address. This is where the MAC address
+spoofing is done. The trailer is added and we enqueue and dequeue the packet
+from the net device queue to hit the trace hooks.:</p>
+<div class="highlight-python"><pre>header.SetSource (source);
+header.SetDestination (destination);
+header.SetLengthType (packet-&gt;GetSize ());
+packet-&gt;AddHeader (header);
+
+EthernetTrailer trailer;
+trailer.CalcFcs (packet);
+packet-&gt;AddTrailer (trailer);
+
+m_queue-&gt;Enqueue (packet);
+packet = m_queue-&gt;Dequeue ();
+
+struct sockaddr_ll ll;
+bzero (&amp;ll, sizeof (ll));
+
+ll.sll_family = AF_PACKET;
+ll.sll_ifindex = m_sll_ifindex;
+ll.sll_protocol = htons(ETH_P_ALL);
+
+rc = sendto (m_sock, packet-&gt;PeekData (), packet-&gt;GetSize (), 0,
+  reinterpret_cast&lt;struct sockaddr *&gt; (&amp;ll), sizeof (ll));</pre>
+</div>
+<p>Finally, we simply send the packet to the raw socket which puts it out on the
+real network.</p>
+<p>From the point of view of tracing in the net device, there are several
+interesting points to insert trace hooks.  A convention inherited from other
+simulators is that packets destined for transmission onto attached networks
+pass through a single &#8220;transmit queue&#8221; in the net device.  We provide trace
+hooks at this point in packet flow, which corresponds (abstractly) only to a
+transition from the network to data link layer, and call them collectively
+the device MAC hooks.</p>
+<p>When a packet is sent to the Emu net device for transmission it always
+passes through the transmit queue.  The transmit queue in the EmuNetDevice
+inherits from Queue, and therefore inherits three trace sources:</p>
+<ul class="simple">
+<li>An Enqueue operation source (see Queue::m_traceEnqueue);</li>
+<li>A Dequeue operation source (see Queue::m_traceDequeue);</li>
+<li>A Drop operation source (see Queue::m_traceDrop).</li>
+</ul>
+<p>The upper-level (MAC) trace hooks for the EmuNetDevice are, in fact,
+exactly these three trace sources on the single transmit queue of the device.</p>
+<p>The m_traceEnqueue event is triggered when a packet is placed on the transmit
+queue.  This happens at the time that ns3::EmuNetDevice::Send or
+<tt class="docutils literal"><span class="pre">ns3::EmuNetDevice::SendFrom</span></tt> is called by a higher layer to queue a
+packet for transmission.</p>
+<p>The m_traceDequeue event is triggered when a packet is removed from the
+transmit queue.  Dequeues from the transmit queue happen immediately after
+the packet was enqueued and only indicate that the packet is about to be
+sent to an underlying raw socket.  The actual time at which the packet is
+sent out on the wire is not available.</p>
+<p>Similar to the upper level trace hooks, there are trace hooks available at
+the lower levels of the net device.  We call these the PHY hooks.  These
+events fire from the device methods that talk directly to the underlying
+raw socket.</p>
+<p>The trace source m_dropTrace is not used in the Emu net device since that
+is really the business of the underlying &#8220;real&#8221; device driver.</p>
+<p>The other low-level trace source fires on reception of an accepted packet
+(see <tt class="docutils literal"><span class="pre">ns3::EmuNetDevice::m_rxTrace</span></tt>).  A packet is accepted if it is destined
+for the broadcast address, a multicast address, or to the MAC address
+assigned to the Emu net device.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Emu NetDevice</a><ul>
+<li><a class="reference internal" href="#behavior">Behavior</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+<li><a class="reference internal" href="#implementation">Implementation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="emulation-overview.html"
+                        title="previous chapter">Emulation Overview</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tap.html"
+                        title="next chapter">Tap NetDevice</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/emu.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tap.html" title="Tap NetDevice"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="emulation-overview.html" title="Emulation Overview"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+
+          <li><a href="emulation-overview.html" >Emulation Overview</a><span class="navelem">&nbsp;</span></li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,574 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Wifi &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="next" title="Wimax NetDevice" href="wimax.html" />
+    <link rel="prev" title="UAN Framework" href="uan.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="wimax.html" title="Wimax NetDevice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="uan.html" title="UAN Framework"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="wifi">
+<h1>Wifi<a class="headerlink" href="#wifi" title="Permalink to this headline">¶</a></h1>
+<p><em>ns-3</em> nodes can contain a collection of NetDevice objects, much like an actual
+computer contains separate interface cards for Ethernet, Wifi, Bluetooth, etc.
+This chapter describes the <em>ns-3</em> WifiNetDevice and related models. By adding
+WifiNetDevice objects to <em>ns-3</em> nodes, one can create models of 802.11-based
+infrastructure and ad hoc networks.</p>
+<div class="section" id="overview-of-the-model">
+<h2>Overview of the model<a class="headerlink" href="#overview-of-the-model" title="Permalink to this headline">¶</a></h2>
+<p>The WifiNetDevice models a wireless network interface controller based
+on the IEEE 802.11 standard <a class="reference internal" href="#ieee80211">[ieee80211]</a>. We will go into more detail below but in brief,
+<em>ns-3</em> provides models for these aspects of 802.11:</p>
+<ul class="simple">
+<li>basic 802.11 DCF with <strong>infrastructure</strong> and <strong>adhoc</strong> modes</li>
+<li><strong>802.11a</strong>, <strong>802.11b</strong> and <strong>802.11g</strong> physical layers</li>
+<li>QoS-based EDCA and queueing extensions of <strong>802.11e</strong></li>
+<li>various propagation loss models including <strong>Nakagami, Rayleigh, Friis,
+LogDistance, FixedRss, Random</strong></li>
+<li>two propagation delay models, a distance-based and random model</li>
+<li>various rate control algorithms including <strong>Aarf, Arf, Cara, Onoe, Rraa,
+ConstantRate, and Minstrel</strong></li>
+<li>802.11s (mesh), described in another chapter</li>
+</ul>
+<p>The set of 802.11 models provided in <em>ns-3</em> attempts to provide an accurate
+MAC-level implementation of the 802.11 specification and to provide a
+not-so-slow PHY-level model of the 802.11a specification.</p>
+<p>The implementation is modular and provides roughly four levels of models:</p>
+<ul class="simple">
+<li>the <strong>PHY layer models</strong></li>
+<li>the so-called <strong>MAC low models</strong>: they implement DCF and EDCAF</li>
+<li>the so-called <strong>MAC high models</strong>: they implement the MAC-level beacon
+generation, probing, and association state machines, and</li>
+<li>a set of <strong>Rate control algorithms</strong> used by the MAC low models</li>
+</ul>
+<p>There are presently three <strong>MAC high models</strong> that provide for the three
+(non-mesh; the mesh equivalent, which is a sibling of these with common
+parent <tt class="docutils literal"><span class="pre">ns3::RegularWifiMac</span></tt>, is not discussed here) Wi-Fi topological
+elements - Access Point (AP) (implemented in class <tt class="docutils literal"><span class="pre">ns3::ApWifiMac</span></tt>,
+non-AP Station (STA) (<tt class="docutils literal"><span class="pre">ns3::StaWifiMac</span></tt>), and STA in an Independent
+Basic Service Set (IBSS - also commonly referred to as an ad hoc
+network (<tt class="docutils literal"><span class="pre">ns3::AdhocWifiMac</span></tt>).</p>
+<p>The simplest of these is <tt class="docutils literal"><span class="pre">ns3::AdhocWifiMac</span></tt>, which implements a
+Wi-Fi MAC that does not perform any kind of beacon generation,
+probing, or association. The <tt class="docutils literal"><span class="pre">ns3::StaWifiMac</span></tt> class implements
+an active probing and association state machine that handles automatic
+re-association whenever too many beacons are missed. Finally,
+<tt class="docutils literal"><span class="pre">ns3::ApWifiMac</span></tt> implements an AP that generates periodic
+beacons, and that accepts every attempt to associate.</p>
+<p>These three MAC high models share a common parent in
+<tt class="docutils literal"><span class="pre">ns3::RegularWifiMac</span></tt>, which exposes, among other MAC
+configuration, an attribute <tt class="docutils literal"><span class="pre">QosSupported</span></tt> that allows
+configuration of 802.11e/WMM-style QoS support. With QoS-enabled MAC
+models it is possible to work with traffic belonging to four different
+Access Categories (ACs): <strong>AC_VO</strong> for voice traffic,
+<strong>AC_VI</strong> for video traffic, <strong>AC_BE</strong> for best-effort
+traffic and <strong>AC_BK</strong> for background traffic.  In order for the
+MAC to determine the appropriate AC for an MSDU, packets forwarded
+down to these MAC layers should be marked using <strong>ns3::QosTag</strong> in
+order to set a TID (traffic id) for that packet otherwise it will be
+considered belonging to <strong>AC_BE</strong>.</p>
+<p>The <strong>MAC low layer</strong> is split into three components:</p>
+<ol class="arabic simple">
+<li><tt class="docutils literal"><span class="pre">ns3::MacLow</span></tt> which takes care of RTS/CTS/DATA/ACK transactions.</li>
+<li><tt class="docutils literal"><span class="pre">ns3::DcfManager</span></tt> and <tt class="docutils literal"><span class="pre">ns3::DcfState</span></tt> which implements the DCF and EDCAF
+functions.</li>
+<li><tt class="docutils literal"><span class="pre">ns3::DcaTxop</span></tt> and <tt class="docutils literal"><span class="pre">ns3::EdcaTxopN</span></tt> which handle the packet queue,
+packet fragmentation, and packet retransmissions if they are needed.
+The <tt class="docutils literal"><span class="pre">ns3::DcaTxop</span></tt> object is used high MACs that are not QoS-enabled,
+and for transmission of frames (e.g., of type Management)
+that the standard says should access the medium using the DCF.
+<tt class="docutils literal"><span class="pre">ns3::EdcaTxopN</span></tt> is is used by QoS-enabled high MACs and also
+performs QoS operations like 802.11n-style MSDU aggregation.</li>
+</ol>
+<p>There are also several <strong>rate control algorithms</strong> that can be used by the Mac low layer:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">OnoeWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">IdealWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">AarfcdWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">AarfWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ArfWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">AmrrWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">ConstantRateWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">MinstrelWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">CaraWifiManager</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">RraaWifiManager</span></tt></li>
+</ul>
+<p>The PHY layer implements a single model in the <tt class="docutils literal"><span class="pre">ns3::WifiPhy</span> <span class="pre">class</span></tt>: the
+physical layer model implemented there is described fully in a paper entitled
+<a class="reference external" href="http://cutebugs.net/files/wns2-yans.pdf">Yet Another Network Simulator</a>
+Validation results for 802.11b are available in this
+<a class="reference external" href="http://www.nsnam.org/~pei/80211b.pdf">technical report</a></p>
+<p>In <em>ns-3</em>, nodes can have multiple WifiNetDevices on separate channels, and the
+WifiNetDevice can coexist with other device types; this removes an architectural
+limitation found in ns-2. Presently, however, there is no model for
+cross-channel interference or coupling.</p>
+<p>The source code for the Wifi NetDevice lives in the directory
+<tt class="docutils literal"><span class="pre">src/wifi</span></tt>.</p>
+<div class="figure" id="wifi-architecture">
+<img alt="_images/WifiArchitecture.png" src="_images/WifiArchitecture.png" />
+<p class="caption">Wifi NetDevice architecture.</p>
+</div>
+</div>
+<div class="section" id="using-the-wifinetdevice">
+<h2>Using the WifiNetDevice<a class="headerlink" href="#using-the-wifinetdevice" title="Permalink to this headline">¶</a></h2>
+<p>The modularity provided by the implementation makes low-level configuration of
+the WifiNetDevice powerful but complex. For this reason, we provide some helper
+classes to perform common operations in a simple matter, and leverage the <em>ns-3</em>
+attribute system to allow users to control the parametrization of the underlying
+models.</p>
+<p>Users who use the low-level <em>ns-3</em> API and who wish to add a WifiNetDevice to
+their node must create an instance of a WifiNetDevice, plus a number of
+constituent objects, and bind them together appropriately (the WifiNetDevice is
+very modular in this regard, for future extensibility). At the low-level API,
+this can be done with about 20 lines of code (see <tt class="docutils literal"><span class="pre">ns3::WifiHelper::Install</span></tt>,
+and <tt class="docutils literal"><span class="pre">ns3::YansWifiPhyHelper::Create</span></tt>). They also must create, at some point, a
+WifiChannel, which also contains a number of constituent objects (see
+<tt class="docutils literal"><span class="pre">ns3::YansWifiChannelHelper::Create</span></tt>).</p>
+<p>However, a few helpers are available for users to add these devices and channels
+with only a few lines of code, if they are willing to use defaults, and the
+helpers provide additional API to allow the passing of attribute values to
+change default values. The scripts in <tt class="docutils literal"><span class="pre">src/examples</span></tt> can be browsed to see how
+this is done.</p>
+<div class="section" id="yanswifichannelhelper">
+<h3>YansWifiChannelHelper<a class="headerlink" href="#yanswifichannelhelper" title="Permalink to this headline">¶</a></h3>
+<p>The YansWifiChannelHelper has an unusual name. Readers may wonder why it is
+named this way. The reference is to the <a class="reference external" href="http://cutebugs.net/files/wns2-yans.pdf">yans simulator</a> from which this model is taken. The
+helper can be used to create a WifiChannel with a default PropagationLoss and
+PropagationDelay model.  Specifically, the default is a channel model with a
+propagation delay equal to a constant, the speed of light, and a propagation
+loss based on a log distance model with a reference loss of 46.6777 dB at
+reference distance of 1m.</p>
+<p>Users will typically type code such as::</p>
+<div class="highlight-python"><pre>YansWifiChannelHelper wifiChannelHelper = YansWifiChannelHelper::Default ();
+Ptr&lt;WifiChannel&gt; wifiChannel = wifiChannelHelper.Create ();</pre>
+</div>
+<p>to get the defaults.  Note the distinction above in creating a helper object vs.
+an actual simulation object.  In <em>ns-3</em>, helper objects (used at the helper API
+only) are created on the stack (they could also be created with operator new and
+later deleted).  However, the actual <em>ns-3</em> objects typically inherit from
+<tt class="docutils literal"><span class="pre">class</span> <span class="pre">ns3::Object</span></tt> and are assigned to a smart pointer.  See the chapter in
+the <em>ns-3</em> manual for a discussion of the <em>ns-3</em> object model, if you are not
+familiar with it.</p>
+<p><em>Todo: Add notes about how to configure attributes with this helper API</em></p>
+</div>
+<div class="section" id="yanswifiphyhelper">
+<h3>YansWifiPhyHelper<a class="headerlink" href="#yanswifiphyhelper" title="Permalink to this headline">¶</a></h3>
+<p>Physical devices (base class <tt class="docutils literal"><span class="pre">ns3::Phy</span></tt>) connect to <tt class="docutils literal"><span class="pre">ns3::Channel</span></tt> models in
+<em>ns-3</em>.  We need to create Phy objects appropriate for the YansWifiChannel; here
+the <tt class="docutils literal"><span class="pre">YansWifiPhyHelper</span></tt> will do the work.</p>
+<p>The YansWifiPhyHelper class configures an object factory to create instances of
+a <tt class="docutils literal"><span class="pre">YansWifiPhy</span></tt> and adds some other objects to it, including possibly a
+supplemental ErrorRateModel and a pointer to a MobilityModel. The user code is
+typically::</p>
+<div class="highlight-python"><pre>YansWifiPhyHelper wifiPhyHelper = YansWifiPhyHelper::Default ();
+wifiPhyHelper.SetChannel (wifiChannel);</pre>
+</div>
+<p>Note that we haven&#8217;t actually created any WifiPhy objects yet; we&#8217;ve just
+prepared the YansWifiPhyHelper by telling it which channel it is connected to.
+The phy objects are created in the next step.</p>
+</div>
+<div class="section" id="nqoswifimachelper-and-qoswifimachelper">
+<h3>NqosWifiMacHelper and QosWifiMacHelper<a class="headerlink" href="#nqoswifimachelper-and-qoswifimachelper" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">ns3::NqosWifiMacHelper</span></tt> and <tt class="docutils literal"><span class="pre">ns3::QosWifiMacHelper</span></tt> configure an
+object factory to create instances of a <tt class="docutils literal"><span class="pre">ns3::WifiMac</span></tt>. They are used to
+configure MAC parameters like type of MAC.</p>
+<p>The former, <tt class="docutils literal"><span class="pre">ns3::NqosWifiMacHelper</span></tt>, supports creation of MAC
+instances that do not have 802.11e/WMM-style QoS support enabled.</p>
+<p>For example the following user code configures a non-QoS MAC that
+will be a non-AP STA in an infrastructure network where the AP has
+SSID <tt class="docutils literal"><span class="pre">ns-3-ssid</span></tt>::</p>
+<div class="highlight-python"><pre>NqosWifiMacHelper wifiMacHelper = NqosWifiMacHelper::Default ();
+Ssid ssid = Ssid ("ns-3-ssid");
+wifiMacHelper.SetType ("ns3::StaWifiMac",
+                      "Ssid", SsidValue (ssid),
+                      "ActiveProbing", BooleanValue (false));</pre>
+</div>
+<p>To create MAC instances with QoS support enabled,
+<tt class="docutils literal"><span class="pre">ns3::QosWifiMacHelper</span></tt> is used in place of
+<tt class="docutils literal"><span class="pre">ns3::NqosWifiMacHelper</span></tt>.  This object can be also used to set:</p>
+<ul class="simple">
+<li>a MSDU aggregator for a particular Access Category (AC) in order to use
+802.11n MSDU aggregation feature;</li>
+<li>block ack parameters like threshold (number of packets for which block ack
+mechanism should be used) and inactivity timeout.</li>
+</ul>
+<p>The following code shows an example use of <tt class="docutils literal"><span class="pre">ns3::QosWifiMacHelper</span></tt> to
+create an AP with QoS enabled, aggregation on AC_VO, and Block Ack on AC_BE::</p>
+<div class="highlight-python"><pre>QosWifiMacHelper wifiMacHelper = QosWifiMacHelper::Default ();
+wifiMacHelper.SetType ("ns3::ApWifiMac",
+                       "Ssid", SsidValue (ssid),
+                       "BeaconGeneration", BooleanValue (true),
+                       "BeaconInterval", TimeValue (Seconds (2.5)));
+wifiMacHelper.SetMsduAggregatorForAc (AC_VO, "ns3::MsduStandardAggregator",
+                                      "MaxAmsduSize", UintegerValue (3839));
+wifiMacHelper.SetBlockAckThresholdForAc (AC_BE, 10);
+wifiMacHelper.SetBlockAckInactivityTimeoutForAc (AC_BE, 5);</pre>
+</div>
+</div>
+<div class="section" id="wifihelper">
+<h3>WifiHelper<a class="headerlink" href="#wifihelper" title="Permalink to this headline">¶</a></h3>
+<p>We&#8217;re now ready to create WifiNetDevices. First, let&#8217;s create
+a WifiHelper with default settings::</p>
+<div class="highlight-python"><pre>WifiHelper wifiHelper = WifiHelper::Default ();</pre>
+</div>
+<p>What does this do?  It sets the RemoteStationManager to
+<tt class="docutils literal"><span class="pre">ns3::ArfWifiManager</span></tt>.
+Now, let&#8217;s use the wifiPhyHelper and wifiMacHelper created above to install WifiNetDevices
+on a set of nodes in a NodeContainer &#8220;c&#8221;::</p>
+<div class="highlight-python"><pre>NetDeviceContainer wifiContainer = WifiHelper::Install (wifiPhyHelper, wifiMacHelper, c);</pre>
+</div>
+<p>This creates the WifiNetDevice which includes also a WifiRemoteStationManager, a
+WifiMac, and a WifiPhy (connected to the matching WifiChannel).</p>
+<p>There are many <em>ns-3</em> attributes that can be set on the above helpers to
+deviate from the default behavior; the example scripts show how to do some of
+this reconfiguration.</p>
+</div>
+<div class="section" id="adhoc-wifinetdevice-configuration">
+<h3>AdHoc WifiNetDevice configuration<a class="headerlink" href="#adhoc-wifinetdevice-configuration" title="Permalink to this headline">¶</a></h3>
+<p>This is a typical example of how a user might configure an adhoc network.</p>
+<p><em>To be completed</em></p>
+</div>
+<div class="section" id="infrastructure-access-point-and-clients-wifinetdevice-configuration">
+<h3>Infrastructure (Access Point and clients) WifiNetDevice configuration<a class="headerlink" href="#infrastructure-access-point-and-clients-wifinetdevice-configuration" title="Permalink to this headline">¶</a></h3>
+<p>This is a typical example of how a user might configure an access point and a
+set of clients.</p>
+<p><em>To be completed</em></p>
+</div>
+</div>
+<div class="section" id="the-wifichannel-and-wifiphy-models">
+<h2>The WifiChannel and WifiPhy models<a class="headerlink" href="#the-wifichannel-and-wifiphy-models" title="Permalink to this headline">¶</a></h2>
+<p>The WifiChannel subclass can be used to connect together a set of
+<tt class="docutils literal"><span class="pre">ns3::WifiNetDevice</span></tt> network interfaces. The class <tt class="docutils literal"><span class="pre">ns3::WifiPhy</span></tt> is the
+object within the WifiNetDevice that receives bits from the channel.
+For the channel propagation modeling, the propagation module is used; see section <a class="reference internal" href="propagation.html#propagation"><em>Propagation</em></a> for details.</p>
+<p>This section summarizes the description of the BER calculations found in the
+yans paper taking into account the Forward Error Correction present in 802.11a
+and describes the algorithm we implemented to decide whether or not a packet can
+be successfully received. See <a class="reference external" href="http://cutebugs.net/files/wns2-yans.pdf">&#8220;Yet Another Network Simulator&#8221;</a> for more details.</p>
+<p>The PHY layer can be in one of three states:</p>
+<ol class="arabic simple">
+<li>TX: the PHY is currently transmitting a signal on behalf of its associated
+MAC</li>
+<li>RX: the PHY is synchronized on a signal and is waiting until it has received
+its last bit to forward it to the MAC.</li>
+<li>IDLE: the PHY is not in the TX or RX states.</li>
+</ol>
+<p>When the first bit of a new packet is received while the PHY is not IDLE (that
+is, it is already synchronized on the reception of another earlier packet or it
+is sending data itself), the received packet is dropped. Otherwise, if the PHY
+is IDLE, we calculate the received energy of the first bit of this new signal
+and compare it against our Energy Detection threshold (as defined by the Clear
+Channel Assessment function mode 1). If the energy of the packet k is higher,
+then the PHY moves to RX state and schedules an event when the last bit of the
+packet is expected to be received. Otherwise, the PHY stays in IDLE state and
+drops the packet.</p>
+<p>The energy of the received signal is assumed to be zero outside of the reception
+interval of packet k and is calculated from the transmission power with a
+path-loss propagation model in the reception interval.  where the path loss
+exponent, <img class="math" src="_images/math/174fadd07fd54c9afe288e96558c92e0c1da733a.png" alt="n"/>, is chosen equal to <img class="math" src="_images/math/7cde695f2e4542fd01f860a89189f47a27143b66.png" alt="3"/>, the reference distance,
+<img class="math" src="_images/math/b5623ee18f045ea1ed3d240690fc7f54892e60a6.png" alt="d_0"/> is choosen equal to <img class="math" src="_images/math/a111eac5d2ef71476ac72fff58d518343b53306a.png" alt="1.0m"/> and the reference energy is based
+based on a Friis propagation model.</p>
+<p>When the last bit of the packet upon which the PHY is synchronized is received,
+we need to calculate the probability that the packet is received with any error
+to decide whether or not the packet on which we were synchronized could be
+successfully received or not: a random number is drawn from a uniform
+distribution and is compared against the probability of error.</p>
+<p>To evaluate the probability of error, we start from the piecewise linear
+functions shown in Figure <a class="reference internal" href="#snir"><em>SNIR function over time.</em></a> and calculate the
+SNIR function.</p>
+<div class="figure" id="snir">
+<img alt="_images/snir.png" src="_images/snir.png" />
+<p class="caption"><em>SNIR function over time.</em></p>
+</div>
+<p>From the SNIR function we can derive the Bit Error Rate (BER) and Packet Error Rate (PER) for the modulation and coding scheme being used for the transmission.  Please refer to <a class="reference internal" href="#pei80211ofdm">[pei80211ofdm]</a>, <a class="reference internal" href="#pei80211b">[pei80211b]</a> and <a class="reference internal" href="#lacage2006yans">[lacage2006yans]</a> for a detailed description of the available BER/PER models.</p>
+<div class="section" id="wifichannel-configuration">
+<h3>WifiChannel configuration<a class="headerlink" href="#wifichannel-configuration" title="Permalink to this headline">¶</a></h3>
+<p>The WifiChannel implementation uses the propagation loss and delay models provided within the ns-3 <em>propagation</em> module.</p>
+</div>
+</div>
+<div class="section" id="the-mac-model">
+<h2>The MAC model<a class="headerlink" href="#the-mac-model" title="Permalink to this headline">¶</a></h2>
+<p>The 802.11 Distributed Coordination Function is used to calculate when to grant
+access to the transmission medium. While implementing the DCF would have been
+particularly easy if we had used a recurring timer that expired every slot, we
+chose to use the method described in <a class="reference internal" href="#ji2004sslswn">[ji2004sslswn]</a>
+where the backoff timer duration is lazily calculated whenever needed since it
+is claimed to have much better performance than the simpler recurring timer
+solution.</p>
+<p>The higher-level MAC functions are implemented in a set of other C++ classes and
+deal with:</p>
+<ul class="simple">
+<li>packet fragmentation and defragmentation,</li>
+<li>use of the rts/cts protocol,</li>
+<li>rate control algorithm,</li>
+<li>connection and disconnection to and from an Access Point,</li>
+<li>the MAC transmission queue,</li>
+<li>beacon generation,</li>
+<li>msdu aggregation,</li>
+<li>etc.</li>
+</ul>
+</div>
+<div class="section" id="wifi-attributes">
+<h2>Wifi Attributes<a class="headerlink" href="#wifi-attributes" title="Permalink to this headline">¶</a></h2>
+<p>Should link to the list of attributes exported by Doxygen</p>
+</div>
+<div class="section" id="wifi-tracing">
+<h2>Wifi Tracing<a class="headerlink" href="#wifi-tracing" title="Permalink to this headline">¶</a></h2>
+<p>Should link to the list of traces exported by Doxygen</p>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<table class="docutils citation" frame="void" id="ieee80211" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[ieee80211]</a></td><td>IEEE Std 802.11-2007 <em>Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications</em></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="pei80211b" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id4">[pei80211b]</a></td><td>G. Pei and Tom Henderson, <a class="reference external" href="http://www.nsnam.org/~pei/80211b.pdf">Validation of ns-3 802.11b PHY model</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="pei80211ofdm" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[pei80211ofdm]</a></td><td>G. Pei and Tom Henderson, <a class="reference external" href="http://www.nsnam.org/~pei/80211ofdm.pdf">Validation of OFDM error rate model in ns-3</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="lacage2006yans" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id5">[lacage2006yans]</a></td><td>M. Lacage and T. Henderson, <a class="reference external" href="http://cutebugs.net/files/wns2-yans.pdf">Yet another Network Simulator</a></td></tr>
+</tbody>
+</table>
+<table class="docutils citation" frame="void" id="ji2004sslswn" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id6">[ji2004sslswn]</a></td><td>Z. Ji, J. Zhou, M. Takai and R. Bagrodia, <em>Scalable simulation of large-scale wireless networks with bounded inaccuracies</em>, in Proc. of the Seventh ACM Symposium on Modeling, Analysis and Simulation of Wireless and Mobile Systems, October 2004.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Wifi</a><ul>
+<li><a class="reference internal" href="#overview-of-the-model">Overview of the model</a></li>
+<li><a class="reference internal" href="#using-the-wifinetdevice">Using the WifiNetDevice</a><ul>
+<li><a class="reference internal" href="#yanswifichannelhelper">YansWifiChannelHelper</a></li>
+<li><a class="reference internal" href="#yanswifiphyhelper">YansWifiPhyHelper</a></li>
+<li><a class="reference internal" href="#nqoswifimachelper-and-qoswifimachelper">NqosWifiMacHelper and QosWifiMacHelper</a></li>
+<li><a class="reference internal" href="#wifihelper">WifiHelper</a></li>
+<li><a class="reference internal" href="#adhoc-wifinetdevice-configuration">AdHoc WifiNetDevice configuration</a></li>
+<li><a class="reference internal" href="#infrastructure-access-point-and-clients-wifinetdevice-configuration">Infrastructure (Access Point and clients) WifiNetDevice configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-wifichannel-and-wifiphy-models">The WifiChannel and WifiPhy models</a><ul>
+<li><a class="reference internal" href="#wifichannel-configuration">WifiChannel configuration</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-mac-model">The MAC model</a></li>
+<li><a class="reference internal" href="#wifi-attributes">Wifi Attributes</a></li>
+<li><a class="reference internal" href="#wifi-tracing">Wifi Tracing</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="uan.html"
+                        title="previous chapter">UAN Framework</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="wimax.html"
+                        title="next chapter">Wimax NetDevice</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/wifi.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="wimax.html" title="Wimax NetDevice"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="uan.html" title="UAN Framework"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

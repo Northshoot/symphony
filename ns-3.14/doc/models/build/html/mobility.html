@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mobility &mdash; Model Library</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     'ns-3-dev',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Model Library" href="index.html" />
+    <link rel="next" title="Network Module" href="network.html" />
+    <link rel="prev" title="MPI for Distributed Simulation" href="distributed.html" />
+  <link rel="stylesheet" type="text/css"
+    href="_static/ns3_stylesheet.css" />
+    <link rel="icon" type="image/ico" 
+      href="_static/favicon.ico" />
+
+  <script type="text/javascript" src="_static/drop-down-menu.js"></script>
+  <script type="text/javascript" src="_static/ns3_version.js"></script>
+  <script type="text/javascript">var ns3_builder="html";</script>
+  <script type="text/javascript" src="_static/ns3_links.js"></script>
+      
+
+  </head>
+  <body>
+  <div id="titlearea">
+    <table cellspacing="0" cellpadding="0" width="100%">
+      <tbody>
+	<tr style="height: 56px;">
+	  <td id="projectlogo">
+	    <a id="ns3_home1"
+	       href="http://www.nsnam.org/">
+	       <img alt="ns-3 Logo"
+		    src="_static/ns-3-inverted-notext-small.png"/>
+	    </a>
+	  </td>
+	  <td id="projecttext">
+	    <div id="projectbrief">A Discrete-Event Network Simulator</div>
+	      <span id="projectnumber"><script type="text/javascript">document.write(ns3_version)</script></span>
+	  </td>
+	      
+	  <td id="ns3-menu">
+	    <div class="menu">
+	      <ul >
+	        <li><a id="ns3_home2"
+		       href="http://www.nsnam.org/"
+		       >&nbsp;&nbsp;Home</a>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mTuts')" 
+		      onmouseout="mclosetime()"
+			>Tutorials &nbsp;&#x25BC;</span>
+		    <div id="mTuts" 
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_tut"
+			 href="/docs/tutorial/html/index.html"
+			  >English</a><br/>
+		      <a id="ns3_ptbr"
+			 href="/docs/tutorial-pt-br/html/index.html"
+			    >Portuguese</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDocs')" 
+		      onmouseout="mclosetime()"
+			>Docs &nbsp;&nbsp;&nbsp;&#x25BC;</span>
+		    <div id="mDocs"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_wiki"
+			 href="http://www.nsnam.org/wiki"
+			 >Wiki</a><br/>
+		      <a id="ns3_man"
+			 href="/docs/manual/html/index.html"
+			 >Manual</a><br/>
+		      <a id="ns3_mod"
+			 href="/docs/models/html/index.html"
+			 >Models</a><br/>
+	        </li>
+	        <li><span
+		      onmouseover="mopen('mDev')" 
+		      onmouseout="mclosetime()"
+			>Develop &#x25BC;</span>
+		    <div id="mDev"
+		        onmouseover="mcancelclosetime()" 
+		        onmouseout="mclosetime()">
+		      <a id="ns3_api"
+			 href="/docs/doxygen/html/index.html"
+			 >API</a><br/>
+		      <a id="ns3_bugs"
+		       href="http://www.nsnam.org/bugzilla/">Bugs</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </td>
+	  <td id="projectsection">
+	    <span style="margin-right:10px">Models</span>
+	  </td>
+	</tr>
+      </tbody>
+    </table>
+    <script  type="text/javascript">ns3_write_links()</script>
+  </div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="network.html" title="Network Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="distributed.html" title="MPI for Distributed Simulation"
+             accesskey="P">previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mobility">
+<h1>Mobility<a class="headerlink" href="#mobility" title="Permalink to this headline">¶</a></h1>
+<p>The mobility support in ns-3 includes:</p>
+<ul class="simple">
+<li>a set of mobility models which are used to track and maintain the <em>current</em> cartesian position and speed of an object.</li>
+<li>a &#8220;course change notifier&#8221; trace source which can be used to register listeners to the course changes of a mobility model</li>
+<li>a number of helper classes which are used to place nodes and setup mobility models (including parsers for some mobility definition formats).</li>
+</ul>
+<div class="section" id="model-description">
+<h2>Model Description<a class="headerlink" href="#model-description" title="Permalink to this headline">¶</a></h2>
+<p>The source code for mobility lives in the directory <tt class="docutils literal"><span class="pre">src/mobility</span></tt>.</p>
+<div class="section" id="design">
+<h3>Design<a class="headerlink" href="#design" title="Permalink to this headline">¶</a></h3>
+<p>The design includes mobility models, position allocators, and helper
+functions.</p>
+<p>In ns-3, special <tt class="docutils literal"><span class="pre">MobilityModel</span></tt> objects track the evolution of position
+with respect to a (cartesian) coordinate system.  The mobility model
+is typically aggregated to an <tt class="docutils literal"><span class="pre">ns3::Node</span></tt> object and queried using
+<tt class="docutils literal"><span class="pre">GetObject&lt;MobilityModel&gt;</span> <span class="pre">()</span></tt>. The base class <tt class="docutils literal"><span class="pre">ns3::MobilityModel</span></tt>
+is subclassed for different motion behaviors.</p>
+<p>The initial position of objects is typically set with a PositionAllocator.
+These types of objects will lay out the position on a notional canvas.
+Once the simulation starts, the position allocator may no longer be
+used, or it may be used to pick future mobility &#8220;waypoints&#8221; for such
+mobility models.</p>
+<p>Most users interact with the mobility system using mobility helper
+classes.  The MobilityHelper combines a mobility model and position
+allocator, and can be used with a node container to install mobility
+capability on a set of nodes.</p>
+<p>We first describe the coordinate system and issues
+surrounding multiple coordinate systems.</p>
+<div class="section" id="coordinate-system">
+<h4>Coordinate system<a class="headerlink" href="#coordinate-system" title="Permalink to this headline">¶</a></h4>
+<p>There are many possible coordinate systems and possible translations between
+them.  ns-3 uses the Cartesian coordinate system only, at present.</p>
+<p>The question has arisen as to how to use the mobility models (supporting
+Cartesian coordinates) with different coordinate systems.  This is possible
+if the user performs conversion between the ns-3 Cartesian and the
+other coordinate system.  One possible library to assist is
+the proj4 <a class="reference external" href="http://trac.osgeo.org/proj/">http://trac.osgeo.org/proj/</a> library for projections and reverse
+projections.</p>
+<p>If we support converting between coordinate systems, we must adopt a
+reference.  It has been suggested to use the geocentric Cartesian coordinate
+system as a reference.  Contributions are welcome in this regard.</p>
+<p>The question has arisen about adding a new mobility model whose motion
+is natively implemented in a different coordinate system (such as an
+orbital mobility model implemented using spherical coordinate system).
+We advise to create a subclass with the APIs desired
+(such as Get/SetSphericalPosition), and new position allocators, and
+implement the motion however desired, but must also support the conversion to
+cartesian (by supporting the cartesian Get/SetPosition).</p>
+</div>
+<div class="section" id="coordinates">
+<h4>Coordinates<a class="headerlink" href="#coordinates" title="Permalink to this headline">¶</a></h4>
+<p>The base class for a coordinate is called <tt class="docutils literal"><span class="pre">ns3::Vector</span></tt>.  While
+positions are normally described as coordinates and not vectors in
+the literature, it is possible to reuse the same data structure to
+represent position (x,y,z) and velocity (magnitude and direction
+from the current position).  ns-3 uses class Vector for both.</p>
+<p>There are also some additional related structures used to support
+mobility models.</p>
+<ul class="simple">
+<li>Rectangle</li>
+<li>Box</li>
+<li>Waypoint</li>
+</ul>
+</div>
+<div class="section" id="mobilitymodel">
+<h4>MobilityModel<a class="headerlink" href="#mobilitymodel" title="Permalink to this headline">¶</a></h4>
+<p>Describe base class</p>
+<ul class="simple">
+<li>GetPosition ()</li>
+<li>Position and Velocity attributes</li>
+<li>GetDistanceFrom ()</li>
+<li>CourseChangeNotification</li>
+</ul>
+</div>
+<div class="section" id="mobilitymodel-subclasses">
+<h4>MobilityModel Subclasses<a class="headerlink" href="#mobilitymodel-subclasses" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>ConstantPosition</li>
+<li>ConstantVelocity</li>
+<li>ConstantAcceleration</li>
+<li>GaussMarkov</li>
+<li>Hierarchical</li>
+<li>RandomDirection2D</li>
+<li>RandomWalk2D</li>
+<li>RandomWaypoint</li>
+<li>SteadyStateRandomWaypoint</li>
+<li>Waypoint</li>
+</ul>
+</div>
+<div class="section" id="positionallocator">
+<h4>PositionAllocator<a class="headerlink" href="#positionallocator" title="Permalink to this headline">¶</a></h4>
+<p>Position allocators usually used only at beginning, to lay out the nodes
+initial position.  However, some mobility models (e.g. RandomWaypoint) will
+use a position allocator to pick new waypoints.</p>
+<ul class="simple">
+<li>ListPositionAllocator</li>
+<li>GridPositionAllocator</li>
+<li>RandomRectanglePositionAllocator</li>
+<li>RandomBoxPositionAllocator</li>
+<li>RandomDiscPositionAllocator</li>
+<li>UniformDiscPositionAllocator</li>
+</ul>
+</div>
+<div class="section" id="helper">
+<h4>Helper<a class="headerlink" href="#helper" title="Permalink to this headline">¶</a></h4>
+<p>A special mobility helper is provided that is mainly aimed at supporting
+the installation of mobility to a Node container (when using containers
+at the helper API level).  The MobilityHelper class encapsulates
+a MobilityModel factory object and a PositionAllocator used for
+initial node layout.</p>
+</div>
+<div class="section" id="ns-2-mobilityhelper">
+<h4>ns-2 MobilityHelper<a class="headerlink" href="#ns-2-mobilityhelper" title="Permalink to this headline">¶</a></h4>
+<p>The ns-2 mobility format is a widely used mobility trace format.  The
+documentation is available at: <a class="reference external" href="http://www.isi.edu/nsnam/ns/doc/node172.html">http://www.isi.edu/nsnam/ns/doc/node172.html</a></p>
+<p>Valid trace files use the following ns2 statements:</p>
+<div class="highlight-python"><pre>$node set X_ x1
+$node set Y_ y1
+$node set Z_ z1
+$ns at $time $node setdest x2 y2 speed
+$ns at $time $node set X_ x1
+$ns at $time $node set Y_ Y1
+$ns at $time $node set Z_ Z1</pre>
+</div>
+<p>Some examples of external tools that can export in this format include:</p>
+<ul class="simple">
+<li>BonnMotion <a class="reference external" href="http://net.cs.uni-bonn.de/wg/cs/applications/bonnmotion/">http://net.cs.uni-bonn.de/wg/cs/applications/bonnmotion/</a></li>
+<li>SUMO <a class="reference external" href="http://sourceforge.net/apps/mediawiki/sumo/index.php?title=Main_Page">http://sourceforge.net/apps/mediawiki/sumo/index.php?title=Main_Page</a></li>
+<li>TraNS <a class="reference external" href="http://trans.epfl.ch/">http://trans.epfl.ch/</a></li>
+</ul>
+<p>A special Ns2MobilityHelper object can be used to parse these files
+and convert the statements into ns-3 mobility events.</p>
+</div>
+</div>
+<div class="section" id="scope-and-limitations">
+<h3>Scope and Limitations<a class="headerlink" href="#scope-and-limitations" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>only cartesian coordinates are presently supported</li>
+</ul>
+</div>
+<div class="section" id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<p>TBD</p>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Most ns-3 program authors typically interact with the mobility system
+only at configuration time.  However, various ns-3 objects interact
+with mobility objects repeatedly during runtime, such as a propagation
+model trying to determine the path loss between two mobile nodes.</p>
+<div class="section" id="id1">
+<h3>Helper<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>A typical usage pattern can be found in the <tt class="docutils literal"><span class="pre">third.cc</span></tt> program in the
+tutorial.</p>
+<p>First, the user instantiates a <tt class="docutils literal"><span class="pre">MobilityHelper</span></tt> object and sets some
+<tt class="docutils literal"><span class="pre">Attributes</span></tt> controlling the &#8220;position allocator&#8221; functionality.</p>
+<div class="highlight-python"><pre>MobilityHelper mobility;
+
+mobility.SetPositionAllocator ("ns3::GridPositionAllocator",
+  "MinX", DoubleValue (0.0),
+  "MinY", DoubleValue (0.0),
+  "DeltaX", DoubleValue (5.0),
+  "DeltaY", DoubleValue (10.0),
+  "GridWidth", UintegerValue (3),
+  "LayoutType", StringValue ("RowFirst"));</pre>
+</div>
+<p>This code tells the mobility helper to use a two-dimensional grid to initially
+place the nodes.  The first argument is an ns-3 TypeId specifying the
+type of mobility model; the remaining attribute/value pairs configure
+this position allocator.</p>
+<p>Next, the user typically sets the MobilityModel subclass; e.g.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mobility</span><span class="o">.</span><span class="n">SetMobilityModel</span> <span class="p">(</span><span class="s">&quot;ns3::RandomWalk2dMobilityModel&quot;</span><span class="p">,</span>
+  <span class="s">&quot;Bounds&quot;</span><span class="p">,</span> <span class="n">RectangleValue</span> <span class="p">(</span><span class="n">Rectangle</span> <span class="p">(</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)));</span>
+</pre></div>
+</div>
+<p>Once the helper is configured, it is typically passed a container, such as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">mobility</span><span class="o">.</span><span class="n">Install</span> <span class="p">(</span><span class="n">wifiStaNodes</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>A MobilityHelper object may be reconfigured and reused for different
+NodeContainers during the configuration of an ns-3 scenario.</p>
+</div>
+<div class="section" id="use-of-random-variables">
+<h3>Use of Random Variables<a class="headerlink" href="#use-of-random-variables" title="Permalink to this headline">¶</a></h3>
+<p>A typical use case is to evaluate protocols on a mobile topology that
+involves some randomness in the motion or initial position allocation.
+To obtain random motion and positioning that is not affected by
+the configuration of the rest of the scenario, it is recommended to
+use the &#8220;AssignStreams&#8221; facility of the random number system.</p>
+<p>Class <tt class="docutils literal"><span class="pre">MobilityModel</span></tt> and class <tt class="docutils literal"><span class="pre">PositionAllocator</span></tt> both have public
+API to assign streams to underlying random variables:</p>
+<div class="highlight-python"><pre>/**
+ * Assign a fixed random variable stream number to the random variables
+ * used by this model. Return the number of streams (possibly zero) that
+ * have been assigned.
+ *
+ * \param stream first stream index to use
+ * \return the number of stream indices assigned by this model
+ */
+int64_t AssignStreams (int64_t stream);</pre>
+</div>
+<p>The class <tt class="docutils literal"><span class="pre">MobilityHelper</span></tt> also provides this API.  The typical usage
+pattern when using the helper is:</p>
+<div class="highlight-python"><pre>int64_t streamIndex = /*some positive integer */
+MobilityHelper mobility;
+... (configure mobility)
+mobility.Install (wifiStaNodes);
+int64_t streamsUsed = mobility.AssignStreams (wifiStaNodes, streamIndex);</pre>
+</div>
+<p>If AssignStreams is called before Install, it will not have any effect.</p>
+</div>
+<div class="section" id="advanced-usage">
+<h3>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h3>
+<p>A number of external tools can be used to generate traces read by
+the Ns2MobilityHelper.</p>
+<div class="section" id="ns-2-scengen">
+<h4>ns-2 scengen<a class="headerlink" href="#ns-2-scengen" title="Permalink to this headline">¶</a></h4>
+<p>TBD</p>
+</div>
+<div class="section" id="bonnmotion">
+<h4>BonnMotion<a class="headerlink" href="#bonnmotion" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://net.cs.uni-bonn.de/wg/cs/applications/bonnmotion/">http://net.cs.uni-bonn.de/wg/cs/applications/bonnmotion/</a></p>
+</div>
+<div class="section" id="sumo">
+<h4>SUMO<a class="headerlink" href="#sumo" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://sourceforge.net/apps/mediawiki/sumo/index.php?title=Main_Page">http://sourceforge.net/apps/mediawiki/sumo/index.php?title=Main_Page</a></p>
+</div>
+<div class="section" id="trans">
+<h4>TraNS<a class="headerlink" href="#trans" title="Permalink to this headline">¶</a></h4>
+<p><a class="reference external" href="http://trans.epfl.ch/">http://trans.epfl.ch/</a></p>
+</div>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>main-random-topology.cc</li>
+<li>main-random-walk.cc</li>
+<li>main-grid-topology.cc</li>
+<li>ns2-mobility-trace.cc</li>
+</ul>
+</div>
+</div>
+<div class="section" id="validation">
+<h2>Validation<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h2>
+<p>TBD</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Mobility</a><ul>
+<li><a class="reference internal" href="#model-description">Model Description</a><ul>
+<li><a class="reference internal" href="#design">Design</a><ul>
+<li><a class="reference internal" href="#coordinate-system">Coordinate system</a></li>
+<li><a class="reference internal" href="#coordinates">Coordinates</a></li>
+<li><a class="reference internal" href="#mobilitymodel">MobilityModel</a></li>
+<li><a class="reference internal" href="#mobilitymodel-subclasses">MobilityModel Subclasses</a></li>
+<li><a class="reference internal" href="#positionallocator">PositionAllocator</a></li>
+<li><a class="reference internal" href="#helper">Helper</a></li>
+<li><a class="reference internal" href="#ns-2-mobilityhelper">ns-2 MobilityHelper</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#scope-and-limitations">Scope and Limitations</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#id1">Helper</a></li>
+<li><a class="reference internal" href="#use-of-random-variables">Use of Random Variables</a></li>
+<li><a class="reference internal" href="#advanced-usage">Advanced Usage</a><ul>
+<li><a class="reference internal" href="#ns-2-scengen">ns-2 scengen</a></li>
+<li><a class="reference internal" href="#bonnmotion">BonnMotion</a></li>
+<li><a class="reference internal" href="#sumo">SUMO</a></li>
+<li><a class="reference internal" href="#trans">TraNS</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation">Validation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="distributed.html"
+                        title="previous chapter">MPI for Distributed Simulation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="network.html"
+                        title="next chapter">Network Module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/mobility.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="network.html" title="Network Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="distributed.html" title="MPI for Distributed Simulation"
+             >previous</a> |</li>
+    <li class="navelem"><a href="">ns-3</a><span class="navelem">&nbsp;</span></li>
+    
+        <li><a href="index.html">Models</a><span class="navelem">&nbsp;</span></li>
+ 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, ns-3 project.
+      Last updated on Oct 17, 2012 10:56.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
