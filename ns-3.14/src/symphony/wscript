@@ -10,7 +10,7 @@ def configure(conf):
      
 
 def generate():
-	 Ns3ToTosProxyGenerator("/home/lauril/dev/symphony/ns-3.14/build/symphony.xml")
+	 Ns3ToTosProxyGenerator("build/symphony.xml")
 
 def build(bld):
     generate()
