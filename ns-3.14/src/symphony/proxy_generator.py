@@ -14,7 +14,7 @@ class Ns3ToTosProxyGenerator:
        from symphony.xml file
     """
     def __init__(self, xml_file):
-        self.xml_file   = xml_file
+        self.xml_file   = 'build/symphony.xml'
         self.cwd        = os.getcwd() + '/'
         self.text       = self.TextFolder()
         self.standart_xml = "src/symphony/helper/symphony.xml"
