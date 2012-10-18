@@ -74,9 +74,9 @@ NS_LOG_COMPONENT_DEFINE ("EmulatedUdpEchoExample");
 int 
 main (int argc, char *argv[])
 {
-  std::string deviceName ("eth1");
+  std::string deviceName ("eth0");
   std::string encapMode ("Dix");
-  uint32_t nNodes = 4;
+  uint32_t nNodes = 2;
 
   //
   // Allow the user to override any of the defaults at run-time, via command-line

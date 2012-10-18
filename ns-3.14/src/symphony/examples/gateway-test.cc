@@ -59,17 +59,30 @@
 #include "ns3/applications-module.h"
 #include "ns3/ipv4-static-routing-helper.h"
 #include "ns3/ipv4-list-routing-helper.h"
+#include "ns3/gateway-client.h"
 
 using namespace ns3;
 
-NS_LOG_COMPONENT_DEFINE ("PingEmulationExample");
+NS_LOG_COMPONENT_DEFINE ("GatewayClientExample");
 
-static void 
-PingRtt (std::string context, Time rtt)
-{
-  NS_LOG_UNCOND ("Received Response with RTT = " << rtt);
+//static void
+//PingRtt (std::string context, Time rtt)
+//{
+//  NS_LOG_UNCOND ("Received Response with RTT = " << rtt.GetMicroSeconds());
+//}
+
+void
+sender(Ptr<WSNGatewayClient> app){
+  NS_LOG_INFO("send send");
+  std::string str("hej");
+
+  const uint8_t* data = reinterpret_cast<const uint8_t*>(str.c_str());
+
+  app->sendData(data,sizeof(data));
+  NS_LOG_INFO(sizeof(str.c_str()));
+  Simulator::Schedule (Seconds(1), &sender,app);
+
 }
-
 int 
 main (int argc, char *argv[])
 {
@@ -183,13 +196,15 @@ main (int argc, char *argv[])
   // of a hassle and since there is no law that says we cannot mix the
   // helper API with the low level API, let's just use the helper.
   //
-  NS_LOG_INFO ("Create V4Ping Appliation");
-  Ptr<V4Ping> app = CreateObject<V4Ping> ();
+  NS_LOG_INFO ("Create WSNGatewayClient Application");
+  Ptr<WSNGatewayClient> app = CreateObject<WSNGatewayClient> ();
   app->SetAttribute ("Remote", Ipv4AddressValue (remoteIp));
+
   node->AddApplication (app);
-  app->SetStartTime (Seconds (1.0));
+  app->SetStartTime (Seconds (0.0));
   app->SetStopTime (Seconds (20.0));
 
+  Simulator::Schedule (Seconds(1), &sender,app);
   //
   // Give the application a name.  This makes life much easier when constructing
   // config paths.
@@ -199,7 +214,7 @@ main (int argc, char *argv[])
   //
   // Hook a trace to print something when the response comes back.
   //
-  Config::Connect ("/Names/app/Rtt", MakeCallback (&PingRtt));
+  //Config::Connect ("/Names/app/Rtt", MakeCallback (&PingRtt));
 
   //
   // Enable a promiscuous pcap trace to see what is coming and going on our device.
@@ -211,7 +226,7 @@ main (int argc, char *argv[])
   // Now, do the actual emulation.
   //
   NS_LOG_INFO ("Run Emulation.");
-  Simulator::Stop (Seconds (20.0));
+  Simulator::Stop (Seconds (10.0));
   Simulator::Run ();
   Simulator::Destroy ();
   NS_LOG_INFO ("Done.");

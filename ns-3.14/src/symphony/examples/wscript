@@ -7,4 +7,6 @@ def build(bld):
     sens.source = 'tos-sensor.cc'
     hidden = sens = bld.create_ns3_program('tos-hidden-terminal',['symphony'])
     hidden.source = 'tos-hidden-terminal.cc'
+    emu = bld.create_ns3_program('gateway-test',['symphony','emu'])
+    emu.source = 'gateway-test.cc'
 
