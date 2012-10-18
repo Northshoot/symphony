@@ -31,28 +31,28 @@
 #include "model-element.h"
 #include "model-vocabulary.h"
 
-void
-printTosPacket(char *buf)
-{
-  int size = sizeof(message_t);
-  int hsize = sizeof(ns3packet_header_t);
-  int i = 0;
-  ns3packet_header_t *hdr;
-  hdr = (ns3packet_header_t*) (((message_t*) buf)->header);
-  printf("FROM NS3 - SIZE: %d :: HEADER size: %d\n", size, hsize);
-  printf("HEX: ");
-  for (; i < size - 1; i++)
-    {
-      printf("%02X ", (uint8_t) buf[i]);
-    }
-  printf("%02X\n", (uint8_t) buf[i]);
-  printf("header: ");
-  printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n", hdr->length,
-      hdr->dsn, hdr->type, hdr->fdest, hdr->destpan);
-  printf("dest %d :: src %d :: padd %d\n", hdr->dest, hdr->src, hdr->padd);
-  printf("offsetof() is %lu\n", offsetof(ns3packet_header_t, fdest));
-
-}
+//void
+//printTosPacket(char *buf)
+//{
+//  int size = sizeof(message_t);
+//  int hsize = sizeof(ns3packet_header_t);
+//  int i = 0;
+//  ns3packet_header_t *hdr;
+//  hdr = (ns3packet_header_t*) (((message_t*) buf)->header);
+//  printf("FROM NS3 - SIZE: %d :: HEADER size: %d\n", size, hsize);
+//  printf("HEX: ");
+//  for (; i < size - 1; i++)
+//    {
+//      printf("%02X ", (uint8_t) buf[i]);
+//    }
+//  printf("%02X\n", (uint8_t) buf[i]);
+//  printf("header: ");
+//  printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n", hdr->length,
+//      hdr->dsn, hdr->type, hdr->fdest, hdr->destpan);
+//  printf("dest %d :: src %d :: padd %d\n", hdr->dest, hdr->src, hdr->padd);
+//  printf("offsetof() is %lu\n", offsetof(ns3packet_header_t, fdest));
+//
+//}
 
 NS_LOG_COMPONENT_DEFINE("TosNetDevice");
 
