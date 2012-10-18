@@ -51,10 +51,10 @@ Install TinyOS http://shieldroute.blogspot.se/2012/08/tossim-simulations-on-amaz
 Additionally install xml parser libxerces-c3.1
 $sudo apt-get install libxerces-c3.1*
 
-Then pach TinyOS
+Then patch TinyOS
 patching /usr/lib/ncc/nesc_nx.h:316
-http://www.cyberciti.biz/faq/appy-patch-file-using-patch-command/
-sudo patch < ../../helper/nesc_nx.h.symphony.patch
+Tutorial: http://jungels.net/articles/diff-patch-ten-minutes.html
+ ../../helper/nesc_nx.h.symphony.patch
 
 Additionally you will need to set following environment variables,
 put them in your .bashrc file and remember to restart terminal
@@ -145,6 +145,8 @@ sensor/
 tos/
 tos-hidden-terminal/
 time/
+
+remember that running examples you will need to specify the path to the ns3 build directory
 
 Troubleshooting
 ===============
