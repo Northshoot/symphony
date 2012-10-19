@@ -25,6 +25,7 @@
 #include "raw-sensor.h"
 #include "simu-clock.h"
 #include "tos-net-device.h"
+#include "symphony-application.h"
 
 class TosToNs3Proxy {
    friend class TosNode;
@@ -46,6 +47,7 @@ class TosToNs3Proxy {
 	   //ns3 then each function is dispatched to the right format by casting
 	   int deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2 );
 	   int SensorCommand(SensorCall call);
+	   void ApplicationCommand(ApplicationCall call, void* data);
 	   ns3::Ptr<ns3::SimuClock>  simu_clock;
 
 	~TosToNs3Proxy();
@@ -53,6 +55,7 @@ private:
 
      ns3::Ptr<ns3::TosNetDevice> m_tosnetdevice;
      ns3::Ptr<ns3::RawSensor> m_sensor;
+     ns3::Ptr<ns3::SymphonyApplication> m_application;
 
 
 	
@@ -69,6 +72,7 @@ int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void
 int gatewaySensor(void *obj, SensorCall call);
 void gatewayLogg(void *obj, const char* func, int line_num,const char* msg);
 
+void gatewayApplication(void *obj, ApplicationCall call, void * data);
 #ifdef __cplusplus
 }
 #endif

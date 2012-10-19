@@ -1,2 +1,7 @@
 ************
-Example of using TinyOS with ns3 node
+Example of using TinyOS with ns3 
+
+TosNode send a packet to the real back end.
+This is done via an application that is installed to TosNode.
+Interface from TinyOS that accesses the real socket is
+

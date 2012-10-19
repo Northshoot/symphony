@@ -26,8 +26,8 @@ int
 main(int argc, char *argv[])
 {
 
-  std::string nodeModel = "/home/lauril/dev/symphony-release/ns-3.14/build/symphony.xml";
-  std::string nodeImage = "/home/lauril/dev/symphony-release/ns-3.14/build/libtos.so";
+  std::string nodeModel = "/home/lauril/dev/symphony/ns-3.14/build/symphony.xml";
+  std::string nodeImage = "/home/lauril/dev/symphony/ns-3.14/build/libtos.so";
   uint64_t simLength = 5;
   bool realTime = false;
   CommandLine cmd;
