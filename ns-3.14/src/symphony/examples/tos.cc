@@ -12,7 +12,6 @@
 #include <unistd.h>
 #include <iostream>
 
-#include "ns3/core-module.h"
 #include "ns3/symphony-module.h"
 #include "ns3/core-module.h"
 #include "ns3/mobility-module.h"
@@ -28,7 +27,7 @@ main(int argc, char *argv[])
 
   std::string nodeModel = "/home/lauril/dev/symphony/ns-3.14/build/symphony.xml";
   std::string nodeImage = "/home/lauril/dev/symphony/ns-3.14/build/libtos.so";
-  uint64_t simLength = 5;
+  uint64_t simLength = 10;
   bool realTime = false;
   CommandLine cmd;
   cmd.AddValue("nodeModel", "model of the node in XML format", nodeModel);
@@ -59,6 +58,7 @@ main(int argc, char *argv[])
   //wifi.EnableLogComponents ();
   //Set node model
   wifi.SetNodeModel(nodeModel);
+
   //LogComponentEnableAll(LOG_ALL);
   //Create physical layer
   YansTosPhyHelper wifiPhy = YansTosPhyHelper::Default();

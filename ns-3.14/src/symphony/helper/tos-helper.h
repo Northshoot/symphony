@@ -64,7 +64,7 @@ namespace ns3
      * \returns a device container which contains all the devices created by this method.
      */
     TosNetDeviceContainer
-    Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const;
+    Install(const TosPhyHelper &phyHelper, TosNodeContainer c) ;
 
     /**
      * \param standard the phy standard to configure during installation
@@ -87,12 +87,17 @@ namespace ns3
     SymphonySensorContainer
     InstallSensors(uint32_t i , TosNodeContainer c, std::string path) ;
 
+    void
+    Init(TosNodeContainer c) const;
+
   private:
+    void Inited(void);
     std::vector<std::string> m_tosExternals;
     Ptr<HardwareModel> m_radioModel;
     std::string m_xmlFile;
     SymphonyXML sym;
     enum WifiPhyStandard m_standard;
+    bool m_inited;
 
   };
 

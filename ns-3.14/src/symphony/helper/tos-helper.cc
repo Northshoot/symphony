@@ -45,6 +45,7 @@ TosHelper::SetNodeModel(std::string file)
   sym.readConfigFile(m_xmlFile);
   m_tosExternals = sym.getExternalFunctions();
   m_radioModel = sym.getModel("radio");
+
 }
 TosHelper::~TosHelper() {
   m_tosExternals.clear();
@@ -56,9 +57,25 @@ TosHelper::Default(void)
 	TosHelper toshelper;
 	return toshelper;
 }
+void
+TosHelper::Inited(void)
+{
+  m_inited=true;
+}
+void
+TosHelper::Init(TosNodeContainer c) const
+{
 
+  for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
+      {
+      Ptr<TosNode> node = *i;
+      node->SetCallback(m_tosExternals);
+      }
+
+
+}
 TosNetDeviceContainer
-TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
+TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c)
 {
 	NS_LOG_FUNCTION_NOARGS();
 	TosNetDeviceContainer devices;
@@ -73,12 +90,14 @@ TosHelper::Install(const TosPhyHelper &phyHelper, TosNodeContainer c) const
 	      device->SetNode(node);
 	      device->SetPhy (phy);
 	      device->SetMac (mac);
-	      node->AddDevice (device);
-	      node->SetCallback(m_tosExternals);
 	      device->SetRadioModel(m_radioModel);
+	      node->AddDevice (device);
 	      devices.Add (device);
+
 	      NS_LOG_DEBUG ("node=" << node << ", mob=" << node->GetObject<MobilityModel> ());
 	    }
+	  Init(c);
+	  m_inited=true;
 	  return devices;
 }
 
@@ -102,13 +121,16 @@ TosHelper::InstallSensors(uint32_t i , TosNodeContainer c, std::string path)
           sensor->SetAttribute("InterruptData", CallbackValue(tmp1));
           sensors.Add(sensor);
          (node->GetTosToNs3Proxy())->SetSensor(sensor);
-//          sensor->SetNs3ToTosProxy(node->GetNs3ToTosProxy());
-          node->SetCallback(m_tosExternals);
+
           NS_LOG_DEBUG ("node=" << node << ", sensor=" << sensor);
         }
+
+      Init(c);
+      m_inited=true;
       return sensors;
 
 }
+
 
 void
 TosHelper::SetStandard(enum WifiPhyStandard standard)

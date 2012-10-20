@@ -258,6 +258,7 @@ namespace ns3
   TosNetDevice::DeviceSend(void* msg)
   {
     NS_ASSERT(m_state == RADIO_STATE_ON && !m_busy);
+    NS_LOG_FUNCTION(this);
     if (!m_RxEvent.IsRunning() && !m_trasmit.IsRunning())
       {
 
@@ -266,9 +267,15 @@ namespace ns3
         m_busy = true;
 //    uint64_t t = boost::lexical_cast<uint64_t>(m_txParams->getElement(ModelVocabulary::CALL,"DeviceSend")->getAttributeValue("time"));
 //    NS_LOG_FUNCTION(t);
-//    Time run_time=MilliSeconds(200);
+//    Time run_time=MilliSeconds(t);
 //    m_trasmit = Simulator::Schedule(run_time, &TosNetDevice::TransmitData, this);
-//    std::cout<<"Transmit ordered "<< m_startUpEvent.IsRunning() << " " << m_trasmit.GetTs() <<std::endl;
+//        uint64_t t =
+//            boost::lexical_cast<uint64_t>(
+//                m_txParams->getElement(ModelVocabulary::CALLBACK, "sendDone")->getAttributeValue(
+//                    "time"));
+//        Time run_time = MilliSeconds(t);
+//        m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
+//            this, 0);
         TransmitData();
         return SUCCESS;
       }
@@ -315,16 +322,22 @@ namespace ns3
   {
     NS_LOG_FUNCTION_NOARGS ();
     m_tos_mac->Start();
+
     m_phy->Start();
+
     NetDevice::DoStart();
     //m_txParams->printModel();
+    NS_ASSERT_MSG(m_txParams !=NULL, "RadioModel is not set");
     uint64_t t =
         boost::lexical_cast<uint64_t>(
             m_txParams->getElement(ModelVocabulary::CALL, "radioStart")->getAttributeValue(
                 "time"));
+    std::cout<<"STARTED\n";
     Time run_time = MilliSeconds(t);
+
     m_startUpEvent = Simulator::Schedule(run_time,
         &TosNetDevice::radioStartDone, this);
+
   }
   Ptr<Packet>
   TosNetDevice::TosToNsPacket(message_t* msg)
@@ -358,11 +371,11 @@ namespace ns3
   void
   TosNetDevice::SendDone(Time duration)
   {
-    uint64_t t =
-        boost::lexical_cast<uint64_t>(
-            m_txParams->getElement(ModelVocabulary::CALLBACK, "sendDone")->getAttributeValue(
-                "time"));
-    Time run_time = MilliSeconds(t) + duration;
+//    uint64_t t =
+//        boost::lexical_cast<uint64_t>(
+//            m_txParams->getElement(ModelVocabulary::CALLBACK, "sendDone")->getAttributeValue(
+//                "time"));
+    Time run_time =  duration;
     m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
         this, 0);
 
@@ -373,7 +386,8 @@ namespace ns3
   {
     NS_ASSERT_MSG(!c_ns2tosSendDone.IsNull(), "SendDone callback is not set.");
     m_state = RADIO_STATE_ON;
-    NS_LOG_FUNCTION("DEVICE_SEND_DONE");
+
+    NS_LOG_FUNCTION(this);
     m_busy = false;
     m_tx++;
     c_ns2tosSendDone(&m_tx_msg, 0);
@@ -432,7 +446,7 @@ namespace ns3
 
             message_t * msg = NsToTosPacket(packet, hdr);
             m_rx++;
-            m_RxEvent = Simulator::Schedule(MicroSeconds(5),  &TosNetDevice::DeviceReceive, this, msg);
+           DeviceReceive(msg);
     } else  {
       m_dr++;
       NS_LOG_INFO("Dropping Packet, still in RX state"<<m_node->GetId());

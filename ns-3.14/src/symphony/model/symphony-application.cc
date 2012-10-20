@@ -20,7 +20,7 @@ namespace ns3
   SymphonyApplication::GetTypeId(void)
   {
     static TypeId tid = TypeId ("ns3::SymphonyApplication")
-      .SetParent<Application> ()
+      .SetParent<Object> ()
       .AddConstructor<SymphonyApplication> ()
       .AddAttribute("StartDone","Callback for application start done event.",
           CallbackValue(),
@@ -43,8 +43,6 @@ namespace ns3
   void
   SymphonyApplication::StartNS3Application(void)
   {
-    StartApplication();
-    NS_ASSERT(m_startTime < Simulator::Now());
     NS_ASSERT(!m_startDone.IsNull());
     m_started = true;
     m_startDone(0);
@@ -61,11 +59,13 @@ namespace ns3
   }
 
   uint8_t
-  SymphonyApplication::SendData(void*)
+  SymphonyApplication::SendData(uint16_t length,void* buff)
   {
-    NS_ASSERT(!m_started);
+    NS_ASSERT(m_started);
     //TODO: Do something with data
-    //ex;
+    //example when you know what is sent;
+    //otherview use lenght to create a buffer copy with appropriate lenght
+    if(m_sendDataUp.IsNull()){
     typedef struct {
       uint32_t counter;
       uint32_t nodeTime;
@@ -75,6 +75,9 @@ namespace ns3
     npkt= (NodePacket*) malloc(sizeof(NodePacket));
     NS_LOG_UNCOND("Node sent counter " <<npkt->counter<<" at time "<<npkt->nodeTime);
     delete npkt;
+    } else {
+        m_sendDataUp(length, buff);
+    }
     return 0;
   }
 
@@ -84,7 +87,7 @@ namespace ns3
     NS_LOG_FUNCTION (this);
     m_startTime = Simulator:: Now();
     m_started = true;
-    Application::DoStart();
+
 
   }
 

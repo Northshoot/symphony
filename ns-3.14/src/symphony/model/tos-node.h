@@ -95,7 +95,8 @@ namespace ns3
     GetTosToNs3Proxy();
     Ns3ToTosProxy *
     GetNs3ToTosProxy();
-
+    void
+    AddApplication(Ptr<SymphonyApplication> app);
     uint32_t
     getNow();
     uint32_t
@@ -183,6 +184,8 @@ namespace ns3
      * Pointer to proxy for tos to lib communiactions
      */
     Ns3ToTosProxy *nstotos;
+
+    Ptr<SymphonyApplication> m_application;
 
   };
 
