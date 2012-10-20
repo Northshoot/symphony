@@ -142,5 +142,43 @@ TosToNs3Proxy::SensorCommand(SensorCall call)
 //just in case if anything else fails
 return -1;
 }
+
+void
+TosToNs3Proxy::SetApplication(ns3::Ptr<ns3::SymphonyApplication> app)
+{
+  m_application = app;
+
+}
+void
+TosToNs3Proxy::ApplicationCommand(ApplicationCall call,uint16_t length, void *data)
+{
+
+ if(m_application != NULL) {
+  switch (call) {
+  case APP_ON:
+           m_application->StartNS3Application();
+
+          break;
+
+  case APP_OFF:
+           m_application->StopNS3Application();
+
+          break;
+
+  case APP_RX:
+    m_application->SendData(length,data);
+          break;
+
+
+    default:
+          //OPS! never ever go here!
+          //if you have -> core dump :D
+          NS_ASSERT_MSG(false," bad index no where to go "+ call);
+
+          break;
+}
+ }
+
+}
 TosToNs3Proxy::~TosToNs3Proxy() {}
 

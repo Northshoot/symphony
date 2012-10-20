@@ -38,4 +38,10 @@ typedef enum {
   SENSOR_RESET=3,
 }SensorCall;
 
+typedef enum {
+  APP_ON=1,
+  APP_OFF=2,
+  APP_RX=3,
+}ApplicationCall;
+
 #endif /* CALLS_TO_NS3_H_ */

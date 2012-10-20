@@ -81,8 +81,12 @@ namespace ns3
     m_init = false;
 
   }
-
-  void
+void
+TosNode::AddApplication(Ptr<SymphonyApplication> app)
+{
+  m_application = app;
+}
+void
   TosNode::SetCallback(std::vector<std::string> tosExternals)
   {
     m_tos_functions = tosExternals;
@@ -175,6 +179,21 @@ namespace ns3
   {
     //open instance of the library  LM_ID_NEWLM
     NS_ASSERT (m_init);
+
+    if( m_application !=NULL) {
+
+        tostons->SetApplication(m_application);
+
+        Callback<void, uint8_t> tmp =
+            MakeCallback(&Ns3ToTosProxy::ApplicationStartDone,nstotos);
+        m_application->SetAttribute("StartDone", CallbackValue(tmp));
+
+        Callback<void, uint8_t> tmp1=
+            MakeCallback(&Ns3ToTosProxy::AplicationStopDone,nstotos);
+        m_application->SetAttribute("StopDone", CallbackValue(tmp1));
+
+        m_application->StartApplication();
+    }
     callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
     simuclock = CreateObject < SimuClock
         > (NANOSECOND, NONE, callBackFromClock);

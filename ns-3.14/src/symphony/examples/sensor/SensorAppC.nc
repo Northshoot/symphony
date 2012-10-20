@@ -27,7 +27,6 @@ implementation {
     }
  
 
-
     async event void DataIn.interruptWithData(error_t result, uint16_t length, void * buffer) {
             printf("event void InterruptWithData.interruptWithData NODE_ID %d - data lenght %d\n",TOS_NODE_ID, length);
     }

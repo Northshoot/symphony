@@ -31,7 +31,7 @@ implementation {
  
 	event void Boot.booted() {
 		printf("App: booted %d\n", TOS_NODE_ID);
-		if(TOS_NODE_ID == 0) dest = 3;
+		if(TOS_NODE_ID == 0) dest = 2;
 		else if (TOS_NODE_ID == 1) dest = 0;
 		else printf("TOS_NODE_ID error: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		call AMControl.start();
@@ -67,7 +67,7 @@ implementation {
 				return;
 			}
 			rcm->counter = counter;
-			if (call AMSend.send(AM_BROADCAST_ADDR, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+			if (call AMSend.send(dest, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 				locked = TRUE;
 			}
 		}
@@ -83,8 +83,8 @@ implementation {
 		//get counter		
 	    atomic counter = ((radio_count_msg_t*)payload)->counter;
 		printf("TOSNODE:: %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
-		//post send();
-		call MilliTimer.startOneShot(1000);
+		post send();
+		//call MilliTimer.startOneShot(1);
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
 		else {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;

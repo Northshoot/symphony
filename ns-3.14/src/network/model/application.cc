@@ -85,11 +85,13 @@ Application::DoDispose (void)
 void
 Application::DoStart (void)
 {
+
   m_startEvent = Simulator::Schedule (m_startTime, &Application::StartApplication, this);
   if (m_stopTime != TimeStep (0))
     {
       m_stopEvent = Simulator::Schedule (m_stopTime, &Application::StopApplication, this);
     }
+
   Object::DoStart ();
 }
 

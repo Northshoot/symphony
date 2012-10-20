@@ -24,6 +24,7 @@ def build(bld):
             		  'model/tos-node-list.cc',
             		  'model/tos-mac-low.cc',
             		  'model/tos-net-device.cc',
+                      'model/symphony-application.cc',
             		  'helper/tos-node-container.cc',
             		  'helper/tos-helper.cc',
             		  'helper/yans-tos-helper.cc',
@@ -76,6 +77,7 @@ def build(bld):
                     'model/gateway-client.h',
                     '../wifi/model/wifi-mac-trailer.h',
                     'model/raw-sensor.h',
+                    'model/symphony-application.h',
         ]
 
     #if bld.env.ENABLE_EXAMPLES:
