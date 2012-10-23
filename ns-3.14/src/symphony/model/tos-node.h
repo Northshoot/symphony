@@ -139,6 +139,7 @@ namespace ns3
     void
     Construct(void);
     uint32_t m_id; // Node id for this node
+    uint32_t tos_id;
     Ptr<SimuClock>  simuclock;
     uint32_t m_sid; // System id for this node
     Time m_bootTime; //boot time of the node

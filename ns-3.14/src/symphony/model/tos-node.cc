@@ -39,15 +39,22 @@ namespace ns3
   TypeId
   TosNode::GetTypeId(void)
   {
-    static TypeId tid = TypeId("ns3::TosNode").SetParent<Node>().AddConstructor<
-        TosNode>().AddAttribute("TosDeviceList",
-        "The list of devices associated to this Node.", ObjectVectorValue(),
+    static TypeId tid = TypeId("ns3::TosNode")
+        .SetParent<Node>()
+        .AddConstructor<TosNode>()
+        .AddAttribute("TosDeviceList","The list of devices associated to this Node.", ObjectVectorValue(),
         MakeObjectVectorAccessor(&TosNode::m_devices),
-        MakeObjectVectorChecker<TosNetDevice>()).AddAttribute("Tid",
-        "The id (unique integer) of this Node.",
+        MakeObjectVectorChecker<TosNetDevice>())
+        .AddAttribute("Tid", "The id (unique integer) of this Node.",
         TypeId::ATTR_GET, // allow only getting it.
         UintegerValue(0), MakeUintegerAccessor(&TosNode::m_id),
-        MakeUintegerChecker<uint32_t>());
+        MakeUintegerChecker<uint32_t>())
+        .AddAttribute("TosId", "The id (unique integer) of this Node.",
+                TypeId::ATTR_SET, // allow only getting it.
+                UintegerValue(0), MakeUintegerAccessor(&TosNode::tos_id),
+                MakeUintegerChecker<uint32_t>())
+
+        ;
     return tid;
   }
 
@@ -67,8 +74,9 @@ namespace ns3
   }
 
   TosNode::TosNode(uint32_t node_id, Time bootTime, const char* lib) :
-      m_id(node_id), m_bootTime(bootTime), m_libname(lib)
+    tos_id(node_id), m_bootTime(bootTime), m_libname(lib)
   {
+    m_id=tos_id;
     Construct();
   }
 
@@ -116,7 +124,7 @@ void
   TosNode::BootBooted(void)
   {
     simuclock->Start();
-    nstotos->sim_main_start_mote(m_id);
+    nstotos->sim_main_start_mote(tos_id);
     Simulator::Remove (m_boot_event);
   }
 
@@ -225,6 +233,7 @@ void
     //	      Ptr<TosNetDevice> device = *i;
     //	      device->Start ();
     //	    }
+    nstotos->setUniqueID(tos_id);
     Node::DoStart();
     Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
   }
@@ -277,7 +286,9 @@ void
   TosNode::AddSensor(Ptr<RawSensor> sensor)
   {
     uint32_t index = m_sensors.size();
+    sensor->SetAttribute("RsId",UintegerValue(tos_id));
     m_sensors.push_back(sensor);
+
     return index;
   }
 

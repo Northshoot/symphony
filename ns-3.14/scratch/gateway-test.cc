@@ -89,7 +89,7 @@ main (int argc, char *argv[])
   NS_LOG_INFO ("Ping Emulation Example");
 
   std::string deviceName ("eth0");
-  std::string remote ("130.240.175.138"); // example.com
+  std::string remote ("130.240.233.10"); // example.com
 
   //
   // Allow the user to override any of the defaults at run-time, via 

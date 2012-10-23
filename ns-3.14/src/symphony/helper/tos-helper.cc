@@ -110,9 +110,9 @@ TosHelper::InstallSensors(uint32_t i , TosNodeContainer c, std::string path)
         {
           Ptr<TosNode> node = *i;
           Ptr<RawSensor> sensor = CreateObject<RawSensor> ();
-          sensor->SetAttribute("RsId", UintegerValue(node->GetId()));
+          //sensor->SetAttribute("RsId", UintegerValue(node->GetId()));
           sensor->SetAttribute("SensorDataPath", StringValue(path));
-
+          node->AddSensor(sensor);
           Callback<int, uint8_t> tmp =
               MakeCallback(&Ns3ToTosProxy::sensorStartDone,(node->GetNs3ToTosProxy()));
           sensor->SetAttribute("SensorStartDone", CallbackValue(tmp));

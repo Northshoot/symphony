@@ -99,6 +99,7 @@ WSNGatewayClient::Receive (Ptr<Socket> socket)
 {
   //if needed a callback function must be created, added, data extracted and forwarded to the proper receiver
   NS_LOG_FUNCTION (this << socket);
+
 }
 
 uint32_t

@@ -43,18 +43,36 @@ main(int argc, char *argv[])
           StringValue("ns3::RealtimeSimulatorImpl"));
     }
   TosNodeContainer c;
-  //Create nodes
-  c.Create(1, nodeImage.c_str());
+
+  //The node ID's have to match the sensor data start id, which is always starts with
+  //ID# were 3 is node id.
+  //This is example of one way to set the tos_node_id
+  c.Add(CreateObject<TosNode> (10, MilliSeconds(0), nodeImage.c_str() ));
+  c.Add(CreateObject<TosNode> (11, MilliSeconds(0), nodeImage.c_str() ));
+  c.Add(CreateObject<TosNode> (15, MilliSeconds(0), nodeImage.c_str() ));
+  c.Add(CreateObject<TosNode> (19, MilliSeconds(0), nodeImage.c_str() ));
+  c.Add(CreateObject<TosNode> (23, MilliSeconds(0), nodeImage.c_str() ));
+  c.Add(CreateObject<TosNode> (33, MilliSeconds(0), nodeImage.c_str() ));
+  c.Add(CreateObject<TosNode> (46, MilliSeconds(0), nodeImage.c_str() ));
+
+  //another way
+  TosNodeContainer c1;
+  c1.Create(2,nodeImage.c_str() );
+  c1.Get(0)->SetAttribute("TosId", UintegerValue(47));
+  c1.Get(1)->SetAttribute("TosId", UintegerValue(49));
+  c.Add(c1);
+ //And there is a third way...
+//reacall lecture slides
   TosHelper sens;
   sens.SetNodeModel(nodeModel);
   SymphonySensorContainer sc = sens.InstallSensors(1,c,"/home/lauril/dev/symphony/ns-3.14/bin_pkt/");
 
 
   //Set run-time for the simulation
-  ns3::Simulator::Stop(ns3::Seconds(simLength));
+  Simulator::Stop(ns3::Seconds(simLength));
   //Run simulation
-  ns3::Simulator::Run();
+  Simulator::Run();
   //Clean up all objects
-  ns3::Simulator::Destroy();
+  Simulator::Destroy();
   return 0;
 }
