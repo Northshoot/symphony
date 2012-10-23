@@ -40,7 +40,7 @@ namespace ns3
         .AddConstructor<RawSensor> ()
         .AddAttribute(
             "RsId", "The id (unique integer) of this RawSensor.",
-            TypeId::ATTR_SET, // allow only getting it.
+            TypeId::ATTR_SET,
             UintegerValue(0), MakeUintegerAccessor(&RawSensor::m_id),
             MakeUintegerChecker<uint32_t>())
         .AddAttribute("SensorDataPath", "The path to directory were sensor data files are stored.",
@@ -67,7 +67,8 @@ namespace ns3
   RawSensor::DoStart(void)
   {
 
-    m_ids="ID10";
+
+    m_ids="ID"+boost::lexical_cast<std::string>(m_id);
     m_directory = Init();
     m_fileNames = GetMyData();
     Object::DoStart();

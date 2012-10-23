@@ -10,12 +10,7 @@
 #include <iostream>
 #include <sys/time.h>
 #include "ns3/propagation-module.h"
-#include "ns3/core-module.h"
-#include "ns3/propagation-module.h"
-#include "ns3/network-module.h"
-
 #include "ns3/mobility-module.h"
-
 #include "ns3/symphony-module.h"
 #include "ns3/core-module.h"
 #include "ns3/network-module.h"

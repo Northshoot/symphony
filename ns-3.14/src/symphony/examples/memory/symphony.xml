@@ -26,4 +26,13 @@
    <call name="SplitControlStart"/>
    <call name="SplitControlStop"/>
   </model>
+  
+  <model name="ns3application">
+  <callback return="void" params="1" param1="uint8_t" name="ApplicationStartDone"/>
+   <callback return="void" params="1" param1="uint8_t" name="AplicationStopDone"/>
+   
+   <call name="StartNS3Application"/>
+   <call name="StopNS3Application"/>
+   <call return="void" params="2" param1="uint16_t" param2="void *" name="SendData"/>
+ </model>
 </symphony>
