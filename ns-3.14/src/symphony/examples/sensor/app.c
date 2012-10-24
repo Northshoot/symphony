@@ -741,7 +741,7 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2aec1ae5b1f0, const void *arg_0x2aec1ae5b4c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2b0c243a71f0, const void *arg_0x2b0c243a74c8);
 #line 776
 __extension__ 
 #line 793
@@ -1193,20 +1193,30 @@ typedef struct __nesc_unnamed4280 {
 #line 42
 TMicro;
 typedef TMilli NsTimerP$Timer$precision_tag;
+typedef TMilli SensorAppC$Timer0$precision_tag;
+typedef TMilli /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag;
+typedef /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$precision_tag;
+typedef /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$precision_tag;
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t PlatformP$Init$init(void );
 #line 62
 static error_t LedsP$Init$init(void );
 #line 62
 static error_t NsTimerP$Init$init(void );
-# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-static void NsTimerP$Timer$default$fired(void );
-# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
-static error_t SimMainP$SoftwareInit$default$init(void );
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static uint32_t NsTimerP$Timer$getNow(void );
+#line 129
+static void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt);
+#line 78
+static void NsTimerP$Timer$stop(void );
+# 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+static error_t SchedulerBasicP$TaskBasic$postTask(
+# 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+uint8_t arg_0x2b0c2466f960);
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2aec1b123960);
+uint8_t arg_0x2b0c2466f960);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1227,12 +1237,26 @@ static void SimMoteP$SimMote$turnOn(void );
 static void SensorAppC$SensorControl$startDone(error_t error);
 #line 138
 static void SensorAppC$SensorControl$stopDone(error_t error);
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static void SensorAppC$Timer0$fired(void );
 # 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
 static void SensorAppC$Boot$booted(void );
 # 22 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/InterruptWithData.nc"
 static void SensorAppC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer);
 # 104 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static error_t MagnetomiterP$SplitControl$start(void );
+# 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void );
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void );
+#line 136
+static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(
+# 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b0c247b67f8);
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(
+# 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b0c247b67f8);
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t PlatformP$SubInit$init(void );
 #line 62
@@ -1276,13 +1300,14 @@ static inline void NsTimerP$updateTimer(void );
 
 
 extern int tickFired(uint32_t a)   ;
+#line 69
+static inline void NsTimerP$Timer$stop(void );
+#line 99
+static inline void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt);
+#line 112
+static inline uint32_t NsTimerP$Timer$getNow(void );
 #line 133
 static inline error_t NsTimerP$Init$init(void );
-
-
-
-
-static inline void NsTimerP$Timer$default$fired(void );
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t SimMainP$SoftwareInit$init(void );
 # 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
@@ -1293,12 +1318,10 @@ static error_t SimMainP$PlatformInit$init(void );
 static void SimMainP$Scheduler$init(void );
 # 17 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
 int sim_main_start_mote(int id)   ;
-#line 65
-static inline error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2aec1b123960);
+uint8_t arg_0x2b0c2466f960);
 
 
 
@@ -1310,7 +1333,7 @@ extern int runNextEventExternal(uint32_t a)   ;
 
 enum SchedulerBasicP$__nesc_unnamed4282 {
 
-  SchedulerBasicP$NUM_TASKS = 0U, 
+  SchedulerBasicP$NUM_TASKS = 1U, 
   SchedulerBasicP$NO_TASK = 255
 };
 
@@ -1326,11 +1349,23 @@ uint8_t SchedulerBasicP$m_next[SchedulerBasicP$NUM_TASKS];
 
 
 static __inline uint8_t SchedulerBasicP$popTask(void );
+#line 93
+static inline bool SchedulerBasicP$isWaiting(uint8_t id);
+
+
+
+
+static inline bool SchedulerBasicP$pushTask(uint8_t id);
 #line 120
 static inline void SchedulerBasicP$Scheduler$init(void );
 #line 132
 static inline bool SchedulerBasicP$Scheduler$runNextTask(void );
-#line 175
+#line 170
+static inline error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id);
+
+
+
+
 static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id);
 # 8 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
 long long int SimMoteP$euid;
@@ -1411,7 +1446,9 @@ void sim_mote_turn_off(int mote)   ;
 void sim_mote_enqueue_boot_event(int mote)   ;
 # 104 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static error_t SensorAppC$SensorControl$start(void );
-# 11 "SensorAppC.nc"
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static uint32_t SensorAppC$Timer0$getNow(void );
+# 12 "SensorAppC.nc"
 static inline void SensorAppC$Boot$booted(void );
 
 
@@ -1432,6 +1469,10 @@ static inline void SensorAppC$SensorControl$stopDone(error_t err);
 
 
 static inline void SensorAppC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer);
+
+
+
+static inline void SensorAppC$Timer0$fired(void );
 # 113 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static void MagnetomiterP$SplitControl$startDone(error_t error);
 #line 138
@@ -1459,6 +1500,66 @@ extern int sensorStopDone(error_t error)   ;
 
 
 extern void interruptData(error_t result, uint16_t lenght, void *buffer)   ;
+# 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask(void );
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(void );
+#line 129
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$startOneShotAt(uint32_t t0, uint32_t dt);
+#line 78
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop(void );
+
+
+
+
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(
+# 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b0c247b67f8);
+#line 71
+enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4283 {
+#line 71
+  VirtualizeTimerC$0$updateFromTimer = 0U
+};
+#line 71
+typedef int /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_sillytask_updateFromTimer[/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer];
+#line 53
+enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4284 {
+
+  VirtualizeTimerC$0$NUM_TIMERS = 1U, 
+  VirtualizeTimerC$0$END_OF_LIST = 255
+};
+
+
+
+
+
+
+
+
+#line 59
+typedef struct /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4285 {
+
+  uint32_t t0;
+  uint32_t dt;
+  bool isoneshot : 1;
+  bool isrunning : 1;
+  bool _reserved : 6;
+} /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer_t;
+
+/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$m_timers[/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$NUM_TIMERS];
+
+
+
+
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(uint32_t now);
+#line 99
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void );
+#line 138
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void );
+#line 189
+static inline uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(uint8_t num);
+#line 204
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(uint8_t num);
 # 10 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
 __inline  __nesc_atomic_t __nesc_atomic_start(void )
 #line 10
@@ -1471,15 +1572,170 @@ __inline  void __nesc_atomic_end(__nesc_atomic_t x)
 {
 }
 
+# 112 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+static inline uint32_t NsTimerP$Timer$getNow(void )
+#line 112
+{
+
+  return NsTimerP$time_now;
+}
+
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(void ){
+#line 136
+  unsigned int __nesc_result;
+#line 136
+
+#line 136
+  __nesc_result = NsTimerP$Timer$getNow();
+#line 136
+
+#line 136
+  return __nesc_result;
+#line 136
+}
+#line 136
+# 138 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void )
+{
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow());
+}
+
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void NsTimerP$Timer$fired(void ){
+#line 83
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired();
+#line 83
+}
+#line 83
+# 33 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+static inline void NsTimerP$updateTimer(void )
+#line 33
+{
+
+  if (NsTimerP$m_timer.shoot == NsTimerP$time_now) {
+
+      NsTimerP$Timer$fired();
+    }
+}
+
+#line 99
+static inline void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt)
+#line 99
+{
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+#line 100
+    {
+      NsTimerP$m_timer.isoneshot = TRUE;
+      NsTimerP$m_timer.dt = dt;
+      NsTimerP$m_timer.t0 = t0;
+      NsTimerP$m_timer.shoot = t0 + dt;
+      NsTimerP$m_timer.isrunning = TRUE;
+    }
+#line 106
+    __nesc_atomic_end(__nesc_atomic); }
+
+  NsTimerP$updateTimer();
+}
+
+# 129 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$startOneShotAt(uint32_t t0, uint32_t dt){
+#line 129
+  NsTimerP$Timer$startOneShotAt(t0, dt);
+#line 129
+}
+#line 129
+# 69 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+static inline void NsTimerP$Timer$stop(void )
+#line 69
+{
+
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+#line 71
+    {
+      NsTimerP$m_timer.isoneshot = FALSE;
+      NsTimerP$m_timer.dt = 0;
+      NsTimerP$m_timer.t0 = 0;
+      NsTimerP$m_timer.shoot = 0;
+      NsTimerP$m_timer.isrunning = FALSE;
+    }
+#line 77
+    __nesc_atomic_end(__nesc_atomic); }
+}
+
+# 78 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop(void ){
+#line 78
+  NsTimerP$Timer$stop();
+#line 78
+}
+#line 78
+# 99 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void )
+{
+
+
+
+
+  uint32_t now = /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow();
+  int32_t min_remaining = (1UL << 31) - 1;
+  bool min_remaining_isset = FALSE;
+  uint8_t num;
+
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop();
+
+  for (num = 0; num < /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$NUM_TIMERS; num++) 
+    {
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer_t *timer = &/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$m_timers[num];
+
+      if (timer->isrunning) 
+        {
+          uint32_t elapsed = now - timer->t0;
+          int32_t remaining = timer->dt - elapsed;
+
+          if (remaining < min_remaining) 
+            {
+              min_remaining = remaining;
+              min_remaining_isset = TRUE;
+            }
+        }
+    }
+
+  if (min_remaining_isset) 
+    {
+      if (min_remaining <= 0) {
+        /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(now);
+        }
+      else {
+#line 134
+        /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$startOneShotAt(now, min_remaining);
+        }
+    }
+}
+
 # 175 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 {
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2aec1b123960){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b0c2466f960){
 #line 75
-    SchedulerBasicP$TaskBasic$default$runTask(arg_0x2aec1b123960);
+  switch (arg_0x2b0c2466f960) {
+#line 75
+    case /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer:
+#line 75
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask();
+#line 75
+      break;
+#line 75
+    default:
+#line 75
+      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b0c2466f960);
+#line 75
+      break;
+#line 75
+    }
 #line 75
 }
 #line 75
@@ -1538,30 +1794,105 @@ static inline bool SchedulerBasicP$Scheduler$runNextTask(void )
   return TRUE;
 }
 
-# 138 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
-static inline void NsTimerP$Timer$default$fired(void )
-#line 138
+# 35 "SensorAppC.nc"
+static inline void SensorAppC$Timer0$fired(void )
+#line 35
+{
+}
+
+# 204 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(uint8_t num)
 {
 }
 
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void NsTimerP$Timer$fired(void ){
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b0c247b67f8){
 #line 83
-  NsTimerP$Timer$default$fired();
+  switch (arg_0x2b0c247b67f8) {
+#line 83
+    case 0U:
+#line 83
+      SensorAppC$Timer0$fired();
+#line 83
+      break;
+#line 83
+    default:
+#line 83
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b0c247b67f8);
+#line 83
+      break;
+#line 83
+    }
 #line 83
 }
 #line 83
-# 33 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
-static inline void NsTimerP$updateTimer(void )
-#line 33
+# 93 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+static inline bool SchedulerBasicP$isWaiting(uint8_t id)
 {
+  return SchedulerBasicP$m_next[id] != SchedulerBasicP$NO_TASK || SchedulerBasicP$m_tail == id;
+}
 
-  if (NsTimerP$m_timer.shoot == NsTimerP$time_now) {
-
-      NsTimerP$Timer$fired();
+static inline bool SchedulerBasicP$pushTask(uint8_t id)
+{
+  if (!SchedulerBasicP$isWaiting(id)) 
+    {
+      if (SchedulerBasicP$m_head == SchedulerBasicP$NO_TASK) 
+        {
+          SchedulerBasicP$m_head = id;
+          SchedulerBasicP$m_tail = id;
+        }
+      else 
+        {
+          SchedulerBasicP$m_next[SchedulerBasicP$m_tail] = id;
+          SchedulerBasicP$m_tail = id;
+        }
+      return TRUE;
+    }
+  else 
+    {
+      return FALSE;
     }
 }
 
+#line 170
+static inline error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id)
+{
+  { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
+#line 172
+    {
+#line 172
+      {
+        unsigned char __nesc_temp = 
+#line 172
+        SchedulerBasicP$pushTask(id) ? SUCCESS : EBUSY;
+
+        {
+#line 172
+          __nesc_atomic_end(__nesc_atomic); 
+#line 172
+          return __nesc_temp;
+        }
+      }
+    }
+#line 175
+    __nesc_atomic_end(__nesc_atomic); }
+}
+
+# 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+inline static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask(void ){
+#line 67
+  unsigned char __nesc_result;
+#line 67
+
+#line 67
+  __nesc_result = SchedulerBasicP$TaskBasic$postTask(/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer);
+#line 67
+
+#line 67
+  return __nesc_result;
+#line 67
+}
+#line 67
 # 120 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline void SchedulerBasicP$Scheduler$init(void )
 {
@@ -1665,22 +1996,13 @@ inline static error_t SimMainP$PlatformInit$init(void ){
 #line 62
 }
 #line 62
-# 65 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
-static inline error_t SimMainP$SoftwareInit$default$init(void )
-#line 65
-{
-#line 65
-  return SUCCESS;
-}
-
-# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 inline static error_t SimMainP$SoftwareInit$init(void ){
 #line 62
   unsigned char __nesc_result;
 #line 62
 
 #line 62
-  __nesc_result = SimMainP$SoftwareInit$default$init();
+  __nesc_result = NsTimerP$Init$init();
 #line 62
 
 #line 62
@@ -1711,9 +2033,9 @@ inline static error_t SensorAppC$SensorControl$start(void ){
 #line 104
 }
 #line 104
-# 11 "SensorAppC.nc"
+# 12 "SensorAppC.nc"
 static inline void SensorAppC$Boot$booted(void )
-#line 11
+#line 12
 {
   printf("App: booted %d\n", TOS_NODE_ID);
   SensorAppC$SensorControl$start();
@@ -1749,16 +2071,16 @@ static inline void SimMoteP$SimMote$turnOn(void )
   SimMoteP$isOn = TRUE;
 }
 
-# 16 "SensorAppC.nc"
+# 17 "SensorAppC.nc"
 static inline void SensorAppC$SensorControl$startDone(error_t err)
-#line 16
+#line 17
 {
   if (err == SUCCESS) {
       printf("SensorControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
       fflush(stdout);
     }
   else 
-#line 20
+#line 21
     {
       SensorAppC$SensorControl$start();
     }
@@ -1771,9 +2093,9 @@ inline static void MagnetomiterP$SplitControl$startDone(error_t error){
 #line 113
 }
 #line 113
-# 25 "SensorAppC.nc"
+# 26 "SensorAppC.nc"
 static inline void SensorAppC$SensorControl$stopDone(error_t err)
-#line 25
+#line 26
 {
 }
 
@@ -1784,11 +2106,32 @@ inline static void MagnetomiterP$SplitControl$stopDone(error_t error){
 #line 138
 }
 #line 138
-# 30 "SensorAppC.nc"
-static inline void SensorAppC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer)
-#line 30
+# 189 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static inline uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(uint8_t num)
 {
-  printf("event void InterruptWithData.interruptWithData NODE_ID %d - data lenght %d\n", TOS_NODE_ID, length);
+  return /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow();
+}
+
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static uint32_t SensorAppC$Timer0$getNow(void ){
+#line 136
+  unsigned int __nesc_result;
+#line 136
+
+#line 136
+  __nesc_result = /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(0U);
+#line 136
+
+#line 136
+  return __nesc_result;
+#line 136
+}
+#line 136
+# 31 "SensorAppC.nc"
+static inline void SensorAppC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer)
+#line 31
+{
+  printf("NODE_ID %d - data lenght %d time: %d\n", TOS_NODE_ID, length, SensorAppC$Timer0$getNow());
 }
 
 # 22 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/InterruptWithData.nc"
@@ -1840,6 +2183,37 @@ extern   int runNextEventExternal(uint32_t a)
 
   SchedulerBasicP$Scheduler$runNextTask();
   return 0;
+}
+
+# 73 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(uint32_t now)
+{
+  uint8_t num;
+
+#line 76
+  for (num = 0; num < /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$NUM_TIMERS; num++) 
+    {
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer_t *timer = &/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$m_timers[num];
+
+      if (timer->isrunning) 
+        {
+          uint32_t elapsed = now - timer->t0;
+
+          if (elapsed >= timer->dt) 
+            {
+              if (timer->isoneshot) {
+                timer->isrunning = FALSE;
+                }
+              else {
+#line 89
+                timer->t0 += timer->dt;
+                }
+              /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(num);
+              break;
+            }
+        }
+    }
+  /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask();
 }
 
 # 42 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"

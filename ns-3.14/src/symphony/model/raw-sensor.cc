@@ -76,13 +76,12 @@ namespace ns3
     if(m_fileNames.size()>0){
       uint64_t now=m_fileNames.front();
       m_fileNames.erase(m_fileNames.begin());
-      uint64_t next=m_fileNames.front();
-      m_fileNames.erase(m_fileNames.begin());
-
+//      uint64_t next=m_fileNames.front();
+//      m_fileNames.erase(m_fileNames.begin());
+//      std::cout <<" Next event "<<next<<std::endl;
       std::string fileN = m_path+m_ids+"_"+boost::lexical_cast<std::string>(now);
-      ReadData(fileN.c_str());
       m_bufferQueue=true;
-      m_next=Simulator::Schedule(m_started+MilliSeconds(now),&RawSensor::RawSensorEvent, this, MilliSeconds(next));
+      m_next=Simulator::Schedule(( MilliSeconds(now)-Simulator::Now() ) ,&RawSensor::RawSensorEvent, this, fileN);
     } else {
         NS_LOG_INFO("No more sensor data.");
         m_bufferQueue=false;
@@ -105,11 +104,13 @@ namespace ns3
   }
 
   void
-  RawSensor::RawSensorEvent(Time ms)
+  RawSensor::RawSensorEvent(std::string fileN)
   {
     uint64_t next;
     //do something with m_buffer
-
+    ReadData(fileN.c_str());
+//    std::cout <<" NOW " << Simulator::Now().GetMilliSeconds() ;
+//    std::cout << " sensor now " << fileN <<std::endl;
     //remember to free the memory
     free(m_buffer);
     //Reschedule event while data still exist
@@ -118,9 +119,8 @@ namespace ns3
       m_fileNames.erase(m_fileNames.begin());
       std::string fileN = m_path+m_ids +"_"+ boost::lexical_cast<std::string>(next);
       NS_LOG_INFO(fileN);
-      ReadData(fileN.c_str());
       m_bufferQueue = true;
-      m_next=Simulator::Schedule(m_started+ms,&RawSensor::RawSensorEvent, this, MilliSeconds(next));
+      m_next=Simulator::Schedule((MilliSeconds(next)-Simulator::Now() ),&RawSensor::RawSensorEvent, this, fileN);
     } else {
         NS_LOG_INFO("No more sensor data.");
         m_bufferQueue=false;
@@ -129,7 +129,6 @@ namespace ns3
   void
   RawSensor::ReadData( const char * fileName)
   {
-    NS_LOG_INFO(fileName);
     FILE *file;
     file = fopen(fileName, "rb");
     NS_ASSERT_MSG(file, "Can't open file.");
@@ -138,12 +137,10 @@ namespace ns3
     fseek(file, 0, SEEK_SET);
     m_buffer = (char *) malloc(m_fileLen);
     NS_ASSERT_MSG(m_buffer, "Memory error!");
-
     fread(m_buffer, m_fileLen, 1, file);
     fclose(file);
     NS_ASSERT_MSG(!m_InterruptData.IsNull(),"Callback for sensor interrupt with data is not set");
-    int val = m_InterruptData(0,m_fileLen,(void*) m_buffer);
-    NS_LOG_DEBUG(val);
+     m_InterruptData(0,m_fileLen,(void*) m_buffer);
   }
 
   RawSensor::RawSensor()
@@ -167,14 +164,14 @@ namespace ns3
         std::vector<std::string> file;
         boost::split(file, str, boost::is_any_of("_"));
         if(file[0]==m_ids){
-            data.push_back(boost::lexical_cast<uint64_t>(file[1]));
-
+            uint64_t tmp = boost::lexical_cast<uint64_t>(file[1]);
+            data.push_back(tmp);
         }
     }
 //    std::vector<uint64_t> data_s=data;
     boost::sort(data);
 //    for(unsigned int i=0; i< data.size();i++){
-//        std::cout<<"data:sorted "<<data[i]<<":"<<data_s[i]<<std::endl;
+//        std::cout<<"data:sorted "<<data[i]<<":"<<data[i]<<std::endl;
 //    }
     return data;
   }

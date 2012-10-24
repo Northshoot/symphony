@@ -16,6 +16,7 @@ implementation {
   }
   int sim_main_start_mote(int id) @C() @spontaneous() {
   	TOS_NODE_ID=id;
+  	
     //char timeBuf[128];
     //printf("FROM toslib: sim_main_start_mote\n");
 

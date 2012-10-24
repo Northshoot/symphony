@@ -51,17 +51,18 @@ main(int argc, char *argv[])
     {
       nodes.Get(i)->AggregateObject(
           CreateObject<ConstantPositionMobilityModel>());
+
     }
 
   // 3. Create propagation loss matrix
-  double zero2one = 110;
-  double two2one =  110;
+  double zero2one = 50;
+  double two2one =  50;
   Ptr<MatrixPropagationLossModel> lossModel = CreateObject<
       MatrixPropagationLossModel>();
-  lossModel->SetDefaultLoss(200); // set default loss to 200 dB (no link)
-  lossModel->SetLoss(nodes.Get(0)->GetObject<MobilityModel>(),
-      nodes.Get(1)->GetObject<MobilityModel>(), zero2one); // set symmetric loss 0 <-> 1 to 50 dB
+  lossModel->SetDefaultLoss(100); // set default loss to 200 dB (no link)
   lossModel->SetLoss(nodes.Get(2)->GetObject<MobilityModel>(),
+      nodes.Get(1)->GetObject<MobilityModel>(), zero2one); // set symmetric loss 0 <-> 1 to 50 dB
+  lossModel->SetLoss(nodes.Get(1)->GetObject<MobilityModel>(),
       nodes.Get(1)->GetObject<MobilityModel>(), two2one); // set symmetric loss 2 <-> 1 to 50 dB
 
   Ptr<YansWifiChannel> wifiChannel = CreateObject <YansWifiChannel> ();

@@ -105,7 +105,7 @@ implementation {
    */
   async command am_addr_t amAddress() {
     am_addr_t myAddr;
-    atomic myAddr = addr;
+    atomic myAddr = TOS_NODE_ID;
     return myAddr;
   }
   

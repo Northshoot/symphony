@@ -440,16 +440,16 @@ namespace ns3
   void
   TosNetDevice::ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr)
   {
+    NS_LOG_FUNCTION(this <<packet);
     NS_ASSERT_MSG(!c_ns2tosRx.IsNull(), "Receive callback is not set.");
     if (m_state == RADIO_STATE_RX)
       {
-
             message_t * msg = NsToTosPacket(packet, hdr);
             m_rx++;
            DeviceReceive(msg);
     } else  {
       m_dr++;
-      NS_LOG_INFO("Dropping Packet, still in RX state"<<m_node->GetId());
+      NS_LOG_FUNCTION("Dropping Packet, still in RX state"<<m_node->GetId());
   }
 }
 

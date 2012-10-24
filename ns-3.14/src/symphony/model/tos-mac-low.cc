@@ -262,6 +262,7 @@ TosMacLow::StartDataTxTimers (void)
 void
 TosMacLow::SendDataPacket (void)
 {
+  NS_LOG_FUNCTION(GetDataTxMode ());
   ForwardDown (m_currentPacket, &m_currentHdr, GetDataTxMode ());
 }
 

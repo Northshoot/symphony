@@ -46,7 +46,7 @@ implementation{
 	}
         
 	extern int receiveMessage(void * msg)@C() @spontaneous(){
-//		printf("TOS RX LOW \n");
+		//printf("\tTOS RX LOW %d\n", TOS_NODE_ID);
 //		fflush(stdout);
 		msg_in = (message_t*)msg;
 		//printTosPacket((char*)msg);
