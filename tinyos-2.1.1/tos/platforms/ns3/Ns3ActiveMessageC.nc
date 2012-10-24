@@ -167,9 +167,9 @@ implementation
 		am_id_t id = call AMPacket.type(msg);
 		void* payload = getPayload(msg);
 		uint8_t len = call Packet.payloadLength(msg);
-//		printf("\tSubReceive.receive me (%d) from (%d) to (%d)\n", 
+//		printf("\tSubReceive.receive me (%d) from (%d) to (%d) type (%d)\n", 
 //		          TOS_NODE_ID, call AMPacket.source(msg), 
-//		          call AMPacket.destination(msg));
+//		          call AMPacket.destination(msg), call AMPacket.type(msg));
 		call AMPacket.isForMe(msg) 
 			? signal Receive.receive[id](msg, payload, len)
 			: signal Snoop.receive[id](msg, payload, len);
@@ -261,7 +261,7 @@ implementation
 
 	command uint8_t Packet.payloadLength(message_t* msg)
 	{
-		return sizeof(ns3packet_header_t);
+		return getHeader(msg)->length ;
 	}
 
 	command void Packet.setPayloadLength(message_t* msg, uint8_t len)

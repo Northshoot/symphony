@@ -4,6 +4,10 @@
 
 typedef nx_struct radio_count_msg {
 	nx_uint16_t counter;
+	nx_uint32_t a;
+	nx_uint32_t b;
+	nx_uint32_t c;
+	nx_uint32_t d;
 } radio_count_msg_t;
 
 enum {
@@ -18,13 +22,12 @@ module RadioTestC @safe() {
 		interface Timer<TMilli> as MilliTimer;
 		interface SplitControl as AMControl;
 		interface Packet;
+		interface AMPacket;
 	}
 }
 implementation {
     void task send();
 	message_t packet;
-	message_t packet1;
-	message_t packet2;
     uint8_t dest=0;
 	bool locked;
 	uint16_t counter = 0;
@@ -56,7 +59,8 @@ implementation {
  	void task send(){
  		counter++;
  		//if (counter <15){
-		printf("TOSNODE::void task send() TOS_NODE_ID::%d - COUNTER::%d - DEST::%d\n", TOS_NODE_ID, counter, dest);
+		printf("TOSNODE (%d) send() - COUNTER (%d)- DEST (%d) PKT SIZE (%ld)\n", 
+		TOS_NODE_ID, counter, dest, sizeof(radio_count_msg_t));
 		if (locked) {
 			printf("LOCKED\n");
 			return;
@@ -68,6 +72,10 @@ implementation {
 				return;
 			}
 			rcm->counter = counter;
+			rcm->a = 178956970;
+			rcm->b = 196852667;
+			rcm->c = 214748364;
+            rcm->d = 232644061;
 			if (call AMSend.send(dest, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 				locked = TRUE;
 			}
@@ -81,15 +89,18 @@ implementation {
 
 	event message_t* Receive.receive(message_t* bufPtr, 
 			void* payload, uint8_t len) {
-		//get counter		
-	    atomic counter = ((radio_count_msg_t*)payload)->counter;
-		printf("TOSNODE:: %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
-		//post send();
-		call MilliTimer.startOneShot(10);
-		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
+
+		if (len != sizeof(radio_count_msg_t)) {
+		  printf("Buffer error on reception %d\n",len);
+			return bufPtr;}
 		else {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;
-			printf("Buffer error on reception\n");
+			              //get counter       
+            atomic counter = ((radio_count_msg_t*)payload)->counter;
+            printf("TOSNODE (%d) receive (%d) len (%d)\n",TOS_NODE_ID
+            ,counter, len );
+            //post send();
+            call MilliTimer.startOneShot(10);   
 			return bufPtr;
 		}
 		

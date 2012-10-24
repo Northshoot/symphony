@@ -4,8 +4,8 @@ configuration RadioApp
 }
 implementation {
   components MainC, RadioTestC as App;
-  components new AMSenderC(30);
-  components new AMReceiverC(30);
+  components new AMSenderC(12);
+  components new AMReceiverC(12);
   components new TimerMilliC();
   components ActiveMessageC;
   
