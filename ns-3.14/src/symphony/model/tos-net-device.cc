@@ -34,14 +34,16 @@
 //void
 //printTosPacket(char *buf)
 //{
-//  int size = sizeof(message_t);
+//
 //  int hsize = sizeof(ns3packet_header_t);
 //  int i = 0;
+//  int size = 0;
 //  ns3packet_header_t *hdr;
 //  hdr = (ns3packet_header_t*) (((message_t*) buf)->header);
+//  size=hdr->length;
 //  printf("FROM NS3 - SIZE: %d :: HEADER size: %d\n", size, hsize);
 //  printf("HEX: ");
-//  for (; i < size - 1; i++)
+//  for (; i < ( size +sizeof(ns3packet_header_t) ); i++)
 //    {
 //      printf("%02X ", (uint8_t) buf[i]);
 //    }
@@ -261,7 +263,7 @@ namespace ns3
     NS_LOG_FUNCTION(this);
     if (!m_RxEvent.IsRunning() && !m_trasmit.IsRunning())
       {
-
+        //printTosPacket((char*)msg);
         memcpy((void *) &m_tx_msg, (void *) msg, sizeof(message_t));
         m_state = RADIO_STATE_TX;
         m_busy = true;

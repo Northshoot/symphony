@@ -3,23 +3,26 @@
 #include "ns3/calls-to-ns3.h"
 #include <stdio.h>
 
-void
-printTosPacket( char *buf){
-    int size = sizeof(message_t);
-    int i=0;
-    ns3packet_header_t *hdr;
-    hdr =(ns3packet_header_t*)(((message_t*)buf)->header);
-    printf("FROM TOS - SIZE: %d :: HEADER size: %lu\n", size, sizeof(ns3packet_header_t));
-    printf("HEX: ");
-    for (;i<size-1;i++){
-        printf("%02X ", (uint8_t)buf[i]);
-    }
-    printf("%02X\n",(uint8_t)buf[i]);
-    printf("header: ");
-    printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
-    printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
-    hdr =NULL;
-}
+//void
+//printTosPacket( char *buf){
+//   
+//    unsigned int i=0;
+//    unsigned int size=0;
+//    ns3packet_header_t *hdr;
+//    hdr =(ns3packet_header_t*)(((message_t*)buf)->header);
+//    size= hdr->length;
+//    printf("FROM TOS - SIZE: %d :: HEADER size: %lu\n", size, 
+//    sizeof(ns3packet_header_t));
+//    printf("HEX: ");
+//    for (;i<(size+sizeof(ns3packet_header_t));i++){
+//        printf("%02X ", (uint8_t)buf[i]);
+//    }
+//    printf("%02X\n",(uint8_t)buf[i]);
+//    printf("header: ");
+//    printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
+//    printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
+//
+//}
 
 module NS3MsgGatewayP{
 	provides 
@@ -70,7 +73,7 @@ implementation{
 	command error_t Send.send(message_t* msg){
 		msg_out = msg;		
 		//printf("\t\t\t\t SENDING\n");
-//		printTosPacket((char*)msg);
+		//printTosPacket((char*)msg);
 		a=gatewayRadio(proxy, RADIO_SEND,-1,-1,(void *)msg, (void *) msg);
 		return 0;
 	
