@@ -16,4 +16,5 @@ implementation {
   App.AMControl -> ActiveMessageC;
   App.MilliTimer -> TimerMilliC;
   App.Packet -> AMSenderC;
+  App.AMPacket->AMSenderC;
 }

@@ -17,6 +17,7 @@ module RadioTestC @safe() {
 		interface Timer<TMilli> as MilliTimer;
 		interface SplitControl as AMControl;
 		interface Packet;
+		interface AMPacket;
 	}
 }
 implementation {
@@ -34,7 +35,7 @@ implementation {
 
 	event void AMControl.startDone(error_t err) {
 		if(err == SUCCESS) {
-			if(TOS_NODE_ID == 2 ) {
+			if(TOS_NODE_ID == 1 ) {
 				call MilliTimer.startOneShot(100);
 			}
 					  else if (TOS_NODE_ID == 0){
@@ -67,7 +68,7 @@ implementation {
 
 			rcm->counter = counter;
 			rcm->id = TOS_NODE_ID;
-			if(call AMSend.send(1, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+			if(call AMSend.send(2, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
 				locked = TRUE;
 			}
 		}
@@ -79,7 +80,7 @@ implementation {
 	event message_t * Receive.receive(message_t * bufPtr, void * payload,
 			uint8_t len) {
 
-		
+	   printf("RX_ID (%d) TX_ID (%d)\n", call AMPacket.source(bufPtr), call AMPacket.destination(bufPtr));
 		atomic rx_id = ((radio_count_msg_t * ) payload)->id;
 		switch(rx_id) {
 			case 0 : 

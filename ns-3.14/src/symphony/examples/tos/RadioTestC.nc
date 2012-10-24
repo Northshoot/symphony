@@ -31,16 +31,17 @@ implementation {
  
 	event void Boot.booted() {
 		printf("App: booted %d\n", TOS_NODE_ID);
-		if(TOS_NODE_ID == 0) dest = 2;
-		else if (TOS_NODE_ID == 1) dest = 0;
+		if(TOS_NODE_ID == 10) dest = 0;
+		else if (TOS_NODE_ID == 0) dest = 10;
 		else printf("TOS_NODE_ID error: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		call AMControl.start();
 	}
 
 	event void AMControl.startDone(error_t err) {
+		printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		if (err == SUCCESS) {
-		  if  (TOS_NODE_ID == 0){
-            post send();			
+		  if  (TOS_NODE_ID == 10){
+            call MilliTimer.startOneShot(100);			
 		  }
 		  //printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		}else {
@@ -83,8 +84,8 @@ implementation {
 		//get counter		
 	    atomic counter = ((radio_count_msg_t*)payload)->counter;
 		printf("TOSNODE:: %d RadioTest event message_t* Receive.receive %u\n",TOS_NODE_ID,counter );
-		post send();
-		//call MilliTimer.startOneShot(1);
+		//post send();
+		call MilliTimer.startOneShot(10);
 		if (len != sizeof(radio_count_msg_t)) {return bufPtr;}
 		else {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;

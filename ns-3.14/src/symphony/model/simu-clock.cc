@@ -75,7 +75,7 @@ namespace ns3
         tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired,
             this);
         count++;
-        callBack(0);
+        callBack(Simulator::Now().GetMilliSeconds());
       }
     else if (type == STATIC)
       {

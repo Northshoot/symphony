@@ -43,7 +43,7 @@ WSNGatewayClient::GetTypeId (void)
 
 WSNGatewayClient::WSNGatewayClient()
 :   m_socket (0),
-    m_port(21567)
+    m_port(12345)
   {
   }
 

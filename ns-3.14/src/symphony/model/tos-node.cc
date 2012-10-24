@@ -76,7 +76,6 @@ namespace ns3
   TosNode::TosNode(uint32_t node_id, Time bootTime, const char* lib) :
     tos_id(node_id), m_bootTime(bootTime), m_libname(lib)
   {
-    m_id=tos_id;
     Construct();
   }
 
@@ -187,6 +186,7 @@ void
   {
     //open instance of the library  LM_ID_NEWLM
     NS_ASSERT (m_init);
+    NS_LOG_FUNCTION("TosID " << tos_id << "SysId " << GetId());
 
     if( m_application !=NULL) {
 

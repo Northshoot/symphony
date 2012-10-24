@@ -31,7 +31,7 @@ namespace ns3
     static TypeId
     GetTypeId(void);
 
-    const static uint32_t MIN_FILE_LENGTH = 10;
+    const static uint32_t MIN_FILE_LENGTH = 8;
     RawSensor();
 
     virtual
@@ -43,7 +43,7 @@ namespace ns3
     DoDispose(void);
 
     void
-    RawSensorEvent(Time ms);
+    RawSensorEvent(std::string fileN);
 
 
 

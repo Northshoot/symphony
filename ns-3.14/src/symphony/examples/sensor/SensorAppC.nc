@@ -3,6 +3,7 @@ module SensorAppC {
         interface Boot;
         interface SplitControl as SensorControl;
         interface InterruptWithData as DataIn;
+        interface Timer<TMilli> as Timer0;
     }
 }
 implementation {
@@ -28,7 +29,8 @@ implementation {
  
 
     async event void DataIn.interruptWithData(error_t result, uint16_t length, void * buffer) {
-            printf("event void InterruptWithData.interruptWithData NODE_ID %d - data lenght %d\n",TOS_NODE_ID, length);
+            printf("NODE_ID %d - data lenght %d time: %d\n",TOS_NODE_ID, length, call Timer0.getNow() );
     }
-
+  
+  event void Timer0.fired() { }
 }

@@ -56,12 +56,13 @@ implementation
 	}
 	
 	extern int radioStateDone() @C() @spontaneous(){
-        printf("\t radio state done\n");        
+//        printf("\t radio state done\n");        
 		post SplitControlStartDone();
 		return 0;
 		
 	}	
 	command error_t SplitControl.start(){
+		//call ActiveMessageAddress.setAddress(0, TOS_NODE_ID);
 		call SubState.turnOn();
 		return 0;
 	}
@@ -162,10 +163,13 @@ implementation
 
 	event message_t* SubReceive.receive(message_t* msg)
 	{
+		
 		am_id_t id = call AMPacket.type(msg);
 		void* payload = getPayload(msg);
 		uint8_t len = call Packet.payloadLength(msg);
-		
+//		printf("\tSubReceive.receive me (%d) from (%d) to (%d)\n", 
+//		          TOS_NODE_ID, call AMPacket.source(msg), 
+//		          call AMPacket.destination(msg));
 		call AMPacket.isForMe(msg) 
 			? signal Receive.receive[id](msg, payload, len)
 			: signal Snoop.receive[id](msg, payload, len);
