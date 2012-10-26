@@ -1,0 +1,12 @@
+cc -g -Wall  -fPIC  -c -o libtostest.o libtostest.c
+cc libtostest.o -Wl,--warn-unresolved-symbols -L../ -Wl,--no-as-needed -shared -L../ldso -nostdlib -o libtostest.so
+cc -g -Wall  -c -o testtos.o testtos.c
+cc testtos.o -Wl,--warn-unresolved-symbols -L../ -Wl,--no-as-needed -ldl -o testtos
+../elfedit testtos ../ldso
+LD_LIBRARY_PATH=.:../ ./testtos
+enter main, starting to open 1000 libraries
+Opened 1000 libraries, time : 0.030000
+Time to execute one function in 1000 libraries : 0.000000
+Time to close  1000 libraries : 0.250000
+dlclose libtos.so completed
+leave main

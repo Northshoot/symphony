@@ -1,0 +1,6 @@
+cc -g -Wall  -fPIC  -c -o libtostest.o libtostest.c
+cc libtostest.o -Wl,--warn-unresolved-symbols -L../ -Wl,--no-as-needed -shared -L../ldso -nostdlib -o libtostest.so
+cc -g -Wall  -c -o testtos.o testtos.c
+cc testtos.o -Wl,--warn-unresolved-symbols -L../ -Wl,--no-as-needed -ldl -o testtos
+../elfedit testtos ../ldso
+LD_LIBRARY_PATH=.:../ ./testtos
