@@ -11,4 +11,6 @@ def build(bld):
     emu.source = 'gateway-test.cc'
     app = bld.create_ns3_program('tos2application',['symphony','emu'])
     app.source = 'tos2application.cc'
+    elf = bld.create_ns3_program('tos-elf',['symphony','emu'])
+    elf.source = 'tos-elf.cc'
 

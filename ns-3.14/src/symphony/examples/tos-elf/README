@@ -1,0 +1,5 @@
+Application with bigger number of the nodes
+Ping-pong application with increasing counter.
+
+run:
+./waf --run="tos-elf"

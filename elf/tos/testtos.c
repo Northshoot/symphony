@@ -1,8 +1,9 @@
 #define _GNU_SOURCE
 #include <dlfcn.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
-#define NUM 100000
+#define NUM 35000
 typedef int (*Fn)(int);
 
 int main (int argc, char *argv[])
@@ -12,9 +13,10 @@ int main (int argc, char *argv[])
   void * tmp[NUM];
   long int i=0;
   long int open=0;
-  printf ("enter main, starting to open %d libraries\n", NUM);
+  int libs = atoi(argv[1]);
+  printf ("enter main, starting to open %d libraries\n", libs);
   clock_t start = clock();
-  for(;i<NUM;i++){
+  for(;i<libs;i++){
     g1[i] = dlmopen(LM_ID_NEWLM,"libtostest.so", RTLD_LAZY);
     if(!g1[i]){
       printf ("Cannot open library %ld: %s\n",i,dlerror());
@@ -26,7 +28,7 @@ int main (int argc, char *argv[])
 
        } else {
          //printf("opened: %d\n",i);
-	open++;
+        open++;
        }
     }
   }
@@ -34,7 +36,7 @@ int main (int argc, char *argv[])
 printf("Opened %ld libraries, time : %f\n", open, ( (double)clock() - start ) / CLOCKS_PER_SEC );
 
   start = clock();
-  for(i=0;i<NUM;i++){
+  for(i=0;i<libs;i++){
          ((Fn)tmp[i])(i);
   }
 
@@ -42,7 +44,7 @@ printf("Time to execute one function in %ld libraries : %f\n",  open,( (double)c
 
   //sleep(30);
 start = clock();
-  for(i=0;i<NUM;i++){
+  for(i=0;i<libs;i++){
   dlclose (g1[i]);
 
   }
