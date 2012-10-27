@@ -15,7 +15,7 @@ def generate():
 def build(bld):
     generate()
     module = bld.create_ns3_module('symphony', ['core','wifi','mobility','internet','emu','applications'])
-    module.env.append_value("LINKFLAGS",['-lxerces-c'])
+    module.env.append_value("LINKFLAGS",['-lxerces-c','-L/home/lauril/dev/symphony/elf'])
     module.use.append("XERCES")
     module.use.append("LDL")
     module.source = [

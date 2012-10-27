@@ -28,6 +28,7 @@ main(int argc, char *argv[])
   std::string nodeModel = "/home/lauril/dev/symphony/ns-3.14/build/symphony.xml";
   std::string nodeImage = "/home/lauril/dev/symphony/ns-3.14/build/libtos.so";
   uint64_t simLength = 1;
+  uint32_t numNodes=20;
   bool realTime = false;
   CommandLine cmd;
   cmd.AddValue("nodeModel", "model of the node in XML format", nodeModel);
@@ -44,9 +45,9 @@ main(int argc, char *argv[])
     }
   TosNodeContainer c;
   //Create nodes
-//  c.Create(2, nodeImage.c_str());
-  c.Add(CreateObject<TosNode> (10, MilliSeconds(0), nodeImage.c_str() ));
-  c.Add(CreateObject<TosNode> (0, MilliSeconds(0), nodeImage.c_str() ));
+  c.Create(numNodes, nodeImage.c_str());
+//  c.Add(CreateObject<TosNode> (10, MilliSeconds(0), nodeImage.c_str() ));
+//  c.Add(CreateObject<TosNode> (0, MilliSeconds(0), nodeImage.c_str() ));
   //Create helper
   TosHelper wifi;
   //here you can enable logging
@@ -61,7 +62,7 @@ main(int argc, char *argv[])
 //   LogComponentEnable ("TosHelper", LOG_LEVEL_ALL);
 //   LogComponentEnable ("YansTosPhyHelper", LOG_LEVEL_ALL);
 //   LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
-//   LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
+   LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
   //Set node model
   wifi.SetNodeModel(nodeModel);
 
@@ -91,8 +92,10 @@ main(int argc, char *argv[])
   TosMobilityHelper mobility;
   Ptr<ListPositionAllocator> positionAlloc =
       CreateObject<ListPositionAllocator>();
-  positionAlloc->Add(Vector(0.0, 0.0, 0.0));
-  positionAlloc->Add(Vector(50.0, 0.0, 0.0));
+  for(uint32_t i=0; i<numNodes;i++)
+    positionAlloc->Add(Vector(10*i, 0.0, 0.0));
+
+  //positionAlloc->Add(Vector(50.0, 0.0, 0.0));
   //positionAlloc->Add (Vector (0, 0.0, 0.0));
   mobility.SetPositionAllocator(positionAlloc);
   mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");

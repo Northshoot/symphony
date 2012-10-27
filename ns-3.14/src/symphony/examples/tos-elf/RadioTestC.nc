@@ -34,17 +34,16 @@ implementation {
  
 	event void Boot.booted() {
 		printf("App: booted %d\n", TOS_NODE_ID);
-		if(TOS_NODE_ID == 10) dest = 0;
-		else if (TOS_NODE_ID == 0) dest = 10;
-		else printf("TOS_NODE_ID error: TOS_NODE_ID == %d\n", TOS_NODE_ID);
+		if(TOS_NODE_ID != 10) dest = 0;
+
 		call AMControl.start();
 	}
 
 	event void AMControl.startDone(error_t err) {
 		printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		if (err == SUCCESS) {
-		  if  (TOS_NODE_ID == 10){
-            call MilliTimer.startOneShot(100);			
+		  if  (TOS_NODE_ID != 0){
+            //call MilliTimer.startOneShot(100);			
 		  }
 		  //printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		}else {
