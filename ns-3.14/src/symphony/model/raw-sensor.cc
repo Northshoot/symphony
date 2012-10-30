@@ -5,14 +5,14 @@
  *      Author: lauril
  */
 #include <boost/algorithm/string.hpp>
-#include <boost/range/algorithm.hpp>
 #include <boost/lexical_cast.hpp>
 #include <iostream>
 #include <stdlib.h>
 #include <string>
 #include <stdio.h>
 #include <dirent.h>
-
+#include <algorithm>
+#include <vector>
 
 #include "ns3/log.h"
 #include "ns3/nstime.h"
@@ -169,7 +169,7 @@ namespace ns3
         }
     }
 //    std::vector<uint64_t> data_s=data;
-    boost::sort(data);
+    std::sort(data.begin(),data.end());
 //    for(unsigned int i=0; i< data.size();i++){
 //        std::cout<<"data:sorted "<<data[i]<<":"<<data[i]<<std::endl;
 //    }

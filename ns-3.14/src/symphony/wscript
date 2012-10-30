@@ -6,7 +6,7 @@ from proxy_generator import *
 def configure(conf):
      conf.check_nonfatal(header_name='XMLValidator.hpp', define_name='HAVE_XERCES_H')
      conf.env['xercersc'] = conf.check(mandatory=True, lib='xerces-c', uselib_store='XERCES')
-     conf.env['ldl'] = conf.check(mandatory=True, lib='dl', uselib_store='LDL')
+     #conf.env['ldl'] = conf.check(mandatory=True, lib='dl', uselib_store='LDL')
      
 
 def generate():
@@ -14,10 +14,10 @@ def generate():
 
 def build(bld):
     generate()
-    module = bld.create_ns3_module('symphony', ['core','wifi','mobility','internet','emu','applications'])
-    module.env.append_value("LINKFLAGS",['-lxerces-c','-L/home/lauril/dev/symphony/elf'])
+    module = bld.create_ns3_module('symphony', ['core','tos-loader','wifi','mobility','internet','emu','applications'])
+    module.env.append_value("LINKFLAGS",['-lxerces-c'])
     module.use.append("XERCES")
-    module.use.append("LDL")
+
     module.source = [
                       'model/tos-to-ns3-proxy.cc',
             		  'model/ns3-to-tos-proxy_auto.cc',

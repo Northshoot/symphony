@@ -1,1 +1,1 @@
-interp.o: /home/lauril/dev/elf/interp.c
+interp.o: /home/lauril/dev/symphony/elf/interp.c

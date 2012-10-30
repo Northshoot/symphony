@@ -19,7 +19,6 @@ NODE=symphony.xml
 GPP=g++
 GCC=gcc
 NCC=ncc
-LIB=ar rcs
 PY=python
 
 
@@ -48,6 +47,8 @@ NS3_CORE =$(SYMPHONY_BUILD)/$(PRE_NS_LIB)-core-$(POST_NS_LIB)
 NS3_NET =$(SYMPHONY_BUILD)/$(PRE_NS_LIB)-network-$(POST_NS_LIB)
 CALL_HEADER=$(SYMPHONY_SRC)/model/calls-to-ns3.h
 
+LINKFLAGS=-Wl,--warn-unresolved-symbols -L/home/lauril/dev/symphony/elf/ -Wl,--no-as-needed -shared -L/home/lauril/dev/symphony/elf/ldso 
+
 #app to create
 SIM_LIB=libtos
 
@@ -58,10 +59,10 @@ all:
 		$(PY) $(POST) $(TOS_APP_C) $(SIM_LIB).c
 		@echo ""
 		@echo "Building TinyOS object             "
-		$(GPP) -fPIC -Wall -g -c $(SIM_LIB).c	$(NS3_INCL)
+		$(GPP) -g -Wall -fPIC -c $(SIM_LIB).c$(NS3_INCL)
 		@echo ""
 		@echo "Creating library and linking with proxy objects            "
-		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) -ldl 
+		$(GPP) $(SIM_LIB).o $(LINKFLAGS) -o $(SIM_LIB).so $(NS3_OBJ) -ldl 
 
 		@echo "                           "		
 		@echo "*** copying library to ns_dir***"

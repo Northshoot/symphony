@@ -42,11 +42,13 @@ main(int argc, char *argv[])
       GlobalValue::Bind("SimulatorImplementationType",
           StringValue("ns3::RealtimeSimulatorImpl"));
     }
+  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
+  LogComponentEnable ("TosLoader", LOG_LEVEL_ALL);
   TosNodeContainer c;
   //Create nodes
-//  c.Create(2, nodeImage.c_str());
-  c.Add(CreateObject<TosNode> (10, MilliSeconds(0), nodeImage.c_str() ));
-  c.Add(CreateObject<TosNode> (0, MilliSeconds(0), nodeImage.c_str() ));
+  c.Create(20, nodeImage.c_str());
+//  c.Add(CreateObject<TosNode> (10, MilliSeconds(0), nodeImage.c_str() ));
+//  c.Add(CreateObject<TosNode> (0, MilliSeconds(0), nodeImage.c_str() ));
   //Create helper
   TosHelper wifi;
   //here you can enable logging

@@ -7,8 +7,6 @@
 #include <vector>
 #include<map>
 #include <iostream>
-#include <dlfcn.h>
-#include <link.h>
 
 #include "ns3/object.h"
 #include "ns3/nstime.h"
@@ -20,6 +18,7 @@
 #include "ns3/global-value.h"
 #include "ns3/assert.h"
 #include "ns3/log.h"
+#include "ns3/tos-loader.h"
 
 #include "simu-clock.h"
 #include "tos-node.h"
@@ -97,6 +96,7 @@ void
   TosNode::SetCallback(std::vector<std::string> tosExternals)
   {
     m_tos_functions = tosExternals;
+    m_tosLoader = new TosLoader();
     m_init = true;
   }
 
@@ -168,7 +168,7 @@ void
     //        Simulator::Cancel(m_boot_event);
     //        Simulator::Remove(m_boot_event);
     //      }
-    dlclose (handler);
+//    dlclose (handler);
     delete nstotos;
     delete tostons;
     //    delete m_libname;
@@ -209,10 +209,10 @@ void
     //changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
     //for eclipse debug full path is needed for the lib
     //TODO: add script for copying libtos.so to build/debug
-    handler = dlmopen(LM_ID_NEWLM, m_libname, RTLD_LAZY);
+    handler = m_tosLoader->getHandler(m_libname);
     if (!handler)
       {
-        std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
+        std::cerr << handler << "Cannot open library: "  << '\n';
         exit(1);
       }
     else
@@ -221,7 +221,7 @@ void
           {
             string f = m_tos_functions[i];
             NS_LOG_FUNCTION(this<<"adding function " << f);
-            nstotos->addFunction(f, getFunc(f.c_str()));
+            nstotos->addFunction(f, m_tosLoader->getFunction(f.c_str()));
           }
       }
 
@@ -320,26 +320,26 @@ void
   void *
   TosNode::getFunc(const char* func_name)
   {
-    char *error = NULL;
-    void * tmp = dlsym(handler, func_name);
-    if ((error = dlerror()) != NULL)
-      {
-//        std::stringstream sstm;
-//        sstm << "Cannot get function: " << name << "\n" << error;
-//        NS_ASSERT_MSG(false, sstm.str());
-        //this is not fail safe, better way for multiple models is neede
-        //for now return default function which prints error is the function is not found
-      std::string defFunc = "sim_function_not_found";
-      std::stringstream sstm;
-      sstm << "Function not found: " << func_name << ". Using default TOS function.\n" << error;
-      void * tmp = dlsym(handler, defFunc.c_str());
-      NS_LOG_ERROR(sstm.str());
-      return tmp;
-      }
-    else
-      {
-        return tmp;
-      }
+//    char *error = NULL;
+//    void * tmp = dlsym(handler, func_name);
+//    if ((error = dlerror()) != NULL)
+//      {
+////        std::stringstream sstm;
+////        sstm << "Cannot get function: " << name << "\n" << error;
+////        NS_ASSERT_MSG(false, sstm.str());
+//        //this is not fail safe, better way for multiple models is neede
+//        //for now return default function which prints error is the function is not found
+//      std::string defFunc = "sim_function_not_found";
+//      std::stringstream sstm;
+//      sstm << "Function not found: " << func_name << ". Using default TOS function.\n" << error;
+//      void * tmp = dlsym(handler, defFunc.c_str());
+//      NS_LOG_ERROR(sstm.str());
+//      return tmp;
+//      }
+//    else
+//      {
+//        return tmp;
+//      }
       return NULL;
   }
 
