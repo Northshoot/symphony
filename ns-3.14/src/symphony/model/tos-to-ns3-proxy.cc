@@ -24,6 +24,7 @@ TosToNs3Proxy::TosToNs3Proxy() { }
 //functions for TosNode
 int
 TosToNs3Proxy::confirmSet(int a){
+	m_node_id = a;
 	return 0;
 }
 

@@ -1,4 +1,6 @@
+#ifndef _GNU_SOURCE
 #define _GNU_SOURCE
+#endif
 #include <dlfcn.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,12 +24,15 @@ int main (int argc, char *argv[])
       printf ("Cannot open library %ld: %s\n",i,dlerror());
     } else {
       char *error=NULL;
-      tmp[i]= dlsym(g1[i],"test_func");
+      tmp[i]= dlsym(g1[i],"tickFired");
       if( (error = dlerror()) != NULL){
          printf("ERROR getting function: %s\n", dlerror());
 
        } else {
-         //printf("opened: %d\n",i);
+    	   if(tmp[i])
+    		   printf("got tickFired: %lu %lu\n",i, (long int)tmp[i]);
+    	   else
+    		   printf("Wierd error, should not end here\n");
         open++;
        }
     }

@@ -13,14 +13,15 @@ module RadioTestC @safe() {
 implementation {
  
 	event void Boot.booted() {
-		printf("App: booted %d\n", TOS_NODE_ID);
+		gatewayLogg(proxy,__PRETTY_FUNCTION__,__LINE__, "Boot Booted");
 		call MilliTimer.startPeriodic( 500 );
 
 	}
 
  
 	event void MilliTimer.fired() {
-		printf("%s - %d\n",__PRETTY_FUNCTION__, call MilliTimer.getNow());
+		
+		gatewayLogg(proxy,__PRETTY_FUNCTION__,__LINE__, "MilliTimer.fired()" );
 		call Leds.led1Toggle();
 	}
 

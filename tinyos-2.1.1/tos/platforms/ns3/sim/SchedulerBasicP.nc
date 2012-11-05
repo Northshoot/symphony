@@ -54,6 +54,7 @@ implementation
        call Scheduler.runNextTask();
        return 0;
     }
+
   enum
   {
     NUM_TASKS = uniqueCount("TinySchedulerC.TaskBasic"),

@@ -34,7 +34,7 @@ implementation {
  
 	event void Boot.booted() {
 		printf("App: booted %d\n", TOS_NODE_ID);
-		if(TOS_NODE_ID != 10) dest = 0;
+		if(TOS_NODE_ID != 0) dest = 0;
 
 		call AMControl.start();
 	}
@@ -43,7 +43,7 @@ implementation {
 		printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		if (err == SUCCESS) {
 		  if  (TOS_NODE_ID != 0){
-            //call MilliTimer.startOneShot(100);			
+            call MilliTimer.startOneShot(100*TOS_NODE_ID);			
 		  }
 		  //printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		}else {
@@ -99,7 +99,7 @@ implementation {
             printf("TOSNODE (%d) receive (%d) len (%d)\n",TOS_NODE_ID
             ,counter, len );
             //post send();
-            call MilliTimer.startOneShot(10);   
+            //call MilliTimer.startOneShot(10);   
 			return bufPtr;
 		}
 		
@@ -109,7 +109,7 @@ implementation {
 		if (&packet == bufPtr) {
 			locked = FALSE;
 			printf("event void AMSend.sendDone %d\n",TOS_NODE_ID);
-			//call MilliTimer.startOneShot(2000);
+			call MilliTimer.startOneShot(100);   
 		}
 
 	}

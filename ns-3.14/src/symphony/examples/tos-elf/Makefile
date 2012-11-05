@@ -16,7 +16,7 @@ TARGET=ns3
 NODE=symphony.xml
 
 #compilers
-GPP=g++
+GXX=g++
 GCC=gcc
 NCC=ncc
 PY=python
@@ -34,7 +34,7 @@ LINK_NS_OPT=-lstdc++
 OPTFLAGS_GCC = -g -O0 -Wall -Wshadow
 #NCC_OPT= -c -fPIC -o $(SIM_OBJ).o $(OPTFLAGS_GCC) -fnesc-gcc=$(GCC) -Wnesc-all -target=$(TARGET) -fnesc-cfile=app.c $(TOS_APP).nc
 NCC_OPT=-fPIC -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(SYMPHONY_BUILD)
-NCC_OPT_WALL=-fPIC -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(SYMPHONY_BUILD)
+NCC_OPT_WALL= -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(SYMPHONY_BUILD)
 #include dirs
 
 #for headers always use "ns3/header.h" to allow moving to waf in future
@@ -43,29 +43,30 @@ TOS_INCL = -I$(TOS_NS3)
 PRE_NS_LIB=libns3-dev
 POST_NS_LIB=debug.so
 NS3_OBJ = $(SYMPHONY_BUILD)/$(PRE_NS_LIB)-symphony-$(POST_NS_LIB)
-NS3_CORE =$(SYMPHONY_BUILD)/$(PRE_NS_LIB)-core-$(POST_NS_LIB)
-NS3_NET =$(SYMPHONY_BUILD)/$(PRE_NS_LIB)-network-$(POST_NS_LIB)
 CALL_HEADER=$(SYMPHONY_SRC)/model/calls-to-ns3.h
 
-LINKFLAGS=-Wl,--warn-unresolved-symbols -L$(SYMPHONY_ELF_EDIT) -Wl,--no-as-needed
+
+CXXFLAGS=-g -Wall 
+CXXLIBFLAGS=$(CXXFLAGS) -fPIC
+LINKFLAGS=-Wl,--warn-unresolved-symbols -L/home/lauril/dev/symphony/elf/ -Wl,--no-as-needed  -L../../../../../elf/ldso $(NS3_OBJ)  
+
 #app to create
-SIM_LIB=libtos
+LIB=libtos
 
 all:
 		@echo "                                   "
 		@echo "Building TinyOS image              "
 		$(NCC) $(NCC_OPT_WALL)
-		$(PY) $(POST) $(TOS_APP_C) $(SIM_LIB).c
+		$(PY) $(POST) $(TOS_APP_C) $(LIB).c
 		@echo ""
 		@echo "Building TinyOS object             "
-		$(GPP) -fPIC -Wall -g -c -nostdlib $(SIM_LIB).c $(NS3_INCL)
-		@echo ""
-		@echo "Creating library and linking with proxy objects            "
-		$(GPP) $(SIM_LIB).o $(LINKFLAGS) -shared -L../../../../../elf/ldso $(NS3_OBJ) -o $(SIM_LIB).so   -ldl 
+		$(CXX) $(CXXLIBFLAGS)  -c -o $(LIB).o $(LIB).c
+		$(CXX) $(LIB).o $(LINKFLAGS) -shared -nostdlib  -o $(LIB).so
+		@echo  $(NS3_OBJ)  
 
 		@echo "                           "		
 		@echo "*** copying library to ns_dir***"
-		cp $(SIM_LIB).so $(SYMPHONY_BUILD)/
+		cp $(LIB).so $(SYMPHONY_BUILD)/
 		cp $(NODE) $(SYMPHONY_BUILD)/		
 		@echo "*** tos-ns was successfully build***"
 		@echo ""

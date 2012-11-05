@@ -11,7 +11,7 @@
 #include "vdl-linkmap.h"
 #include "vdl-file.h"
 
-#define TLS_EXTRA_STATIC_ALLOC 1000
+#define TLS_EXTRA_STATIC_ALLOC 1000000000
 
 static void
 file_initialize (struct VdlFile *file)

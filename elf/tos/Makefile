@@ -1,17 +1,24 @@
-LIB=libtostest
+#LIB=libtostest
+LIB=libtos
 TARGET=testtos
-CXX=$(CC)
+CXX=g++
 CXXFLAGS=-g -Wall 
 CXXLIBFLAGS=$(CXXFLAGS) -fPIC
 LINKFLAGS=-Wl,--warn-unresolved-symbols -I/home/lauril/dev/symphony/elf/ -Wl,--no-as-needed
 
+app:
+	$(CXX) $(CXXFLAGS) -c -o $(TARGET).o $(TARGET).c
+	$(CXX) $(TARGET).o $(LINKFLAGS) -ldl -o $(TARGET)
+	../elfedit $(TARGET) ../ldso
+	LD_LIBRARY_PATH=../ ./$(TARGET) 20
+	
 ldso:
 	$(CXX) $(CXXLIBFLAGS)  -c -o $(LIB).o $(LIB).c
-	$(CXX) $(LIB).o $(LINKFLAGS) -shared -L/home/lauril/dev/symphony/elf/ldso -nostdlib -o $(LIB).so
-	$(CC) $(CXXFLAGS) -c -o $(TARGET).o $(TARGET).c
+	$(CXX) $(LIB).o $(LINKFLAGS) -shared -L../ldso -nostdlib -o $(LIB).so
+	$(CXX) $(CXXFLAGS) -c -o $(TARGET).o $(TARGET).c
 	$(CXX) $(TARGET).o $(LINKFLAGS) -ldl -o $(TARGET)
-	melftedit $(TARGET) ../ldso
-	LD_LIBRARY_PATH=../ ./$(TARGET)
+	../elfedit $(TARGET) ../ldso
+	LD_LIBRARY_PATH=../ ./$(TARGET) 20
 	
 snd:
 	$(CXX) $(CXXLIBFLAGS)  -c -o $(LIB).o $(LIB).c

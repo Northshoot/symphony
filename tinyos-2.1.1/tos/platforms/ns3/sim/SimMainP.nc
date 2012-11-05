@@ -1,6 +1,6 @@
 //static void __nesc_nido_initialise(int node);
 #include <stdio.h>
-#include "sim_main.h"
+
 
 module SimMainP {
   provides interface Boot;
@@ -11,12 +11,12 @@ module SimMainP {
 implementation {
 	
 
-  void sim_function_not_found(){
-  	 printf("ERROR: Fucntion does not exist!!!\n");
+       extern void sim_function_not_found()@C() @spontaneous(){
+     printf("ERROR: Function does not exist!!!\n");
   }
-  int sim_main_start_mote(int id) @C() @spontaneous() {
+  
+   extern int sim_main_start_mote(int id) @C() @spontaneous() {
   	TOS_NODE_ID=id;
-  	
     //char timeBuf[128];
     //printf("FROM toslib: sim_main_start_mote\n");
 

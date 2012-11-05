@@ -12,9 +12,9 @@ static __attribute__ ((constructor))
   }
 
 
-   extern int test_func(int i)
+   extern int tickFired(void * funk)
       {
-        printf ("test_func: %d\n",i );
+        printf ("tickFired: %d\n",i );
         return i;
       }
 

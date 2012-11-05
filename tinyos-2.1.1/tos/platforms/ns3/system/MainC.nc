@@ -46,7 +46,7 @@ implementation {
   // SimMoteP is not referred to by any component here.
   // It is included to make sure nesC loads it, as it
   // includes functionality many other systems depend on.
-  components SimMoteP;
+  //components SimMoteP;
   
   SimMainP.Scheduler -> SchedulerBasicP;
   SimMainP.PlatformInit -> PlatformC;

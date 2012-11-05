@@ -220,8 +220,14 @@ void
         for (uint32_t i = 0; i < m_tos_functions.size(); i++)
           {
             string f = m_tos_functions[i];
-            NS_LOG_FUNCTION(this<<"adding function " << f);
-            nstotos->addFunction(f, m_tosLoader->getFunction(f.c_str()));
+            //NS_LOG_FUNCTION(this<<"adding function " << f);
+            void * fu = m_tosLoader->getFunction(f.c_str());
+ //           if(fu){
+            	nstotos->addFunction(f, fu);
+//            	NS_LOG_FUNCTION(this<<"adding function " << f);
+//            } else {
+//            	NS_LOG_FUNCTION(this<<"Can't add function" << f);
+//            }
           }
       }
 

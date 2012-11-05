@@ -13,7 +13,7 @@
 #include "ns3/object-factory.h"
 #include "ns3/wifi-phy-standard.h"
 #include "ns3/trace-helper.h"
-
+#include "ns3/log.h"
 #include "ns3/tos-net-device.h"
 #include "tos-node-container.h"
 #include "tos-net-device-container.h"

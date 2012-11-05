@@ -50,6 +50,7 @@ class TosToNs3Proxy {
 	   int SensorCommand(SensorCall call);
 	   void ApplicationCommand(ApplicationCall call, uint16_t length, void* data);
 	   ns3::Ptr<ns3::SimuClock>  simu_clock;
+	   uint32_t m_node_id;
 
 	~TosToNs3Proxy();
 private:
@@ -57,6 +58,7 @@ private:
      ns3::Ptr<ns3::TosNetDevice> m_tosnetdevice;
      ns3::Ptr<ns3::RawSensor> m_sensor;
      ns3::Ptr<ns3::SymphonyApplication> m_application;
+
 
 
 	

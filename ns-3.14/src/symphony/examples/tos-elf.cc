@@ -28,7 +28,7 @@ main(int argc, char *argv[])
   std::string nodeModel = "/home/lauril/dev/symphony/ns-3.14/build/symphony.xml";
   std::string nodeImage = "/home/lauril/dev/symphony/ns-3.14/build/libtos.so";
   uint64_t simLength = 1;
-  uint32_t numNodes=20;
+  uint32_t numNodes=400;
   bool realTime = false;
   CommandLine cmd;
   cmd.AddValue("nodeModel", "model of the node in XML format", nodeModel);
@@ -37,7 +37,8 @@ main(int argc, char *argv[])
   cmd.AddValue("realTime", "true to use real time simulation", realTime);
   cmd.Parse(argc, argv);
   //Create TosNodeContainer
-
+  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
+  LogComponentEnable ("TosLoader", LOG_LEVEL_ALL);
   if (realTime)
     {
       GlobalValue::Bind("SimulatorImplementationType",
@@ -93,7 +94,7 @@ main(int argc, char *argv[])
   Ptr<ListPositionAllocator> positionAlloc =
       CreateObject<ListPositionAllocator>();
   for(uint32_t i=0; i<numNodes;i++)
-    positionAlloc->Add(Vector(10*i, 0.0, 0.0));
+    positionAlloc->Add(Vector(50, 0.0, 0.0));
 
   //positionAlloc->Add(Vector(50.0, 0.0, 0.0));
   //positionAlloc->Add (Vector (0, 0.0, 0.0));

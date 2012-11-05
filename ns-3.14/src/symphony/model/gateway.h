@@ -13,7 +13,6 @@
 
 #include "tos-to-ns3-proxy.h"
 #include "ns3includes.h"
-#include "ns3/log.h"
 #include "calls-to-ns3.h"
 /**
  * This function is used by all objects.
@@ -97,7 +96,7 @@ extern void gatewayLogg(void *obj, const char* func, int line_num,const char* ms
 //           *valueptr = replacechar;
 //  }
 
-  printf("%s::%d - %s\n", func, line_num, msg);
+  printf("(%d) - %s::%d - %s\n",  ((TosToNs3Proxy *)obj)->m_node_id, func, line_num, msg);
 
 }
 #endif /* GATEWAY_H_ */
