@@ -259,8 +259,10 @@ namespace ns3
   tos_error_t
   TosNetDevice::DeviceSend(void* msg)
   {
-    NS_ASSERT(m_state == RADIO_STATE_ON && !m_busy);
+
     NS_LOG_FUNCTION(this);
+    if(m_state == RADIO_STATE_ON && !m_busy)
+    	return EBUSY;
     if (!m_RxEvent.IsRunning() && !m_trasmit.IsRunning())
       {
         //printTosPacket((char*)msg);

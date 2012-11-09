@@ -1,5 +1,24 @@
 # -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+from waflib import Logs
 
+def testingpost(bld):
+    env=bld.env
+    needed_mod=['ns3-symphony',  'ns3-tos-loader']
+    if bool(sum(map(lambda x: x in needed_mod, env['NS3_ENABLED_MODULES']))):
+        Logs.pprint('GREEN', 'Found needed modules')
+        for prog in env['PROGRAMS_TO_PATH']:
+            elft="../elf/elfedit "
+            ldso=" ../elf/ldso"
+            cmd = elft +prog+" ../elf/ldso"    
+            bld.exec_command(cmd)
+            Logs.pprint('GREEN', 'ELF_LOADER: pathing %s' %cmd) 
+    else:
+        Logs.pprint('RED', 'Needed modules not found')  
+        
+
+    
+
+    
 def build(bld):
     blink = bld.create_ns3_program('tos-blink', ['symphony'])
     blink.source = 'tos-blink.cc'
@@ -13,6 +32,15 @@ def build(bld):
     emu.source = 'gateway-test.cc'
     app = bld.create_ns3_program('tos2application',['symphony','emu'])
     app.source = 'tos2application.cc'
-    elf = bld.create_ns3_program('tos-elf',['symphony','emu'])
+    elf = bld.create_ns3_program('tos-elf',['symphony','tos-loader'])
     elf.source = 'tos-elf.cc'
+    elf = bld.create_ns3_program('clock-test',['symphony','tos-loader'])
+    elf.source = 'clock-test.cc'
+    
+    bld.env.append_value('PROGRAMS_TO_PATH',[
+        'build/src/symphony/examples/ns3-dev-tos-elf-debug',
+        'build/src/symphony/examples/ns3-dev-clock-test-debug'        
+        ])
+
+    bld.add_post_fun(testingpost)
 

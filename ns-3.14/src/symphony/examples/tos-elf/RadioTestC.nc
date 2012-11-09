@@ -43,7 +43,7 @@ implementation {
 		printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		if (err == SUCCESS) {
 		  if  (TOS_NODE_ID != 0){
-            call MilliTimer.startOneShot(100*TOS_NODE_ID);			
+            call MilliTimer.startOneShot(10*TOS_NODE_ID);			
 		  }
 		  //printf("AMControl.startDone: TOS_NODE_ID == %d\n", TOS_NODE_ID);
 		}else {
@@ -56,6 +56,7 @@ implementation {
 	}
  
  	void task send(){
+ 		error_t error;
  		counter++;
  		//if (counter <15){
 		printf("TOSNODE (%d) send() - COUNTER (%d)- DEST (%d) PKT SIZE (%ld)\n", 
@@ -75,9 +76,10 @@ implementation {
 			rcm->b = 196852667;
 			rcm->c = 214748364;
             rcm->d = 232644061;
-			if (call AMSend.send(dest, &packet, sizeof(radio_count_msg_t)) == SUCCESS) {
+            error = call AMSend.send(dest, &packet, sizeof(radio_count_msg_t))
+			if ( error == SUCCESS) {
 				locked = TRUE;
-			}
+			} else
 		}
 		//}
  	}
@@ -108,7 +110,7 @@ implementation {
 	event void AMSend.sendDone(message_t* bufPtr, error_t error) {
 		if (&packet == bufPtr) {
 			locked = FALSE;
-			printf("event void AMSend.sendDone %d\n",TOS_NODE_ID);
+			//printf("event void AMSend.sendDone %d\n",TOS_NODE_ID);
 			call MilliTimer.startOneShot(100);   
 		}
 

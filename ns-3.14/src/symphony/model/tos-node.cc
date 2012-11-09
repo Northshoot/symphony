@@ -97,6 +97,12 @@ void
   {
     m_tos_functions = tosExternals;
     m_tosLoader = new TosLoader();
+    handler = m_tosLoader->getHandler(m_libname);
+    if (!handler)
+      {
+        std::cerr << handler << "Cannot open library: "  << '\n';
+        exit(1);
+      }
     m_init = true;
   }
 
@@ -124,6 +130,7 @@ void
   {
     simuclock->Start();
     nstotos->sim_main_start_mote(tos_id);
+    NS_LOG_FUNCTION(tos_id << Simulator::Now().GetMilliSeconds());
     Simulator::Remove (m_boot_event);
   }
 
@@ -138,7 +145,7 @@ void
   uint32_t
   TosNode::getNow()
   {
-    cout << "TosNode::getNow()" << endl;
+   // cout << "TosNode::getNow()" << endl;
     //simuclock->getTimeNow();
     //cout<< "Time " << simuclock->getNow() << " ms"<<endl;
     return simuclock->getTimeNow();
@@ -147,6 +154,7 @@ void
   void
   TosNode::DoDispose(void)
   {
+	  NS_LOG_FUNCTION(this<< Simulator::Now().GetMilliSeconds());
     /**
      * Check and remove shutdown event
      */
@@ -209,13 +217,7 @@ void
     //changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
     //for eclipse debug full path is needed for the lib
     //TODO: add script for copying libtos.so to build/debug
-    handler = m_tosLoader->getHandler(m_libname);
-    if (!handler)
-      {
-        std::cerr << handler << "Cannot open library: "  << '\n';
-        exit(1);
-      }
-    else
+
       {
         for (uint32_t i = 0; i < m_tos_functions.size(); i++)
           {

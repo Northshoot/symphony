@@ -1,31 +1,9 @@
-#! /usr/bin/env python
-## -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
-#
-from subprocess import Popen, PIPE, STDOUT
+#!/usr/bin/python
+import commands
+import socket
 import time
-import os
-import datetime
-from threading import Thread, Lock
-from Queue import Queue
-
-
-def h_r(quantity, multiple=1024):
-    if quantity == 0:
-        quantity = +0
-    SUFFIXES = ["B"] + [i + {1000: "B", 1024: "iB"}[multiple] for i in "KMGTPEZY"]
-    for suffix in SUFFIXES:
-        if quantity < multiple or suffix == SUFFIXES[-1]:
-            if suffix == SUFFIXES[0]:
-                return "%d%s" % (quantity, suffix)
-            else:
-                return "%.1f%s" % (quantity, suffix)
-        else:
-            quantity /= multiple
-
-def niceTime(t):
-    return str(datetime.timedelta(seconds=int(t)))
-
-
+import struct
+import sys
 
 class Worker(Thread):
     """This is the main worker - it will process jobs as long as the "job
@@ -36,21 +14,21 @@ class Worker(Thread):
     # technically a Mutual Exclusion (mutex)
     screen_mutex = Lock()
 
-    def __init__(self, queue, file):
+    def __init__(self, queue):
         # initialize the base class
         super(Worker, self).__init__()
         self.queue = queue
-        self.file=file
+        self.remote
 
     def log(self, message):
-        #Worker.screen_mutex.acquire()        
+        #send data to the server     
         msg="{timestamp:%d-%b-%Y %H:%M:%S.%f UTC}\t{message}".format(timestamp=datetime.datetime.utcnow(),
                                          message=message)
         if(message):
             self.file.write(msg+'\n')
             self.file.flush()
             
-        #Worker.screen_mutex.release()
+
 
     def run(self):
         while True:
@@ -85,50 +63,50 @@ class Worker(Thread):
             # when the job is done, you signal the queue - refer to
             # the Queue module documentation
             self.queue.task_done()
-       
+        
+        def getCommand(self):	
+			s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			s.connect(self.remote)
+			#tosend = struct.pack('!IIBQI',ce,2,si,time.time()*1000,len(data))
+			string ='halloooohalloooohalloooohalloooohalloooo'
+			tosend = struct.pack('!III%ds'%len(string),1,2,len(string),string)
+			print "Sending %s"%len(string)
+			s.send(tosend)
+			received = s.recv(1024)
+			print "Received: {}".format(received)
+			s.close()
+			if max_tests < 0:
+				sys.exit()
+			max_tests-=1
+			
+            
+"""
+Send some random testdata.
+
+host:		host_id
+worker:		thread_id
+type:		1/0 full or summary log
+msg:		message to save
+"""
+
+if __name__ == '__main__':
+	max_tests = 10
+	while True:
+		for ce in xrange(1,10):
+			
+			s = socket.socket(
+			socket.AF_INET, socket.SOCK_STREAM)
+			s.connect(('130.240.231.18', 12345))
+			#tosend = struct.pack('!IIBQI',ce,2,si,time.time()*1000,len(data))
+			string ='halloooohalloooohalloooohalloooohalloooo'
+			tosend = struct.pack('!III%ds'%len(string),1,2,len(string),string)
+			print "Sending %s"%len(string)
+			s.send(tosend)
+			received = s.recv(1024)
+			print "Received: {}".format(received)
+			s.close()
+			if max_tests < 0:
+				sys.exit()
+			max_tests-=1
 
 
-def main(number_of_workers):
-    folder="nightly-logs/"
-    runtime=600
-    incr = 60
-    number_of_time_jobs=int(runtime/incr)
-    max_n = 4000
-    nodeS= 50
-    number_of_node_jobs=int(max_n/nodeS)
-    queue = Queue()
-    runLog = open(folder+"LOGSUMMARY.SIM."+str(time.time())+"LOG",'w')
-    runLog.write("Timestamp\tRun\ts_time\tr_time\tnodes\treal-time\tlog size\n")
-
-
-
-    #simulation set ups
-    runNum=0
-    for _ in range(number_of_time_jobs):
-        run=(1+_)*incr
-        #for each time we run different nodes
-        for __ in range(number_of_node_jobs):
-                nod=(1+__)*nodeS
-                runNum+=1
-                args={'num':runNum,'runtime':run, 'fileName':folder,'real-time':0,'numN':nod}
-                queue.put(args)
-                runNum+=1
-                args={'num':runNum,'runtime':run, 'fileName':folder,'real-time':1,'numN':nod}
-                queue.put(args)
-
-    print "Queue size %s" %queue.qsize()
-
-    for _ in range(number_of_workers):
-        print "Setting upp %s of %s workers" %(_,number_of_workers)
-        worker = Worker(queue,runLog)
-        worker.daemon = True        
-        worker.start()
-    #print queue
-    #print queue.qsize()
-    queue.join()
-    runLog.close()   
-
-if __name__ == "__main__":
-    import multiprocessing
-    # call main             
-    main(multiprocessing.cpu_count())
