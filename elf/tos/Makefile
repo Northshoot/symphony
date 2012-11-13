@@ -1,5 +1,5 @@
 #LIB=libtostest
-LIB=libtos
+LIB=libtostest
 TARGET=testtos
 CXX=g++
 CXXFLAGS=-g -Wall 
