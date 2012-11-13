@@ -1,0 +1,47 @@
+# -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+
+def postProcess(bld,file):
+    #file ="libns3-dev-tos-loader-debug.so"
+    filePath=bld.out_dir+"/"+file
+    elft="../elf/elfedit"
+    ldso="../elf/ldso"
+    #print bld.env
+    cmd = "melftedit " +file+" ../elf/ldso"    
+    print cmd
+    #bld.exec_command(cmd)
+
+    
+# def options(opt):
+#     pass
+
+def configure(conf):
+#    conf.env['VDL'] = conf.check(mandatory=True, lib='vdlso', uselib_store='VDL')
+     conf.env['ldl'] = conf.check(mandatory=True, lib='dl', uselib_store='LDL')
+
+def build(bld):
+    module = bld.create_ns3_module('tos-loader',['core'])
+    module.env.append_value("LINKFLAGS",['-L../elf/ldso'])
+    module.use.append("LDL")
+    module.source = [
+        'model/tos-loader.cc',
+        #'helper/tos-loader-helper.cc',
+        ]
+    #postProcess(bld, "libns3-dev-tos-loader-debug.so")
+    module_test = bld.create_ns3_module_test_library('tos-loader')
+    module_test.source = [
+        'test/tos-loader-test-suite.cc',
+        ]
+
+    headers = bld.new_task_gen(features=['ns3header'])
+    headers.module = 'tos-loader'
+    headers.source = [
+        'model/tos-loader.h',
+        #'helper/tos-loader-helper.h',
+        ]
+
+    if bld.env.ENABLE_EXAMPLES:
+        bld.add_subdirs('examples')
+        
+    # bld.ns3_python_bindings()
+   
+    
