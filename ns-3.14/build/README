@@ -1,0 +1,3 @@
+libtos is processed and compiled tinyos code which is created as library.
+ldd releaves that linking it with ns-3-symphony (which is basically virtualization and run time enviromnet for tinyos) makes it linked with many libraries which are not used. 
+I suspect that this couses loader to crash after 436 open libraries.

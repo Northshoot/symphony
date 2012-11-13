@@ -1,0 +1,264 @@
+/*
+ * wsn-tos-device.h
+ *
+ *  Created on: Feb 13, 2012
+ *      Author: lauril
+ */
+
+#ifndef TOS_NET_DEVICE_H_
+#define TOS_NET_DEVICE_H_
+#include <string>
+
+#include "ns3/nstime.h"
+#include "ns3/simulator.h"
+#include "ns3/event-id.h"
+#include "ns3/callback.h"
+#include "ns3/object.h"
+#include "ns3/ptr.h"
+#include "ns3/traced-callback.h"
+#include "ns3/net-device.h"
+#include "ns3/mac48-address.h"
+#include "ns3/wifi-mac-header.h"
+#include "ns3/ns3includes.h"
+#include "ns3-to-tos-proxy_auto.h"
+#include "calls-to-ns3.h"
+
+#include "hardware-model.h"
+
+namespace ns3
+{
+
+  class TosNode;
+  class Packet;
+  class Channel;
+  class WifiChannel;
+  class WifiPhy;
+  class TosMacLow;
+  class PhyTosListener;
+
+  class TosNetDevice : public NetDevice
+  {
+  public:
+
+    typedef Callback<void, int> RadioStartDoneCallback;
+    typedef Callback<int, void*, uint8_t> DeviceSendDoneCallback;
+    typedef Callback<int, void *> ReceiveMessageCallback;
+
+    static TypeId
+    GetTypeId(void);
+
+    TosNetDevice();
+    virtual
+    ~TosNetDevice();
+
+    /**
+     * \param mac the mac layer to use.
+     */
+    void
+    SetMac(Ptr<TosMacLow> mac);
+    /**
+     * \param phy the phy layer to use.
+     */
+    void
+    SetPhy(Ptr<WifiPhy> phy);
+    void
+    TransmitData(void);
+
+    void
+    setNs3ToTos(Ns3ToTosProxy * nstos);
+    /**
+     * \param manager the manager to use.
+     */
+    /**
+     * \returns the mac we are currently using.
+     */
+    Ptr<TosMacLow>
+    GetMac(void) const;
+    /**
+     * \returns the phy we are currently using.
+     */
+    Ptr<WifiPhy>
+    GetPhy(void) const;
+
+//  void SetTosNodeContainer(TosNodeContainer c);
+
+    void
+    SetMac48Address(Mac48Address address);
+    Mac48Address
+    GetMac48Address(void) const;
+
+    void
+    ForwardUp(Ptr<Packet> packet, const WifiMacHeader* hdr);
+
+    bool
+    Send(Ptr<Packet> packet, const Address& dest);
+    void
+    radioStartDone(void);
+    void
+    StartRx(Time a);
+    //commands from tos-radio emulations
+    //implementation of radio state
+    tos_error_t
+    DeviceTurnOff();
+    tos_error_t
+    DeviceStandby();
+    tos_error_t
+    DeviceTurnOn();
+    tos_error_t
+    DeviceSetChannel(uint8_t channel);
+    void
+    done();
+    uint8_t
+    DeviceGetChannel();
+    message_t
+    GetCurrentMsg();
+    //implementation of RadioSend
+    tos_error_t
+    DeviceSend(void * msg);
+    //callback
+
+    void
+    SendDone(Time duration);
+    void
+    DeviceCancel(message_t* msg);
+    //implementation of BareReceive
+    //callback
+    bool
+    DeviceRXHeader(message_t* msg);
+    //callback
+    message_t*
+    DeviceReceive(message_t* msg);
+
+    void
+    SetRadioModel(Ptr<HardwareModel> model);
+
+    // inherited from NetDevice base class.
+    virtual void
+    SetIfIndex(const uint32_t index);
+    virtual uint32_t
+    GetIfIndex(void) const;
+    virtual Ptr<Channel>
+    GetChannel(void) const;
+    virtual void
+    SetAddress(Address address);
+    virtual Address
+    GetAddress(void) const;
+    virtual bool
+    SetMtu(const uint16_t mtu);
+    virtual uint16_t
+    GetMtu(void) const;
+    virtual bool
+    IsLinkUp(void) const;
+    virtual void
+    AddLinkChangeCallback(Callback<void> callback);
+    virtual bool
+    IsBroadcast(void) const;
+    virtual Address
+    GetBroadcast(void) const;
+    virtual bool
+    IsMulticast(void) const;
+    virtual Address
+    GetMulticast(Ipv4Address multicastGroup) const;
+    virtual bool
+    IsPointToPoint(void) const;
+    virtual bool
+    IsBridge(void) const;
+    virtual bool
+    Send(Ptr<Packet> packet, const Address& dest, uint16_t protocolNumber);
+    virtual Ptr<Node>
+    GetNode(void) const;
+    virtual void
+    SetNode(Ptr<Node> node);
+    virtual bool
+    NeedsArp(void) const;
+    virtual void
+    SetReceiveCallback(NetDevice::ReceiveCallback cb);
+    virtual Address
+    GetMulticast(Ipv6Address addr) const;
+    virtual bool
+    SendFrom(Ptr<Packet> packet, const Address& source, const Address& dest,
+        uint16_t protocolNumber);
+    virtual void
+    SetPromiscReceiveCallback(PromiscReceiveCallback cb);
+    virtual bool
+    SupportsSendFrom(void) const;
+    void
+    DeviceSendDone(uint8_t error);
+
+  private:
+    /**
+     * Internal functions for setting timers according the device model
+     */
+
+    Ptr<Packet>
+    TosToNsPacket(message_t *msg);
+
+    message_t*
+    NsToTosPacket(Ptr<Packet> pkt, const WifiMacHeader * hdr);
+
+    // This value conforms to the TinyOS specification TEP:111
+    static const uint16_t MAX_MSDU_SIZE = 232;
+
+    RadioStartDoneCallback c_ns2tosStartDone;
+    DeviceSendDoneCallback c_ns2tosSendDone;
+    ReceiveMessageCallback c_ns2tosRx;
+
+    PhyTosListener * m_phyListener;
+    virtual void
+    DoDispose(void);
+    virtual void
+    DoStart(void);
+
+    void
+    LinkUp(void);
+    void
+    LinkDown(void);
+    void
+    Setup(void);
+    Ptr<WifiChannel>
+    DoGetChannel(void) const;
+    void
+    CompleteConfig(void);
+
+    Ptr<TosMacLow> m_tos_mac;
+    message_t m_tx_msg;
+    Ptr<Packet> m_tx_pkt;
+    message_t m_rx_msg;
+    Ptr<Packet> m_rx_pkt;
+    Ns3ToTosProxy* m_ns3totos;
+    DeviceCall m_current;
+    RadioState m_state;
+    Time m_startUpTime;
+    EventId m_startUpEvent;
+    EventId m_sendEvent;
+    EventId m_trasmit;
+    EventId m_RxEvent;
+    uint32_t m_dr;
+    uint32_t m_rx;
+    uint32_t m_tx;
+    //TODO:
+    //the model needs to be implemented with accesors
+    //default model need to be added in case inserted is not working (?)
+    Ptr<HardwareModel> m_txParams;
+
+    //inherited from NetDevice
+    Ptr<Node> m_node;
+    Ptr<WifiPhy> m_phy;
+    NetDevice::ReceiveCallback m_forwardUp;
+    NetDevice::PromiscReceiveCallback m_promiscRx;
+
+    TracedCallback<Ptr<const Packet>, Mac48Address> m_rxLogger;
+    TracedCallback<Ptr<const Packet>, Mac48Address> m_txLogger;
+
+    bool m_busy;
+
+    uint32_t m_ifIndex;
+    bool m_linkUp;
+    TracedCallback<> m_linkChanges;
+    mutable uint16_t m_mtu;
+    bool m_configComplete;
+
+  };
+
+} /* namespace ns3 */
+#endif /* WSN_TOS_DEVICE_H_ */

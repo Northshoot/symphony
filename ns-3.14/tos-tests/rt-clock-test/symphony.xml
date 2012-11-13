@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<symphony>
+  <model name="radio">
+  	<callback return="int" params="2" param1="void *" param2="uint8_t" time="5" name="sendDone"/>
+  	<callback return="void" params="1" param1="int" time="500" units="ms" name="radioStartDone"/>
+  	<callback return="int" params="1" param1="int" name="setUniqueID"/>
+  	<callback return="void" params="1" param1="int" name="sim_main_start_mote"/>
+  	<callback return="int" params="1" param1="long" name="setProxy"/>
+  	<callback return="int" params="1" param1="uint32_t" name="tickFired"/>
+  	<callback return="int" params="0" name="radioStateDone"/>
+  	<callback return="int" params="1" param1="void *" name="receiveMessage"/>
+  	<callback return="int" params="1" param1="uint32_t" name="runNextEventExternal"/>
+  	
+   <property units="kb" size="28" name="packet"/>
+   <property units="Mb" size="280" initial="220" name="buffer"/>
+   
+   <call unit="ms" time="200" name="radioStart"/>
+   <call time="80" name="swithChannel"/>
+   <call units="ms" time="60" name="DeviceSend"/>
+  </model>
+  
+  <model name="rawsensor">
+   <callback return="int" params="1" param1="uint8_t" name="sensorStartDone"/>
+   <callback return="int" params="1" param1="uint8_t" name="sensorStopDone"/>
+   <callback return="int" params="3" param1="uint8_t" param2="uint16_t" param3="void *" time="20" units="ms" name="interruptData"/>
+   <call name="SplitControlStart"/>
+   <call name="SplitControlStop"/>
+  </model>
+  
+  <model name="ns3application">
+  <callback return="void" params="1" param1="uint8_t" name="ApplicationStartDone"/>
+   <callback return="void" params="1" param1="uint8_t" name="AplicationStopDone"/>
+   
+   <call name="StartNS3Application"/>
+   <call name="StopNS3Application"/>
+   <call return="void" params="2" param1="uint16_t" param2="void *" name="SendData"/>
+ </model>
+</symphony>
