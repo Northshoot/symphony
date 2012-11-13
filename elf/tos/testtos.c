@@ -1,61 +1,72 @@
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
 #endif
+
 #include <dlfcn.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <sys/time.h>
+#include <iostream>
+
 #define NUM 35000
 typedef int (*Fn)(int);
 
-int main (int argc, char *argv[])
-{
+inline long getMilliSecs() {
+	timeval t;
+	gettimeofday(&t, NULL );
+	return t.tv_sec * 1000 + t.tv_usec / 1000;
+}
 
-  void *g1[NUM];
-  void * tmp[NUM];
-  long int i=0;
-  long int open=0;
-  int libs = atoi(argv[1]);
-  printf ("enter main, starting to open %d libraries\n", libs);
-  clock_t start = clock();
-  for(;i<libs;i++){
-    g1[i] = dlmopen(LM_ID_NEWLM,"libtostest.so", RTLD_LAZY);
-    if(!g1[i]){
-      printf ("Cannot open library %ld: %s\n",i,dlerror());
-    } else {
-      char *error=NULL;
-      tmp[i]= dlsym(g1[i],"tickFired");
-      if( (error = dlerror()) != NULL){
-         printf("ERROR getting function: %s\n", dlerror());
+using namespace std;
 
-       } else {
-    	   if(tmp[i])
-    		   printf("got tickFired: %lu %lu\n",i, (long int)tmp[i]);
-    	   else
-    		   printf("Wierd error, should not end here\n");
-        open++;
-       }
-    }
-  }
 
-printf("Opened %ld libraries, time : %f\n", open, ( (double)clock() - start ) / CLOCKS_PER_SEC );
+int main(int argc, char *argv[]) {
 
-  start = clock();
-  for(i=0;i<libs;i++){
-         ((Fn)tmp[i])(i);
-  }
+	void *g1[NUM];
+	void * tmp[NUM];
+	long int i = 0;
+	long int open = 0;
+	int libs = atoi(argv[1]);
+	printf("enter main, starting to open %d libraries\n", libs);
+	long start_libs = getMilliSecs();
+	for (; i < libs; i++) {
+		g1[i] = dlmopen(LD_BIND_NOW, "libtostest.so", RTLD_LAZY);
+		if (!g1[i]) {
+			printf("Cannot open library %ld: %s\n", i, dlerror());
+		}
+	}
 
-printf("Time to execute one function in %ld libraries : %f\n",  open,( (double)clock() - start ) / CLOCKS_PER_SEC );
 
-  //sleep(30);
-start = clock();
-  for(i=0;i<libs;i++){
-  dlclose (g1[i]);
+long time_libs = getMilliSecs() - start_libs;
 
-  }
-printf("Time to close  %ld libraries : %f\n", open,  ( (double)clock() - start ) / CLOCKS_PER_SEC );
+start_libs = getMilliSecs();
+char *error = NULL;
+for (i=0; i < libs; i++) {
+	tmp[i] = dlsym(g1[i], "tickFired");
+	if( (error = dlerror()) != NULL) {
+		printf("ERROR getting function: %s\n", dlerror());
 
-  printf ("dlclose libtos.so completed\n");
-  printf ("leave main\n");
-  return 0;
+	}
+}
+long time_func = getMilliSecs() - start_libs;
+
+start_libs = getMilliSecs();
+for(i=0;i<libs;i++) {
+	((Fn)tmp[i])(i);
+}
+long time_exec = getMilliSecs() - start_libs;
+
+
+
+//sleep(30);
+start_libs = getMilliSecs();
+for(i=0;i<libs;i++) {
+	dlclose (g1[i]);
+
+}
+long time_close = getMilliSecs() - start_libs;
+
+cout<<"Libs: "<< libs <<"\topen time: "<<time_libs<<"\t get func: "<< timefunc<<"\tclose time: "<< time_close<<endl;
+
+return 0;
 }

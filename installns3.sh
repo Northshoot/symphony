@@ -20,7 +20,7 @@ function timer()
 tmr=$(timer)
 INSTALL_DIR="/home/ubuntu/dev/symphony"
 #files to install 
-APPS="gcc g++ python python-dev mercurial bzr gdb valgrind gsl-bin libgsl0-dev libgsl0ldbl flex bison libfl-dev tcpdum sqlite sqlite3 libsqlite3-dev libxml2 libxml2-dev libgtk2.0-0 libgtk2.0-dev vtun lxc uncrustify doxygen graphviz imagemagick texlive texlive-extra-utils texlive-latex-extra python-sphinx dia python-pygraphviz python-kiwi python-pygoocanvas libgoocanvas-dev libboost-signals-dev libboost-filesystem-dev openmpi-* tinyos-2.1.2"
+APPS="gcc g++ python python-dev mercurial bzr gdb valgrind gsl-bin libgsl0-dev libgsl0ldbl flex bison libfl-dev tcpdump sqlite sqlite3 libsqlite3-dev libxml2 libxml2-dev libgtk2.0-0 libgtk2.0-dev vtun lxc uncrustify doxygen graphviz imagemagick texlive texlive-extra-utils texlive-latex-extra python-sphinx dia python-pygraphviz python-kiwi python-pygoocanvas libgoocanvas-dev libboost-signals-dev libboost-filesystem-dev openmpi-* tinyos-2.1.2 libxerces-c3.1* subversion"
 # update repos
 RETVAL=$(sudo apt-get update)
 if [ $? -ne 0 ]; then
@@ -39,7 +39,7 @@ function make_install(){
 	for app in $*
 	do
 		#we do not care is packet is installed it is success
-		RETVAL=$(sudo apt-get install -y $app 2>&1 >/dev/null)
+		RETVAL=$(sudo apt-get install -y --force-yes $app 2>&1 >/dev/null)
 		if [ $? -ne 0 ]; then
 			echo "Failure: can't install $app reson: $?"
 		        echo $RETVAL
