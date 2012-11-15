@@ -3,11 +3,11 @@
  		 #endif 
 #define nx_struct struct
 #define nx_union union
-# 150 "/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stddef.h" 3
+# 149 "/usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/include/stddef.h" 3
 typedef long int ptrdiff_t;
-#line 212
+#line 211
 typedef long unsigned int size_t;
-#line 324
+#line 323
 typedef int wchar_t;
 # 8 "/usr/lib/ncc/deputy_nodeputy.h"
 struct __nesc_attr_nonnull {
@@ -169,7 +169,7 @@ typedef struct { unsigned char nxdata[2]; } __attribute__((packed)) nxle_uint16_
 typedef struct { unsigned char nxdata[4]; } __attribute__((packed)) nxle_uint32_t;typedef uint32_t __nesc_nxbase_nxle_uint32_t  ;
 typedef struct { unsigned char nxdata[8]; } __attribute__((packed)) nxle_uint64_t;typedef uint64_t __nesc_nxbase_nxle_uint64_t  ;
 # 65 "/usr/include/string.h" 3
-extern void *memset(void *__s, int __c, size_t __n) __attribute((__leaf__)) __attribute((__nothrow__)) __attribute((__nonnull__(1))) ;
+extern void *memset(void *__s, int __c, size_t __n) __attribute((__nothrow__)) __attribute((__nonnull__(1))) ;
 # 40 "/usr/include/xlocale.h" 3
 #line 28
 typedef struct __locale_struct {
@@ -188,7 +188,7 @@ typedef struct __locale_struct {
 
 
 typedef __locale_t locale_t;
-# 67 "/usr/include/x86_64-linux-gnu/bits/waitstatus.h" 3
+# 67 "/usr/include/bits/waitstatus.h" 3
 union wait {
 
   int w_status;
@@ -288,7 +288,7 @@ __extension__
 
 
 __extension__ 
-# 31 "/usr/include/x86_64-linux-gnu/bits/types.h" 3
+# 31 "/usr/include/bits/types.h" 3
 typedef unsigned char __u_char;
 typedef unsigned short int __u_short;
 typedef unsigned int __u_int;
@@ -378,7 +378,7 @@ typedef long int __intptr_t;
 
 
 typedef unsigned int __socklen_t;
-# 34 "/usr/include/x86_64-linux-gnu/sys/types.h" 3
+# 34 "/usr/include/sys/types.h" 3
 typedef __u_char u_char;
 typedef __u_short u_short;
 typedef __u_int u_int;
@@ -457,7 +457,7 @@ typedef __time_t time_t;
 typedef __clockid_t clockid_t;
 #line 104
 typedef __timer_t timer_t;
-# 151 "/usr/include/x86_64-linux-gnu/sys/types.h" 3
+# 151 "/usr/include/sys/types.h" 3
 typedef unsigned long int ulong;
 typedef unsigned short int ushort;
 typedef unsigned int uint;
@@ -468,7 +468,7 @@ typedef unsigned int u_int32_t __attribute((__mode__(__SI__))) ;
 typedef unsigned int u_int64_t __attribute((__mode__(__DI__))) ;
 
 typedef int register_t __attribute((__mode__(__word__))) ;
-# 24 "/usr/include/x86_64-linux-gnu/bits/sigset.h" 3
+# 24 "/usr/include/bits/sigset.h" 3
 typedef int __sig_atomic_t;
 
 
@@ -482,7 +482,7 @@ typedef struct __nesc_unnamed4250 {
 
   unsigned long int __val[1024 / (8 * sizeof(unsigned long int ))];
 } __sigset_t;
-# 38 "/usr/include/x86_64-linux-gnu/sys/select.h" 3
+# 38 "/usr/include/sys/select.h" 3
 typedef __sigset_t sigset_t;
 # 120 "/usr/include/time.h" 3
 struct timespec {
@@ -490,13 +490,13 @@ struct timespec {
   __time_t tv_sec;
   long int tv_nsec;
 };
-# 31 "/usr/include/x86_64-linux-gnu/bits/time.h" 3
+# 75 "/usr/include/bits/time.h" 3
 struct timeval {
 
   __time_t tv_sec;
   __suseconds_t tv_usec;
 };
-# 49 "/usr/include/x86_64-linux-gnu/sys/select.h" 3
+# 49 "/usr/include/sys/select.h" 3
 typedef __suseconds_t suseconds_t;
 
 
@@ -504,8 +504,8 @@ typedef __suseconds_t suseconds_t;
 
 
 typedef long int __fd_mask;
-#line 76
-#line 65
+#line 78
+#line 67
 typedef struct __nesc_unnamed4251 {
 
 
@@ -525,7 +525,7 @@ fd_set;
 
 
 typedef __fd_mask fd_mask;
-# 32 "/usr/include/x86_64-linux-gnu/sys/sysmacros.h" 3
+# 30 "/usr/include/sys/sysmacros.h" 3
 __extension__ 
 
 
@@ -533,7 +533,7 @@ __extension__
 
 
 __extension__ 
-# 229 "/usr/include/x86_64-linux-gnu/sys/types.h" 3
+# 229 "/usr/include/sys/types.h" 3
 typedef __blksize_t blksize_t;
 
 
@@ -550,7 +550,7 @@ typedef __fsblkcnt_t fsblkcnt_t;
 
 
 typedef __fsfilcnt_t fsfilcnt_t;
-# 50 "/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h" 3
+# 50 "/usr/include/bits/pthreadtypes.h" 3
 typedef unsigned long int pthread_t;
 
 
@@ -744,15 +744,15 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b0c243a71f0, const void *arg_0x2b0c243a74c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2b1a0ab216b0, const void *arg_0x2b1a0ab21988);
 #line 776
 __extension__ 
 #line 793
 __extension__ 
-# 31 "/usr/include/x86_64-linux-gnu/bits/mathdef.h" 3
+# 31 "/usr/include/bits/mathdef.h" 3
 typedef float float_t;
 typedef double double_t;
-# 203 "/usr/include/math.h" 3
+# 202 "/usr/include/math.h" 3
 enum __nesc_unnamed4263 {
 
   FP_NAN, 
@@ -765,8 +765,8 @@ enum __nesc_unnamed4263 {
 
   FP_NORMAL
 };
-#line 303
-#line 296
+#line 302
+#line 295
 typedef enum __nesc_unnamed4264 {
 
   _IEEE_ = -1, 
@@ -775,7 +775,7 @@ typedef enum __nesc_unnamed4264 {
   _POSIX_, 
   _ISOC_
 } _LIB_VERSION_TYPE;
-#line 321
+#line 320
 struct exception {
 
 
@@ -907,11 +907,11 @@ typedef int _G_int16_t __attribute((__mode__(__HI__))) ;
 typedef int _G_int32_t __attribute((__mode__(__SI__))) ;
 typedef unsigned int _G_uint16_t __attribute((__mode__(__HI__))) ;
 typedef unsigned int _G_uint32_t __attribute((__mode__(__SI__))) ;
-# 40 "/usr/lib/gcc/x86_64-linux-gnu/4.6/include/stdarg.h" 3
+# 40 "/usr/lib/x86_64-linux-gnu/gcc/x86_64-linux-gnu/4.5.2/include/stdarg.h" 3
 typedef __builtin_va_list __gnuc_va_list;
-# 172 "/usr/include/libio.h" 3
+# 170 "/usr/include/libio.h" 3
 struct _IO_jump_t;
-#line 172
+#line 170
 struct _IO_FILE;
 
 
@@ -936,7 +936,7 @@ struct _IO_marker {
 
   int _pos;
 };
-#line 208
+#line 206
 enum __codecvt_result {
 
   __codecvt_ok, 
@@ -944,7 +944,7 @@ enum __codecvt_result {
   __codecvt_error, 
   __codecvt_noconv
 };
-#line 273
+#line 271
 struct _IO_FILE {
   int _flags;
 
@@ -1023,7 +1023,7 @@ struct _IO_FILE_plus;
 struct _IO_FILE_plus;
 struct _IO_FILE_plus;
 struct _IO_FILE_plus;
-#line 366
+#line 364
 typedef __ssize_t __io_read_fn(void *__cookie, char *__buf, size_t __nbytes);
 
 
@@ -1049,13 +1049,13 @@ typedef int __io_close_fn(void *__cookie);
 typedef __gnuc_va_list va_list;
 #line 111
 typedef _G_fpos_t fpos_t;
-#line 169
+#line 165
 struct _IO_FILE;
 extern struct _IO_FILE *stdout;
 struct _IO_FILE;
-#line 243
+#line 239
 extern int fflush(FILE *__stream);
-#line 363
+#line 359
 extern int printf(const char *__restrict __format, ...);
 # 23 "/home/lauril/dev/symphony/ns-3.14/build/ns3/calls-to-ns3.h"
 #line 12
@@ -1112,7 +1112,7 @@ typedef enum __nesc_unnamed4276 {
   APP_OFF = 2, 
   APP_RX = 3
 } ApplicationCall;
-# 69 "/home/lauril/dev/symphony/ns-3.14/build/ns3/tos-to-ns3-proxy.h"
+# 71 "/home/lauril/dev/symphony/ns-3.14/build/ns3/tos-to-ns3-proxy.h"
 int gateway(void *obj, int func, int arg);
 int setProxy(void *obj);
 
@@ -1214,11 +1214,11 @@ static void NsTimerP$Timer$stop(void );
 # 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b0c2466f960);
+uint8_t arg_0x2b1a0add0960);
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b0c2466f960);
+uint8_t arg_0x2b1a0add0960);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1229,12 +1229,6 @@ static void SchedulerBasicP$Scheduler$init(void );
 
 
 static bool SchedulerBasicP$Scheduler$runNextTask(void );
-# 36 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMote.nc"
-static void SimMoteP$SimMote$setEuid(long long int euid);
-
-
-
-static void SimMoteP$SimMote$turnOn(void );
 # 113 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static void SensorAppC$SensorControl$startDone(error_t error);
 #line 138
@@ -1254,11 +1248,11 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fire
 #line 136
 static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b0c247b67f8);
+uint8_t arg_0x2b1a0aedc448);
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b0c247b67f8);
+uint8_t arg_0x2b1a0aedc448);
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t PlatformP$SubInit$init(void );
 #line 62
@@ -1318,17 +1312,22 @@ static void SimMainP$Boot$booted(void );
 static error_t SimMainP$PlatformInit$init(void );
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SimMainP$Scheduler$init(void );
-# 17 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
-int sim_main_start_mote(int id)   ;
+# 14 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+extern void sim_function_not_found(void )   ;
+
+
+
+extern int sim_main_start_mote(int id)   ;
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b0c2466f960);
+uint8_t arg_0x2b1a0add0960);
 
 
 
 
 extern int runNextEventExternal(uint32_t a)   ;
+
 
 
 
@@ -1351,101 +1350,24 @@ uint8_t SchedulerBasicP$m_next[SchedulerBasicP$NUM_TASKS];
 
 
 static __inline uint8_t SchedulerBasicP$popTask(void );
-#line 93
+#line 94
 static inline bool SchedulerBasicP$isWaiting(uint8_t id);
 
 
 
 
 static inline bool SchedulerBasicP$pushTask(uint8_t id);
-#line 120
+#line 121
 static inline void SchedulerBasicP$Scheduler$init(void );
-#line 132
+#line 133
 static inline bool SchedulerBasicP$Scheduler$runNextTask(void );
-#line 170
+#line 171
 static inline error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id);
 
 
 
 
 static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id);
-# 8 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
-long long int SimMoteP$euid;
-
-bool SimMoteP$isOn;
-
-
-
-
-
-static inline void SimMoteP$SimMote$setEuid(long long int e);
-#line 30
-static inline void SimMoteP$SimMote$turnOn(void );
-#line 50
-long long int sim_mote_euid(int mote)   ;
-
-
-
-
-
-
-
-
-void sim_mote_set_euid(int mote, long long int id)   ;
-
-
-
-
-
-
-long long int sim_mote_start_time(int mote)   ;
-
-
-
-
-
-
-
-
-int sim_mote_get_variable_info(int mote, char *name, void **ptr, size_t *len)   ;
-
-
-
-
-
-
-
-
-
-void sim_mote_set_start_time(int mote, long long int t)   ;
-
-
-
-
-
-
-
-
-bool sim_mote_is_on(int mote)   ;
-
-
-
-
-
-
-
-
-void sim_mote_turn_on(int mote)   ;
-
-
-
-
-
-
-
-void sim_mote_turn_off(int mote)   ;
-#line 127
-void sim_mote_enqueue_boot_event(int mote)   ;
 # 104 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static error_t SensorAppC$SensorControl$start(void );
 # 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
@@ -1516,7 +1438,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b0c247b67f8);
+uint8_t arg_0x2b1a0aedc448);
 #line 71
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4283 {
 #line 71
@@ -1715,15 +1637,15 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateF
     }
 }
 
-# 175 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 176 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 {
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b0c2466f960){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b1a0add0960){
 #line 75
-  switch (arg_0x2b0c2466f960) {
+  switch (arg_0x2b1a0add0960) {
 #line 75
     case /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer:
 #line 75
@@ -1733,7 +1655,7 @@ inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b0c2466f960)
 #line 75
     default:
 #line 75
-      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b0c2466f960);
+      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b1a0add0960);
 #line 75
       break;
 #line 75
@@ -1741,14 +1663,14 @@ inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b0c2466f960)
 #line 75
 }
 #line 75
-# 74 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static __inline uint8_t SchedulerBasicP$popTask(void )
 {
   if (SchedulerBasicP$m_head != SchedulerBasicP$NO_TASK) 
     {
       uint8_t id = SchedulerBasicP$m_head;
 
-#line 79
+#line 80
       SchedulerBasicP$m_head = SchedulerBasicP$m_next[SchedulerBasicP$m_head];
       if (SchedulerBasicP$m_head == SchedulerBasicP$NO_TASK) 
         {
@@ -1763,13 +1685,13 @@ static __inline uint8_t SchedulerBasicP$popTask(void )
     }
 }
 
-#line 132
+#line 133
 static inline bool SchedulerBasicP$Scheduler$runNextTask(void )
 {
 
   uint8_t nextTask;
 
-#line 136
+#line 137
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
     {
       nextTask = SchedulerBasicP$popTask();
@@ -1777,21 +1699,21 @@ static inline bool SchedulerBasicP$Scheduler$runNextTask(void )
         {
           {
             unsigned char __nesc_temp = 
-#line 141
+#line 142
             true;
 
             {
-#line 141
+#line 142
               __nesc_atomic_end(__nesc_atomic); 
-#line 141
+#line 142
               return __nesc_temp;
             }
           }
         }
     }
-#line 145
+#line 146
     __nesc_atomic_end(__nesc_atomic); }
-#line 144
+#line 145
   SchedulerBasicP$TaskBasic$runTask(nextTask);
   return true;
 }
@@ -1808,9 +1730,9 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$d
 }
 
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b0c247b67f8){
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b1a0aedc448){
 #line 83
-  switch (arg_0x2b0c247b67f8) {
+  switch (arg_0x2b1a0aedc448) {
 #line 83
     case 0U:
 #line 83
@@ -1820,7 +1742,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$f
 #line 83
     default:
 #line 83
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b0c247b67f8);
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b1a0aedc448);
 #line 83
       break;
 #line 83
@@ -1828,7 +1750,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$f
 #line 83
 }
 #line 83
-# 93 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 94 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline bool SchedulerBasicP$isWaiting(uint8_t id)
 {
   return SchedulerBasicP$m_next[id] != SchedulerBasicP$NO_TASK || SchedulerBasicP$m_tail == id;
@@ -1856,27 +1778,27 @@ static inline bool SchedulerBasicP$pushTask(uint8_t id)
     }
 }
 
-#line 170
+#line 171
 static inline error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id)
 {
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-#line 172
+#line 173
     {
-#line 172
+#line 173
       {
         unsigned char __nesc_temp = 
-#line 172
+#line 173
         SchedulerBasicP$pushTask(id) ? SUCCESS : EBUSY;
 
         {
-#line 172
+#line 173
           __nesc_atomic_end(__nesc_atomic); 
-#line 172
+#line 173
           return __nesc_temp;
         }
       }
     }
-#line 175
+#line 176
     __nesc_atomic_end(__nesc_atomic); }
 }
 
@@ -1895,7 +1817,7 @@ inline static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$upda
 #line 67
 }
 #line 67
-# 120 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 121 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline void SchedulerBasicP$Scheduler$init(void )
 {
   /* atomic removed: atomic calls only */
@@ -2050,29 +1972,6 @@ inline static void SimMainP$Boot$booted(void ){
 #line 60
 }
 #line 60
-# 16 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
-static inline void SimMoteP$SimMote$setEuid(long long int e)
-#line 16
-{
-  SimMoteP$euid = e;
-}
-
-
-
-
-
-
-
-
-
-
-
-static inline void SimMoteP$SimMote$turnOn(void )
-#line 30
-{
-  SimMoteP$isOn = true;
-}
-
 # 17 "SensorAppC.nc"
 static inline void SensorAppC$SensorControl$startDone(error_t err)
 #line 17
@@ -2235,16 +2134,22 @@ extern   int tickFired(uint32_t a)
   return 0;
 }
 
-# 17 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
-  int sim_main_start_mote(int id)
-#line 17
+# 14 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+extern   void sim_function_not_found(void )
+#line 14
+{
+  printf("ERROR: Function does not exist!!!\n");
+}
+
+extern   int sim_main_start_mote(int id)
+#line 18
 {
   TOS_NODE_ID = id;
 
 
 
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
-#line 22
+#line 23
     {
 
 
@@ -2269,7 +2174,7 @@ extern   int tickFired(uint32_t a)
 
       TOS_NODE_ID = id;
     }
-#line 45
+#line 46
     __nesc_atomic_end(__nesc_atomic); }
 
 
@@ -2287,93 +2192,6 @@ extern   int tickFired(uint32_t a)
 
 
   return 0;
-}
-
-# 50 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
-  long long int sim_mote_euid(int mote)
-#line 50
-{
-
-
-
-
-
-  return 3;
-}
-
-  void sim_mote_set_euid(int mote, long long int id)
-#line 59
-{
-
-
-  SimMoteP$SimMote$setEuid(id);
-}
-
-
-  long long int sim_mote_start_time(int mote)
-#line 66
-{
-
-
-
-
-
-  return 2;
-}
-
-  int sim_mote_get_variable_info(int mote, char *name, void **ptr, size_t *len)
-#line 75
-{
-  int result = 0;
-
-
-
-
-
-  return result;
-}
-
-  void sim_mote_set_start_time(int mote, long long int t)
-#line 85
-{
-}
-
-
-
-
-
-
-
-  bool sim_mote_is_on(int mote)
-#line 94
-{
-
-
-
-
-
-  return SimMoteP$isOn;
-}
-
-  void sim_mote_turn_on(int mote)
-#line 103
-{
-  printf("sim_main_start_mote\n");
-
-
-  SimMoteP$SimMote$turnOn();
-}
-
-
-  void sim_mote_turn_off(int mote)
-#line 111
-{
-}
-
-#line 127
-  void sim_mote_enqueue_boot_event(int mote)
-#line 127
-{
 }
 
 # 22 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/MagnetomiterP.nc"

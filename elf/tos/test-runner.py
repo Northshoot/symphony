@@ -54,7 +54,7 @@ class Worker(Thread):
                                          name=self.getName(),
                                          message=message))
         if(message):
-            self.file.write(message+'\n')
+            self.file.write(message)
             self.file.flush()
             
         Worker.screen_mutex.release()
@@ -70,16 +70,16 @@ class Worker(Thread):
             after = time.time()
 
             if(stdout):
-                msg = "STDOUT: %s" %(stdout)
+                msg = "%s" %(stdout)
                 self.log(msg)
             
             if stderr:
                 msg = "STERR: %s" %(stderr)
                 self.log(msg)
    
-            msg = "Finished run with  = %s  open libs running time %s" \
-                %(job['num'],niceTime(after-before))
-            self.log(msg)
+#            msg = "Finished run with  = %s  open libs running time %s" \
+#                %(job['num'],niceTime(after-before))
+#            self.log(msg)
 
             # when the job is done, you signal the queue - refer to
             # the Queue module documentation
@@ -90,8 +90,10 @@ def main(number_of_workers):
     runtime=100000
     incr = 100
     number_of_jobs=int((runtime)/incr)
-    queue = Queue()
-    runLog = open("SUMMARY.EFL-TESTS.LOG",'w')
+    queue = Queue()    
+    statinfo = os.stat("libtostest.so")  
+    run_log = "SUMMARY.EFL-TESTS.%s.LOG" %h_r(statinfo.st_size) 
+    runLog = open(run_log,'w')
 
     for _ in range(number_of_workers):
         worker = Worker(queue,runLog)
@@ -110,4 +112,4 @@ def main(number_of_workers):
 if __name__ == "__main__":
     import multiprocessing
     # call main             
-    main(multiprocessing.cpu_count()-1)
+    main(7)

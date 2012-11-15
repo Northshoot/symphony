@@ -2,6 +2,7 @@
 #define _GNU_SOURCE
 #endif
 
+
 #include <dlfcn.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,7 +10,14 @@
 #include <iostream>
 
 #define NUM 35000
-typedef int (*Fn)(int);
+typedef long int (*Fn)(int);
+
+
+//CLOCK_REALTIME, a system-wide realtime clock.
+//CLOCK_PROCESS_CPUTIME_ID, high-resolution timer provided by the CPU for each process.
+//CLOCK_THREAD_CPUTIME_ID, high-resolution timer provided by the CPU for each of the threads.
+
+#define CLOCK_TYPE CLOCK_PROCESS_CPUTIME_ID
 
 inline long getMilliSecs() {
 	timeval t;
@@ -17,56 +25,79 @@ inline long getMilliSecs() {
 	return t.tv_sec * 1000 + t.tv_usec / 1000;
 }
 
-using namespace std;
+timespec diff(timespec start, timespec end)
+{
+	timespec temp;
+	if ((end.tv_nsec-start.tv_nsec)<0) {
+		temp.tv_sec = end.tv_sec-start.tv_sec-1;
+		temp.tv_nsec = 1000000000+end.tv_nsec-start.tv_nsec;
+	} else {
+		temp.tv_sec = end.tv_sec-start.tv_sec;
+		temp.tv_nsec = end.tv_nsec-start.tv_nsec;
+	}
+	return temp;
+}
 
 
 int main(int argc, char *argv[]) {
 
-	void *g1[NUM];
-	void * tmp[NUM];
+	timespec time1, time2;
+
 	long int i = 0;
 	long int open = 0;
 	int libs = atoi(argv[1]);
-	printf("enter main, starting to open %d libraries\n", libs);
-	long start_libs = getMilliSecs();
+	void *g1[libs];
+	void * tmp[libs];
+	clock_gettime(CLOCK_TYPE, &time1);
 	for (; i < libs; i++) {
-		g1[i] = dlmopen(LD_BIND_NOW, "libtostest.so", RTLD_LAZY);
-		if (!g1[i]) {
+		g1[i] = dlmopen(LM_ID_NEWLM, "libtostest.so", RTLD_LAZY);
+		if ((dlerror()) != NULL) {
 			printf("Cannot open library %ld: %s\n", i, dlerror());
+		} else {
+
+			open++;
 		}
 	}
+	clock_gettime(CLOCK_TYPE, &time2);
+	long time_libs = diff(time1,time2).tv_nsec;
 
 
-long time_libs = getMilliSecs() - start_libs;
-
-start_libs = getMilliSecs();
-char *error = NULL;
-for (i=0; i < libs; i++) {
+	clock_gettime(CLOCK_TYPE, &time1);
+for (i=0; i < open; i++) {
 	tmp[i] = dlsym(g1[i], "tickFired");
-	if( (error = dlerror()) != NULL) {
+	if(!tmp[i]) {
 		printf("ERROR getting function: %s\n", dlerror());
 
 	}
 }
-long time_func = getMilliSecs() - start_libs;
+clock_gettime(CLOCK_TYPE, &time2);
+long time_func = diff(time1,time2).tv_nsec;
 
-start_libs = getMilliSecs();
+clock_gettime(CLOCK_TYPE, &time1);
+long int ret;
 for(i=0;i<libs;i++) {
-	((Fn)tmp[i])(i);
+	ret=((Fn)tmp[i])(i);
+	if(!(ret == i))
+		printf("error in return value got %ld expect %ld\n",ret, i);
 }
-long time_exec = getMilliSecs() - start_libs;
+clock_gettime(CLOCK_TYPE, &time2);
+long time_exec = diff(time1,time2).tv_nsec;
 
 
 
-//sleep(30);
-start_libs = getMilliSecs();
+clock_gettime(CLOCK_TYPE, &time1);
 for(i=0;i<libs;i++) {
 	dlclose (g1[i]);
 
 }
-long time_close = getMilliSecs() - start_libs;
+clock_gettime(CLOCK_TYPE, &time2);
+long time_close =  diff(time1,time2).tv_nsec;
+//
+//std::cout<<"Libs: "<< libs <<"\topen time: "<<time_libs<<"\t get func: "<<
+//			time_func<<"\texec_time: "<< time_exec<< "\tclose time: "<<time_close<<std::endl;
 
-cout<<"Libs: "<< libs <<"\topen time: "<<time_libs<<"\t get func: "<< timefunc<<"\tclose time: "<< time_close<<endl;
 
+std::cout<<libs <<"\t"<<time_libs<<"\t"<<
+			time_func<<"\t"<< time_exec<< "\t"<<time_close<<std::endl;
 return 0;
 }

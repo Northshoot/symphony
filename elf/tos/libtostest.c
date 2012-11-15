@@ -2,9 +2,9 @@
 
 static __attribute__ ((constructor))
   void constructor (void)
-  {               \
+  {
     printf ("libtos constructor\n");
-  }               \
+  }
   static __attribute__ ((destructor))
   void destructor (void)
   {
@@ -12,7 +12,7 @@ static __attribute__ ((constructor))
   }
 
 
-   extern int tickFired(void * funk)
+   extern long int tickFired(int i)
       {
         printf ("tickFired: %d\n",i );
         return i;
