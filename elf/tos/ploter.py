@@ -3,6 +3,8 @@ from matplotlib.mlab import *
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.path as path
+from matplotlib.backends.backend_pdf import PdfPages
+
 
 experiment = dict(
                   nodes=FormatInt(),
@@ -14,12 +16,12 @@ experiment = dict(
 
 
     
-data= csv2rec('SUMMARY.EFL-TESTS.7.0KiB.LOG',delimiter='\t')
+data= csv2rec('log1.cvs',delimiter='\t')
 
-data.sort()
-press_mc=0.001 #micro seconds
-press_ms=0.000001 #milli seconds
-press_s = 1/1000000000
+#data.sort()
+press_mc=1.0/1000.0 #micro seconds
+press_ms=1.0/1000000.0 #milli seconds
+press_s = 1.0/1000000000.0
 
 def getData(type, prec=None):
     ret=[]
@@ -53,11 +55,14 @@ def getData(type, prec=None):
 
 norm_excec = [x/y for x,y in zip(getData('excec'),getData('nodes'))]    
 
+
 print norm_excec
 print "Mean %f" %np.mean(norm_excec, dtype=np.float64)
 print "Average %f" %np.average(norm_excec)
 print "Variance %f" %np.var(norm_excec, dtype=np.float64)
 print "Standard deviation %f" %np.std(norm_excec, dtype=np.float64)
+
+pp = PdfPages('loading-experiments.pdf')
 
 fig = plt.figure()
 ax = fig.add_subplot(111)
@@ -86,7 +91,7 @@ ax.set_xlim(left[0], right[-1])
 ax.set_ylim(bottom.min(), top.max())
 ax.set_xlabel('Average time per call in Nanoseconds')
 ax.set_ylabel('Number of records')
-
+fig.savefig(pp, format='pdf')
 
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(111)
@@ -94,22 +99,35 @@ ax1.set_title('Number of nodes vs function call')
 ax1.plot( norm_excec, getData('nodes'),'o')
 ax1.set_xlabel('Average time per call in Nanoseconds')
 ax1.set_ylabel('Number of nodes')
+fig1.savefig(pp, format='pdf')
 
 fig2 = plt.figure()
 ax2 = fig2.add_subplot(111)
 ax2.set_title('Time to call one function vs number of nodes')
-ax2.plot( getData('excec','ms'), getData('nodes'),'o')
+ax2.plot( getData('excec'), getData('nodes'),'o')
 ax2.set_xlabel('Time per call in Nanoseconds')
 ax2.set_ylabel('Number of nodes')
+fig2.savefig(pp, format='pdf')
 
+norm_open = [x/y for x,y in zip(getData('open','ms'),getData('nodes'))]   
 fig3 = plt.figure()
 ax3 = fig3.add_subplot(111)
 ax3.set_title('Time to open images')
-ax3.plot( getData('close','ms'), getData('nodes'),'o')
+ax3.plot( norm_open, getData('nodes'),'o')
 ax3.set_xlabel('Time in microseconds')
 ax3.set_ylabel('Number of nodes')
+fig3.savefig(pp, format='pdf')
 
-#
-plt.show()
+fig4 = plt.figure()
+ax4 = fig4.add_subplot(111)
+ax4.set_title('Time to close images')
+ax4.plot( getData('close','mc'), getData('nodes'),'o')
+ax4.set_xlabel('Time in microseconds')
+ax4.set_ylabel('Number of nodes')
+fig4.savefig(pp, format='pdf')
+
+pp.savefig()
+pp.close()
+#plt.show()
 
 

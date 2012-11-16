@@ -87,7 +87,7 @@ class Worker(Thread):
 
 
 def main(number_of_workers):
-    runtime=100000
+    runtime=34000
     incr = 100
     number_of_jobs=int((runtime)/incr)
     queue = Queue()    
@@ -112,4 +112,4 @@ def main(number_of_workers):
 if __name__ == "__main__":
     import multiprocessing
     # call main             
-    main(7)
+    main(5)

@@ -17,7 +17,7 @@ typedef long int (*Fn)(int);
 //CLOCK_PROCESS_CPUTIME_ID, high-resolution timer provided by the CPU for each process.
 //CLOCK_THREAD_CPUTIME_ID, high-resolution timer provided by the CPU for each of the threads.
 
-#define CLOCK_TYPE CLOCK_PROCESS_CPUTIME_ID
+#define CLOCK_TYPE CLOCK_REALTIME
 
 inline long getMilliSecs() {
 	timeval t;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 		}
 	}
 	clock_gettime(CLOCK_TYPE, &time2);
-	long time_libs = diff(time1,time2).tv_nsec;
+	timespec time_open = diff(time1,time2);
 
 
 	clock_gettime(CLOCK_TYPE, &time1);
@@ -71,7 +71,7 @@ for (i=0; i < open; i++) {
 	}
 }
 clock_gettime(CLOCK_TYPE, &time2);
-long time_func = diff(time1,time2).tv_nsec;
+timespec time_func = diff(time1,time2);
 
 clock_gettime(CLOCK_TYPE, &time1);
 long int ret;
@@ -81,7 +81,7 @@ for(i=0;i<libs;i++) {
 		printf("error in return value got %ld expect %ld\n",ret, i);
 }
 clock_gettime(CLOCK_TYPE, &time2);
-long time_exec = diff(time1,time2).tv_nsec;
+timespec time_exec = diff(time1,time2);
 
 
 
@@ -91,13 +91,16 @@ for(i=0;i<libs;i++) {
 
 }
 clock_gettime(CLOCK_TYPE, &time2);
-long time_close =  diff(time1,time2).tv_nsec;
+timespec time_close =  diff(time1,time2);
 //
 //std::cout<<"Libs: "<< libs <<"\topen time: "<<time_libs<<"\t get func: "<<
 //			time_func<<"\texec_time: "<< time_exec<< "\tclose time: "<<time_close<<std::endl;
 
 
-std::cout<<libs <<"\t"<<time_libs<<"\t"<<
-			time_func<<"\t"<< time_exec<< "\t"<<time_close<<std::endl;
+std::cout<<libs <<"\t"<<
+			time_open.tv_sec<<"\t"<<time_open.tv_nsec<<"\t"<<
+			time_func.tv_sec<<"\t"<< time_func.tv_nsec<<"\t"<<
+			time_exec.tv_sec<< "\t"<<time_exec.tv_nsec<< "\t"<<
+			time_close.tv_sec<<"\t"<<time_close.tv_nsec<<std::endl;
 return 0;
 }
