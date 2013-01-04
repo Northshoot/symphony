@@ -37,6 +37,7 @@ OPTFLAGS_GCC = -g -O0 -Wall -Wshadow
 NCC_OPT=-fPIC -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(SYMPHONY_BUILD)
 NCC_OPT_WALL=-fPIC -Wall -g -c -o /dev/null -fnesc-gcc=$(GCC) -target=$(TARGET) -fnesc-cfile=$(TOS_APP_C) $(TOS_APP).nc -I$(SYMPHONY_BUILD)
 #include dirs
+LINKFLAGS=-Wl,--warn-unresolved-symbols -I/home/lauril/dev/symphony/elf/ -Wl,--no-as-needed
 
 #for headers always use "ns3/header.h" to allow moving to waf in future
 NS3_INCL = -I$(SYMPHONY_BUILD) 
@@ -44,8 +45,7 @@ TOS_INCL = -I$(TOS_NS3)
 PRE_NS_LIB=libns3-dev
 POST_NS_LIB=debug.so
 NS3_OBJ = $(SYMPHONY_BUILD)/$(PRE_NS_LIB)-symphony-$(POST_NS_LIB)
-NS3_CORE =$(SYMPHONY_BUILD)/$(PRE_NS_LIB)-core-$(POST_NS_LIB)
-NS3_NET =$(SYMPHONY_BUILD)/$(PRE_NS_LIB)-network-$(POST_NS_LIB)
+NS3_LOAD =$(SYMPHONY_BUILD)/$(PRE_NS_LIB)-tos-loader-$(POST_NS_LIB)
 CALL_HEADER=$(SYMPHONY_SRC)/model/calls-to-ns3.h
 
 #app to create
@@ -58,10 +58,10 @@ all:
 		$(PY) $(POST) $(TOS_APP_C) $(SIM_LIB).c
 		@echo ""
 		@echo "Building TinyOS object             "
-		$(GPP) -fPIC -Wall -g -c $(SIM_LIB).c	$(NS3_INCL)
+		$(GPP) -fPIC -Wall -g -c -nostdlib $(SIM_LIB).c	$(NS3_INCL)
 		@echo ""
 		@echo "Creating library and linking with proxy objects            "
-		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) -ldl 
+		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_LOAD) -nostdlib -ldl 
 
 		@echo "                           "		
 		@echo "*** copying library to ns_dir***"

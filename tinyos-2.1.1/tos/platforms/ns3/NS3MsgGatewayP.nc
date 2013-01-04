@@ -3,26 +3,26 @@
 #include "ns3/calls-to-ns3.h"
 #include <stdio.h>
 
-//void
-//printTosPacket( char *buf){
-//   
-//    unsigned int i=0;
-//    unsigned int size=0;
-//    ns3packet_header_t *hdr;
-//    hdr =(ns3packet_header_t*)(((message_t*)buf)->header);
-//    size= hdr->length;
-//    printf("FROM TOS - SIZE: %d :: HEADER size: %lu\n", size, 
-//    sizeof(ns3packet_header_t));
-//    printf("HEX: ");
-//    for (;i<(size+sizeof(ns3packet_header_t));i++){
-//        printf("%02X ", (uint8_t)buf[i]);
-//    }
-//    printf("%02X\n",(uint8_t)buf[i]);
-//    printf("header: ");
-//    printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
-//    printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
-//
-//}
+void
+printTosPacket( char *buf){
+  
+   unsigned int i=0;
+    unsigned int size=0;
+   ns3packet_header_t *hdr;
+   hdr =(ns3packet_header_t*)(((message_t*)buf)->header);
+     size= hdr->length;
+    printf("FROM TOS - SIZE: %d :: HEADER size: %lu\n", size, 
+    sizeof(ns3packet_header_t));
+    printf("HEX: ");
+   for (;i<(size+sizeof(ns3packet_header_t));i++){
+        printf("%02X ", (uint8_t)buf[i]);
+    }
+    printf("%02X\n",(uint8_t)buf[i]);
+    printf("header: ");
+    printf("len %d :: dsn %d :: type %d :: fdest %d :: destpan %d\n",hdr->length,hdr->dsn,hdr->type,hdr->fdest,hdr->destpan);
+    printf("dest %d :: src %d :: padd %d\n", hdr->dest,hdr->src,hdr->padd);
+
+}
 
 module NS3MsgGatewayP{
 	provides 
@@ -50,9 +50,10 @@ implementation{
         
 	extern int receiveMessage(void * msg)@C() @spontaneous(){
 		//printf("\tTOS RX LOW %d\n", TOS_NODE_ID);
-//		fflush(stdout);
+		//fflush(stdout);
+        //dbg( "DEBBUG" ,  "NS3MsgGatewayP.receiveMessage\n");
 		msg_in = (message_t*)msg;
-		//printTosPacket((char*)msg);
+		printTosPacket((char*)msg);
 		post receive();
 		return 0;
 	}
@@ -72,7 +73,7 @@ implementation{
 //gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);	
 	command error_t Send.send(message_t* msg){
 		msg_out = msg;		
-		//printf("\t\t\t\t SENDING\n");
+		//printf("\t\t\t\t SENDING size %d\n",TOSH_DATA_LENGTH);
 		//printTosPacket((char*)msg);
 		a=gatewayRadio(proxy, RADIO_SEND,-1,-1,(void *)msg, (void *) msg);
 		return 0;
@@ -80,7 +81,7 @@ implementation{
 	}
 
 	command error_t Send.cancel(message_t* msg){
-		return gatewayRadio(proxy, RADIO_CANCEL,-1,-1,(void *)msg, (void *) msg);;
+		return gatewayRadio(proxy, RADIO_CANCEL,-1,-1,(void *)msg, (void *) msg);
 		}
 		
 	/**

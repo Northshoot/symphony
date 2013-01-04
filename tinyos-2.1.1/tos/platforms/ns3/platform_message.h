@@ -58,4 +58,5 @@ typedef union message_metadata {
 } message_metadata_t;
 
 
+
 #endif  // __PLATFORM_MESSAGE_H__

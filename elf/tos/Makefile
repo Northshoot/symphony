@@ -9,7 +9,7 @@ LINKFLAGS=-Wl,--warn-unresolved-symbols -I/home/lauril/dev/symphony/elf/ -Wl,--n
 
 app:
 	$(CXX) $(CXXFLAGS) -c -o $(TARGET).o $(TARGET).c
-	$(CXX) $(TARGET).o $(LINKFLAGS) -ldl -o $(TARGET)
+	$(CXX) $(TARGET).o $(LINKFLAGS) -lrt -ldl -o $(TARGET)
 	../elfedit $(TARGET) ../ldso
 	LD_LIBRARY_PATH=../ ./$(TARGET) 20
 	

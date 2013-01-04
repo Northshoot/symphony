@@ -45,7 +45,7 @@ class Worker(Thread):
         self.queue = queue
         self.file=file
         self.envviron=os.environ
-        self.envviron["LD_LIBRARY_PATH"]=".:../"
+        self.envviron["LD_LIBRARY_PATH"]=".:../:../../ns-3.14/build/"
 
     def log(self, message):
         Worker.screen_mutex.acquire()        
@@ -87,11 +87,11 @@ class Worker(Thread):
 
 
 def main(number_of_workers):
-    runtime=34000
+    runtime=2300
     incr = 100
     number_of_jobs=int((runtime)/incr)
     queue = Queue()    
-    statinfo = os.stat("libtostest.so")  
+    statinfo = os.stat("libtosblink.so")  
     run_log = "SUMMARY.EFL-TESTS.%s.LOG" %h_r(statinfo.st_size) 
     runLog = open(run_log,'w')
 

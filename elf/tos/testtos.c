@@ -50,8 +50,8 @@ int main(int argc, char *argv[]) {
 	void * tmp[libs];
 	clock_gettime(CLOCK_TYPE, &time1);
 	for (; i < libs; i++) {
-		g1[i] = dlmopen(LM_ID_NEWLM, "libtostest.so", RTLD_LAZY);
-		if ((dlerror()) != NULL) {
+		g1[i] = dlmopen(LM_ID_NEWLM, "libtosblink.so", RTLD_LAZY);
+		if (!g1[i]) {
 			printf("Cannot open library %ld: %s\n", i, dlerror());
 		} else {
 
@@ -77,8 +77,8 @@ clock_gettime(CLOCK_TYPE, &time1);
 long int ret;
 for(i=0;i<libs;i++) {
 	ret=((Fn)tmp[i])(i);
-	if(!(ret == i))
-		printf("error in return value got %ld expect %ld\n",ret, i);
+	//if(!(ret == i))
+		//printf("error in return value got %ld expect %ld\n",ret, i);
 }
 clock_gettime(CLOCK_TYPE, &time2);
 timespec time_exec = diff(time1,time2);

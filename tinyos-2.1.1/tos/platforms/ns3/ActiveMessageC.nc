@@ -1,6 +1,3 @@
-
-//#include <RadioConfig.h>
-
 configuration ActiveMessageC
 {
 	provides
@@ -9,7 +6,7 @@ configuration ActiveMessageC
 
 		interface AMSend[uint8_t id];
 		interface Receive[uint8_t id];
-		//interface Receive as Snoop[uint8_t id];
+		interface Receive as Snoop[uint8_t id];
 		interface SendNotifier[am_id_t id];
 
 		interface Packet;
@@ -43,7 +40,7 @@ implementation
 
 	AMSend = MessageC;
 	Receive = MessageC.Receive;
-//	Snoop = MessageC.Snoop;
+	Snoop = MessageC.Snoop;
 	SendNotifier = MessageC;
 
 	Packet = MessageC;

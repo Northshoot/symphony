@@ -97,9 +97,10 @@ namespace ns3
     virtual void
     NotifyTxStart(Time duration)
     {
+
+      std::cout << " \tNotifyTxStart " << duration.GetMicroSeconds()
+          << " micro s " << std::endl;
       m_device->SendDone(duration);
-//      std::cout << " \tNotifyTxStart " << duration.GetMicroSeconds()
-//          << " micro s " << std::endl;
     }
     virtual void
     NotifyMaybeCcaBusyStart(Time duration)
@@ -261,8 +262,11 @@ namespace ns3
   {
 
     NS_LOG_FUNCTION(this);
-    if(m_state == RADIO_STATE_ON && !m_busy)
+
+    if((m_state != RADIO_STATE_ON) || m_busy)
     	return EBUSY;
+
+
     if (!m_RxEvent.IsRunning() && !m_trasmit.IsRunning())
       {
         //printTosPacket((char*)msg);
@@ -280,6 +284,7 @@ namespace ns3
 //        Time run_time = MilliSeconds(t);
 //        m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
 //            this, 0);
+        std::cerr <<" About to call TosNetDevice::TransmitData(void) "<< std::endl;
         TransmitData();
         return SUCCESS;
       }
@@ -318,6 +323,7 @@ namespace ns3
     m_state = RADIO_STATE_ON;
     NS_ASSERT_MSG(!c_ns2tosStartDone.IsNull(),
         "StartDone callback is not set.");
+
     c_ns2tosStartDone(SUCCESS);
     NS_LOG_FUNCTION_NOARGS ();
   }
@@ -336,7 +342,6 @@ namespace ns3
         boost::lexical_cast<uint64_t>(
             m_txParams->getElement(ModelVocabulary::CALL, "radioStart")->getAttributeValue(
                 "time"));
-    std::cout<<"STARTED\n";
     Time run_time = MilliSeconds(t);
 
     m_startUpEvent = Simulator::Schedule(run_time,
@@ -379,7 +384,7 @@ namespace ns3
 //        boost::lexical_cast<uint64_t>(
 //            m_txParams->getElement(ModelVocabulary::CALLBACK, "sendDone")->getAttributeValue(
 //                "time"));
-    Time run_time =  duration;
+	Time run_time = MicroSeconds(duration.GetMicroSeconds()+200);
     m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
         this, 0);
 
@@ -408,14 +413,14 @@ namespace ns3
     return true;
   }
 
-  message_t*
+  void
   TosNetDevice::DeviceReceive(message_t* msg)
   {
     c_ns2tosRx((void*) msg);
-    m_RxEvent.Cancel();
+    NS_LOG_FUNCTION_NOARGS();
+    if(m_RxEvent.IsRunning())
+    	m_RxEvent.Cancel();
     m_state=RADIO_STATE_ON;
-
-    return &m_rx_msg;
   }
 
   void

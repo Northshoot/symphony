@@ -90,7 +90,7 @@ TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, v
 	case RADIO_SEND:
 		//keep the tongue in right mouth
 		//TODO: make some sanity check
-	        //std::cerr <<" m_tosnetdevice->DeviceSend "<<std::endl;
+	     //   std::cerr <<" m_tosnetdevice->DeviceSend "<<std::endl;
 		return m_tosnetdevice->DeviceSend(obj2);
 		break;
 
@@ -100,7 +100,7 @@ TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, v
 	default:
 		//OPS! never ever go here!
 		//if you have -> core dump :D
-		std::cerr <<" bad index no where to go "<< call<< std::endl;
+		//std::cerr <<" bad index no where to go "<< call<< std::endl;
 		return -1;
 		break;
 }

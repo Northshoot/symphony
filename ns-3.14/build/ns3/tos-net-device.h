@@ -126,7 +126,7 @@ namespace ns3
     bool
     DeviceRXHeader(message_t* msg);
     //callback
-    message_t*
+    void
     DeviceReceive(message_t* msg);
 
     void
