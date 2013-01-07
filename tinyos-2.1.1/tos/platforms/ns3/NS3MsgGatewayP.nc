@@ -53,7 +53,7 @@ implementation{
 		//fflush(stdout);
         //dbg( "DEBBUG" ,  "NS3MsgGatewayP.receiveMessage\n");
 		msg_in = (message_t*)msg;
-		printTosPacket((char*)msg);
+		//printTosPacket((char*)msg);
 		post receive();
 		return 0;
 	}

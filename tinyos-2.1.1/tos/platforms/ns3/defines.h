@@ -22,10 +22,10 @@
 void os_log_debug(char* string, const char* format, ...);
 
 void os_log_debug(char* string, const char* format, ...) {
-  va_list args;
-    printf("%s (%i): ",string, TOS_NODE_ID);
-    fprintf( stdout,format, args); 
-    fflush(stdout);
+//  va_list args;
+//    printf("%s (%i): ",string, TOS_NODE_ID);
+//    fprintf( stdout,format, args); 
+//    fflush(stdout);
 
 }
 

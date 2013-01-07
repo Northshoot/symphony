@@ -97,9 +97,6 @@ namespace ns3
     virtual void
     NotifyTxStart(Time duration)
     {
-
-      std::cout << " \tNotifyTxStart " << duration.GetMicroSeconds()
-          << " micro s " << std::endl;
       m_device->SendDone(duration);
     }
     virtual void
@@ -273,6 +270,7 @@ namespace ns3
         memcpy((void *) &m_tx_msg, (void *) msg, sizeof(message_t));
         m_state = RADIO_STATE_TX;
         m_busy = true;
+        //TODO: the event for sending get erronious
 //    uint64_t t = boost::lexical_cast<uint64_t>(m_txParams->getElement(ModelVocabulary::CALL,"DeviceSend")->getAttributeValue("time"));
 //    NS_LOG_FUNCTION(t);
 //    Time run_time=MilliSeconds(t);
@@ -284,7 +282,6 @@ namespace ns3
 //        Time run_time = MilliSeconds(t);
 //        m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
 //            this, 0);
-        std::cerr <<" About to call TosNetDevice::TransmitData(void) "<< std::endl;
         TransmitData();
         return SUCCESS;
       }

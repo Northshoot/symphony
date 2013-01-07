@@ -65,7 +65,7 @@ extern int gateway(void *tthis,int call, int arg){
  * We just move call to the proxy object
  */
 extern int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg){
-	printf("\t\tgatewayRadio (%d) %d\n",  ((TosToNs3Proxy *)obj)->m_node_id, call);
+	//printf("\t\tgatewayRadio (%d) %d\n",  ((TosToNs3Proxy *)obj)->m_node_id, call);
 	return ((TosToNs3Proxy *)obj)->deviceCommand(call, val1, val2, hdr,msg);
 
 }
@@ -97,7 +97,7 @@ extern void gatewayLogg(void *obj,  char* func, int line_num, char* msg){
 //           *valueptr = replacechar;
 //  }
 
-  printf("(%d) - %s::%d - %s\n",  ((TosToNs3Proxy *)obj)->m_node_id, func, line_num, msg);
-
+  //printf("(%d) - %s::%d - %s\n",  ((TosToNs3Proxy *)obj)->m_node_id, func, line_num, msg);
+	printf("#######################\n\n\tNOT YET IMPLEMENTED\n#######################\n");
 }
 #endif /* GATEWAY_H_ */

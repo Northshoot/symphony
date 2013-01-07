@@ -42,27 +42,27 @@ implementation {
 
 
   async command void Leds.led0On() {
-    dbg( "Led0", "on");
+    dbg( "Led0", "on\n");
   }
 
   async command void Leds.led0Off() {
-     dbg( "Led0","off");
+     dbg( "Led0","off\n");
   }
 
   async command void Leds.led0Toggle() {
-     dbg( "Led0","toggle");
+     dbg( "Led0","toggle\n");
   }
 
   async command void Leds.led1On() {
-     dbg( "Led1","on");
+     dbg( "Led1","on\n");
   }
 
   async command void Leds.led1Off() {
-     dbg( "Led1","off");
+     dbg( "Led1","off\n");
   }
 
   async command void Leds.led1Toggle() {
-     dbg( "Led1","toggle");
+     dbg( "Led1","toggle\n");
   }
 
   async command void Leds.led2On() {
@@ -70,11 +70,11 @@ implementation {
   }
 
   async command void Leds.led2Off() {
-     dbg( "Led2","off");
+     dbg( "Led2","off\n");
   }
 
   async command void Leds.led2Toggle() {
-     dbg( "Led2","toggle");
+     dbg( "Led2","toggle\n");
   }
 
   async command uint8_t Leds.get() {

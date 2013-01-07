@@ -91,7 +91,7 @@ implementation
 	}
 
 	am_addr_t destination(message_t* msg){
-	  return getHeader(msg)->dest;
+	  return  getHeader(msg)->dest;
 	}
 
     void setDestination(message_t* msg, am_addr_t addr){
@@ -169,10 +169,10 @@ implementation
         void* payload = getPayload(msg);
         uint8_t len = call Packet.payloadLength(msg);
 
-		printf("SubReceive.receive******************\n");
-				printf("\tSubReceive.receive me (%d) from (%d) to (%d) type (%d)\n", 
-		          TOS_NODE_ID, call AMPacket.source(msg), 
-		          call AMPacket.destination(msg), call AMPacket.type(msg));
+//		printf("SubReceive.receive******************\n");
+//				printf("\tSubReceive.receive me (%d) from (%d) to (%d) type (%d)\n", 
+//		          TOS_NODE_ID, call AMPacket.source(msg), 
+//		          call AMPacket.destination(msg), call AMPacket.type(msg));
 		call AMPacket.isForMe(msg) 
 			? signal Receive.receive[id](msg, payload, len)
 			: signal Snoop.receive[id](msg, payload, len);
@@ -261,6 +261,7 @@ implementation
 	{
 		//TODO:clear flags
 		//getMeta(msg)->flags ;		
+		printf("########################\n\tCALL to UNEMPLEMENTED FUNCTION %s\n########################\n", __FUNCTION__);
 	}
 
 	command uint8_t Packet.payloadLength(message_t* msg)
@@ -276,8 +277,7 @@ implementation
 	}
 
 	command uint8_t Packet.maxPayloadLength()
-	{
-		printf("maxPayloadLength %d\n",TOSH_DATA_LENGTH);
+    {
 		return TOSH_DATA_LENGTH;
 	}
 
