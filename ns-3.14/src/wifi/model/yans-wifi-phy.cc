@@ -157,7 +157,7 @@ YansWifiPhy::ConfigureStandard (enum WifiPhyStandard standard)
   switch (standard)
     {
   case ZIGBEE_PHY_STANDARD_802154:
-    Configure802154 ();
+	  Configure802154 ();
           break;
     case WIFI_PHY_STANDARD_80211a:
       Configure80211a ();
@@ -790,7 +790,8 @@ YansWifiPhy::EndReceive (Ptr<Packet> packet, Ptr<InterferenceHelper::Event> even
 
   NS_LOG_DEBUG ("mode=" << (event->GetPayloadMode ().GetDataRate ()) <<
                 ", snr=" << snrPer.snr << ", per=" << snrPer.per << ", size=" << packet->GetSize ());
-  if (m_random->GetValue () > snrPer.per)
+//TODO: why does per gets calculated to 1?
+  if (m_random->GetValue () > (snrPer.per))
     {
       NotifyRxEnd (packet);
       uint32_t dataRate500KbpsUnits = event->GetPayloadMode ().GetDataRate () / 500000;

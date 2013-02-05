@@ -29,7 +29,8 @@ namespace ns3 {
 enum WifiPreamble
 {
   WIFI_PREAMBLE_LONG,
-  WIFI_PREAMBLE_SHORT
+  WIFI_PREAMBLE_SHORT,
+  ZIGBEE_PREAMBLE
 };
 
 } // namespace ns3

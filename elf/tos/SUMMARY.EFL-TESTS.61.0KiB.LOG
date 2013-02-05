@@ -1,0 +1,152 @@
+0	0	100	0	65	0	67	0	64
+100	0	984499333	0	1222663	0	746723	0	234585333
+200	1	639142565	0	2964551	0	1224264	0	665202400
+300	3	26665099	0	6228533	0	2025941	1	605638173
+400	5	456611612	0	11062468	0	2728658	3	126937639
+500	7	892179805	0	17563055	0	3349063	5	637210422
+600	14	513754410	0	31726818	0	5363265	13	779285011
+700	17	399379480	0	35264682	0	4936260	12	476054817
+800	28	468453860	0	44701732	0	5496367	17	13590304
+900	33	722316961	0	66870514	0	8220956	30	493622187
+1000	42	392226488	0	72415856	0	7135624	27	990942909
+1100	54	539645692	0	85902164	0	7814980	32	894101784
+1200	77	32092815	0	110908661	0	8588004	53	817701239
+1300	93	727384673	0	146651025	0	11064941	58	312363042
+1400	116	615457868	0	172517756	0	9998893	72	835863258
+1500	150	864774320	0	234721235	0	10197586	79	877987352
+1600	180	665854983	0	274588865	0	11062400	72	462220410
+1700	254	220958111	0	370775821	0	12037832	123	13887014
+1800	313	904836134	0	508647583	0	12898943	106	75641913
+1900	397	823238754	0	570346540	0	19241586	150	701047675
+2000	486	687489963	0	527395918	0	14702895	161	474694668
+2100	562	358548330	0	767767672	0	14772536	141	304950220
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.
+/home/lauril/dev/symphony/elf/vdl-map.c:658:vdl_file_map_single: Unable to allocate complete mapping for ../../ns-3.14/build//libns3-dev-core-debug.so
+/home/lauril/dev/symphony/elf/vdl-map.c:772, vdl_file_map_single_maybe, The file should be there so this should not fail.

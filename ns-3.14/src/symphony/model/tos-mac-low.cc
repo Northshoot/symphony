@@ -61,14 +61,7 @@ TosMacLow::TosMacLow ()
     m_listener (0)
 {
   NS_LOG_FUNCTION (this);
-  //we change datarate to fit zigbee phy
-//  m_wifiMode= WifiModeFactory::CreateWifiMode ("DsssRate1Mbps",
-//                                       WIFI_MOD_CLASS_DSSS,
-//                                       true,
-//                                       22000000, 250000,
-//                                       WIFI_CODE_RATE_UNDEFINED,
-//                                       2);
-  m_wifiMode = WifiPhy::GetDsssRate1Mbps();
+  m_wifiMode = WifiPhy::GetDsssRate250Kbps();
 }
 
 TosMacLow::~TosMacLow ()
@@ -224,7 +217,7 @@ TosMacLow::CalculateTransmissionTime (Ptr<const Packet> packet,
   //TODO: must fix time calculations!
   Time txTime = Seconds (0);
   uint32_t dataSize = GetSize (packet, hdr);
-  txTime += m_phy->CalculateTxDuration (dataSize, GetDataTxMode(), WIFI_PREAMBLE_SHORT);
+  txTime += m_phy->CalculateTxDuration (dataSize, GetDataTxMode(), ZIGBEE_PREAMBLE);
   return txTime;
 }
 
@@ -240,7 +233,7 @@ TosMacLow::ForwardDown (Ptr<const Packet> packet, const WifiMacHeader* hdr,
                 ", mode=" << txMode <<
                 ", duration=" << hdr->GetDuration () <<
                 ", seq=0x" << std::hex << m_currentHdr.GetSequenceControl () << std::dec);
-   m_phy->SendPacket (packet, txMode, WIFI_PREAMBLE_LONG, 0);
+   m_phy->SendPacket (packet, txMode, ZIGBEE_PREAMBLE, 0);
 }
 
 

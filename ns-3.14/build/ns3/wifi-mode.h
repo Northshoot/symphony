@@ -53,7 +53,9 @@ enum WifiModulationClass
   /** OFDM PHY (Clause 17) */
   WIFI_MOD_CLASS_OFDM,
   /** HT PHY (Clause 20) */
-  WIFI_MOD_CLASS_HT
+  WIFI_MOD_CLASS_HT,
+  /**SYMPHONY EXPERIMENTAL */
+  WIFI_MOD_CLASS_ZIGBEE
 };
 
 

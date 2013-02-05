@@ -97,6 +97,7 @@ WifiPhy::~WifiPhy ()
 WifiMode
 WifiPhy::GetPlcpHeaderMode (WifiMode payloadMode, WifiPreamble preamble)
 {
+
   switch (payloadMode.GetModulationClass ())
     {
     case WIFI_MOD_CLASS_OFDM:
@@ -123,14 +124,19 @@ WifiPhy::GetPlcpHeaderMode (WifiMode payloadMode, WifiPreamble preamble)
       if (preamble == WIFI_PREAMBLE_LONG)
         {
           // IEEE Std 802.11-2007, sections 15.2.3 and 18.2.2.1
+
           return WifiPhy::GetDsssRate1Mbps ();
         }
       else  //  WIFI_PREAMBLE_SHORT
         {
           // IEEE Std 802.11-2007, section 18.2.2.2
+
           return WifiPhy::GetDsssRate2Mbps ();
         }
-
+     //TODO: Symphony experimental
+    case WIFI_MOD_CLASS_ZIGBEE:
+    	std::cout << "\tENDED HERE WIFI_MOD_CLASS_ZIGBEE"<<std::endl;
+    	return WifiPhy::GetDsssRate250Kbps();
     default:
       NS_FATAL_ERROR ("unsupported modulation class");
       return WifiMode ();
@@ -163,7 +169,9 @@ WifiPhy::GetPlcpHeaderDurationMicroSeconds (WifiMode payloadMode, WifiPreamble p
             return 16;
           }
       }
-
+      //TODO: Symphony experimental
+    case WIFI_MOD_CLASS_ZIGBEE:
+    	return 2;
     case WIFI_MOD_CLASS_ERP_OFDM:
       return 16;
 
@@ -179,6 +187,7 @@ WifiPhy::GetPlcpHeaderDurationMicroSeconds (WifiMode payloadMode, WifiPreamble p
           return 48;
         }
 
+
     default:
       NS_FATAL_ERROR ("unsupported modulation class");
       return 0;
@@ -192,6 +201,9 @@ WifiPhy::GetPlcpPreambleDurationMicroSeconds (WifiMode payloadMode, WifiPreamble
     {
     case WIFI_MOD_CLASS_OFDM:
       {
+          if (preamble == ZIGBEE_PREAMBLE) {
+        	  return 16;
+          }
         switch (payloadMode.GetBandwidth ())
           {
           case 20000000:
@@ -219,6 +231,7 @@ WifiPhy::GetPlcpPreambleDurationMicroSeconds (WifiMode payloadMode, WifiPreamble
           // IEEE Std 802.11-2007, section 18.2.2.2 and figure 18-2
           return 72;
         }
+
       else // WIFI_PREAMBLE_LONG
         {
           // IEEE Std 802.11-2007, sections 18.2.2.1 and figure 18-1
@@ -349,23 +362,24 @@ WifiPhy::NotifyMonitorSniffTx (Ptr<const Packet> packet, uint16_t channelFreqMhz
 }
 
 
-/**
- * Clause 15 rates (DSSS)
- */
+
 
 WifiMode
 WifiPhy::GetDsssRate250Kbps ()
 {
   static WifiMode mode =
     WifiModeFactory::CreateWifiMode ("DsssRate250Kbps",
-                                     WIFI_MOD_CLASS_DSSS,
+    								WIFI_MOD_CLASS_ERP_OFDM,
                                      true,
-                                     22000000, 250000,
-                                     WIFI_CODE_RATE_UNDEFINED,
+                                     5000000, 250000,
+                                     WIFI_CODE_RATE_1_2,
                                      2);
   return mode;
 }
 
+/**
+ * Clause 15 rates (DSSS)
+ */
 WifiMode
 WifiPhy::GetDsssRate1Mbps ()
 {
@@ -877,6 +891,7 @@ static class Constructor
 public:
   Constructor ()
   {
+	ns3::WifiPhy::GetDsssRate250Kbps();
     ns3::WifiPhy::GetDsssRate1Mbps ();
     ns3::WifiPhy::GetDsssRate2Mbps ();
     ns3::WifiPhy::GetDsssRate5_5Mbps ();
