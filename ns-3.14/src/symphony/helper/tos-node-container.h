@@ -185,7 +185,7 @@ public:
    *
    * \code
    *   uint32_t nNodeTests = container.GetN ();
-   *   for (uint32_t i = 0 i < nNodeTests; ++i)
+   *   for (uint32_t i = 0; i < nNodeTests; ++i)
    *     {
    *       Ptr<TosNode> p = container.Get (i)
    *       i->method ();  // some TosNode method
@@ -207,7 +207,7 @@ public:
    *
    * \code
    *   uint32_t nNodeTests = container.GetN ();
-   *   for (uint32_t i = 0 i < nNodeTests; ++i)
+   *   for (uint32_t i = 0; i < nNodeTests; ++i)
    *     {
    *       Ptr<TosNode> p = container.Get (i)
    *       i->method ();  // some TosNode method
@@ -230,7 +230,7 @@ public:
    * \param n The number of NodeTests to create
    */
   void Create (uint32_t n);
-void Create (uint32_t n, const char * lib);
+  void Create (uint32_t n, const char * lib);
 
   /**
    * \brief Create n NodeTests with specified systemId for distributed simulations

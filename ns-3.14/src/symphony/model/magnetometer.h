@@ -6,8 +6,8 @@
  *      Author: lauril
  */
 
-#ifndef RAW_SENSOR_H_
-#define RAW_SENSOR_H_
+#ifndef SYMPHONY_SENSOR_H_
+#define SYMPHONY_SENSOR_H_
 
 #include <string>
 #include <map>
@@ -20,29 +20,32 @@
 #include "ns3/ns3-to-tos-proxy_auto.h"
 #include "ns3/calls-to-ns3.h"
 
+
+
 namespace ns3
 {
 
-  class RawSensor : public Object
+  class Magnetometer : public Object
   {
   public:
     static TypeId
     GetTypeId(void);
 
     const static uint32_t MIN_FILE_LENGTH = 8;
-    RawSensor();
+    Magnetometer();
 
     virtual
-    ~RawSensor();
+    ~Magnetometer();
 
-    virtual void
-    RawSensorEvent(std::string fileN);
-
-    virtual void
+    void
     DoStart(void);
-
-    virtual void
+    void
     DoDispose(void);
+
+    void
+    MagnetometerEvent(std::string fileN);
+
+
 
   private:
     Time m_started;
@@ -51,13 +54,11 @@ namespace ns3
      */
     void
     ReadData(const char * fileName);
-
     /**
      * Read directory and filter for your data
      */
     std::vector<uint64_t>
     GetMyData(void);
-
     /**
      * Date-Time Converter
      */
@@ -70,7 +71,6 @@ namespace ns3
     std::vector<std::string>
     Init(void);
 
-  protected:
     Callback<int, uint8_t> m_SensorStartDone;
     Callback<int, uint8_t> m_SensorStopDone;
     Callback<int, uint8_t,uint16_t,void *> m_InterruptData;

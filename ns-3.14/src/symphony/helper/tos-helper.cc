@@ -27,6 +27,7 @@
 #include "ns3/RF230-radio-model.h"
 #include "ns3/symphony-sensor-container.h"
 #include "ns3/raw-sensor.h"
+#include "ns3/skynet-sensor.h"
 
 NS_LOG_COMPONENT_DEFINE ("TosHelper");
 
@@ -109,8 +110,8 @@ TosHelper::InstallSensors(uint32_t i , TosNodeContainer c, std::string path)
       for (TosNodeContainer::Iterator i = c.Begin (); i != c.End (); ++i)
         {
           Ptr<TosNode> node = *i;
-          Ptr<RawSensor> sensor = CreateObject<RawSensor> ();
-          //sensor->SetAttribute("RsId", UintegerValue(node->GetId()));
+          Ptr<RawSensor> sensor = CreateObject<SkynetSensor> ();
+          sensor->SetAttribute("RsId", UintegerValue(node->GetId()));
           sensor->SetAttribute("SensorDataPath", StringValue(path));
           node->AddSensor(sensor);
           Callback<int, uint8_t> tmp =

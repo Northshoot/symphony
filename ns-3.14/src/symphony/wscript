@@ -41,6 +41,7 @@ def build(bld):
                       'model/hardware-model.cc',
                       'model/gateway-client.cc',
                       'model/raw-sensor.cc',
+                      'model/skynet-sensor.cc',
         ]
 
     module_test = bld.create_ns3_module_test_library('symphony')
@@ -78,6 +79,7 @@ def build(bld):
                     '../wifi/model/wifi-mac-trailer.h',
                     'model/raw-sensor.h',
                     'model/symphony-application.h',
+                    'model/skynet-sensor.h',
         ]
 
     #if bld.env.ENABLE_EXAMPLES:

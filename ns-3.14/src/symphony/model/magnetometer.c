@@ -24,73 +24,75 @@
 #include "ns3/type-id.h"
 #include "raw-sensor.h"
 
-NS_LOG_COMPONENT_DEFINE("RawSensor");
+NS_LOG_COMPONENT_DEFINE("Magnetometer");
 
 namespace ns3
 {
 
-  NS_OBJECT_ENSURE_REGISTERED(RawSensor);
+  NS_OBJECT_ENSURE_REGISTERED(Magnetometer);
 
   TypeId
-  RawSensor::GetTypeId(void)
+  Magnetometer::GetTypeId(void)
   {
     static TypeId tid =
-        TypeId("ns3::RawSensor")
-        .SetParent<Object> ()
-        .AddConstructor<RawSensor> ()
+        TypeId("ns3::Magnetometer")
+        .SetParent<Magnetometer> ()
+        .AddConstructor<Magnetometer> ()
         .AddAttribute(
-            "RsId", "The id (unique integer) of this RawSensor.",
+            "RsId", "The id (unique integer) of this Magnetometer.",
             TypeId::ATTR_SET,
-            UintegerValue(0), MakeUintegerAccessor(&RawSensor::m_id),
+            UintegerValue(0), MakeUintegerAccessor(&Magnetometer::m_id),
             MakeUintegerChecker<uint32_t>())
         .AddAttribute("SensorDataPath", "The path to directory were sensor data files are stored.",
             StringValue(),
-            MakeStringAccessor(&RawSensor::m_path),
+            MakeStringAccessor(&Magnetometer::m_path),
             MakeStringChecker())
          .AddAttribute("SensorStartDone","Callback for sensor start done event.",
              CallbackValue(),
-             MakeCallbackAccessor(&RawSensor::m_SensorStartDone),
+             MakeCallbackAccessor(&Magnetometer::m_SensorStartDone),
              MakeCallbackChecker ())
           .AddAttribute("SensorStopDone","Callback for sensor stop done event.",
                           CallbackValue(),
-                          MakeCallbackAccessor(&RawSensor::m_SensorStopDone),
+                          MakeCallbackAccessor(&Magnetometer::m_SensorStopDone),
                           MakeCallbackChecker ())
           .AddAttribute("InterruptData","Callback for sensor Interrupt with data event.",
                                        CallbackValue(),
-                                       MakeCallbackAccessor(&RawSensor::m_InterruptData),
+                                       MakeCallbackAccessor(&Magnetometer::m_InterruptData),
                                        MakeCallbackChecker ())
             ;
     return tid;
   }
 
-   void
-  RawSensor::DoStart(void)
+  void
+  Magnetometer::DoStart(void)
   {
- //   m_ids="ID"+boost::lexical_cast<std::string>(m_id);
-  //  m_directory = Init();
-   // m_fileNames = GetMyData();
+
+
+    m_ids="ID"+boost::lexical_cast<std::string>(m_id);
+    m_directory = Init();
+    m_fileNames = GetMyData();
     Object::DoStart();
-//    m_started = Simulator::Now();
- //   if(m_fileNames.size()>0){
- //     uint64_t now=m_fileNames.front();
- //     m_fileNames.erase(m_fileNames.begin());
+    m_started = Simulator::Now();
+    if(m_fileNames.size()>0){
+      uint64_t now=m_fileNames.front();
+      m_fileNames.erase(m_fileNames.begin());
 //      uint64_t next=m_fileNames.front();
 //      m_fileNames.erase(m_fileNames.begin());
 //      std::cout <<" Next event "<<next<<std::endl;
- //     std::string fileN = m_path+m_ids+"_"+boost::lexical_cast<std::string>(now);
- //     m_bufferQueue=true;
- //     m_next=Simulator::Schedule(( MilliSeconds(now)-Simulator::Now() ) ,&RawSensor::RawSensorEvent, this, fileN);
-//    } else {
-//        NS_LOG_INFO("No more sensor data.");
-//        m_bufferQueue=false;
-   // }
+      std::string fileN = m_path+m_ids+"_"+boost::lexical_cast<std::string>(now);
+      m_bufferQueue=true;
+      m_next=Simulator::Schedule(( MilliSeconds(now)-Simulator::Now() ) ,&Magnetometer::MagnetometerEvent, this, fileN);
+    } else {
+        NS_LOG_INFO("No more sensor data.");
+        m_bufferQueue=false;
+    }
     //this must be sett!
- //   NS_ASSERT_MSG(!m_SensorStartDone.IsNull(), "RawSensor - SensorStartDone is not set!");
- //   m_SensorStartDone(0);
+    NS_ASSERT_MSG(!m_SensorStartDone.IsNull(), "SensorStartDone is not set!");
+    m_SensorStartDone(0);
   }
 
-   void
-  RawSensor::DoDispose(void)
+  void
+  Magnetometer::DoDispose(void)
   {
     //SensorStopDone(0);
     if(m_next.IsRunning()){
@@ -101,8 +103,8 @@ namespace ns3
     Object::DoDispose();
   }
 
-   void
-  RawSensor::RawSensorEvent(std::string fileN)
+  void
+  Magnetometer::MagnetometerEvent(std::string fileN)
   {
     uint64_t next;
     //do something with m_buffer
@@ -118,14 +120,14 @@ namespace ns3
       std::string fileN = m_path+m_ids +"_"+ boost::lexical_cast<std::string>(next);
       NS_LOG_INFO(fileN);
       m_bufferQueue = true;
-      m_next=Simulator::Schedule((MilliSeconds(next)-Simulator::Now() ),&RawSensor::RawSensorEvent, this, fileN);
+      m_next=Simulator::Schedule((MilliSeconds(next)-Simulator::Now() ),&Magnetometer::MagnetometerEvent, this, fileN);
     } else {
         NS_LOG_INFO("No more sensor data.");
         m_bufferQueue=false;
     }
   }
-   void
-  RawSensor::ReadData( const char * fileName)
+  void
+  Magnetometer::ReadData( const char * fileName)
   {
     FILE *file;
     file = fopen(fileName, "rb");
@@ -141,20 +143,20 @@ namespace ns3
      m_InterruptData(0,m_fileLen,(void*) m_buffer);
   }
 
-  RawSensor::RawSensor()
+  Magnetometer::Magnetometer()
   {
     NS_LOG_FUNCTION (this);
 
   }
 
-  RawSensor::~RawSensor()
+  Magnetometer::~Magnetometer()
   {
     // TODO Auto-generated destructor stub
   }
 
 
   std::vector<uint64_t>
-  RawSensor::GetMyData(void)
+  Magnetometer::GetMyData(void)
   {
     std::vector<uint64_t> data;
     for(unsigned int i =0; i< m_directory.size();i++){
@@ -175,7 +177,7 @@ namespace ns3
   }
 
   Time
-  RawSensor::GetTime(std::string dateTime)
+  Magnetometer::GetTime(std::string dateTime)
   {
 
     return Simulator::Now();
@@ -184,7 +186,7 @@ namespace ns3
 
 
   std::vector<std::string>
-  RawSensor::Init(void)
+  Magnetometer::Init(void)
   {
     DIR *dp;
     struct dirent *ep;
@@ -200,7 +202,7 @@ namespace ns3
           {
             j = ep->d_name;
             //linux will give dirs "."-this and ".."-up dirs in the readin
-            if (ep->d_reclen > RawSensor::MIN_FILE_LENGTH)
+            if (ep->d_reclen > Magnetometer::MIN_FILE_LENGTH)
               {
                 fileNames.push_back(j);
 
