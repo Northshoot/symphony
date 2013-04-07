@@ -3,12 +3,19 @@
 def build(bld):
     tos = bld.create_ns3_program('tos-simple', ['symphony'])
     tos.source = 'tos.cc'
+   
     sens = bld.create_ns3_program('tos-sensor',['symphony'])
     sens.source = 'tos-sensor.cc'
+    
     hidden = sens = bld.create_ns3_program('tos-hidden-terminal',['symphony'])
     hidden.source = 'tos-hidden-terminal.cc'
+    
     emu = bld.create_ns3_program('gateway-test',['symphony','emu'])
     emu.source = 'gateway-test.cc'
+    
     app = bld.create_ns3_program('tos2application',['symphony','emu'])
     app.source = 'tos2application.cc'
-
+    
+    skynet = bld.create_ns3_program('skynetTosApp',['symphony'])
+    skynet.source = 'SkynetTos/tos.cc'
+    
