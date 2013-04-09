@@ -1,18 +1,5 @@
 /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
-/*
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation;
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+
 #ifndef SkynetNs3ProxyServer_H
 #define SkynetNs3ProxyServer_H
 
@@ -28,21 +15,21 @@ namespace ns3 {
 class Socket;
 
 /**
- * \brief an application which sends one ICMP ECHO request, waits for a REPLYs
- *        and reports the calculated RTT.
  *
- * Note: The RTT calculated is reported through a trace source.
  */
 class SkynetNs3ProxyServer : public Application
 {
 public:
-  static TypeId GetTypeId (void);
+	static TypeId GetTypeId (void);
 
-  /**
-   * create a pinger applications
-   */
-  SkynetNs3ProxyServer ();
-  virtual ~SkynetNs3ProxyServer ();
+	/**
+	 * Create a new IO Server to communicate between the outside and NS3
+	 * through a TCP Socket.
+	 */
+	SkynetNs3ProxyServer ();
+	virtual ~SkynetNs3ProxyServer ();
+
+	void SendData(int32_t);
 
 private:
 
@@ -52,6 +39,7 @@ private:
   virtual void DoDispose (void);
   uint32_t GetApplicationId (void) const;
  
+  // management of the callbacks
   void HandleRead (Ptr<Socket>);
   void HandleAccept (Ptr<Socket>, const Address& from);
   void HandlePeerClose (Ptr<Socket>);
@@ -59,7 +47,15 @@ private:
   void HandleSend (Ptr<Socket>, uint32_t);
 
   Ptr<Socket> m_socket;
-  int m_portNumber;
+
+  // Information of remote end point
+  int m_remotePortNumber;
+  std::string m_remoteIp;
+
+  // Information of local end point
+  int m_localPortNumber;
+  std::string m_localIp;
+
 };
 
 } // namespace ns3

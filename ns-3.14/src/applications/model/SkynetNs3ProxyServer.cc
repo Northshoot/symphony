@@ -19,6 +19,10 @@
 #include "ns3/config.h"
 #include "ns3/skynet-sensor.h"
 #include "ns3/names.h"
+#include "ns3/string.h"
+#include "ns3/object.h"
+
+#include <stdio.h>
 
 namespace ns3 {
 
@@ -29,7 +33,6 @@ NS_OBJECT_ENSURE_REGISTERED (SkynetNs3ProxyServer);
 SkynetNs3ProxyServer::SkynetNs3ProxyServer ()
 {
 	m_socket = 0;
-	m_portNumber = 9999;
 }
 
 TypeId SkynetNs3ProxyServer::GetTypeId (void)
@@ -37,11 +40,26 @@ TypeId SkynetNs3ProxyServer::GetTypeId (void)
   static TypeId tid = TypeId ("ns3::SkynetNs3ProxyServer")
     .SetParent<Application> ()
     .AddConstructor<SkynetNs3ProxyServer> ()
-    .AddAttribute("PortNumber",
-    							"Listening port for the server",
-    							IntegerValue(9999),
-    							MakeIntegerAccessor(&SkynetNs3ProxyServer::m_portNumber),
-    							MakeIntegerChecker<int64_t>());
+    .AddAttribute("RemotePortNumber",
+    					"Remote port listening for connections",
+    					IntegerValue(9999),
+    					MakeIntegerAccessor(&SkynetNs3ProxyServer::m_remotePortNumber),
+    					MakeIntegerChecker<int64_t>())
+    .AddAttribute("RemoteIp",
+    					"Remote IP listening for connections",
+    					StringValue("127.0.0.1"),
+    					MakeStringAccessor(&SkynetNs3ProxyServer::m_remoteIp),
+    					MakeStringChecker())
+    .AddAttribute("LocalPortNumber",
+    					"Local port for incoming connections",
+    					IntegerValue(3333),
+    					MakeIntegerAccessor(&SkynetNs3ProxyServer::m_localPortNumber),
+    					MakeIntegerChecker<int64_t>())
+    .AddAttribute("LocalIp",
+    					"Local IP for incoming connections",
+    					StringValue("127.0.0.1"),
+    					MakeStringAccessor(&SkynetNs3ProxyServer::m_localIp),
+    					MakeStringChecker());
   return tid;
 }
 
@@ -51,38 +69,50 @@ void SkynetNs3ProxyServer::StartApplication (void)
   NS_LOG_FUNCTION (this);
   
   m_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::TcpSocketFactory"));
-  NS_ASSERT (m_socket != 0);
+  NS_ASSERT_MSG (m_socket != 0, "An error has happened when trying to create the socket");
   
   
-  InetSocketAddress src = InetSocketAddress (Ipv4Address::GetAny(), m_portNumber );
-
-  InetSocketAddress dest = InetSocketAddress(Ipv4Address("172.16.107.1"), m_portNumber);
+  InetSocketAddress src = InetSocketAddress (Ipv4Address::GetAny(), m_localPortNumber );
+  InetSocketAddress dest = InetSocketAddress(Ipv4Address(m_remoteIp.c_str()), m_remotePortNumber);
 
   int status;
   status = m_socket->Bind (src);
-  NS_ASSERT (status != -1);
+  NS_ASSERT_MSG (status != -1, "An error has happened when trying to bind to local end point");
   
   status = m_socket->Connect(dest);
-  NS_ASSERT (status != -1);
+  NS_ASSERT_MSG (status != -1, "An error has happened when trying to connect to remote end point");
   
-  //m_socket->ShutdownSend();
-  
+  // Configures the callbacks for the different events related with the connection
+
+  //m_socket->SetConnectCallback
+
+
   m_socket->SetAcceptCallback (
     MakeNullCallback<bool, Ptr<Socket>, const Address &> (),
     MakeCallback (&SkynetNs3ProxyServer::HandleAccept, this));
+
+  m_socket->SetRecvCallback (
+	MakeCallback (&SkynetNs3ProxyServer::HandleRead, this));
+
+  m_socket->SetDataSentCallback (
+	MakeCallback (&SkynetNs3ProxyServer::HandleSend,this));
+
+  //m_socket->SetSendCallback
+
   m_socket->SetCloseCallbacks (
     MakeCallback (&SkynetNs3ProxyServer::HandlePeerClose, this),
     MakeCallback (&SkynetNs3ProxyServer::HandlePeerError, this));
-  m_socket->SetRecvCallback (
-	MakeCallback (&SkynetNs3ProxyServer::HandleRead, this));
-  m_socket->SetDataSentCallback (
-	MakeCallback (&SkynetNs3ProxyServer::HandleSend,this));
+
+  // If we need to configure a reception only socket or a sending only socket
+  // we need to call one of the following methods:
+  // m_socket->ShutdownSend();
+  // m_socket->ShutdownRecv();
 }
 
 void SkynetNs3ProxyServer::StopApplication (void)
 {
   NS_LOG_FUNCTION (this);
-  m_socket->Close ();
+  m_socket->Close();
 }
 
 void SkynetNs3ProxyServer::HandlePeerClose (Ptr<Socket> socket)
@@ -135,10 +165,20 @@ void SkynetNs3ProxyServer::HandleRead (Ptr<Socket> socket)
           Ptr<SkynetSensor> sens = Names::Find<SkynetSensor>("/Names/TemperatureSensor");
           sens->SetTemperatureValue(atoi((char*)value));
 
-          socket->SendTo (packet, 0, from);
+          //socket->SendTo (packet, 0, from);
          }
 
     }
+}
+
+void SkynetNs3ProxyServer::SendData(int32_t value)
+{
+	char* string;
+
+	asprintf(&string, "%d", value);
+
+	Ptr<Packet> packet = Create<Packet>((uint8_t*) string, sizeof(string));
+	m_socket->Send(packet);
 }
 
 SkynetNs3ProxyServer::~SkynetNs3ProxyServer ()
@@ -149,7 +189,6 @@ SkynetNs3ProxyServer::~SkynetNs3ProxyServer ()
 void SkynetNs3ProxyServer::DoDispose (void)
 {
   NS_LOG_FUNCTION (this);
-
   m_socket = 0;
   Application::DoDispose ();
 }

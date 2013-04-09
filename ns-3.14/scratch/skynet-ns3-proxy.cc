@@ -31,6 +31,9 @@ void Log(uint8_t size, void * buffer){
 
     NodePacket *npkt = (NodePacket*) buffer;
 
+    Ptr<SkynetNs3ProxyServer> serv = Names::Find<SkynetNs3ProxyServer>("/Names/IOServer");
+    serv->SendData(npkt->counter);
+
     NS_LOG_UNCOND("[NS3] Node [" << npkt->nodeId << "] sent value " << npkt->counter );
 }
 
@@ -48,8 +51,11 @@ main (int argc, char *argv[])
   std::string localIp("172.16.107.142");
   std::string localMask("255.255.255.0");
   std::string localGateway("172.16.107.2");
+  int localPortNumber(3333);
 
-  int portNumber(9999);
+  std::string remoteIp("172.16.107.1");
+  int remotePortNumber(9999);
+
   
   // Default Symphony parameters
   std::string nodeModel("/home/onir/dev/symphony/ns-3.14/build/symphony.xml");
@@ -61,14 +67,19 @@ main (int argc, char *argv[])
   // Allow modification of default network parameters
   CommandLine cmd;
   cmd.AddValue ("deviceName", "Device Name (e.g eth0)", deviceName);
+
   cmd.AddValue ("localIp", "Local IP address (e.g 192.168.1.100) - It should match with the IP range inside the network to work", localIp);
   cmd.AddValue ("localMask", "Local Network Mask (e.g. 255.255.255.0)", localMask);
   cmd.AddValue ("localGateway", "Local Gateway (e.g. 192.168.1.1)", localGateway);
+  cmd.AddValue ("localPortNumer", "Local Port Number (e.g 3333)", localPortNumber);
+
+  cmd.AddValue ("remoteIp", "Remote IP address (e.g 172.16.107.1)", remoteIp);
+  cmd.AddValue ("remotePortNumber", "Listening port for the server (e.g 9999)", remotePortNumber);
+
   cmd.AddValue ("simulationTime", "Simulation time (s) (e.g. 60)", simulationTime);
-  cmd.AddValue ("portNumber", "Listening port for the server (e.g 9999)", portNumber);
 
   cmd.AddValue ("nodeModel", "Full path to XML description of the node (s) (e.g. /home/user/symphony.xml)", simulationTime);
-  cmd.AddValue ("nodeImage", "Full path to .so image of TinyOS code (e.g /home/user/libTos.so)", portNumber);
+  cmd.AddValue ("nodeImage", "Full path to .so image of TinyOS code (e.g /home/user/libTos.so)", nodeImage);
 
   cmd.Parse (argc, argv);
   
@@ -130,9 +141,14 @@ main (int argc, char *argv[])
   
   Ptr<SkynetNs3ProxyServer> app = CreateObject<SkynetNs3ProxyServer> ();
   node->AddApplication (app);
-  app->SetStartTime (Seconds (1.0));
-  app->SetStopTime (Seconds (atoi(simulationTime.c_str()))); 
-  app->SetAttribute("PortNumber", IntegerValue(portNumber));
+  app->SetStartTime(Seconds (1.0));
+  app->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
+  app->SetAttribute("RemotePortNumber", IntegerValue(remotePortNumber));
+  app->SetAttribute("RemoteIp", StringValue(remoteIp));
+  app->SetAttribute("LocalPortNumber", IntegerValue(localPortNumber));
+  app->SetAttribute("LocalIp", StringValue(localIp));
+
+  Names::Add("IOServer", app);
 
 
   // Configure the TinyOS node
