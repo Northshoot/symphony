@@ -36,13 +36,13 @@ namespace ns3 {
     public:
     static TypeId GetTypeId (void);
     
-    SimuClock(PRECISION p , TIMEDRIFT t,  Callback<uint32_t,uint32_t>  tf);
+    SimuClock(PRECISION p , TIMEDRIFT t,  Callback<uint32_t,uint64_t>  tf);
 
     /**
      * sets time drift parameter
      * default = 0
      */	
-    void setTimeDrift(uint64_t timeDrift);
+    void setTimeDrift(uint64_t timeDrift, PRECISION precision);
 	
     /**
      * handle timer event
@@ -73,11 +73,11 @@ private:
     /**
      * the value of time drift
      */	
-    uint64_t timeDrift;
+    Time timeDrift;
     /**
      * pointer to callback function
      */
-    Callback<uint32_t,uint32_t>  callBack;
+    Callback<uint32_t,uint64_t>  callBack;
  
     /**
      * Tick time

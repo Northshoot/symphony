@@ -1,5 +1,3 @@
-
- 
 #include "Timer.h"
 
 module ClockTestC @safe() {
@@ -11,21 +9,17 @@ module ClockTestC @safe() {
 	}
 }
 implementation {
- 
+ uint32_t time_exec=0;
 	event void Boot.booted() {
-	  #ifdef SYMPHONY
-		gatewayLogg(proxy,__PRETTY_FUNCTION__,__LINE__, "Boot Booted");
-	  #endif
 		call MilliTimer.startPeriodic( 500 );
 
 	}
 
  
 	event void MilliTimer.fired() {
-		#ifdef SYMPHONY
-		gatewayLogg(proxy,__PRETTY_FUNCTION__,__LINE__, "MilliTimer.fired()" );
-		#endif
-		call Leds.led1Toggle();
+		time_exec = call MilliTimer.getNow();
+		dbg("Info", "Fired %u\n", time_exec);
+		printf("\t\t######### %u\n",time_exec);
 	}
 
 

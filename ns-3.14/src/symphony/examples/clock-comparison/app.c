@@ -741,7 +741,7 @@ struct drand48_data {
   unsigned long long int __a;
 };
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b00bb4066b0, const void *arg_0x2b00bb406988);
+typedef int (*__compar_fn_t)(const void *arg_0x2b6aba33d6b0, const void *arg_0x2b6aba33d988);
 #line 776
 __extension__ 
 #line 793
@@ -1170,9 +1170,7 @@ typedef /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag /*Hi
 static error_t PlatformP$Init$init(void );
 #line 62
 static error_t LedsP$Init$init(void );
-# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Leds.nc"
-static void LedsP$Leds$led1Toggle(void );
-# 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+#line 62
 static error_t NsTimerP$Init$init(void );
 # 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static uint32_t NsTimerP$Timer$getNow(void );
@@ -1183,11 +1181,11 @@ static void NsTimerP$Timer$stop(void );
 # 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b00bb6b5960);
+uint8_t arg_0x2b6aba5ec960);
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b00bb6b5960);
+uint8_t arg_0x2b6aba5ec960);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1206,14 +1204,18 @@ static void ClockTestC$MilliTimer$fired(void );
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void );
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void );
-#line 83
+#line 136
+static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(
+# 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b6aba6e18c8);
+# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b00bb7ab160);
+uint8_t arg_0x2b6aba6e18c8);
 # 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b00bb7ab160, 
+uint8_t arg_0x2b6aba6e18c8, 
 # 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 uint32_t dt);
 # 62 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
@@ -1224,8 +1226,6 @@ static error_t PlatformP$TimerInit$init(void );
 static inline error_t PlatformP$Init$init(void );
 # 37 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/LedsP.nc"
 static inline error_t LedsP$Init$init(void );
-#line 64
-static inline void LedsP$Leds$led1Toggle(void );
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void NsTimerP$Timer$fired(void );
 # 20 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
@@ -1286,7 +1286,7 @@ extern int sim_main_start_mote(int id)   ;
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b00bb6b5960);
+uint8_t arg_0x2b6aba5ec960);
 
 
 
@@ -1333,15 +1333,13 @@ static error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id);
 
 
 static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id);
-# 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+static uint32_t ClockTestC$MilliTimer$getNow(void );
+#line 64
 static void ClockTestC$MilliTimer$startPeriodic(uint32_t dt);
-# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Leds.nc"
-static void ClockTestC$Leds$led1Toggle(void );
-# 15 "ClockTestC.nc"
+# 12 "ClockTestC.nc"
+uint32_t ClockTestC$time_exec = 0;
 static inline void ClockTestC$Boot$booted(void );
-
-
-
 
 
 
@@ -1362,7 +1360,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b00bb7ab160);
+uint8_t arg_0x2b6aba6e18c8);
 #line 71
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4283 {
 #line 71
@@ -1419,6 +1417,8 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTi
 
 
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(uint8_t num, uint32_t dt);
+#line 189
+static inline uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(uint8_t num);
 #line 204
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(uint8_t num);
 # 10 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
@@ -1580,9 +1580,9 @@ static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b00bb6b5960){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b6aba5ec960){
 #line 75
-  switch (arg_0x2b00bb6b5960) {
+  switch (arg_0x2b6aba5ec960) {
 #line 75
     case /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer:
 #line 75
@@ -1592,7 +1592,7 @@ inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b00bb6b5960)
 #line 75
     default:
 #line 75
-      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b00bb6b5960);
+      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b6aba5ec960);
 #line 75
       break;
 #line 75
@@ -1661,28 +1661,34 @@ static inline void os_log_debug(char *string, const char *format, ...)
 {
 }
 
-# 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/LedsP.nc"
-static inline void LedsP$Leds$led1Toggle(void )
-#line 64
+# 189 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+static inline uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(uint8_t num)
 {
-  os_log_debug("Led1", "toggle\n");
+  return /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow();
 }
 
-# 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Leds.nc"
-inline static void ClockTestC$Leds$led1Toggle(void ){
-#line 83
-  LedsP$Leds$led1Toggle();
-#line 83
+# 136 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static uint32_t ClockTestC$MilliTimer$getNow(void ){
+#line 136
+  unsigned int __nesc_result;
+#line 136
+
+#line 136
+  __nesc_result = /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$getNow(0U);
+#line 136
+
+#line 136
+  return __nesc_result;
+#line 136
 }
-#line 83
-# 24 "ClockTestC.nc"
+#line 136
+# 19 "ClockTestC.nc"
 static inline void ClockTestC$MilliTimer$fired(void )
-#line 24
+#line 19
 {
-
-
-
-  ClockTestC$Leds$led1Toggle();
+  ClockTestC$time_exec = ClockTestC$MilliTimer$getNow();
+  os_log_debug("Info", "Fired %u\n", ClockTestC$time_exec);
+  printf("\t\t######### %u\n", ClockTestC$time_exec);
 }
 
 # 204 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
@@ -1691,9 +1697,9 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$d
 }
 
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b00bb7ab160){
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b6aba6e18c8){
 #line 83
-  switch (arg_0x2b00bb7ab160) {
+  switch (arg_0x2b6aba6e18c8) {
 #line 83
     case 0U:
 #line 83
@@ -1703,7 +1709,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$f
 #line 83
     default:
 #line 83
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b00bb7ab160);
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b6aba6e18c8);
 #line 83
       break;
 #line 83
@@ -1896,13 +1902,10 @@ inline static void ClockTestC$MilliTimer$startPeriodic(uint32_t dt){
 #line 64
 }
 #line 64
-# 15 "ClockTestC.nc"
+# 13 "ClockTestC.nc"
 static inline void ClockTestC$Boot$booted(void )
-#line 15
+#line 13
 {
-
-
-
   ClockTestC$MilliTimer$startPeriodic(500);
 }
 

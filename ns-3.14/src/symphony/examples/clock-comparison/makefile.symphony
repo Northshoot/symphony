@@ -47,7 +47,7 @@ NS3_OBJ = $(SYMPHONY_BUILD)/$(PRE_NS_LIB)-symphony-$(POST_NS_LIB)
 NS3_LOAD =$(SYMPHONY_BUILD)/$(PRE_NS_LIB)-tos-loader-$(POST_NS_LIB)
 CALL_HEADER=$(SYMPHONY_SRC)/model/calls-to-ns3.h
 
-#define symphony
+#define symphony used internally in tinyos when something specific is done by symphony
 CFLAGS+=-DSYMPHONY
 #app to create
 SIM_LIB=libtos

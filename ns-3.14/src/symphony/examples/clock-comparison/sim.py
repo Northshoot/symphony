@@ -2,7 +2,7 @@
 import sys
 from tinyos.tossim.TossimApp import *
 from TOSSIM import *
-from BooterMsg import *
+#from BooterMsg import *
 
 n = NescApp()
 t = Tossim(n.variables.variables())
@@ -10,12 +10,12 @@ r = t.radio()
 
 
 #t.addChannel("Snoop",sys.stdout)
-#t.addChannel("Info",sys.stdout)
-t.addChannel("Summary",sys.stdout)
+t.addChannel("Info",sys.stdout)
+#t.addChannel("Summary",sys.stdout)
 #t.addChannel("LedsC", sys.stdout)
 
 
-for i in range(0, 10):
+for i in range(0, 1):
   m = t.getNode(i)
   m.bootAtTime(3 * i + 1)
 
@@ -37,15 +37,8 @@ for i in range(10):
   t.getNode(i).createNoiseModel()
 
 
-m = t.getNode(9) 
-v = m.getVariable("BooterC.test_ended")
-
-print "BooterC.num_seq: <", v.getData(), ">"
-
-while not v.getData():
+for i in range(10000):
   t.runNextEvent()
 
-s = m.getVariable("BooterC.num_seq") 
-nm = m.getVariable("BooterC.num_msg") 
-print "BooterC.num_seq: <", s.getData(), ":", nm.getData(), ">"
+
 

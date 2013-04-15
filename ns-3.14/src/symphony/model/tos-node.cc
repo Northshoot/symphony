@@ -135,9 +135,8 @@ void
   }
 
   uint32_t
-  TosNode::wrapFire(uint32_t a)
+  TosNode::wrapFire(uint64_t a)
   {
-    a = simuclock->getTimeNow();
     nstotos->tickFired(a);
     return 0;
   }
@@ -212,7 +211,8 @@ void
     }
     callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
     simuclock = CreateObject < SimuClock
-        > (NANOSECOND, NONE, callBackFromClock);
+        > (MILLISECOND, STATIC, callBackFromClock);
+    simuclock->setTimeDrift(5, MILLISECOND);
     tostons->simu_clock = simuclock;
     //changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
     //for eclipse debug full path is needed for the lib

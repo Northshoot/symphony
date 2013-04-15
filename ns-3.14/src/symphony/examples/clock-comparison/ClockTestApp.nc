@@ -1,5 +1,5 @@
 
-configuration RadioApp
+configuration ClockTestApp
 {
 }
 implementation {

@@ -28,7 +28,7 @@ namespace ns3
     return tid;
   }
   SimuClock::SimuClock(PRECISION p, TIMEDRIFT t,
-      Callback<uint32_t, uint32_t> tf) :
+      Callback<uint32_t, uint64_t> tf) :
       prec(p), type(t), timeDrift(0), callBack(tf)
   {
     count = 0;
@@ -53,17 +53,34 @@ namespace ns3
   {
     //set up time
     double crystal;
-    crystal = 1.0 / 1024.0;
+    crystal = 1.0 / 1022.0;
     //std::cout<<"crystal "<<crystal<<std::endl;
-    tickTime = SimuClock::getTime(prec, crystal);
-    //std::cout<<"tickTime "<<tickTime<<std::endl;
+    tickTime = Seconds(crystal*prec);
+    //std::cout<<"tickTime "<<tickTime.GetMilliSeconds()<<std::endl;
     tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired, this);
   }
 
   void
-  SimuClock::setTimeDrift(uint64_t td)
+  SimuClock::setTimeDrift(uint64_t td, PRECISION precision)
   {
-    timeDrift = td;
+	  switch (precision) {
+		case SECOND:
+			timeDrift = ns3::Seconds(td*1.0);
+			break;
+		case MILLISECOND:
+			timeDrift = ns3::MilliSeconds(td);
+			break;
+		case MICROSECOND:
+			timeDrift = ns3::MicroSeconds(td);
+			break;
+		case NANOSECOND:
+			timeDrift = ns3::NanoSeconds(td);
+			break;
+		default:
+			NS_ASSERT_MSG(true,"undefined PRECISION for clock drift");
+			break;
+	}
+
   }
 
   void
@@ -79,10 +96,11 @@ namespace ns3
       }
     else if (type == STATIC)
       {
-        //TODO:
-        std::cout << "SimuClock::timerFired() STATIC not implemented!"
-            << std::endl;
-        exit(1);
+        tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired,
+            this);
+        count++;
+        std::cout<<"tick now "<<Simulator::Now().GetMilliSeconds()<<" t " << tickTime.GetMilliSeconds()<<std::endl;
+        callBack(Simulator::Now().GetMilliSeconds());
       }
     else if (type == EXPONENTIAL)
       {

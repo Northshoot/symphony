@@ -101,7 +101,7 @@ namespace ns3
     uint32_t
     getNow();
     uint32_t
-    wrapFire(uint32_t);
+    wrapFire(uint64_t);
     /**
      * \returns the unique id of this node.
      *
@@ -114,7 +114,7 @@ namespace ns3
     /**
      * Callback function
      */
-    Callback<uint32_t, uint32_t> callBackFromClock;
+    Callback<uint32_t, uint64_t> callBackFromClock;
 
     Ptr<SimuClock>
     getClock();
