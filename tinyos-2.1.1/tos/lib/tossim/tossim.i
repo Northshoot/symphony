@@ -262,7 +262,6 @@ PyObject* listFromArray(char* type, char* ptr, int len) {
   }
 }
 
-
 %typemap(python,in) nesc_app_t* {
   if (!PyList_Check($input)) {
     PyErr_SetString(PyExc_TypeError, "Requires a list as a parameter.");
