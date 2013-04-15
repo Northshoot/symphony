@@ -3,7 +3,7 @@ configuration RadioApp
 {
 }
 implementation {
-  components MainC, LedsC, RadioTestC as App;
+  components MainC, LedsC, ClockTestC as App;
   components new TimerMilliC();
 
   

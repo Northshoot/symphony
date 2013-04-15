@@ -789,7 +789,7 @@ extern void *malloc(size_t __size) __attribute((__nothrow__)) __attribute((__mal
 #line 488
 extern void free(void *__ptr) __attribute((__nothrow__)) ;
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b1f5271c6b0, const void *arg_0x2b1f5271c988);
+typedef int (*__compar_fn_t)(const void *arg_0x2b722d53a6b0, const void *arg_0x2b722d53a988);
 #line 776
 __extension__ 
 #line 793
@@ -1171,8 +1171,8 @@ typedef struct hashtable hashtable_t;
 #line 78
 struct hashtable *
 create_hashtable(unsigned int minsize, 
-unsigned int (*hashfunction)(void *arg_0x2b1f529d4ca8), 
-int (*key_eq_fn)(void *arg_0x2b1f529d24e8, void *arg_0x2b1f529d2788));
+unsigned int (*hashfunction)(void *arg_0x2b722d7f2ca8), 
+int (*key_eq_fn)(void *arg_0x2b722d7f04e8, void *arg_0x2b722d7f0788));
 #line 103
 #line 102
 int 
@@ -1785,7 +1785,7 @@ struct tm;
 
 struct tm;
 # 46 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/randomlib.h"
-static inline void RandomInitialise(int arg_0x2b1f52bcb9b0, int arg_0x2b1f52bcbc18);
+static inline void RandomInitialise(int arg_0x2b722d9e99b0, int arg_0x2b722d9e9c18);
 static inline double RandomUniform(void );
 # 51 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/sim_noise.c"
 int numCase1 = 0;
@@ -3559,7 +3559,7 @@ typedef union __nesc_unnamed4324 {
     uint8_t rsvd : 2;
   } bits;
 } Atm128_ETIFR_t;
-typedef TMilli RadioTestC$MilliTimer$precision_tag;
+typedef TMilli ClockTestC$MilliTimer$precision_tag;
 typedef TMilli /*AlarmCounterMilliP.Atm128AlarmAsyncC*/Atm128AlarmAsyncC$0$precision;
 typedef /*AlarmCounterMilliP.Atm128AlarmAsyncC*/Atm128AlarmAsyncC$0$precision /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$precision;
 typedef /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$precision /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$Alarm$precision_tag;
@@ -3618,11 +3618,11 @@ static error_t MeasureClockC$Init$init(void );
 # 67 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SimSchedulerBasicP$TaskBasic$postTask(
 # 49 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2b1f52ce2108);
+uint8_t arg_0x2b722db00108);
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SimSchedulerBasicP$TaskBasic$default$runTask(
 # 49 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2b1f52ce2108);
+uint8_t arg_0x2b722db00108);
 # 57 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SimSchedulerBasicP$Scheduler$init(void );
 
@@ -3660,7 +3660,7 @@ message_t *
 
 TossimActiveMessageC$Snoop$default$receive(
 # 49 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b1f52fbbb68, 
+am_id_t arg_0x2b722ddd9b68, 
 # 71 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -3699,7 +3699,7 @@ message_t *
 
 TossimActiveMessageC$Receive$default$receive(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b1f52fbb020, 
+am_id_t arg_0x2b722ddd9020, 
 # 71 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -3738,9 +3738,9 @@ static error_t LedsP$Init$init(void );
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Leds.nc"
 static void LedsP$Leds$led1Toggle(void );
 # 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
-static void RadioTestC$Boot$booted(void );
+static void ClockTestC$Boot$booted(void );
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-static void RadioTestC$MilliTimer$fired(void );
+static void ClockTestC$MilliTimer$fired(void );
 # 109 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Alarm.nc"
 static /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$Alarm$size_type /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$Alarm$getNow(void );
 #line 103
@@ -3807,11 +3807,11 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fire
 #line 83
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b1f532b4da0);
+uint8_t arg_0x2b722e0d2da0);
 # 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b1f532b4da0, 
+uint8_t arg_0x2b722e0d2da0, 
 # 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 uint32_t dt);
 # 82 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Counter.nc"
@@ -3898,7 +3898,7 @@ int sim_main_start_mote(void )   ;
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SimSchedulerBasicP$TaskBasic$runTask(
 # 49 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/SimSchedulerBasicP.nc"
-uint8_t arg_0x2b1f52ce2108);
+uint8_t arg_0x2b722db00108);
 
 
 
@@ -4072,7 +4072,7 @@ message_t *
 
 TossimActiveMessageC$Snoop$receive(
 # 49 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b1f52fbbb68, 
+am_id_t arg_0x2b722ddd9b68, 
 # 71 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4091,7 +4091,7 @@ message_t *
 
 TossimActiveMessageC$Receive$receive(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/tossim/TossimActiveMessageC.nc"
-am_id_t arg_0x2b1f52fbb020, 
+am_id_t arg_0x2b722ddd9020, 
 # 71 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
 message_t * msg, 
 void * payload, 
@@ -4180,11 +4180,11 @@ static inline error_t LedsP$Init$init(void );
 #line 99
 static inline void LedsP$Leds$led1Toggle(void );
 # 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-static void RadioTestC$MilliTimer$startPeriodic(uint32_t dt);
+static void ClockTestC$MilliTimer$startPeriodic(uint32_t dt);
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Leds.nc"
-static void RadioTestC$Leds$led1Toggle(void );
-# 15 "RadioTestC.nc"
-static inline void RadioTestC$Boot$booted(void );
+static void ClockTestC$Leds$led1Toggle(void );
+# 15 "ClockTestC.nc"
+static inline void ClockTestC$Boot$booted(void );
 
 
 
@@ -4193,7 +4193,7 @@ static inline void RadioTestC$Boot$booted(void );
 
 
 
-static inline void RadioTestC$MilliTimer$fired(void );
+static inline void ClockTestC$MilliTimer$fired(void );
 # 53 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/chips/atm128/timer/HplAtm128TimerCtrl8.nc"
 static Atm128_TIFR_t /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$TimerCtrl$getInterruptFlag(void );
 #line 46
@@ -4516,7 +4516,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(
 # 48 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b1f532b4da0);
+uint8_t arg_0x2b722e0d2da0);
 #line 71
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4329 {
 #line 71
@@ -4995,13 +4995,13 @@ static inline message_t *TossimActiveMessageC$Snoop$default$receive(am_id_t id, 
 }
 
 # 78 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
-inline static message_t * TossimActiveMessageC$Snoop$receive(am_id_t arg_0x2b1f52fbbb68, message_t * msg, void * payload, uint8_t len){
+inline static message_t * TossimActiveMessageC$Snoop$receive(am_id_t arg_0x2b722ddd9b68, message_t * msg, void * payload, uint8_t len){
 #line 78
   nx_struct message_t *__nesc_result;
 #line 78
 
 #line 78
-    __nesc_result = TossimActiveMessageC$Snoop$default$receive(arg_0x2b1f52fbbb68, msg, payload, len);
+    __nesc_result = TossimActiveMessageC$Snoop$default$receive(arg_0x2b722ddd9b68, msg, payload, len);
 #line 78
 
 #line 78
@@ -5017,13 +5017,13 @@ static inline message_t *TossimActiveMessageC$Receive$default$receive(am_id_t id
 }
 
 # 78 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Receive.nc"
-inline static message_t * TossimActiveMessageC$Receive$receive(am_id_t arg_0x2b1f52fbb020, message_t * msg, void * payload, uint8_t len){
+inline static message_t * TossimActiveMessageC$Receive$receive(am_id_t arg_0x2b722ddd9020, message_t * msg, void * payload, uint8_t len){
 #line 78
   nx_struct message_t *__nesc_result;
 #line 78
 
 #line 78
-    __nesc_result = TossimActiveMessageC$Receive$default$receive(arg_0x2b1f52fbb020, msg, payload, len);
+    __nesc_result = TossimActiveMessageC$Receive$default$receive(arg_0x2b722ddd9020, msg, payload, len);
 #line 78
 
 #line 78
@@ -5487,9 +5487,9 @@ static inline void SimSchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SimSchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b1f52ce2108){
+inline static void SimSchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b722db00108){
 #line 75
-  switch (arg_0x2b1f52ce2108) {
+  switch (arg_0x2b722db00108) {
 #line 75
     case /*HilTimerMilliC.AlarmToTimerC*/AlarmToTimerC$0$fired:
 #line 75
@@ -5505,7 +5505,7 @@ inline static void SimSchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b1f52ce21
 #line 75
     default:
 #line 75
-      SimSchedulerBasicP$TaskBasic$default$runTask(arg_0x2b1f52ce2108);
+      SimSchedulerBasicP$TaskBasic$default$runTask(arg_0x2b722db00108);
 #line 75
       break;
 #line 75
@@ -5604,20 +5604,20 @@ static inline void LedsP$Leds$led1Toggle(void )
 }
 
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Leds.nc"
-inline static void RadioTestC$Leds$led1Toggle(void ){
+inline static void ClockTestC$Leds$led1Toggle(void ){
 #line 83
   LedsP$Leds$led1Toggle();
 #line 83
 }
 #line 83
-# 24 "RadioTestC.nc"
-static inline void RadioTestC$MilliTimer$fired(void )
+# 24 "ClockTestC.nc"
+static inline void ClockTestC$MilliTimer$fired(void )
 #line 24
 {
 
 
 
-  RadioTestC$Leds$led1Toggle();
+  ClockTestC$Leds$led1Toggle();
 }
 
 # 204 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
@@ -5626,19 +5626,19 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$d
 }
 
 # 83 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b1f532b4da0){
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b722e0d2da0){
 #line 83
-  switch (arg_0x2b1f532b4da0) {
+  switch (arg_0x2b722e0d2da0) {
 #line 83
     case 0U:
 #line 83
-      RadioTestC$MilliTimer$fired();
+      ClockTestC$MilliTimer$fired();
 #line 83
       break;
 #line 83
     default:
 #line 83
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b1f532b4da0);
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b722e0d2da0);
 #line 83
       break;
 #line 83
@@ -6417,26 +6417,26 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$s
 }
 
 # 64 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void RadioTestC$MilliTimer$startPeriodic(uint32_t dt){
+inline static void ClockTestC$MilliTimer$startPeriodic(uint32_t dt){
 #line 64
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(0U, dt);
 #line 64
 }
 #line 64
-# 15 "RadioTestC.nc"
-static inline void RadioTestC$Boot$booted(void )
+# 15 "ClockTestC.nc"
+static inline void ClockTestC$Boot$booted(void )
 #line 15
 {
 
 
 
-  RadioTestC$MilliTimer$startPeriodic(500);
+  ClockTestC$MilliTimer$startPeriodic(500);
 }
 
 # 60 "/home/lauril/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
 inline static void SimMainP$Boot$booted(void ){
 #line 60
-  RadioTestC$Boot$booted();
+  ClockTestC$Boot$booted();
 #line 60
 }
 #line 60
@@ -8762,7 +8762,7 @@ static int __nesc_nido_resolve(int __nesc_mote,
 
   /* Module LedsP */
 
-  /* Module RadioTestC */
+  /* Module ClockTestC */
 
   /* Module Atm128AlarmAsyncP$0 */
   if (!strcmp(varname, "/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$set"))
@@ -9001,7 +9001,7 @@ static void __nesc_nido_initialise(int __nesc_mote)
 
   /* Module LedsP */
 
-  /* Module RadioTestC */
+  /* Module ClockTestC */
 
   /* Module Atm128AlarmAsyncP$0 */
   memset((void *)&/*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$set[__nesc_mote], 0, sizeof /*AlarmCounterMilliP.Atm128AlarmAsyncC.Atm128AlarmAsyncP*/Atm128AlarmAsyncP$0$set[__nesc_mote]);

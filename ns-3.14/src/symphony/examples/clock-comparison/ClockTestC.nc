@@ -2,7 +2,7 @@
  
 #include "Timer.h"
 
-module RadioTestC @safe() {
+module ClockTestC @safe() {
 	uses {
 		interface Boot;
 		interface Timer<TMilli> as MilliTimer;
