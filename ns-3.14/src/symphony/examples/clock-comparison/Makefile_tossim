@@ -1,0 +1,17 @@
+COMPONENT=ThroughputApp
+CFLAGS+=-Iradiohack/
+CFLAGS+=-Isecurity_algs/
+CFLAGS+=-I$(TOSDIR)/lib/printf
+CFLAGS+=-DDEBUG
+#CFLAGS+=-DSTAR=2
+CFLAGS+=-DCHAIN=9
+CFLAGS+=-DMCC
+CFLAGS+=-DSTART_NODE=0
+#OPTFLAGS += -O3
+#CFLAGS += -O3
+BUILD_EXTRA_DEPS = BooterMsg.py
+
+BooterMsg.py: crypto.h
+	mig python -target=$(PLATFORM) $(CFLAGS) -python-classname=BooterCMsg crypto.h SecretMsg -o $@
+
+include $(MAKERULES)
