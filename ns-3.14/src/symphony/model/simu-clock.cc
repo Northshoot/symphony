@@ -14,6 +14,7 @@
 #include "ns3/ptr.h"
 
 #include "simu-clock.h"
+#include "calls-to-ns3.h"
 
 using namespace std;
 namespace ns3
@@ -44,7 +45,7 @@ namespace ns3
   SimuClock::getTimeNow()
   {
     //cout<< "SimuClock::getNow() "<<endl;
-    //std::cout<<"getNow "<<Simulator::Now().GetMilliSeconds()<<std::endl;
+    std::cout<<"getNow "<<Simulator::Now().GetMilliSeconds()<<std::endl;
     return Simulator::Now().GetMilliSeconds();
   }
 
@@ -53,7 +54,7 @@ namespace ns3
   {
     //set up time
     double crystal;
-    crystal = 1.0 / 1022.0;
+    crystal = 1.0 / 1024.0;
     //std::cout<<"crystal "<<crystal<<std::endl;
     tickTime = MicroSeconds(crystal*MICROSECOND);
     //std::cout<<"tickTime "<<tickTime.GetMilliSeconds()<<std::endl;
@@ -80,6 +81,7 @@ namespace ns3
 			NS_ASSERT_MSG(true,"undefined PRECISION for clock drift");
 			break;
 	}
+	  tickTime=tickTime+timeDrift;
 
   }
 
@@ -99,7 +101,7 @@ namespace ns3
         tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired,
             this);
         count++;
-        std::cout<<"tick now "<<Simulator::Now().GetMilliSeconds()<<" t " << tickTime.GetMilliSeconds()<<std::endl;
+        //std::cout<<"tick now "<<Simulator::Now().GetMilliSeconds()<<" t " << tickTime.GetMilliSeconds()<<std::endl;
         callBack(Simulator::Now().GetMilliSeconds());
       }
     else if (type == EXPONENTIAL)
@@ -162,7 +164,7 @@ namespace ns3
       t = NanoSeconds((uint64_t) (crystal * NANOSECOND));
       break;
     default:
-      std::cout << "nano" << crystal << " " << NANOSECOND << std::endl;
+      //std::cout << "nano" << crystal << " " << NANOSECOND << std::endl;
       t = NanoSeconds((uint64_t) (crystal * NANOSECOND));
       break;
 

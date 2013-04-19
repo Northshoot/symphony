@@ -46,7 +46,7 @@ main(int argc, char *argv[])
   LogComponentEnable ("TosLoader", LOG_LEVEL_ALL);
   TosNodeContainer c;
   //Create nodes
-  c.Create(20, nodeImage.c_str());
+  c.Create(5, nodeImage.c_str());
 //  c.Add(CreateObject<TosNode> (10, MilliSeconds(0), nodeImage.c_str() ));
 //  c.Add(CreateObject<TosNode> (0, MilliSeconds(0), nodeImage.c_str() ));
   //Create helper
