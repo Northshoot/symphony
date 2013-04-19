@@ -55,7 +55,7 @@ namespace ns3
     double crystal;
     crystal = 1.0 / 1022.0;
     //std::cout<<"crystal "<<crystal<<std::endl;
-    tickTime = Seconds(crystal*prec);
+    tickTime = MicroSeconds(crystal*MICROSECOND);
     //std::cout<<"tickTime "<<tickTime.GetMilliSeconds()<<std::endl;
     tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired, this);
   }
