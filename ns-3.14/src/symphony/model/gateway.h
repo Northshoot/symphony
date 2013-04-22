@@ -34,10 +34,8 @@ printPacket( char *buf , int size){
 
 extern   uint64_t
  gateway(void *tthis,int call, int arg){
-  // here should be a switch case on "call"
   // or possibly an array of function pointers
-	//TODO: dispatch from TosToNs3Proxy as in radio gateway
-  printf("gateway call %u\n", call);
+ // printf("gateway call %u\n", call);
 	switch (call) {
 		case 0:
 			return ((TosToNs3Proxy *)tthis)->confirmSet(arg);

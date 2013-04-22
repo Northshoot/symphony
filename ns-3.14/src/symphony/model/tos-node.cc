@@ -33,25 +33,24 @@ NS_LOG_COMPONENT_DEFINE("TosNode");
 namespace ns3
 {
 
-   NS_OBJECT_ENSURE_REGISTERED (TosNode);
+  NS_OBJECT_ENSURE_REGISTERED(TosNode);
 
   TypeId
   TosNode::GetTypeId(void)
   {
-    static TypeId tid = TypeId("ns3::TosNode")
-        .SetParent<Node>()
-        .AddConstructor<TosNode>()
-        .AddAttribute("TosDeviceList","The list of devices associated to this Node.", ObjectVectorValue(),
+    static TypeId tid = TypeId("ns3::TosNode").SetParent<Node>().AddConstructor<
+        TosNode>().AddAttribute("TosDeviceList",
+        "The list of devices associated to this Node.", ObjectVectorValue(),
         MakeObjectVectorAccessor(&TosNode::m_devices),
-        MakeObjectVectorChecker<TosNetDevice>())
-        .AddAttribute("Tid", "The id (unique integer) of this Node.",
+        MakeObjectVectorChecker<TosNetDevice>()).AddAttribute("Tid",
+        "The id (unique integer) of this Node.",
         TypeId::ATTR_GET, // allow only getting it.
         UintegerValue(0), MakeUintegerAccessor(&TosNode::m_id),
+        MakeUintegerChecker<uint32_t>()).AddAttribute("TosId",
+        "The id (unique integer) of this Node.",
+        TypeId::ATTR_SET, // allow only getting it.
+        UintegerValue(0), MakeUintegerAccessor(&TosNode::tos_id),
         MakeUintegerChecker<uint32_t>())
-        .AddAttribute("TosId", "The id (unique integer) of this Node.",
-                TypeId::ATTR_SET, // allow only getting it.
-                UintegerValue(0), MakeUintegerAccessor(&TosNode::tos_id),
-                MakeUintegerChecker<uint32_t>())
 
         ;
     return tid;
@@ -73,7 +72,7 @@ namespace ns3
   }
 
   TosNode::TosNode(uint32_t node_id, Time bootTime, const char* lib) :
-    tos_id(node_id), m_bootTime(bootTime), m_libname(lib)
+      tos_id(node_id), m_bootTime(bootTime), m_libname(lib)
   {
     Construct();
   }
@@ -87,12 +86,12 @@ namespace ns3
     m_init = false;
 
   }
-void
-TosNode::AddApplication(Ptr<SymphonyApplication> app)
-{
-  m_application = app;
-}
-void
+  void
+  TosNode::AddApplication(Ptr<SymphonyApplication> app)
+  {
+    m_application = app;
+  }
+  void
   TosNode::SetCallback(std::vector<std::string> tosExternals)
   {
     m_tos_functions = tosExternals;
@@ -100,7 +99,7 @@ void
     handler = m_tosLoader->getHandler(m_libname);
     if (!handler)
       {
-        std::cerr << handler << "Cannot open library: "  << '\n';
+        std::cerr << handler << "Cannot open library: " << '\n';
         exit(1);
       }
     m_init = true;
@@ -131,31 +130,26 @@ void
     simuclock->Start();
     nstotos->sim_main_start_mote(tos_id);
     //NS_LOG_FUNCTION(tos_id << Simulator::Now().GetMilliSeconds());
-    Simulator::Remove (m_boot_event);
+    Simulator::Remove(m_boot_event);
   }
 
   uint32_t
   TosNode::wrapFire(uint64_t a)
   {
     nstotos->tickFired(a);
-    //NS_LOG_FUNCTION(tos_id << Simulator::Now().GetMilliSeconds());
     return 0;
   }
 
   uint64_t
   TosNode::getNow()
   {
-   cout << "TosNode::getNow()" << endl;
-    //simuclock->getTimeNow();
-   uint64_t a=   Simulator::Now().GetMilliSeconds();
-   cout<< "Time " << a << " ms"<<endl;
-    return a;
+    return Simulator::Now().GetMicroSeconds();
   }
 
   void
   TosNode::DoDispose(void)
   {
-	  NS_LOG_FUNCTION(this<< Simulator::Now().GetMilliSeconds());
+    NS_LOG_FUNCTION(this<< Simulator::Now().GetMilliSeconds());
     /**
      * Check and remove shutdown event
      */
@@ -194,25 +188,25 @@ void
   TosNode::DoStart()
   {
     //open instance of the library  LM_ID_NEWLM
-    NS_ASSERT (m_init);
+    NS_ASSERT(m_init);
     NS_LOG_FUNCTION("TosID " << tos_id << "SysId " << GetId());
-    if( m_application !=NULL) {
+    if (m_application != NULL)
+      {
 
         tostons->SetApplication(m_application);
 
-        Callback<void, uint8_t> tmp =
-            MakeCallback(&Ns3ToTosProxy::ApplicationStartDone,nstotos);
+        Callback<void, uint8_t> tmp = MakeCallback(
+            &Ns3ToTosProxy::ApplicationStartDone, nstotos);
         m_application->SetAttribute("StartDone", CallbackValue(tmp));
 
-        Callback<void, uint8_t> tmp1=
-            MakeCallback(&Ns3ToTosProxy::AplicationStopDone,nstotos);
+        Callback<void, uint8_t> tmp1 = MakeCallback(
+            &Ns3ToTosProxy::AplicationStopDone, nstotos);
         m_application->SetAttribute("StopDone", CallbackValue(tmp1));
 
         m_application->StartApplication();
-    }
+      }
     callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
-    simuclock = CreateObject < SimuClock
-        > (MILLISECOND, STATIC, callBackFromClock);
+    simuclock = CreateObject<SimuClock>(MILLISECOND, EXPONENTIAL, callBackFromClock);
     simuclock->setTimeDrift(5, MICROSECOND);
     tostons->simu_clock = simuclock;
     //changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
@@ -224,8 +218,8 @@ void
             string f = m_tos_functions[i];
             //NS_LOG_FUNCTION(this<<"adding function " << f);
             void * fu = m_tosLoader->getFunction(f.c_str());
- //           if(fu){
-            	nstotos->addFunction(f, fu);
+            //           if(fu){
+            nstotos->addFunction(f, fu);
 //            	NS_LOG_FUNCTION(this<<"adding function " << f);
 //            } else {
 //            	NS_LOG_FUNCTION(this<<"Can't add function" << f);
@@ -261,16 +255,12 @@ void
     tostons->setDevice(device);
     device->setNs3ToTos(nstotos);
 
-
     device->SetAttribute("SendDone",
-        CallbackValue(MakeCallback(&Ns3ToTosProxy::sendDone, nstotos))
-        );
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::sendDone, nstotos)));
     device->SetAttribute("StartDone",
-        CallbackValue(MakeCallback(&Ns3ToTosProxy::radioStartDone, nstotos))
-        );
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::radioStartDone, nstotos)));
     device->SetAttribute("ReceivePacket",
-        CallbackValue(MakeCallback(&Ns3ToTosProxy::receiveMessage, nstotos))
-        );
+        CallbackValue(MakeCallback(&Ns3ToTosProxy::receiveMessage, nstotos)));
 
     return index;
   }
@@ -279,8 +269,7 @@ void
   TosNode::GetDevice(uint32_t index) const
   {
     NS_ASSERT_MSG(index < m_devices.size(),
-        "Device index " << index << " is out of range (only have "
-            << m_devices.size() << " devices).");
+        "Device index " << index << " is out of range (only have " << m_devices.size() << " devices).");
     return m_devices[index];
   }
 
@@ -294,7 +283,7 @@ void
   TosNode::AddSensor(Ptr<RawSensor> sensor)
   {
     uint32_t index = m_sensors.size();
-    sensor->SetAttribute("RsId",UintegerValue(tos_id));
+    sensor->SetAttribute("RsId", UintegerValue(tos_id));
     m_sensors.push_back(sensor);
 
     return index;
@@ -304,8 +293,7 @@ void
   TosNode::GetSensor(uint32_t index) const
   {
     NS_ASSERT_MSG(index < m_sensors.size(),
-        "Sensor index " << index << " is out of range (only have "
-            << m_devices.size() << " sensors).");
+        "Sensor index " << index << " is out of range (only have " << m_devices.size() << " sensors).");
     return m_sensors[index];
   }
 
@@ -348,7 +336,7 @@ void
 //      {
 //        return tmp;
 //      }
-      return NULL;
+    return NULL;
   }
 
 }

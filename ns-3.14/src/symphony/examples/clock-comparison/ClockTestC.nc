@@ -23,7 +23,7 @@ implementation {
 		time_exec = call MilliTimer.getNow();
 		time_rt = call RTC.getTime(MILLISECOND);
 		dbg("Info", "Fired %u\n", time_exec);
-		printf("%u \t %lu\n",time_exec*1000, time_rt);
+		printf("%lu\n", time_rt);
 	}
 
 

@@ -19,6 +19,8 @@
 #define NSTOSCLOCK_H_
 
 #include <stdint.h>
+#include "ns3/ptr.h"
+#include "ns3/random-variable-stream.h"
 #include "ns3/nstime.h"
 #include "ns3/event-id.h"
 #include "ns3/callback.h"
@@ -28,7 +30,7 @@
 
 
 
-enum TIMEDRIFT {NONE, STATIC, EXPONENTIAL};
+enum TIMEDRIFT {NONE, STATIC, EXPONENTIAL, RANDOM};
 
 namespace ns3 {
 
@@ -37,6 +39,7 @@ namespace ns3 {
     public:
     static TypeId GetTypeId (void);
     
+    SimuClock(PRECISION p, Callback<uint32_t, uint64_t> tf);
     SimuClock(PRECISION p , TIMEDRIFT t,  Callback<uint32_t,uint64_t>  tf);
 
     /**
@@ -63,6 +66,10 @@ namespace ns3 {
     virtual void DoDispose (void);
 private:
     void Construct(void);
+    void InitRandom(void);
+    Ptr<NormalRandomVariable> randomDriftDistribution;
+    double mean;
+    double variance;
     /**
      * precision for *tick*
      */

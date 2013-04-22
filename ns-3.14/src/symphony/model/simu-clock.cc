@@ -12,6 +12,8 @@
 #include "ns3/assert.h"
 #include "ns3/callback.h"
 #include "ns3/ptr.h"
+#include "ns3/random-variable-stream.h"
+#include "ns3/double.h"
 
 #include "simu-clock.h"
 #include "calls-to-ns3.h"
@@ -28,11 +30,21 @@ namespace ns3
 
     return tid;
   }
+
+  SimuClock::SimuClock(PRECISION p, Callback<uint32_t, uint64_t> tf)
+  {
+    SimuClock(p, NONE, tf);
+  }
+
   SimuClock::SimuClock(PRECISION p, TIMEDRIFT t,
       Callback<uint32_t, uint64_t> tf) :
       prec(p), type(t), timeDrift(0), callBack(tf)
   {
     count = 0;
+    if (type == RANDOM)
+      {
+        InitRandom();
+      }
     Construct();
   }
 
@@ -41,27 +53,37 @@ namespace ns3
 
     DoDispose();
   }
+
+void
+SimuClock::InitRandom(void)
+{
+  //implementation can be done by configuring the clock more generically
+  //for now we are "happy" about this static connection
+  mean = 50.0;
+  variance = 5.0;
+  randomDriftDistribution = CreateObject<NormalRandomVariable> ();
+  randomDriftDistribution->SetAttribute ("Mean", DoubleValue (mean));
+  randomDriftDistribution->SetAttribute ("Variance", DoubleValue (variance));
+}
 void
 SimuClock::Construct(void)
 {
   double crystal;
   crystal = 1.0 / 1024.0;
   tickTime = MicroSeconds(crystal*MICROSECOND);
+  timeDrift = MicroSeconds(0);
 }
   uint64_t
   SimuClock::getTimeNow()
   {
-    //cout<< "SimuClock::getNow() "<<endl;
-    uint64_t a = Simulator::Now().GetMicroSeconds();
-    std::cout<<" SimuClock::getNow() "<<Simulator::Now().GetMicroSeconds()<<std::endl;
-    return a;
+    return Simulator::Now().GetMicroSeconds();
   }
 
   void
   SimuClock::DoStart()
   {
-    //set up time
-    tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired, this);
+    //set up time first time there is no drift
+    tick_event = Simulator::Schedule(tickTime+timeDrift, &SimuClock::timerFired, this);
   }
 
   void
@@ -84,36 +106,35 @@ SimuClock::Construct(void)
 			NS_ASSERT_MSG(true,"undefined PRECISION for clock drift");
 			break;
 	}
-	  tickTime=tickTime+timeDrift;
-	  std::cout<<"tickTime "<<tickTime.GetMicroSeconds()<<" ms " << timeDrift.GetMicroSeconds()<<std::endl;
   }
 
   void
   SimuClock::timerFired()
   {
-    //std::cout<<"tick "<<Simulator::Now().GetMilliSeconds()<<std::endl;
-    if (type == NONE)
-      {
-        tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired,
+    Time nextTick;
+    switch (type) {
+      case STATIC:
+        nextTick = tickTime+timeDrift;
+        break;
+
+      case EXPONENTIAL:
+        timeDrift=SimuClock::addTime(MICROSECOND,timeDrift,5);
+        nextTick = tickTime+timeDrift;
+        break;
+
+      case RANDOM:
+        nextTick=tickTime+MicroSeconds(randomDriftDistribution->GetInteger());
+
+        break;
+      default:
+        //default == NONE
+        nextTick = tickTime;
+        break;
+    }
+    tick_event = Simulator::Schedule(nextTick, &SimuClock::timerFired,
             this);
-        count++;
-        callBack(Simulator::Now().GetMicroSeconds());
-      }
-    else if (type == STATIC)
-      {
-        tick_event = Simulator::Schedule(tickTime, &SimuClock::timerFired,
-            this);
-        count++;
-        //std::cout<<"tick now "<<Simulator::Now().GetMilliSeconds()<<" t " << tickTime.GetMicroSeconds()<<std::endl;
-        callBack(Simulator::Now().GetMicroSeconds());
-      }
-    else if (type == EXPONENTIAL)
-      {
-        //TODO:
-        std::cout << "SimuClock::timerFired() EXPONENTIAL not implemented!"
-            << std::endl;
-        exit(1);
-      }
+    callBack(Simulator::Now().GetMicroSeconds());
+
   }
 
   Time

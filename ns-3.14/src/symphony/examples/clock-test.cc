@@ -26,9 +26,9 @@ main(int argc, char *argv[])
 
   std::string nodeModel = "/home/lauril/dev/symphony/ns-3.14/build/symphony.xml";
   std::string nodeImage = "/home/lauril/dev/symphony/ns-3.14/build/libtos.so";
-  uint64_t simLength = 10;
+  uint64_t simLength = 100;
   uint32_t numNodes=1;
-  bool realTime = true;
+  bool realTime = false;
   CommandLine cmd;
   cmd.AddValue("nodeModel", "model of the node in XML format", nodeModel);
   cmd.AddValue("nodeImage", "node image", nodeImage);
