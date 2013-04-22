@@ -49,7 +49,7 @@ namespace ns3 {
      */
     void timerFired();
  
-    uint32_t getTimeNow();
+    uint64_t getTimeNow();
 	
     virtual ~SimuClock();
     protected:
@@ -61,6 +61,7 @@ namespace ns3 {
     virtual void DoStart(void);
     virtual void DoDispose (void);
 private:
+    void Construct(void);
     /**
      * precision for *tick*
      */

@@ -49,6 +49,7 @@ class TosToNs3Proxy {
 	   int deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2 );
 	   int SensorCommand(SensorCall call);
 	   void ApplicationCommand(ApplicationCall call, uint16_t length, void* data);
+	   uint64_t timeCommand(PRECISION call);
 	   ns3::Ptr<ns3::SimuClock>  simu_clock;
 	   uint32_t m_node_id;
 
@@ -68,12 +69,14 @@ private:
 extern "C" {
 #endif
 
-int gateway(void *obj,int func,int arg);
+  uint64_t
+ gateway(void *obj,int func,int arg);
 int setProxy(void * obj);
 
 int gatewayRadio(void *obj, DeviceCall call, int val1, int val2, void* hdr, void* msg);
 int gatewaySensor(void *obj, SensorCall call);
 void gatewayLogg(void *obj, const char* func, int line_num,const char* msg);
+uint64_t gatewayTime(void *obj,  PRECISION call);
 
 void gatewayApplication(void *obj, ApplicationCall call, uint16_t length, void * data);
 #ifdef __cplusplus

@@ -10,6 +10,7 @@ module NsTimerP
   provides {
     interface Init;
     interface Timer<TMilli> as Timer;
+    interface RealTimeClock as RTC;
   
   }
 
@@ -18,6 +19,8 @@ implementation
 {
 
 uint32_t time_now=0;
+uint64_t real_time=0;
+
 typedef struct
   {
     uint32_t t0;
@@ -39,12 +42,19 @@ Timer_t m_timer;
 
   } 
   
-extern int tickFired(uint32_t a) @C() @spontaneous() {
+  command uint64_t RTC.getTime(PRECISION prec){
+    return real_time;
+  }
+  
+extern int tickFired(uint64_t a) @C() @spontaneous() {
   //printf("Timer.thisFired %i\n",  a);
-  atomic time_now = time_now+1;
-	 updateTimer();
+  atomic {
+    time_now = time_now+1;
+    real_time = a;
+  }
+  	 updateTimer();
 	 runNextEventExternal(0);
-  printf("Timer.thisFired %i\n",  time_now);
+  //printf("Timer local %u real %lu \n",  time_now, real_time);
   //signal Timer.fired();
   return 0;
   }

@@ -7,8 +7,6 @@
 #include <vector>
 #include<map>
 #include <iostream>
-#include <dlfcn.h>
-#include <link.h>
 
 #include "ns3/object.h"
 #include "ns3/nstime.h"
@@ -20,6 +18,7 @@
 #include "ns3/global-value.h"
 #include "ns3/assert.h"
 #include "ns3/log.h"
+#include "ns3/tos-loader.h"
 
 #include "simu-clock.h"
 #include "tos-node.h"
@@ -97,6 +96,13 @@ void
   TosNode::SetCallback(std::vector<std::string> tosExternals)
   {
     m_tos_functions = tosExternals;
+    m_tosLoader = new TosLoader();
+    handler = m_tosLoader->getHandler(m_libname);
+    if (!handler)
+      {
+        std::cerr << handler << "Cannot open library: "  << '\n';
+        exit(1);
+      }
     m_init = true;
   }
 
@@ -124,29 +130,32 @@ void
   {
     simuclock->Start();
     nstotos->sim_main_start_mote(tos_id);
+    //NS_LOG_FUNCTION(tos_id << Simulator::Now().GetMilliSeconds());
     Simulator::Remove (m_boot_event);
   }
 
   uint32_t
   TosNode::wrapFire(uint64_t a)
   {
-    a = simuclock->getTimeNow();
     nstotos->tickFired(a);
+    //NS_LOG_FUNCTION(tos_id << Simulator::Now().GetMilliSeconds());
     return 0;
   }
 
-  uint32_t
+  uint64_t
   TosNode::getNow()
   {
-    cout << "TosNode::getNow()" << endl;
+   cout << "TosNode::getNow()" << endl;
     //simuclock->getTimeNow();
-    //cout<< "Time " << simuclock->getNow() << " ms"<<endl;
-    return simuclock->getTimeNow();
+   uint64_t a=   Simulator::Now().GetMilliSeconds();
+   cout<< "Time " << a << " ms"<<endl;
+    return a;
   }
 
   void
   TosNode::DoDispose(void)
   {
+	  NS_LOG_FUNCTION(this<< Simulator::Now().GetMilliSeconds());
     /**
      * Check and remove shutdown event
      */
@@ -168,7 +177,7 @@ void
     //        Simulator::Cancel(m_boot_event);
     //        Simulator::Remove(m_boot_event);
     //      }
-    dlclose (handler);
+//    dlclose (handler);
     delete nstotos;
     delete tostons;
     //    delete m_libname;
@@ -187,7 +196,6 @@ void
     //open instance of the library  LM_ID_NEWLM
     NS_ASSERT (m_init);
     NS_LOG_FUNCTION("TosID " << tos_id << "SysId " << GetId());
-
     if( m_application !=NULL) {
 
         tostons->SetApplication(m_application);
@@ -204,27 +212,27 @@ void
     }
     callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
     simuclock = CreateObject < SimuClock
-        > (MILLISECOND, NONE, callBackFromClock);
+        > (MILLISECOND, STATIC, callBackFromClock);
+    simuclock->setTimeDrift(5, MICROSECOND);
     tostons->simu_clock = simuclock;
     //changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
     //for eclipse debug full path is needed for the lib
-    //TODO: add script for copying libtos.so to build/debug
-    handler = dlmopen(LM_ID_NEWLM, m_libname, RTLD_LAZY);
-    if (!handler)
-      {
-        std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
-        exit(1);
-      }
-    else
+
       {
         for (uint32_t i = 0; i < m_tos_functions.size(); i++)
           {
             string f = m_tos_functions[i];
-            NS_LOG_FUNCTION(this<<"adding function " << f);
-            nstotos->addFunction(f, getFunc(f.c_str()));
+            //NS_LOG_FUNCTION(this<<"adding function " << f);
+            void * fu = m_tosLoader->getFunction(f.c_str());
+ //           if(fu){
+            	nstotos->addFunction(f, fu);
+//            	NS_LOG_FUNCTION(this<<"adding function " << f);
+//            } else {
+//            	NS_LOG_FUNCTION(this<<"Can't add function" << f);
+//            }
           }
       }
-    NS_LOG_FUNCTION(this<<"Uniqueu ID " << tos_id);
+
     nstotos->setProxy((long) (tostons));
     //has to be started from nodes
     //	for (std::vector<Ptr<TosNetDevice> >::iterator i = m_devices.begin ();
@@ -234,7 +242,6 @@ void
     //	      device->Start ();
     //	    }
     nstotos->setUniqueID(tos_id);
-
     Node::DoStart();
     Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
   }
@@ -321,27 +328,27 @@ void
   void *
   TosNode::getFunc(const char* func_name)
   {
-    char *error = NULL;
-    void * tmp ;
-    tmp = dlsym(handler, func_name);
-    if ((error = dlerror()) != NULL)
-      {
-//        std::stringstream sstm;
-//        sstm << "Cannot get function: " << name << "\n" << error;
-//        NS_ASSERT_MSG(false, sstm.str());
-        //this is not fail safe, better way for multiple models is neede
-        //for now return default function which prints error is the function is not found
-      std::string defFunc = "sim_function_not_found";
-      std::stringstream sstm;
-      sstm << "Function not found: " << func_name << ". Using default TOS function.\n" << error;
-      tmp = dlsym(handler, defFunc.c_str());
-
-      NS_LOG_ERROR(this << " " << sstm.str());
-
-      }
-
-        return tmp;
-
+//    char *error = NULL;
+//    void * tmp = dlsym(handler, func_name);
+//    if ((error = dlerror()) != NULL)
+//      {
+////        std::stringstream sstm;
+////        sstm << "Cannot get function: " << name << "\n" << error;
+////        NS_ASSERT_MSG(false, sstm.str());
+//        //this is not fail safe, better way for multiple models is neede
+//        //for now return default function which prints error is the function is not found
+//      std::string defFunc = "sim_function_not_found";
+//      std::stringstream sstm;
+//      sstm << "Function not found: " << func_name << ". Using default TOS function.\n" << error;
+//      void * tmp = dlsym(handler, defFunc.c_str());
+//      NS_LOG_ERROR(sstm.str());
+//      return tmp;
+//      }
+//    else
+//      {
+//        return tmp;
+//      }
+      return NULL;
   }
 
 }

@@ -49,7 +49,7 @@ CALL_HEADER=$(SYMPHONY_SRC)/model/calls-to-ns3.h
 
 #define symphony used internally in tinyos when something specific is done by symphony
 CFLAGS+=-DSYMPHONY
-#app to create
+#app to create -nostdlib
 SIM_LIB=libtos
 
 all:
@@ -59,10 +59,10 @@ all:
 		$(PY) $(POST) $(TOS_APP_C) $(SIM_LIB).c
 		@echo ""
 		@echo "Building TinyOS object             "
-		$(GPP) -fPIC -Wall -g -c -nostdlib $(SIM_LIB).c	$(NS3_INCL)
+		$(GPP) -fPIC -Wall -g -c  $(SIM_LIB).c	$(NS3_INCL)
 		@echo ""
 		@echo "Creating library and linking with proxy objects            "
-		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_LOAD) -nostdlib -ldl 
+		$(GPP) -g -shared -Wl,-soname,$(SIM_LIB).so.0 -o $(SIM_LIB).so $(SIM_LIB).o $(NS3_OBJ) $(NS3_LOAD) -ldl 
 
 		@echo "                           "		
 		@echo "*** copying library to ns_dir***"

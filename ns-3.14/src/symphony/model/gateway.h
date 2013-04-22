@@ -32,10 +32,12 @@ printPacket( char *buf , int size){
 	printf("%02X\n",buf[i]);
 }
 
-extern int gateway(void *tthis,int call, int arg){
+extern   uint64_t
+ gateway(void *tthis,int call, int arg){
   // here should be a switch case on "call"
   // or possibly an array of function pointers
 	//TODO: dispatch from TosToNs3Proxy as in radio gateway
+  printf("gateway call %u\n", call);
 	switch (call) {
 		case 0:
 			return ((TosToNs3Proxy *)tthis)->confirmSet(arg);
@@ -48,7 +50,6 @@ extern int gateway(void *tthis,int call, int arg){
 			//std::cout << "((TosToNs3Proxy *)tthis)->getNow() "<< ((TosToNs3Proxy *)tthis)->getNow(arg) << std::endl;
 			return 0;
 			break;
-
 		default:
 			//OPS! never ever go here!
 			//if you have -> core dump :D
@@ -74,11 +75,18 @@ extern int gatewaySensor(void *obj, SensorCall call){
   return ((TosToNs3Proxy *)obj)->SensorCommand(call);
 }
 
-void gatewayApplication(void *obj, ApplicationCall call, uint16_t length, void * data){
+extern void gatewayApplication(void *obj, ApplicationCall call, uint16_t length, void * data){
   return ((TosToNs3Proxy *)obj)->ApplicationCommand(call, length, data);
 }
 
+extern uint64_t gatewayTime(void *obj,  PRECISION prec) {
+  uint64_t a = 0;
+    printf("gatewayTime call %u\n", prec);
+    a= ((TosToNs3Proxy *)obj)->timeCommand(prec);
+	return a;
+}
 
+//TODO: make a pretty printer from the nodes
 extern void gatewayLogg(void *obj,  char* func, int line_num, char* msg){
 //  char string[]={"this$is$a$string"};
 //

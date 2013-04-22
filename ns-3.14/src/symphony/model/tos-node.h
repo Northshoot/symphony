@@ -97,8 +97,9 @@ namespace ns3
     GetNs3ToTosProxy();
     void
     AddApplication(Ptr<SymphonyApplication> app);
-    uint32_t
+    uint64_t
     getNow();
+
     uint32_t
     wrapFire(uint64_t);
     /**
