@@ -44,4 +44,11 @@ typedef enum {
   APP_RX=3,
 }ApplicationCall;
 
+typedef enum  {
+  SECOND=1,
+  MILLISECOND=1000,
+  MICROSECOND=1000000,
+  NANOSECOND=1000000000
+}PRECISION;
+
 #endif /* CALLS_TO_NS3_H_ */

@@ -20,6 +20,7 @@ encoding//src/test/perf/wscript=utf-8
 encoding//src/test/wscript=utf-8
 encoding//src/tools/examples/wscript=utf-8
 encoding//src/tools/wscript=utf-8
+encoding//src/tos-loader/wscript=utf-8
 encoding//src/uan/examples/wscript=utf-8
 encoding//src/uan/wscript=utf-8
 encoding//src/virtual-net-device/wscript=utf-8
