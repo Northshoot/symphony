@@ -17,141 +17,131 @@
 #include "calls-to-ns3.h"
 #include "tos-net-device.h"
 #include "raw-sensor.h"
-#include "ns3/simulator.h"
 
-TosToNs3Proxy::TosToNs3Proxy()
-{
-}
+
+TosToNs3Proxy::TosToNs3Proxy() { }
 
 //functions for TosNode
 int
-TosToNs3Proxy::confirmSet(int a)
-{
-  std::cout <<" aaaa "<< a<< std::endl;
-  m_node_id = a;
-  return 0;
+TosToNs3Proxy::confirmSet(int a){
+	m_node_id = a;
+	return 0;
 }
 
 //functions for SimuClock
 uint32_t
-TosToNs3Proxy::getNow(int b)
-{
-  NS_ASSERT_MSG(simu_clock != NULL, "Clock is null in LibToTosProxy::getNow");
-  uint32_t a = simu_clock->getTimeNow();
-  std::cout<<"LibToTosProxy::getNow(void) " <<a<<std::endl;
+TosToNs3Proxy::getNow(int b){
+	NS_ASSERT_MSG(simu_clock != NULL, "Clock is null in LibToTosProxy::getNow");
+	uint32_t a = simu_clock->getTimeNow();
+	//std::cout<<"LibToTosProxy::getNow(void) " <<a<<std::endl;
 
-  return a;
+	return a;
 }
 
 void
-TosToNs3Proxy::setDevice(ns3::Ptr<ns3::TosNetDevice> device)
-{
-  m_tosnetdevice = device;
+TosToNs3Proxy::setDevice(ns3::Ptr<ns3::TosNetDevice> device){
+	m_tosnetdevice  = device;
 }
 
 void
 TosToNs3Proxy::SetSensor(ns3::Ptr<ns3::RawSensor> sens)
 {
-  m_sensor = sens;
+  m_sensor=sens;
 }
 int
-TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1,
-    void * obj2)
-{
-  NS_ASSERT_MSG(m_tosnetdevice != NULL, "Device is NULL");
-  switch (call)
-    {
-  case RADIO_ON:
-    return m_tosnetdevice->DeviceTurnOn();
-    break;
+TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2){
+        NS_ASSERT_MSG(m_tosnetdevice != NULL, "Device is NULL");
+	switch (call) {
+	case RADIO_ON:
+		return m_tosnetdevice->DeviceTurnOn();
+		break;
 
-  case RADIO_START:
-    return m_tosnetdevice->DeviceTurnOn();
-    break;
+	case RADIO_START:
+		return m_tosnetdevice->DeviceTurnOn();
+		break;
 
-  case RADIO_SLEEP:
-    return m_tosnetdevice->DeviceStandby();
-    break;
+	case RADIO_SLEEP:
+		return m_tosnetdevice->DeviceStandby();
+		break;
 
-  case RADIO_STOP:
-    return m_tosnetdevice->DeviceTurnOff();
-    break;
+	case RADIO_STOP:
+		return m_tosnetdevice->DeviceTurnOff();
+		break;
 
-  case RADIO_SET_CHANNEL:
-    //perform sanity check
-    if (val1 > 0)
-      return m_tosnetdevice->DeviceSetChannel(val1);
-    else
-      return -1;
-    break;
+	case RADIO_SET_CHANNEL:
+		//perform sanity check
+		if(val1>0)
+			return m_tosnetdevice->DeviceSetChannel(val1);
+		else
+			return -1;
+		break;
 
-  case RADIO_GET_CHANNEL:
-    return m_tosnetdevice->DeviceGetChannel();
-    break;
+	case RADIO_GET_CHANNEL:
+		return m_tosnetdevice->DeviceGetChannel();
+		break;
 
-  case RADIO_SET_TX_POWER:
-    return -1;
-    break;
-  case RADIO_GET_TX_POWER:
+	case RADIO_SET_TX_POWER:
+		return -1;
+		break;
+	case RADIO_GET_TX_POWER:
 
-    return -1;
-    break;
-  case RADIO_SEND:
-    //keep the tongue in right mouth
-    //TODO: make some sanity check
-    //   std::cerr <<" m_tosnetdevice->DeviceSend "<<std::endl;
-    return m_tosnetdevice->DeviceSend(obj2);
-    break;
+		return -1;
+		break;
+	case RADIO_SEND:
+		//keep the tongue in right mouth
+		//TODO: make some sanity check
+	     //   std::cerr <<" m_tosnetdevice->DeviceSend "<<std::endl;
+		return m_tosnetdevice->DeviceSend(obj2);
+		break;
 
-  case RADIO_CANCEL:
-    m_tosnetdevice->DeviceCancel((message_t *) obj2);
-    return 0;
-  default:
-    //OPS! never ever go here!
-    //if you have -> core dump :D
-    //std::cerr <<" bad index no where to go "<< call<< std::endl;
-    return -1;
-    break;
-    }
+	case RADIO_CANCEL:
+		m_tosnetdevice->DeviceCancel((message_t *)obj2);
+		return  0;
+	default:
+		//OPS! never ever go here!
+		//if you have -> core dump :D
+		//std::cerr <<" bad index no where to go "<< call<< std::endl;
+		return -1;
+		break;
+}
 //just in case if anything else fails
-  return -1;
+return -1;
 }
 
 int
 TosToNs3Proxy::SensorCommand(SensorCall call)
 {
 
-  NS_ASSERT_MSG(m_sensor != NULL, "Sensor is null");
+ NS_ASSERT_MSG(m_sensor != NULL, "Sensor is null");
 
-  switch (call)
-    {
+  switch (call) {
   case SENSOR_ON:
-    m_sensor->DoStart();
-    return 1;
-    break;
+           m_sensor->DoStart();
+           return 1;
+          break;
 
   case SENSOR_OFF:
-    m_sensor->DoDispose();
-    return 1;
-    break;
+           m_sensor->DoDispose();
+           return 1;
+          break;
 
   case SENSOR_GET_DATA:
-    NS_ASSERT_MSG(false, " bad index no where to go "+ call);
-    break;
+    NS_ASSERT_MSG(false," bad index no where to go "+ call);
+          break;
 
   case SENSOR_RESET:
-    NS_ASSERT_MSG(false, " bad index no where to go "+ call);
-    break;
+    NS_ASSERT_MSG(false," bad index no where to go "+ call);
+          break;
 
-  default:
-    //OPS! never ever go here!
-    //if you have -> core dump :D
-    NS_ASSERT_MSG(false, " bad index no where to go "+ call);
-    return -1;
-    break;
-    }
+    default:
+          //OPS! never ever go here!
+          //if you have -> core dump :D
+          NS_ASSERT_MSG(false," bad index no where to go "+ call);
+          return -1;
+          break;
+}
 //just in case if anything else fails
-  return -1;
+return -1;
 }
 
 void
@@ -161,66 +151,35 @@ TosToNs3Proxy::SetApplication(ns3::Ptr<ns3::SymphonyApplication> app)
 
 }
 void
-TosToNs3Proxy::ApplicationCommand(ApplicationCall call, uint16_t length,
-    void *data)
+TosToNs3Proxy::ApplicationCommand(ApplicationCall call,uint16_t length, void *data)
 {
 
-  if (m_application != NULL)
-    {
-      switch (call)
-        {
-      case APP_ON:
-        m_application->StartNS3Application();
+ if(m_application != NULL) {
+  switch (call) {
+  case APP_ON:
+           m_application->StartNS3Application();
 
-        break;
+          break;
 
-      case APP_OFF:
-        m_application->StopNS3Application();
+  case APP_OFF:
+           m_application->StopNS3Application();
 
-        break;
+          break;
 
-      case APP_RX:
-        m_application->SendData(length, data);
-        break;
+  case APP_RX:
+    m_application->SendData(length,data);
+          break;
 
-      default:
-        //OPS! never ever go here!
-        //if you have -> core dump :D
-        NS_ASSERT_MSG(false, " bad index no where to go "+ call);
 
-        break;
-        }
-    }
+    default:
+          //OPS! never ever go here!
+          //if you have -> core dump :D
+          NS_ASSERT_MSG(false," bad index no where to go "+ call);
+
+          break;
 }
+ }
 
-int
-TosToNs3Proxy::timeCommand(PRECISION call)
-{
-  unsigned int time_now = 0;
-  std::cout<<"TosToNs3Proxy::timeCommand(PRECISION call) "<<call<<" t " << ns3::Simulator::Now().GetMilliSeconds()<<std::endl;
-  switch (call)
-    {
-  case SECOND:
-    time_now = (unsigned int) (ns3::Simulator::Now().GetSeconds());
-    break;
-  case MILLISECOND:
-    time_now = ns3::Simulator::Now().GetMilliSeconds();
-    break;
-  case MICROSECOND:
-    time_now = ns3::Simulator::Now().GetMicroSeconds();
-    break;
-  case NANOSECOND:
-    time_now = ns3::Simulator::Now().GetNanoSeconds();
-    break;
-  default:
-    NS_ASSERT_MSG(false, " bad index no where to go "+ call);
-    break;
-    }
-
-  return 300;
 }
-
-TosToNs3Proxy::~TosToNs3Proxy()
-{
-}
+TosToNs3Proxy::~TosToNs3Proxy() {}
 

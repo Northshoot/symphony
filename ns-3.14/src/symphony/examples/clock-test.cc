@@ -37,7 +37,7 @@ main(int argc, char *argv[])
   cmd.AddValue("numNodes", "number of nodes in simulations", numNodes);
   cmd.Parse(argc, argv);
   LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
-// LogComponentEnable ("TosLoader", LOG_LEVEL_ALL);
+//  LogComponentEnable ("TosLoader", LOG_LEVEL_ALL);
   if (realTime)
     {
       GlobalValue::Bind("SimulatorImplementationType",

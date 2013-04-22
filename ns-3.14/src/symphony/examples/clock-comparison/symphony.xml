@@ -35,6 +35,4 @@
    <call name="StopNS3Application"/>
    <call return="void" params="2" param1="uint16_t" param2="void *" name="SendData"/>
  </model>
- 
-
 </symphony>

@@ -15,7 +15,6 @@
 #include "ns3/callback.h"
 #include "ns3/node.h"
 #include "ns3/ptr.h"
-#include "ns3/tos-loader.h"
 
 #include "simu-clock.h"
 #include "ns3-to-tos-proxy_auto.h"
@@ -153,7 +152,7 @@ namespace ns3
     std::vector<Ptr<TosNetDevice> > m_devices;
     std::vector<Ptr<RawSensor> > m_sensors;
     const char * m_libname;
-    TosLoader * m_tosLoader;
+
     std::vector<std::string> m_tos_functions;
     bool m_started;
     bool m_init;

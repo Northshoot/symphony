@@ -22,11 +22,10 @@
 #include "ns3/nstime.h"
 #include "ns3/event-id.h"
 #include "ns3/callback.h"
-#include "ns3/calls-to-ns3.h"
 
 
 
-
+enum PRECISION {SECOND=1, MILLISECOND=1000, MICROSECOND=1000000,NANOSECOND=1000000000};
 
 enum TIMEDRIFT {NONE, STATIC, EXPONENTIAL};
 

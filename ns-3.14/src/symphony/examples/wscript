@@ -42,5 +42,5 @@ def build(bld):
         'build/src/symphony/examples/ns3-dev-clock-test-debug'        
         ])
 
-    bld.add_post_fun(testingpost)
+    #bld.add_post_fun(testingpost)
 

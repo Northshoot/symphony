@@ -46,7 +46,7 @@ main(int argc, char *argv[])
   LogComponentEnable ("TosLoader", LOG_LEVEL_ALL);
   TosNodeContainer c;
   //Create nodes
-  c.Create(5, nodeImage.c_str());
+  c.Create(20, nodeImage.c_str());
 //  c.Add(CreateObject<TosNode> (10, MilliSeconds(0), nodeImage.c_str() ));
 //  c.Add(CreateObject<TosNode> (0, MilliSeconds(0), nodeImage.c_str() ));
   //Create helper
@@ -60,9 +60,9 @@ main(int argc, char *argv[])
   wifi.SetStandard(ZIGBEE_PHY_STANDARD_802154);
   //wifi.EnableLogComponents ();
 //  LogComponentEnable ("TosMacLow", LOG_LEVEL_ALL);
-//   LogComponentEnable ("TosHelper", LOG_LEVEL_ALL);
+   LogComponentEnable ("TosHelper", LOG_LEVEL_ALL);
 //   LogComponentEnable ("YansTosPhyHelper", LOG_LEVEL_ALL);
-//   LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
+   LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
 //   LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
   //Set node model
   wifi.SetNodeModel(nodeModel);
