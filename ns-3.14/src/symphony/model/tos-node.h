@@ -153,6 +153,8 @@ namespace ns3
     //reference to the
     std::vector<Ptr<TosNetDevice> > m_devices;
     std::vector<Ptr<RawSensor> > m_sensors;
+    //this is used to allow getting
+    std::vector<Ptr<SimuClock> > m_clocks;
     const char * m_libname;
     TosLoader * m_tosLoader;
     std::vector<std::string> m_tos_functions;

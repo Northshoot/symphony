@@ -38,20 +38,23 @@ namespace ns3
   TypeId
   TosNode::GetTypeId(void)
   {
-    static TypeId tid = TypeId("ns3::TosNode").SetParent<Node>().AddConstructor<
-        TosNode>().AddAttribute("TosDeviceList",
-        "The list of devices associated to this Node.", ObjectVectorValue(),
+    static TypeId tid = TypeId("ns3::TosNode")
+        .SetParent<Node>()
+        .AddConstructor<TosNode>()
+        .AddAttribute("TosDeviceList","The list of devices associated to this Node.", ObjectVectorValue(),
         MakeObjectVectorAccessor(&TosNode::m_devices),
-        MakeObjectVectorChecker<TosNetDevice>()).AddAttribute("Tid",
-        "The id (unique integer) of this Node.",
-        TypeId::ATTR_GET, // allow only getting it.
+        MakeObjectVectorChecker<TosNetDevice>())
+        .AddAttribute("Tid","The id (unique integer) of this Node.",TypeId::ATTR_GET, // allow only getting it.
         UintegerValue(0), MakeUintegerAccessor(&TosNode::m_id),
-        MakeUintegerChecker<uint32_t>()).AddAttribute("TosId",
-        "The id (unique integer) of this Node.",
+        MakeUintegerChecker<uint32_t>())
+        .AddAttribute("TosId","The id (unique integer) of this Node.",
         TypeId::ATTR_SET, // allow only getting it.
         UintegerValue(0), MakeUintegerAccessor(&TosNode::tos_id),
         MakeUintegerChecker<uint32_t>())
-
+        .AddAttribute("SimuClockList","The list of clocks associated with the node.",
+            ObjectVectorValue(),
+        MakeObjectVectorAccessor(&TosNode::m_clocks),
+        MakeObjectVectorChecker<SimuClock>())
         ;
     return tid;
   }
@@ -83,6 +86,13 @@ namespace ns3
     m_id = TosNodeList::Add(this);
     nstotos = new Ns3ToTosProxy(); //ns3 to tos
     tostons = new TosToNs3Proxy(); //tos to ns3
+    callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
+    simuclock = CreateObject<SimuClock>(MICROSECOND, SimuClock::NONE,callBackFromClock);
+    m_clocks.push_back(simuclock);
+    tostons->simu_clock = simuclock;
+
+//   Config::Set ("SimuClock/ClockDriftType", EnumValue(SimuClock::STATIC));
+//   Config::Set ("SimuClock/ClockDrift", TimeValue(MicroSeconds(5)));
     m_init = false;
 
   }
@@ -205,10 +215,6 @@ namespace ns3
 
         m_application->StartApplication();
       }
-    callBackFromClock = MakeCallback(&TosNode::wrapFire, this);
-    simuclock = CreateObject<SimuClock>(MILLISECOND, EXPONENTIAL, callBackFromClock);
-    simuclock->setTimeDrift(5, MICROSECOND);
-    tostons->simu_clock = simuclock;
     //changed from dlmopen LM_ID_NEWLM, will check if more libs can be loaded
     //for eclipse debug full path is needed for the lib
 
@@ -236,6 +242,7 @@ namespace ns3
     //	      device->Start ();
     //	    }
     nstotos->setUniqueID(tos_id);
+
     Node::DoStart();
     Simulator::Schedule(m_bootTime, &TosNode::BootBooted, this);
   }

@@ -25,12 +25,14 @@
 #include "ns3/event-id.h"
 #include "ns3/callback.h"
 #include "ns3/calls-to-ns3.h"
+#include "ns3/config.h"
+#include "ns3/enum.h"
 
 
 
 
 
-enum TIMEDRIFT {NONE, STATIC, EXPONENTIAL, RANDOM};
+
 
 namespace ns3 {
 
@@ -38,9 +40,12 @@ namespace ns3 {
  
     public:
     static TypeId GetTypeId (void);
-    
+    enum TimeDriftType {NONE, STATIC, EXPONENTIAL, RANDOM};
+    SimuClock();
+    SimuClock (Callback<uint32_t, uint64_t> tf);
     SimuClock(PRECISION p, Callback<uint32_t, uint64_t> tf);
-    SimuClock(PRECISION p , TIMEDRIFT t,  Callback<uint32_t,uint64_t>  tf);
+    SimuClock(PRECISION p , TimeDriftType t,  Callback<uint32_t,uint64_t>  tf);
+
 
     /**
      * sets time drift parameter
@@ -66,10 +71,8 @@ namespace ns3 {
     virtual void DoDispose (void);
 private:
     void Construct(void);
-    void InitRandom(void);
-    Ptr<NormalRandomVariable> randomDriftDistribution;
-    double mean;
-    double variance;
+    double m_ticksPerSecond;
+
     /**
      * precision for *tick*
      */
@@ -77,26 +80,40 @@ private:
     /**
      * type of time drift
      */
-    TIMEDRIFT type;
+    TimeDriftType m_ClockDriftType;
  
     /**
      * the value of time drift
      */	
-    Time timeDrift;
+    Time m_timeDrift;
     /**
      * pointer to callback function
      */
-    Callback<uint32_t,uint64_t>  callBack;
+    Callback<uint32_t,uint64_t>  m_callBack;
  
     /**
      * Tick time
      */
-    Time tickTime;
- 
+    Time m_tickTime;
+
     /**
      * tick event
      */
-    EventId tick_event;
+    EventId m_tickEvent;
+
+    /**
+     * time and event dealing with clock drift
+     */
+    EventId m_clockDriftEvent;
+    Time m_clockDriftPeriod; //defines when to drift the clock next time
+    Ptr<NormalRandomVariable> m_randomDriftDistribution;
+    double m_mean;
+    double m_variance;
+    double m_bound;
+    uint64_t m_exonentialCount;
+    void InitRandom(void);
+    void ClockDrift(void);
+
     uint64_t count; //temp val to count ammount for debugging
     Time getTime(PRECISION p, double crystal);
     Time addTime(PRECISION p, Time tm_1, uint64_t tm_2);

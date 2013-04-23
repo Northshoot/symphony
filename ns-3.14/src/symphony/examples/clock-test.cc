@@ -14,7 +14,7 @@
 
 #include "ns3/symphony-module.h"
 #include "ns3/core-module.h"
-
+#include "ns3/config-store-config.h"
 
 #include "ns3/wifi-module.h"
 
@@ -36,14 +36,22 @@ main(int argc, char *argv[])
   cmd.AddValue("realTime", "true to use real time simulation", realTime);
   cmd.AddValue("numNodes", "number of nodes in simulations", numNodes);
   cmd.Parse(argc, argv);
-  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
-  LogComponentEnable ("TosToNs3Proxy", LOG_LEVEL_ALL);
-// LogComponentEnable ("TosLoader", LOG_LEVEL_ALL);
+
+
   if (realTime)
     {
       GlobalValue::Bind("SimulatorImplementationType",
           StringValue("ns3::RealtimeSimulatorImpl"));
     }
+  Config::SetDefault ("ns3::SimuClock::ClockDriftType", EnumValue(SimuClock::RANDOM));
+  Config::SetDefault ("ns3::SimuClock::ClockDrift", TimeValue(MicroSeconds(1)));
+  Config::SetDefault ("ns3::SimuClock::RandomMean", DoubleValue(8));
+  Config::SetDefault ("ns3::SimuClock::RandomVariance", DoubleValue(4));
+  Config::SetDefault ("ns3::SimuClock::ClockDriftPeriod", TimeValue(MilliSeconds(5)));
+
+  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
+  LogComponentEnable ("TosToNs3Proxy", LOG_LEVEL_ALL);
+  LogComponentEnable ("SimuClock", LOG_LEVEL_ALL);
 
   TosNodeContainer c;
   //Create nodes
@@ -54,7 +62,6 @@ main(int argc, char *argv[])
   //Set node model
   wifi.SetNodeModel(nodeModel);
   wifi.Init(c);
-
 
 
   //Set run-time for the simulation
