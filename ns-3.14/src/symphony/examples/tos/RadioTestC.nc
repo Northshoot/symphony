@@ -33,7 +33,9 @@ implementation {
 	uint16_t counter = 0;
  
 	event void Boot.booted() {
-		////printf("App: booted %d\n", TOS_NODE_ID);
+		////
+		
+		printf("App: booted %d\n", TOS_NODE_ID);
 		if(TOS_NODE_ID == 10) dest = 0;
 		else if (TOS_NODE_ID == 0) dest = 10;
 		//else //printf("TOS_NODE_ID error: TOS_NODE_ID == %d\n", TOS_NODE_ID);
@@ -59,8 +61,8 @@ implementation {
  	void task send(){
  		counter++;
  		//if (counter <15){
-		////printf("TOSNODE (%d) send() - COUNTER (%d)- DEST (%d) PKT SIZE (%ld)\n", 
-		//TOS_NODE_ID, counter, dest, sizeof(radio_count_msg_t));
+		printf("TOSNODE (%d) send() - COUNTER (%d)- DEST (%d) PKT SIZE (%ld)\n", 
+		TOS_NODE_ID, counter, dest, sizeof(radio_count_msg_t));
 		if (locked) {
 			//printf("LOCKED\n");
 			return;
@@ -97,8 +99,7 @@ implementation {
 			//radio_count_msg_t* rcm = (radio_count_msg_t*)payload;
 			              //get counter       
             atomic counter = ((radio_count_msg_t*)payload)->counter;
-            //printf("TOSNODE (%d) receive (%d) len (%d)\n",TOS_NODE_ID
-            //,counter, len );
+            printf("TOSNODE (%d) receive (%d) len (%d)\n",TOS_NODE_ID,counter, len );
             //post send();
             call MilliTimer.startOneShot(10);   
 			return bufPtr;

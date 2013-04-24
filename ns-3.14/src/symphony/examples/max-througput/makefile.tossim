@@ -1,0 +1,2 @@
+COMPONENT=$(TOS_APP)
+include $(MAKERULES)

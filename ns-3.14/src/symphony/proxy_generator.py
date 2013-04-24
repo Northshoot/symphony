@@ -6,7 +6,7 @@ import datetime
 from subprocess import call
 from shutil import copy2 as copyfile
 from xml.etree import ElementTree as ET
-
+from waflib import Logs
 
 class Ns3ToTosProxyGenerator:
     """
@@ -60,13 +60,13 @@ class Ns3ToTosProxyGenerator:
         exe = 'g++ -Wall -c ' + self.cpp_name
         return_code = call(exe, shell=True)
         if return_code !=0:
-            print "Error compiling proxy!"
+            Logs.pprint('RED', "Error compiling proxy!")
             sys.exit(1)
         else:
             rm=call('rm  ns3-to-tos-proxy_auto.o', shell=True)            
             if rm != 0:
                 print "could not delete test object"
-        print "Generated and successfully compiled proxy!"
+        Logs.pprint('GREEN', "Generated and successfully compiled proxy!")
         
     def readXML(self):
         try:

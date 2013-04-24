@@ -86,12 +86,12 @@ TosMacLow::DoDispose (void)
   if(m_sendDataEvent.IsRunning()){
       m_sendDataEvent.Cancel ();
   }
-//  m_phy = 0;
-//  m_txParams =0;
-//  m_listener = 0;
+  m_phy = 0;
+  m_txParams =0;
+  m_listener = 0;
 
-//  delete m_txParams;
-//  delete m_listener;
+  delete m_txParams;
+  delete m_listener;
 
   Object::DoDispose();
 }
@@ -195,7 +195,7 @@ TosMacLow::ReceiveOk (Ptr<Packet> packet, double rxSnr, WifiMode txMode, WifiPre
   //TODO: inmplement snr convertion
 //  SnrTag tag;
 //  m_currentPacket->RemovePacketTag (tag);
-  m_rxCallback (packet,&hdr);
+  m_rxCallback (packet->Copy(),&hdr);
 
 }
 
@@ -233,7 +233,7 @@ TosMacLow::ForwardDown (Ptr<const Packet> packet, const WifiMacHeader* hdr,
                 ", mode=" << txMode <<
                 ", duration=" << hdr->GetDuration () <<
                 ", seq=0x" << std::hex << m_currentHdr.GetSequenceControl () << std::dec);
-   m_phy->SendPacket (packet, txMode, ZIGBEE_PREAMBLE, 0);
+   m_phy->SendPacket (packet->Copy(), txMode, ZIGBEE_PREAMBLE, 0);
 }
 
 
@@ -256,7 +256,7 @@ void
 TosMacLow::SendDataPacket (void)
 {
   NS_LOG_FUNCTION(GetDataTxMode ());
-  ForwardDown (m_currentPacket, &m_currentHdr, GetDataTxMode ());
+  ForwardDown (m_currentPacket->Copy(), &m_currentHdr, GetDataTxMode ());
 }
 
 WifiMode

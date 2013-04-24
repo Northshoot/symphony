@@ -16,7 +16,7 @@ namespace ns3 {
 NS_LOG_COMPONENT_DEFINE("TosLoader");
 
 TosLoader::TosLoader() {
-	NS_LOG_FUNCTION(this);
+
 }
 
 TosLoader::~TosLoader() {
@@ -29,7 +29,7 @@ TosLoader::getHandler(std::string libname) {
 
 	handler = dlmopen(LM_ID_NEWLM, libname.c_str(), RTLD_LAZY);
 	if (!handler) {
-		std::cerr << handler << "Cannot open library: " << dlerror() << '\n';
+		NS_LOG_ERROR( this<< handler << "Cannot open library: " << dlerror() );
 		exit(1);
 	}
 
@@ -48,10 +48,10 @@ TosLoader::getFunction(const char * func_name) {
 		//for now return default function which prints error is the function is not found
 		std::string defFunc = "sim_function_not_found";
 		std::stringstream sstm;
-		sstm << "Function not found: " << func_name
+		sstm << " Function not found: " << func_name
 				<< ". Using default TOS function.\n" << error;
 		void * tmp = dlsym(handler, defFunc.c_str());
-		NS_LOG_ERROR(sstm.str());
+		NS_LOG_ERROR(this << sstm.str());
 		return tmp;
 	} else {
 		return tmp;

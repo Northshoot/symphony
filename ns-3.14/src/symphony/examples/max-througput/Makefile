@@ -1,5 +1,5 @@
-#define your application name in TOS_APP
-export TOS_APP=RadioApp
+#
+export TOS_APP=ThroughputApp
 
 sym:
 	$(MAKE) -f makefile.symphony 

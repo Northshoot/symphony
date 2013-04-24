@@ -67,9 +67,9 @@ namespace ns3
   {
   public:
     PhyTosListener(ns3::TosNetDevice *device) :
-        m_device(device)
-    {
-    }
+      m_device(device)
+  {
+  }
     virtual
     ~PhyTosListener()
     {
@@ -79,13 +79,13 @@ namespace ns3
     NotifyRxStart(Time duration)
     {
       m_device->StartRx(duration);
-//      std::cout << " \tNotifyRxStart " << duration.GetMicroSeconds()
-//          << " micro s" << std::endl;
+      //      std::cout << " \tNotifyRxStart " << duration.GetMicroSeconds()
+      //          << " micro s" << std::endl;
     }
     virtual void
     NotifyRxEndOk(void)
     {
-//      std::cout<<" \tNotifyRxEndOk"<<std::endl;
+      //      std::cout<<" \tNotifyRxEndOk"<<std::endl;
 
     }
     virtual void
@@ -97,19 +97,20 @@ namespace ns3
     virtual void
     NotifyTxStart(Time duration)
     {
+      std::cout << " \tNotifyTxStart " << duration.GetMicroSeconds() << " now " << Simulator::Now()<< std::endl;
       m_device->SendDone(duration);
     }
     virtual void
     NotifyMaybeCcaBusyStart(Time duration)
     {
       std::cout << " \tNotifyMaybeCcaBusyStart " << duration.GetMicroSeconds()
-          << std::endl;
+              << std::endl;
     }
     virtual void
     NotifySwitchingStart(Time duration)
     {
       std::cout << " \tNotifySwitchingStart" << duration.GetMicroSeconds()
-          << std::endl;
+              << std::endl;
       //m_macLow->NotifySwitchingStartNow (duration);
     }
   private:
@@ -117,7 +118,7 @@ namespace ns3
   };
 
   TosNetDevice::TosNetDevice() :
-      m_configComplete(false)
+          m_configComplete(false)
   {
     NS_LOG_FUNCTION_NOARGS ();
     m_state = RADIO_STATE_OFF;
@@ -128,29 +129,29 @@ namespace ns3
   {
     static TypeId tid =
         TypeId("ns3::TosNetDevice").SetParent<NetDevice>().AddConstructor<
-            TosNetDevice>().AddAttribute("Mtu",
+        TosNetDevice>().AddAttribute("Mtu",
             "The MAC-level Maximum Transmission Unit",
             UintegerValue(MAX_MSDU_SIZE - 8),
             MakeUintegerAccessor(&TosNetDevice::SetMtu, &TosNetDevice::GetMtu),
             MakeUintegerChecker<uint16_t>(1, MAX_MSDU_SIZE - 8)).AddAttribute(
-            "Channel", "The channel attached to this device", PointerValue(),
-            MakePointerAccessor(&TosNetDevice::DoGetChannel),
-            MakePointerChecker<TosNetDevice>()).AddAttribute("Phy",
-            "The PHY layer attached to this device.", PointerValue(),
-            MakePointerAccessor(&TosNetDevice::GetPhy, &TosNetDevice::SetPhy),
-            MakePointerChecker<WifiPhy>()).AddAttribute("Mac",
-            "The MAC layer attached to this device.", PointerValue(),
-            MakePointerAccessor(&TosNetDevice::GetMac, &TosNetDevice::SetMac),
-            MakePointerChecker<WifiMac>()).AddAttribute("StartDone",
-            "Callback for device start done event.", CallbackValue(),
-            MakeCallbackAccessor(&TosNetDevice::c_ns2tosStartDone),
-            MakeCallbackChecker()).AddAttribute("SendDone",
-            "Callback for device send done event.", CallbackValue(),
-            MakeCallbackAccessor(&TosNetDevice::c_ns2tosSendDone),
-            MakeCallbackChecker()).AddAttribute("ReceivePacket",
-            "Callback to forward packet up.", CallbackValue(),
-            MakeCallbackAccessor(&TosNetDevice::c_ns2tosRx),
-            MakeCallbackChecker());
+                "Channel", "The channel attached to this device", PointerValue(),
+                MakePointerAccessor(&TosNetDevice::DoGetChannel),
+                MakePointerChecker<TosNetDevice>()).AddAttribute("Phy",
+                    "The PHY layer attached to this device.", PointerValue(),
+                    MakePointerAccessor(&TosNetDevice::GetPhy, &TosNetDevice::SetPhy),
+                    MakePointerChecker<WifiPhy>()).AddAttribute("Mac",
+                        "The MAC layer attached to this device.", PointerValue(),
+                        MakePointerAccessor(&TosNetDevice::GetMac, &TosNetDevice::SetMac),
+                        MakePointerChecker<WifiMac>()).AddAttribute("StartDone",
+                            "Callback for device start done event.", CallbackValue(),
+                            MakeCallbackAccessor(&TosNetDevice::c_ns2tosStartDone),
+                            MakeCallbackChecker()).AddAttribute("SendDone",
+                                "Callback for device send done event.", CallbackValue(),
+                                MakeCallbackAccessor(&TosNetDevice::c_ns2tosSendDone),
+                                MakeCallbackChecker()).AddAttribute("ReceivePacket",
+                                    "Callback to forward packet up.", CallbackValue(),
+                                    MakeCallbackAccessor(&TosNetDevice::c_ns2tosRx),
+                                    MakeCallbackChecker());
     return tid;
   }
 
@@ -258,11 +259,9 @@ namespace ns3
   TosNetDevice::DeviceSend(void* msg)
   {
 
-    NS_LOG_FUNCTION(this);
+    NS_LOG_FUNCTION(this<<Simulator::Now());
 
-    if((m_state != RADIO_STATE_ON) || m_busy)
-    	return EBUSY;
-
+    NS_ASSERT(m_state == RADIO_STATE_ON && !m_busy);
 
     if (!m_RxEvent.IsRunning() && !m_trasmit.IsRunning())
       {
@@ -271,17 +270,17 @@ namespace ns3
         m_state = RADIO_STATE_TX;
         m_busy = true;
         //TODO: the event for sending get erronious
-//    uint64_t t = boost::lexical_cast<uint64_t>(m_txParams->getElement(ModelVocabulary::CALL,"DeviceSend")->getAttributeValue("time"));
-//    NS_LOG_FUNCTION(t);
-//    Time run_time=MilliSeconds(t);
-//    m_trasmit = Simulator::Schedule(run_time, &TosNetDevice::TransmitData, this);
-//        uint64_t t =
-//            boost::lexical_cast<uint64_t>(
-//                m_txParams->getElement(ModelVocabulary::CALLBACK, "sendDone")->getAttributeValue(
-//                    "time"));
-//        Time run_time = MilliSeconds(t);
-//        m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
-//            this, 0);
+        //    uint64_t t = boost::lexical_cast<uint64_t>(m_txParams->getElement(ModelVocabulary::CALL,"DeviceSend")->getAttributeValue("time"));
+        //    NS_LOG_FUNCTION(t);
+        //    Time run_time=MilliSeconds(t);
+        //    m_trasmit = Simulator::Schedule(run_time, &TosNetDevice::TransmitData, this);
+        //        uint64_t t =
+        //            boost::lexical_cast<uint64_t>(
+        //                m_txParams->getElement(ModelVocabulary::CALLBACK, "sendDone")->getAttributeValue(
+        //                    "time"));
+        //        Time run_time = MilliSeconds(t);
+        //        m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
+        //            this, 0);
         TransmitData();
         return SUCCESS;
       }
@@ -296,7 +295,7 @@ namespace ns3
   void
   TosNetDevice::TransmitData(void)
   {
-    NS_LOG_FUNCTION_NOARGS();
+    NS_LOG_FUNCTION(this<<m_tx);
     //printf("\t\t\t\tNS3 SENDING\n");
     //printTosPacket((char*)&m_tx_msg);
     m_tx_pkt = TosToNsPacket((message_t*) &m_tx_msg);
@@ -309,30 +308,28 @@ namespace ns3
     hdr.SetDsNotTo();
     m_tx_pkt->AddHeader(hdr);
     m_tx++;
-    m_tos_mac->TransmitData(m_tx_pkt, &hdr);
+    m_tos_mac->TransmitData(m_tx_pkt->Copy(), &hdr);
+
 
   }
 
   void
   TosNetDevice::radioStartDone()
   {
+    NS_LOG_FUNCTION (this<< " "<< Simulator::Now());
     Simulator::Remove(m_startUpEvent);
     m_state = RADIO_STATE_ON;
     NS_ASSERT_MSG(!c_ns2tosStartDone.IsNull(),
         "StartDone callback is not set.");
 
     c_ns2tosStartDone(SUCCESS);
-    NS_LOG_FUNCTION_NOARGS ();
+
   }
   void
   TosNetDevice::DoStart(void)
   {
-    NS_LOG_FUNCTION_NOARGS ();
-    m_tos_mac->Start();
+    NS_LOG_FUNCTION(this<< Simulator::Now());
 
-    m_phy->Start();
-
-    NetDevice::DoStart();
     //m_txParams->printModel();
     NS_ASSERT_MSG(m_txParams !=NULL, "RadioModel is not set");
     uint64_t t =
@@ -344,6 +341,9 @@ namespace ns3
     m_startUpEvent = Simulator::Schedule(run_time,
         &TosNetDevice::radioStartDone, this);
 
+    m_tos_mac->Start();
+    m_phy->Start();
+    NetDevice::DoStart();
   }
   Ptr<Packet>
   TosNetDevice::TosToNsPacket(message_t* msg)
@@ -359,10 +359,10 @@ namespace ns3
     //message_t * msg  = (message_t*) malloc(sizeof(message_t));
     if (packet)
       {
+        NS_LOG_FUNCTION(this<< Simulator::Now());
         packet->RemoveHeader(hdrr);
         packet->CopyData(reinterpret_cast<uint8_t*>(&m_rx_msg),
             sizeof(message_t));
-        NS_LOG_FUNCTION_NOARGS();
 
         //memcpy( ((void *)&m_rx_msg), ((const void *)msg), sizeof(message_t));
         //printTosPacket((char *) &m_rx_msg);
@@ -377,13 +377,19 @@ namespace ns3
   void
   TosNetDevice::SendDone(Time duration)
   {
-//    uint64_t t =
-//        boost::lexical_cast<uint64_t>(
-//            m_txParams->getElement(ModelVocabulary::CALLBACK, "sendDone")->getAttributeValue(
-//                "time"));
-	Time run_time = MicroSeconds(duration.GetMicroSeconds()+200);
-    m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
+    //    uint64_t t =
+    //        boost::lexical_cast<uint64_t>(
+    //            m_txParams->getElement(ModelVocabulary::CALLBACK, "sendDone")->getAttributeValue(
+    //                "time"));
+    if (m_state == RADIO_STATE_TX) {
+      Time run_time = MicroSeconds(duration.GetMicroSeconds()+10);
+      NS_LOG_FUNCTION(this<< Simulator::Now());
+      m_state=RADIO_STATE_ON;
+      m_sendEvent = Simulator::Schedule(run_time, &TosNetDevice::DeviceSendDone,
         this, 0);
+    } else {
+        NS_LOG_FUNCTION(this<< " radio state is not TX");
+    }
 
   }
 
@@ -393,7 +399,7 @@ namespace ns3
     NS_ASSERT_MSG(!c_ns2tosSendDone.IsNull(), "SendDone callback is not set.");
     m_state = RADIO_STATE_ON;
 
-    NS_LOG_FUNCTION(this);
+    NS_LOG_FUNCTION(this<< Simulator::Now());
     m_busy = false;
     m_tx++;
     c_ns2tosSendDone(&m_tx_msg, 0);
@@ -410,28 +416,29 @@ namespace ns3
     return true;
   }
 
-  void
+  message_t*
   TosNetDevice::DeviceReceive(message_t* msg)
   {
     c_ns2tosRx((void*) msg);
-    NS_LOG_FUNCTION_NOARGS();
-    if(m_RxEvent.IsRunning())
-    	m_RxEvent.Cancel();
+    m_RxEvent.Cancel();
     m_state=RADIO_STATE_ON;
+
+    return &m_rx_msg;
   }
 
   void
   TosNetDevice::DoDispose(void)
   {
-    NS_LOG_FUNCTION_NOARGS ();
+    NS_LOG_FUNCTION(this<< Simulator::Now());
 
-	m_node=0;
+    m_node = 0;
     m_tos_mac->Dispose();
     m_phy->Dispose();
-	m_tos_mac=0;
-	m_phy=0;
-	m_phyListener=0;
-	m_ns3totos=0;
+    m_tos_mac = 0;
+    m_phy = 0;
+    m_phyListener = 0;
+    m_ns3totos = 0;
+    delete (m_ns3totos);
 
     delete (m_phyListener);
     NetDevice::DoDispose();
@@ -450,224 +457,229 @@ namespace ns3
     NS_ASSERT_MSG(!c_ns2tosRx.IsNull(), "Receive callback is not set.");
     if (m_state == RADIO_STATE_RX)
       {
-            message_t * msg = NsToTosPacket(packet, hdr);
-            m_rx++;
-           DeviceReceive(msg);
-    } else  {
-      m_dr++;
-      NS_LOG_FUNCTION("Dropping Packet, still in RX state"<<m_node->GetId());
+        message_t * msg = NsToTosPacket(packet, hdr);
+        m_rx++;
+        DeviceReceive(msg);
+      }
+    else
+      {
+        m_dr++;
+        NS_LOG_FUNCTION("Dropping Packet, still in RX state"<<m_node->GetId());
+      }
   }
-}
 
-void
-TosNetDevice::Setup(void)
-{
-}
-
-Ptr<WifiChannel>
-TosNetDevice::DoGetChannel(void) const
-{
-  return m_phy->GetChannel();
-}
-
-bool
-TosNetDevice::Send(Ptr<Packet> packet, const Address& dest)
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
-
-void
-TosNetDevice::SetIfIndex(const uint32_t index)
-{
-  NS_LOG_FUNCTION(this << "NOT in use");
-  m_ifIndex = index;
-}
-
-void
-TosNetDevice::CompleteConfig(void)
-{
-  if (m_tos_mac == 0 || m_phy == 0 || m_node == 0)
-    {
-      return;
-    }
-  m_tos_mac->SetPhy(m_phy);
-  m_tos_mac->SetRxCallback(MakeCallback(&TosNetDevice::ForwardUp, this));
-  m_tos_mac->SetTxCallback(MakeCallback(&TosNetDevice::SendDone, this));
-//	  m_tos_mac->ReceiveError (MakeCallback (&TosWifiNetDevice::LinkUp, this));
-//	  m_tos_mac->ReceiveOk (MakeCallback (&TosWifiNetDevice::LinkDown, this));
-  m_phyListener = new PhyTosListener(this);
-  m_phy->RegisterListener(m_phyListener);
-  m_configComplete = true;
-  m_busy = false;
-  m_rx=0;
-  m_tx=0;
-  m_dr=0;
-}
-void
-TosNetDevice::StartRx(Time a)
-{
-//std::cout << a.GetMicroSeconds()<<" Now "<<Simulator::Now().GetMicroSeconds()<<std::endl;
-  if(m_state != RADIO_STATE_ON) {
-
-  } else {
-  m_state=RADIO_STATE_RX;
+  void
+  TosNetDevice::Setup(void)
+  {
   }
-}
-uint32_t
-TosNetDevice::GetIfIndex(void) const
-{
-  NS_LOG_FUNCTION(this << "NOT in use");
-  return m_ifIndex;
-}
 
-void
-TosNetDevice::SetAddress(Address address)
-{
-  m_tos_mac->SetAddress(Mac48Address::ConvertFrom(address));
+  Ptr<WifiChannel>
+  TosNetDevice::DoGetChannel(void) const
+  {
+    return m_phy->GetChannel();
+  }
 
-}
+  bool
+  TosNetDevice::Send(Ptr<Packet> packet, const Address& dest)
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
 
-Address
-TosNetDevice::GetAddress(void) const
-{
-  return m_tos_mac->GetAddress();
-}
+  void
+  TosNetDevice::SetIfIndex(const uint32_t index)
+  {
+    NS_LOG_FUNCTION(this << "NOT in use");
+    m_ifIndex = index;
+  }
 
-bool
-TosNetDevice::SetMtu(const uint16_t mtu)
-{
-  if (mtu <= MAX_MSDU_SIZE)
-    {
-      m_mtu = mtu;
-      return true;
-    }
-  return false;
-}
+  void
+  TosNetDevice::CompleteConfig(void)
+  {
+    if (m_tos_mac == 0 || m_phy == 0 || m_node == 0)
+      {
+        return;
+      }
+    m_tos_mac->SetPhy(m_phy);
+    m_tos_mac->SetRxCallback(MakeCallback(&TosNetDevice::ForwardUp, this));
+    m_tos_mac->SetTxCallback(MakeCallback(&TosNetDevice::SendDone, this));
+    //	  m_tos_mac->ReceiveError (MakeCallback (&TosWifiNetDevice::LinkUp, this));
+    //	  m_tos_mac->ReceiveOk (MakeCallback (&TosWifiNetDevice::LinkDown, this));
+    m_phyListener = new PhyTosListener(this);
+    m_phy->RegisterListener(m_phyListener);
+    m_configComplete = true;
+    m_busy = false;
+    m_rx = 0;
+    m_tx = 0;
+    m_dr = 0;
+  }
+  void
+  TosNetDevice::StartRx(Time a)
+  {
+    //std::cout << a.GetMicroSeconds()<<" Now "<<Simulator::Now().GetMicroSeconds()<<std::endl;
+    if (m_state != RADIO_STATE_ON)
+      {
 
-uint16_t
-TosNetDevice::GetMtu(void) const
-{
-  return m_mtu;
-}
+      }
+    else
+      {
+        m_state = RADIO_STATE_RX;
+      }
+  }
+  uint32_t
+  TosNetDevice::GetIfIndex(void) const
+  {
+    NS_LOG_FUNCTION(this << "NOT in use");
+    return m_ifIndex;
+  }
 
-Address
-TosNetDevice::GetMulticast(Ipv4Address multicastGroup) const
-{
-  return Mac48Address::GetMulticast(multicastGroup);
-}
+  void
+  TosNetDevice::SetAddress(Address address)
+  {
+    m_tos_mac->SetAddress(Mac48Address::ConvertFrom(address));
 
-Address
-TosNetDevice::GetMulticast(Ipv6Address addr) const
-{
-  return Mac48Address::GetMulticast(addr);
-}
+  }
 
-void
-TosNetDevice::setNs3ToTos(Ns3ToTosProxy * nstos)
-{
-  m_ns3totos = nstos;
-}
+  Address
+  TosNetDevice::GetAddress(void) const
+  {
+    return m_tos_mac->GetAddress();
+  }
 
-void
-TosNetDevice::SetRadioModel(Ptr<HardwareModel> model)
-{
-  m_txParams = model;
-}
-bool
-TosNetDevice::IsLinkUp(void) const
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
+  bool
+  TosNetDevice::SetMtu(const uint16_t mtu)
+  {
+    if (mtu <= MAX_MSDU_SIZE)
+      {
+        m_mtu = mtu;
+        return true;
+      }
+    return false;
+  }
 
-void
-TosNetDevice::AddLinkChangeCallback(Callback<void> callback)
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-}
+  uint16_t
+  TosNetDevice::GetMtu(void) const
+  {
+    return m_mtu;
+  }
 
-bool
-TosNetDevice::IsBroadcast(void) const
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
+  Address
+  TosNetDevice::GetMulticast(Ipv4Address multicastGroup) const
+  {
+    return Mac48Address::GetMulticast(multicastGroup);
+  }
 
-Address
-TosNetDevice::GetBroadcast(void) const
-{
-  return Mac48Address::GetBroadcast();
-}
+  Address
+  TosNetDevice::GetMulticast(Ipv6Address addr) const
+  {
+    return Mac48Address::GetMulticast(addr);
+  }
 
-bool
-TosNetDevice::IsMulticast(void) const
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
-bool
-TosNetDevice::NeedsArp(void) const
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return true;
-}
+  void
+  TosNetDevice::setNs3ToTos(Ns3ToTosProxy * nstos)
+  {
+    m_ns3totos = nstos;
+  }
 
-void
-TosNetDevice::SetReceiveCallback(NetDevice::ReceiveCallback cb)
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-}
+  void
+  TosNetDevice::SetRadioModel(Ptr<HardwareModel> model)
+  {
+    m_txParams = model;
+  }
+  bool
+  TosNetDevice::IsLinkUp(void) const
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
 
-void
-TosNetDevice::LinkUp(void)
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-}
+  void
+  TosNetDevice::AddLinkChangeCallback(Callback<void> callback)
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+  }
 
-void
-TosNetDevice::LinkDown(void)
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-}
-bool
-TosNetDevice::IsPointToPoint(void) const
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
+  bool
+  TosNetDevice::IsBroadcast(void) const
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
 
-bool
-TosNetDevice::IsBridge(void) const
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
+  Address
+  TosNetDevice::GetBroadcast(void) const
+  {
+    return Mac48Address::GetBroadcast();
+  }
 
-bool
-TosNetDevice::Send(Ptr<Packet> packet, const Address& dest,
-    uint16_t protocolNumber)
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
-void
-TosNetDevice::SetPromiscReceiveCallback(PromiscReceiveCallback cb)
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-}
+  bool
+  TosNetDevice::IsMulticast(void) const
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
+  bool
+  TosNetDevice::NeedsArp(void) const
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return true;
+  }
 
-bool
-TosNetDevice::SupportsSendFrom(void) const
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
-bool
-TosNetDevice::SendFrom(Ptr<Packet> packet, const Address& source,
-    const Address& dest, uint16_t protocolNumber)
-{
-  NS_LOG_FUNCTION(this << "NOT implemented");
-  return false;
-}
+  void
+  TosNetDevice::SetReceiveCallback(NetDevice::ReceiveCallback cb)
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+  }
+
+  void
+  TosNetDevice::LinkUp(void)
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+  }
+
+  void
+  TosNetDevice::LinkDown(void)
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+  }
+  bool
+  TosNetDevice::IsPointToPoint(void) const
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
+
+  bool
+  TosNetDevice::IsBridge(void) const
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
+
+  bool
+  TosNetDevice::Send(Ptr<Packet> packet, const Address& dest,
+      uint16_t protocolNumber)
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
+  void
+  TosNetDevice::SetPromiscReceiveCallback(PromiscReceiveCallback cb)
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+  }
+
+  bool
+  TosNetDevice::SupportsSendFrom(void) const
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
+  bool
+  TosNetDevice::SendFrom(Ptr<Packet> packet, const Address& source,
+      const Address& dest, uint16_t protocolNumber)
+  {
+    NS_LOG_FUNCTION(this << "NOT implemented");
+    return false;
+  }
 } /* namespace ns3 */

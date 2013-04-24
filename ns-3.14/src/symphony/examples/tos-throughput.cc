@@ -27,8 +27,8 @@ main(int argc, char *argv[])
 
   std::string nodeModel = "/home/lauril/dev/symphony/ns-3.14/build/symphony.xml";
   std::string nodeImage = "/home/lauril/dev/symphony/ns-3.14/build/libtos.so";
-  uint64_t simLength = 1000;
-  //uint32_t numNone = 2;
+  uint64_t simLength = 100;
+  uint32_t numNone = 2;
   bool realTime = false;
   CommandLine cmd;
   cmd.AddValue("nodeModel", "model of the node in XML format", nodeModel);
@@ -43,15 +43,14 @@ main(int argc, char *argv[])
       GlobalValue::Bind("SimulatorImplementationType",
           StringValue("ns3::RealtimeSimulatorImpl"));
     }
-  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
+//  LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
   //LogComponentEnable ("TosLoader", LOG_LEVEL_ALL);
-  LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
-  LogComponentEnable("TosMacLow",LOG_LEVEL_ALL);
+//  LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
+//  LogComponentEnable("TosMacLow",LOG_LEVEL_ALL);
   TosNodeContainer c;
   //Create nodes
-  //c.Create(numNone, nodeImage.c_str());
-  c.Add(CreateObject<TosNode> (10, MilliSeconds(0), nodeImage.c_str() ));
-  c.Add(CreateObject<TosNode> (0, MilliSeconds(0), nodeImage.c_str() ));
+ c.Create(numNone, nodeImage.c_str());
+
   //Create helper
   TosHelper wifi;
   //here you can enable logging
@@ -61,12 +60,12 @@ main(int argc, char *argv[])
 //	    }
   //sett standart for the communications
   wifi.SetStandard(ZIGBEE_PHY_STANDARD_802154);
-  wifi.EnableLogComponents ();
-//  LogComponentEnable ("TosMacLow", LOG_LEVEL_ALL);
-   LogComponentEnable ("TosHelper", LOG_LEVEL_ALL);
-//   LogComponentEnable ("YansTosPhyHelper", LOG_LEVEL_ALL);
+ // wifi.EnableLogComponents ();
+ LogComponentEnable ("TosMacLow", LOG_LEVEL_ALL);
+ //  LogComponentEnable ("TosHelper", LOG_LEVEL_ALL);
+  LogComponentEnable ("YansTosPhyHelper", LOG_LEVEL_ALL);
    LogComponentEnable ("TosNetDevice", LOG_LEVEL_ALL);
-//   LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
+   LogComponentEnable ("TosNode", LOG_LEVEL_ALL);
   //Set node model
   wifi.SetNodeModel(nodeModel);
 
@@ -98,7 +97,6 @@ main(int argc, char *argv[])
       CreateObject<ListPositionAllocator>();
   positionAlloc->Add(Vector(0.0, 0.0, 0.0));
   positionAlloc->Add(Vector(50.0, 0.0, 0.0));
-  //positionAlloc->Add (Vector (0, 0.0, 0.0));
   mobility.SetPositionAllocator(positionAlloc);
   mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
   //Install it

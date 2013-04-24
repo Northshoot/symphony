@@ -1,4 +1,5 @@
 # -*- Mode: python; py-indent-offset: 4; indent-tabs-mode: nil; coding: utf-8; -*-
+from waflib import Logs
 
 def postProcess(bld,file):
     #file ="libns3-dev-tos-loader-debug.so"
@@ -7,7 +8,7 @@ def postProcess(bld,file):
     ldso="../elf/ldso"
     #print bld.env
     cmd = "melftedit " +file+" ../elf/ldso"    
-    print cmd
+    Logs.pprint('GREEN', cmd )
     #bld.exec_command(cmd)
 
     

@@ -91,9 +91,8 @@ namespace ns3
     m_clocks.push_back(simuclock);
     tostons->simu_clock = simuclock;
 
-//   Config::Set ("SimuClock/ClockDriftType", EnumValue(SimuClock::STATIC));
-//   Config::Set ("SimuClock/ClockDrift", TimeValue(MicroSeconds(5)));
-    m_init = false;
+   m_init = false;
+    NS_LOG_FUNCTION(this<<" Constructed");
 
   }
   void
@@ -139,7 +138,7 @@ namespace ns3
   {
     simuclock->Start();
     nstotos->sim_main_start_mote(tos_id);
-    //NS_LOG_FUNCTION(tos_id << Simulator::Now().GetMilliSeconds());
+   NS_LOG_FUNCTION(tos_id << Simulator::Now().GetMilliSeconds());
     Simulator::Remove(m_boot_event);
   }
 
