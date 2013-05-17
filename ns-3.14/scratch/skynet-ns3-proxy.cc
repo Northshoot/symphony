@@ -14,7 +14,7 @@
 #include "ns3/applications-module.h"
 #include "ns3/ipv4-static-routing-helper.h"
 #include "ns3/ipv4-list-routing-helper.h"
-#include "ns3/SkynetNs3ProxyServer.h"
+#include "ns3/io-proxy-server.h"
 
 #include "ns3/symphony-module.h"
 
@@ -31,7 +31,7 @@ void Log(uint8_t size, void * buffer){
 
     NodePacket *npkt = (NodePacket*) buffer;
 
-    Ptr<SkynetNs3ProxyServer> serv = Names::Find<SkynetNs3ProxyServer>("/Names/IOServer");
+    Ptr<IOProxyServer> serv = Names::Find<IOProxyServer>("/Names/IOServer");
     serv->SendData(npkt->counter);
 
     NS_LOG_UNCOND("[NS3] Node [" << npkt->nodeId << "] sent value " << npkt->counter );
@@ -44,7 +44,7 @@ main (int argc, char *argv[])
   NS_LOG_INFO ("Loading Skynet NS3 Proxy Script");
   
   LogComponentEnable("SkynetNs3ProxyScript", LOG_INFO);
-  LogComponentEnable("SkynetNs3ProxyServer", LOG_INFO);
+  LogComponentEnable("IOProxyServer", LOG_INFO);
   
   // Default network parameters
   std::string deviceName("eth0");
@@ -137,9 +137,9 @@ main (int argc, char *argv[])
   staticRouting->SetDefaultRoute (gateway, interface);
 
   // Configure the application running on the node
-  NS_LOG_INFO("- Adding Skynet NS3 IO Server");
+  NS_LOG_INFO("- Adding IO Proxy Server");
   
-  Ptr<SkynetNs3ProxyServer> app = CreateObject<SkynetNs3ProxyServer> ();
+  Ptr<IOProxyServer> app = CreateObject<IOProxyServer> ();
   node->AddApplication (app);
   app->SetStartTime(Seconds (1.0));
   app->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
@@ -148,7 +148,7 @@ main (int argc, char *argv[])
   app->SetAttribute("LocalPortNumber", IntegerValue(localPortNumber));
   app->SetAttribute("LocalIp", StringValue(localIp));
 
-  Names::Add("IOServer", app);
+  Names::Add("IOProxyServer", app);
 
 
   // Configure the TinyOS node

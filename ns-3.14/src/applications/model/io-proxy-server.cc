@@ -4,8 +4,6 @@
  *
  * @author Jose Angel Fernandez
  */
- 
-#include "SkynetNs3ProxyServer.h"
 #include "ns3/icmpv4.h"
 #include "ns3/assert.h"
 #include "ns3/log.h"
@@ -22,49 +20,51 @@
 #include "ns3/string.h"
 #include "ns3/object.h"
 
+#include "io-proxy-server.h"
+
 #include <stdio.h>
 
 namespace ns3 {
 
-NS_LOG_COMPONENT_DEFINE ("SkynetNs3ProxyServer");
-NS_OBJECT_ENSURE_REGISTERED (SkynetNs3ProxyServer);
+NS_LOG_COMPONENT_DEFINE ("IOProxyServer");
+NS_OBJECT_ENSURE_REGISTERED (IOProxyServer);
 
 
-SkynetNs3ProxyServer::SkynetNs3ProxyServer ()
+IOProxyServer::IOProxyServer ()
 {
 	m_socket = 0;
 }
 
-TypeId SkynetNs3ProxyServer::GetTypeId (void)
+TypeId IOProxyServer::GetTypeId (void)
 {
-  static TypeId tid = TypeId ("ns3::SkynetNs3ProxyServer")
+  static TypeId tid = TypeId ("ns3::IoProxyServer")
     .SetParent<Application> ()
-    .AddConstructor<SkynetNs3ProxyServer> ()
+    .AddConstructor<IOProxyServer> ()
     .AddAttribute("RemotePortNumber",
     					"Remote port listening for connections",
     					IntegerValue(9999),
-    					MakeIntegerAccessor(&SkynetNs3ProxyServer::m_remotePortNumber),
+    					MakeIntegerAccessor(&IOProxyServer::m_remotePortNumber),
     					MakeIntegerChecker<int64_t>())
     .AddAttribute("RemoteIp",
     					"Remote IP listening for connections",
     					StringValue("127.0.0.1"),
-    					MakeStringAccessor(&SkynetNs3ProxyServer::m_remoteIp),
+    					MakeStringAccessor(&IOProxyServer::m_remoteIp),
     					MakeStringChecker())
     .AddAttribute("LocalPortNumber",
     					"Local port for incoming connections",
     					IntegerValue(3333),
-    					MakeIntegerAccessor(&SkynetNs3ProxyServer::m_localPortNumber),
+    					MakeIntegerAccessor(&IOProxyServer::m_localPortNumber),
     					MakeIntegerChecker<int64_t>())
     .AddAttribute("LocalIp",
     					"Local IP for incoming connections",
     					StringValue("127.0.0.1"),
-    					MakeStringAccessor(&SkynetNs3ProxyServer::m_localIp),
+    					MakeStringAccessor(&IOProxyServer::m_localIp),
     					MakeStringChecker());
   return tid;
 }
 
 
-void SkynetNs3ProxyServer::StartApplication (void)
+void IOProxyServer::StartApplication (void)
 {
   NS_LOG_FUNCTION (this);
   
@@ -89,19 +89,19 @@ void SkynetNs3ProxyServer::StartApplication (void)
 
   m_socket->SetAcceptCallback (
     MakeNullCallback<bool, Ptr<Socket>, const Address &> (),
-    MakeCallback (&SkynetNs3ProxyServer::HandleAccept, this));
+    MakeCallback (&IOProxyServer::HandleAccept, this));
 
   m_socket->SetRecvCallback (
-	MakeCallback (&SkynetNs3ProxyServer::HandleRead, this));
+	MakeCallback (&IOProxyServer::HandleRead, this));
 
   m_socket->SetDataSentCallback (
-	MakeCallback (&SkynetNs3ProxyServer::HandleSend,this));
+	MakeCallback (&IOProxyServer::HandleSend,this));
 
   //m_socket->SetSendCallback
 
   m_socket->SetCloseCallbacks (
-    MakeCallback (&SkynetNs3ProxyServer::HandlePeerClose, this),
-    MakeCallback (&SkynetNs3ProxyServer::HandlePeerError, this));
+    MakeCallback (&IOProxyServer::HandlePeerClose, this),
+    MakeCallback (&IOProxyServer::HandlePeerError, this));
 
   // If we need to configure a reception only socket or a sending only socket
   // we need to call one of the following methods:
@@ -109,34 +109,34 @@ void SkynetNs3ProxyServer::StartApplication (void)
   // m_socket->ShutdownRecv();
 }
 
-void SkynetNs3ProxyServer::StopApplication (void)
+void IOProxyServer::StopApplication (void)
 {
   NS_LOG_FUNCTION (this);
   m_socket->Close();
 }
 
-void SkynetNs3ProxyServer::HandlePeerClose (Ptr<Socket> socket)
+void IOProxyServer::HandlePeerClose (Ptr<Socket> socket)
 {
   NS_LOG_FUNCTION (this << socket);
 }
  
-void SkynetNs3ProxyServer::HandlePeerError (Ptr<Socket> socket)
+void IOProxyServer::HandlePeerError (Ptr<Socket> socket)
 {
   NS_LOG_FUNCTION (this << socket);
 }
 
-void SkynetNs3ProxyServer::HandleSend (Ptr<Socket> socket, uint32_t dataSent)
+void IOProxyServer::HandleSend (Ptr<Socket> socket, uint32_t dataSent)
 {
   NS_LOG_FUNCTION (this << socket);
 }
  
-void SkynetNs3ProxyServer::HandleAccept (Ptr<Socket> s, const Address& from)
+void IOProxyServer::HandleAccept (Ptr<Socket> s, const Address& from)
 {
   NS_LOG_FUNCTION (this << s << from);
-  s->SetRecvCallback (MakeCallback (&SkynetNs3ProxyServer::HandleRead, this));
+  s->SetRecvCallback (MakeCallback (&IOProxyServer::HandleRead, this));
 }
 
-void SkynetNs3ProxyServer::HandleRead (Ptr<Socket> socket)
+void IOProxyServer::HandleRead (Ptr<Socket> socket)
 {
   NS_LOG_FUNCTION (this << socket);
   Ptr<Packet> packet;
@@ -171,7 +171,7 @@ void SkynetNs3ProxyServer::HandleRead (Ptr<Socket> socket)
     }
 }
 
-void SkynetNs3ProxyServer::SendData(int32_t value)
+void IOProxyServer::SendData(int32_t value)
 {
 	char* string;
 
@@ -181,12 +181,12 @@ void SkynetNs3ProxyServer::SendData(int32_t value)
 	m_socket->Send(packet);
 }
 
-SkynetNs3ProxyServer::~SkynetNs3ProxyServer ()
+IOProxyServer::~IOProxyServer ()
 {
 
 }
 
-void SkynetNs3ProxyServer::DoDispose (void)
+void IOProxyServer::DoDispose (void)
 {
   NS_LOG_FUNCTION (this);
   m_socket = 0;

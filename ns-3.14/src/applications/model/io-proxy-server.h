@@ -1,7 +1,7 @@
 /* -*- Mode:C++; c-file-style:"gnu"; indent-tabs-mode:nil; -*- */
 
-#ifndef SkynetNs3ProxyServer_H
-#define SkynetNs3ProxyServer_H
+#ifndef IOProxyServer_H
+#define IOProxyServer_H
 
 #include "ns3/application.h"
 #include "ns3/traced-callback.h"
@@ -17,7 +17,7 @@ class Socket;
 /**
  *
  */
-class SkynetNs3ProxyServer : public Application
+class IOProxyServer : public Application
 {
 public:
 	static TypeId GetTypeId (void);
@@ -26,8 +26,8 @@ public:
 	 * Create a new IO Server to communicate between the outside and NS3
 	 * through a TCP Socket.
 	 */
-	SkynetNs3ProxyServer ();
-	virtual ~SkynetNs3ProxyServer ();
+	IOProxyServer ();
+	virtual ~IOProxyServer ();
 
 	void SendData(int32_t);
 
@@ -60,4 +60,4 @@ private:
 
 } // namespace ns3
 
-#endif /* SkynetNs3ProxyServer_H */
+#endif /* IOProxyServer_H */
