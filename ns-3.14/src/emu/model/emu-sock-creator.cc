@@ -217,7 +217,7 @@ main (int argc, char *argv[])
   // wants to create a raw socket as described below.  We are going to do the
   // work here since we're running suid root.  Once we create the raw socket,
   // we have to send it back to the emu net device.  We do that over a Unix
-  // (local interprocess) socket.  The emu net device created a socket to 
+  // (local interprocess) socket.  The emu net device created a socket to
   // listen for our response on, and it is expected to have encoded the address
   // information as a string and to have passed that string as an argument to
   // us.  We see it here as the "path" string.  We can't do anything useful 

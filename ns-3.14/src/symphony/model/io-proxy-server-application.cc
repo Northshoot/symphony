@@ -20,7 +20,7 @@
 #include "ns3/string.h"
 #include "ns3/object.h"
 
-#include "io-proxy-server.h"
+#include "io-proxy-server-application.h"
 
 #include <stdio.h>
 

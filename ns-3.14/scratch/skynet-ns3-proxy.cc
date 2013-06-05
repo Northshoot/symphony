@@ -14,7 +14,7 @@
 #include "ns3/applications-module.h"
 #include "ns3/ipv4-static-routing-helper.h"
 #include "ns3/ipv4-list-routing-helper.h"
-#include "ns3/io-proxy-server.h"
+#include "ns3/io-proxy-server-application.h"
 
 #include "ns3/symphony-module.h"
 
@@ -106,6 +106,7 @@ main (int argc, char *argv[])
 
   Ptr<Queue> queue = CreateObject<DropTailQueue> ();
   device->SetQueue (queue);
+
   node->AddDevice (device);
 
   
@@ -140,13 +141,13 @@ main (int argc, char *argv[])
   NS_LOG_INFO("- Adding IO Proxy Server");
   
   Ptr<IOProxyServer> app = CreateObject<IOProxyServer> ();
-  node->AddApplication (app);
   app->SetStartTime(Seconds (1.0));
   app->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
   app->SetAttribute("RemotePortNumber", IntegerValue(remotePortNumber));
   app->SetAttribute("RemoteIp", StringValue(remoteIp));
   app->SetAttribute("LocalPortNumber", IntegerValue(localPortNumber));
   app->SetAttribute("LocalIp", StringValue(localIp));
+  node->AddApplication (app);
 
   Names::Add("IOProxyServer", app);
 
@@ -162,12 +163,12 @@ main (int argc, char *argv[])
   NS_LOG_INFO("- Adding bridge between TinyOs and NS3");
 
   Ptr<SymphonyApplication> symphonyApp = CreateObject<SymphonyApplication>();
-  tosNode.Get(0)->AddApplication(symphonyApp);
   symphonyApp->SetNode(tosNode.Get(0));
   symphonyApp->SetAttribute("ReceiveDataFromApplication", CallbackValue(MakeCallback(&Log)));
   symphonyApp->SetStartTime (Seconds (0.0));
   symphonyApp->SetStopTime (Seconds (20.0));
   symphonyApp->StartApplication();
+  tosNode.Get(0)->AddApplication(symphonyApp);
 
   // Configuring the sensors available in the node
   NS_LOG_INFO("- Adding sensors");
