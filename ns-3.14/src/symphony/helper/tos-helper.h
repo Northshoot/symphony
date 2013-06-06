@@ -18,7 +18,7 @@
 #include "tos-node-container.h"
 #include "tos-net-device-container.h"
 #include "symphony-xml.h"
-#include "ns3/raw-sensor.h"
+#include "ns3/tos-device.h"
 #include "ns3/symphony-sensor-container.h"
 
 namespace ns3

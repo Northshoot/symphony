@@ -22,7 +22,7 @@
 #include "ns3/ptr.h"
 #include "ns3/wifi-mac-header.h"
 
-#include "raw-sensor.h"
+#include "tos-device.h"
 #include "simu-clock.h"
 #include "tos-net-device.h"
 #include "symphony-application.h"
@@ -39,7 +39,7 @@ class TosToNs3Proxy {
 		 */
 	   int confirmSet(int);
 	   void setDevice(ns3::Ptr<ns3::TosNetDevice> device);
-	   void SetSensor(ns3::Ptr<ns3::RawSensor> sens);
+	   void SetSensor(ns3::Ptr<ns3::TosDevice> sens);
 	   void SetApplication(ns3::Ptr<ns3::SymphonyApplication> app);
 	   uint32_t getNow(int);
 	   void setDownlink(void *  tos);
@@ -55,7 +55,7 @@ class TosToNs3Proxy {
 private:
 
      ns3::Ptr<ns3::TosNetDevice> m_tosnetdevice;
-     ns3::Ptr<ns3::RawSensor> m_sensor;
+     ns3::Ptr<ns3::TosDevice> m_sensor;
      ns3::Ptr<ns3::SymphonyApplication> m_application;
 
 

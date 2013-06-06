@@ -6,7 +6,7 @@
  */
 
 #include "symphony-sensor-container.h"
-#include "ns3/raw-sensor.h"
+#include "ns3/tos-device.h"
 
 namespace ns3
 {
@@ -14,13 +14,13 @@ namespace ns3
 SymphonySensorContainer::SymphonySensorContainer ()
 {
 }
-SymphonySensorContainer::SymphonySensorContainer (Ptr<RawSensor> dev)
+SymphonySensorContainer::SymphonySensorContainer (Ptr<TosDevice> dev)
 {
   m_sensors.push_back (dev);
 }
 SymphonySensorContainer::SymphonySensorContainer (std::string devName)
 {
-  Ptr<RawSensor> dev = Names::Find<RawSensor> (devName);
+  Ptr<TosDevice> dev = Names::Find<TosDevice> (devName);
   m_sensors.push_back (dev);
 }
 SymphonySensorContainer::SymphonySensorContainer (const SymphonySensorContainer &a, const SymphonySensorContainer &b)
@@ -46,7 +46,7 @@ SymphonySensorContainer::GetN (void) const
 {
   return m_sensors.size ();
 }
-Ptr<RawSensor>
+Ptr<TosDevice>
 SymphonySensorContainer::Get (uint32_t i) const
 {
   uint32_t index = m_sensors.size();
@@ -62,14 +62,14 @@ SymphonySensorContainer::Add (SymphonySensorContainer other)
     }
 }
 void
-SymphonySensorContainer::Add (Ptr<RawSensor> sensor)
+SymphonySensorContainer::Add (Ptr<TosDevice> sensor)
 {
   m_sensors.push_back (sensor);
 }
 void
 SymphonySensorContainer::Add (std::string sensorName)
 {
-  Ptr<RawSensor> sensor = Names::Find<RawSensor> (sensorName);
+  Ptr<TosDevice> sensor = Names::Find<TosDevice> (sensorName);
   m_sensors.push_back (sensor);
 }
 

@@ -8,7 +8,7 @@
 #ifndef SYMPHONY_SENSOR_CONTAINER_H_
 #define SYMPHONY_SENSOR_CONTAINER_H_
 #include "ns3/names.h"
-#include "ns3/raw-sensor.h"
+#include "ns3/tos-device.h"
 #include "ns3/tos-node-container.h"
 #include "ns3/string.h"
 
@@ -18,7 +18,7 @@ namespace ns3
   class SymphonySensorContainer
   {
   public:
-  typedef std::vector<Ptr<RawSensor> >::const_iterator Iterator;
+  typedef std::vector<Ptr<TosDevice> >::const_iterator Iterator;
 
   /**
    * Create an empty SymphonySensorContainer.
@@ -31,7 +31,7 @@ namespace ns3
    * Create a SymphonySensorContainer with exactly one net sensor that has previously
    * been instantiated
    */
-  SymphonySensorContainer (Ptr<RawSensor> dev);
+  SymphonySensorContainer (Ptr<TosDevice> dev);
 
   /**
    * Create a SymphonySensorContainer with exactly one sensor which has been
@@ -146,7 +146,7 @@ namespace ns3
    * \param i the index of the requested sensor pointer.
    * \returns the requested sensor pointer.
    */
-  Ptr<RawSensor> Get (uint32_t i) const;
+  Ptr<TosDevice> Get (uint32_t i) const;
 
   /**
    * \brief Append the contents of another SymphonySensorContainer to the end of
@@ -161,7 +161,7 @@ namespace ns3
    *
    * \param sensor The Ptr<RawSensor> to append.
    */
-  void Add (Ptr<RawSensor> sensor);
+  void Add (Ptr<TosDevice> sensor);
 
   /**
    * \brief Append to this container the single Ptr<RawSensor> referred to
@@ -174,7 +174,7 @@ namespace ns3
 
 
 private:
-  std::vector<Ptr<RawSensor> > m_sensors;
+  std::vector<Ptr<TosDevice> > m_sensors;
   };
 
 } /* namespace ns3 */

@@ -27,6 +27,14 @@
    <call name="SplitControlStop"/>
   </model>
   
+   <model name="temperaturesensordevice">
+   <callback return="int" params="1" param1="uint8_t" name="sensorStartDone"/>
+   <callback return="int" params="1" param1="uint8_t" name="sensorStopDone"/>
+   <callback return="int" params="3" param1="uint8_t" param2="uint16_t" param3="void *" time="20" units="ms" name="interruptData"/>
+   <call name="SplitControlStart"/>
+   <call name="SplitControlStop"/>
+  </model>
+  
   <model name="ns3application">
   <callback return="void" params="1" param1="uint8_t" name="ApplicationStartDone"/>
    <callback return="void" params="1" param1="uint8_t" name="AplicationStopDone"/>

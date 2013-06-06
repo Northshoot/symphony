@@ -743,7 +743,7 @@ struct drand48_data {
 #line 471
 extern void *malloc(size_t __size) __attribute((__leaf__)) __attribute((__nothrow__)) __attribute((__malloc__)) ;
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b64d824e1f0, const void *arg_0x2b64d824e4c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2b8e1dc8a1f0, const void *arg_0x2b8e1dc8a4c8);
 #line 776
 __extension__ 
 #line 793
@@ -800,7 +800,7 @@ enum __nesc_unnamed4265 {
   _ISpunct = 10 < 8 ? (1 << 10) << 8 : (1 << 10) >> 8, 
   _ISalnum = 11 < 8 ? (1 << 11) << 8 : (1 << 11) >> 8
 };
-# 23 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/tos.h"
+# 23 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/system/tos.h"
 typedef uint8_t bool;
 enum __nesc_unnamed4266 {
 #line 24
@@ -822,7 +822,7 @@ struct __nesc_attr_atleastonce {
 #line 36
 struct __nesc_attr_exactlyonce {
 };
-# 51 "/home/onir/dev/symphony/tinyos-2.1.1/tos/types/TinyError.h"
+# 51 "/home/onir/dev/skynet/tinyos-2.1.1/tos/types/TinyError.h"
 enum __nesc_unnamed4267 {
   SUCCESS = 0, 
   FAIL = 1, 
@@ -842,7 +842,7 @@ enum __nesc_unnamed4267 {
 typedef uint8_t error_t  ;
 
 static inline error_t ecombine(error_t r1, error_t r2)  ;
-# 4 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
+# 4 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
 static __inline void __nesc_enable_interrupt();
 static __inline void __nesc_disable_interrupt();
 
@@ -1055,7 +1055,7 @@ struct _IO_FILE;
 struct _IO_FILE;
 #line 363
 extern int printf(const char *__restrict __format, ...);
-# 23 "/home/onir/dev/symphony/ns-3.14/build/ns3/calls-to-ns3.h"
+# 23 "/home/onir/dev/skynet/ns-3.14/build/ns3/calls-to-ns3.h"
 #line 12
 typedef enum __nesc_unnamed4273 {
   RADIO_ON = 0, 
@@ -1110,7 +1110,7 @@ typedef enum __nesc_unnamed4276 {
   APP_OFF = 2, 
   APP_RX = 3
 } ApplicationCall;
-# 69 "/home/onir/dev/symphony/ns-3.14/build/ns3/tos-to-ns3-proxy.h"
+# 69 "/home/onir/dev/skynet/ns-3.14/build/ns3/tos-to-ns3-proxy.h"
 int gateway(void *obj, int func, int arg);
 int setProxy(void *obj);
 
@@ -1119,7 +1119,7 @@ int gatewaySensor(void *obj, SensorCall call);
 
 
 void gatewayApplication(void *obj, ApplicationCall call, uint16_t length, void *data);
-# 6 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
+# 6 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
 int a;
 int id_this_lib;
 void *proxy;
@@ -1135,7 +1135,7 @@ int setUniqueID(int i)   ;
 
 
 int setProxy(void *con)   ;
-# 43 "/home/onir/dev/symphony/tinyos-2.1.1/tos/types/Leds.h"
+# 43 "/home/onir/dev/skynet/tinyos-2.1.1/tos/types/Leds.h"
 enum __nesc_unnamed4277 {
   LEDS_LED0 = 1 << 0, 
   LEDS_LED1 = 1 << 1, 
@@ -1146,7 +1146,7 @@ enum __nesc_unnamed4277 {
   LEDS_LED6 = 1 << 6, 
   LEDS_LED7 = 1 << 7
 };
-# 44 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/logprinter.h"
+# 44 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/logprinter.h"
 #line 17
 typedef enum LogLevel {
   LOG_NONE = 0x00000000, 
@@ -1176,7 +1176,7 @@ typedef enum LogLevel {
   LOG_PREFIX_TIME = 0x40000000, 
   LOG_PREFIX_NODE = 0x20000000
 } LogLevel;
-# 40 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.h"
+# 40 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.h"
 typedef struct __nesc_unnamed4278 {
 #line 40
   int notUsed;
@@ -1200,27 +1200,27 @@ typedef TMilli SkynetTosC$MilliTimer$precision_tag;
 typedef TMilli /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag;
 typedef /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$precision_tag;
 typedef /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$precision_tag /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$precision_tag;
-# 62 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t PlatformP$Init$init(void );
 #line 62
 static error_t LedsP$Init$init(void );
 #line 62
 static error_t NsTimerP$Init$init(void );
-# 136 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 136 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static uint32_t NsTimerP$Timer$getNow(void );
 #line 129
 static void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt);
 #line 78
 static void NsTimerP$Timer$stop(void );
-# 67 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 67 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(
-# 47 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b64d852c960);
-# 75 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+uint8_t arg_0x2b8e1df68960);
+# 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
-# 47 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b64d852c960);
-# 57 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
+# 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+uint8_t arg_0x2b8e1df68960);
+# 57 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
 
@@ -1230,13 +1230,13 @@ static void SchedulerBasicP$Scheduler$init(void );
 
 
 static bool SchedulerBasicP$Scheduler$runNextTask(void );
-# 36 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMote.nc"
+# 36 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SimMote.nc"
 static void SimMoteP$SimMote$setEuid(long long int euid);
 
 
 
 static void SimMoteP$SimMote$turnOn(void );
-# 113 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+# 113 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static void SkynetTosC$SensorControl$startDone(error_t error);
 #line 138
 static void SkynetTosC$SensorControl$stopDone(error_t error);
@@ -1244,45 +1244,45 @@ static void SkynetTosC$SensorControl$stopDone(error_t error);
 static void SkynetTosC$AppControl$startDone(error_t error);
 #line 138
 static void SkynetTosC$AppControl$stopDone(error_t error);
-# 60 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
+# 60 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Boot.nc"
 static void SkynetTosC$Boot$booted(void );
-# 75 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SkynetTosC$send$runTask(void );
-# 83 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 83 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void SkynetTosC$MilliTimer$fired(void );
-# 22 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/InterruptWithData.nc"
+# 22 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/InterruptWithData.nc"
 static void SkynetTosC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer);
-# 75 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void );
-# 83 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 83 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void );
 #line 83
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(
-# 48 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b64d865d7f8);
-# 64 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 48 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b8e1e0997f8);
+# 64 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(
-# 48 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b64d865d7f8, 
-# 64 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 48 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b8e1e0997f8, 
+# 64 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 uint32_t dt);
-# 104 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+# 104 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static error_t Ns3ApplicationP$SplitControl$start(void );
-# 20 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3Application.nc"
+# 20 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3Application.nc"
 static void Ns3ApplicationP$Ns3Application$SendDataToApplication(uint16_t length, void *buffer);
-# 104 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
-static error_t MagnetomiterP$SplitControl$start(void );
-# 62 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 104 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+static error_t TemperatureSensorP$SplitControl$start(void );
+# 62 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t PlatformP$SubInit$init(void );
 #line 62
 static error_t PlatformP$TimerInit$init(void );
-# 56 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformP.nc"
+# 56 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/PlatformP.nc"
 static inline error_t PlatformP$Init$init(void );
-# 68 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/LedsP.nc"
+# 68 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/system/LedsP.nc"
 static inline error_t LedsP$Init$init(void );
-# 83 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 83 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void NsTimerP$Timer$fired(void );
-# 20 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 20 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 uint32_t NsTimerP$time_now = 0;
 
 
@@ -1323,20 +1323,20 @@ static inline void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt);
 static inline uint32_t NsTimerP$Timer$getNow(void );
 #line 133
 static inline error_t NsTimerP$Init$init(void );
-# 62 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t SimMainP$SoftwareInit$init(void );
-# 60 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
+# 60 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Boot.nc"
 static void SimMainP$Boot$booted(void );
-# 62 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Init.nc"
 static error_t SimMainP$PlatformInit$init(void );
-# 57 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
+# 57 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SimMainP$Scheduler$init(void );
-# 17 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+# 17 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
 int sim_main_start_mote(int id)   ;
-# 75 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
-# 47 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b64d852c960);
+# 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+uint8_t arg_0x2b8e1df68960);
 
 
 
@@ -1382,7 +1382,7 @@ static error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id);
 
 
 static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id);
-# 8 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
+# 8 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
 long long int SimMoteP$euid;
 
 bool SimMoteP$isOn;
@@ -1459,15 +1459,15 @@ void sim_mote_turn_on(int mote)   ;
 void sim_mote_turn_off(int mote)   ;
 #line 127
 void sim_mote_enqueue_boot_event(int mote)   ;
-# 104 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+# 104 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static error_t SkynetTosC$SensorControl$start(void );
 #line 104
 static error_t SkynetTosC$AppControl$start(void );
-# 67 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 67 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SkynetTosC$send$postTask(void );
-# 20 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3Application.nc"
+# 20 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3Application.nc"
 static void SkynetTosC$Ns3Application$SendDataToApplication(uint16_t length, void *buffer);
-# 64 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 64 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static void SkynetTosC$MilliTimer$startPeriodic(uint32_t dt);
 # 25 "SkynetTosC.nc"
 enum SkynetTosC$__nesc_unnamed4283 {
@@ -1536,9 +1536,9 @@ static inline void SkynetTosC$SensorControl$stopDone(error_t err);
 
 
 static inline void SkynetTosC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer);
-# 67 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 67 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask(void );
-# 136 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 136 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(void );
 #line 129
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$startOneShotAt(uint32_t t0, uint32_t dt);
@@ -1549,8 +1549,8 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop
 
 
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(
-# 48 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
-uint8_t arg_0x2b64d865d7f8);
+# 48 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+uint8_t arg_0x2b8e1e0997f8);
 #line 71
 enum /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$__nesc_unnamed4285 {
 #line 71
@@ -1609,11 +1609,11 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTi
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(uint8_t num, uint32_t dt);
 #line 204
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(uint8_t num);
-# 113 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+# 113 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static void Ns3ApplicationP$SplitControl$startDone(error_t error);
 #line 138
 static void Ns3ApplicationP$SplitControl$stopDone(error_t error);
-# 17 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3ApplicationP.nc"
+# 17 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3ApplicationP.nc"
 static inline error_t Ns3ApplicationP$SplitControl$start(void );
 
 
@@ -1636,14 +1636,14 @@ extern int AplicationStopDone(error_t error)   ;
 
 
 static inline void Ns3ApplicationP$Ns3Application$SendDataToApplication(uint16_t length, void *buffer);
-# 113 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
-static void MagnetomiterP$SplitControl$startDone(error_t error);
+# 113 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+static void TemperatureSensorP$SplitControl$startDone(error_t error);
 #line 138
-static void MagnetomiterP$SplitControl$stopDone(error_t error);
-# 22 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/InterruptWithData.nc"
-static void MagnetomiterP$data$interruptWithData(error_t result, uint16_t length, void *buffer);
-# 17 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/MagnetomiterP.nc"
-static inline error_t MagnetomiterP$SplitControl$start(void );
+static void TemperatureSensorP$SplitControl$stopDone(error_t error);
+# 22 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/InterruptWithData.nc"
+static void TemperatureSensorP$Data$interruptWithData(error_t result, uint16_t length, void *buffer);
+# 16 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/TemperatureSensorP.nc"
+static inline error_t TemperatureSensorP$SplitControl$start(void );
 
 
 
@@ -1663,7 +1663,7 @@ extern int sensorStopDone(error_t error)   ;
 
 
 extern void interruptData(error_t result, uint16_t lenght, void *buffer)   ;
-# 10 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
+# 10 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
 __inline  __nesc_atomic_t __nesc_atomic_start(void )
 #line 10
 {
@@ -1675,14 +1675,14 @@ __inline  void __nesc_atomic_end(__nesc_atomic_t x)
 {
 }
 
-# 38 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3ApplicationP.nc"
+# 38 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3ApplicationP.nc"
 static inline void Ns3ApplicationP$Ns3Application$SendDataToApplication(uint16_t length, void *buffer)
 #line 38
 {
   gatewayApplication(proxy, APP_RX, length, buffer);
 }
 
-# 20 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3Application.nc"
+# 20 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3Application.nc"
 inline static void SkynetTosC$Ns3Application$SendDataToApplication(uint16_t length, void *buffer){
 #line 20
   Ns3ApplicationP$Ns3Application$SendDataToApplication(length, buffer);
@@ -1702,7 +1702,7 @@ static inline void SkynetTosC$send$runTask(void )
   SkynetTosC$Ns3Application$SendDataToApplication(sizeof(SkynetTosC$NodePacket ), npkt);
 }
 
-# 112 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 112 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 static inline uint32_t NsTimerP$Timer$getNow(void )
 #line 112
 {
@@ -1710,7 +1710,7 @@ static inline uint32_t NsTimerP$Timer$getNow(void )
   return NsTimerP$time_now;
 }
 
-# 136 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 136 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 inline static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(void ){
 #line 136
   unsigned int __nesc_result;
@@ -1725,20 +1725,20 @@ inline static uint32_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Tim
 #line 136
 }
 #line 136
-# 138 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+# 138 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired(void )
 {
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow());
 }
 
-# 83 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 83 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 inline static void NsTimerP$Timer$fired(void ){
 #line 83
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$fired();
 #line 83
 }
 #line 83
-# 33 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 33 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 static inline void NsTimerP$updateTimer(void )
 #line 33
 {
@@ -1768,14 +1768,14 @@ static inline void NsTimerP$Timer$startOneShotAt(uint32_t t0, uint32_t dt)
   NsTimerP$updateTimer();
 }
 
-# 129 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 129 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$startOneShotAt(uint32_t t0, uint32_t dt){
 #line 129
   NsTimerP$Timer$startOneShotAt(t0, dt);
 #line 129
 }
 #line 129
-# 69 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 69 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 static inline void NsTimerP$Timer$stop(void )
 #line 69
 {
@@ -1793,14 +1793,14 @@ static inline void NsTimerP$Timer$stop(void )
     __nesc_atomic_end(__nesc_atomic); }
 }
 
-# 78 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 78 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$stop(void ){
 #line 78
   NsTimerP$Timer$stop();
 #line 78
 }
 #line 78
-# 99 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+# 99 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$runTask(void )
 {
 
@@ -1843,15 +1843,15 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateF
     }
 }
 
-# 175 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 175 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 {
 }
 
-# 75 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b64d852c960){
+# 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b8e1df68960){
 #line 75
-  switch (arg_0x2b64d852c960) {
+  switch (arg_0x2b8e1df68960) {
 #line 75
     case SkynetTosC$send:
 #line 75
@@ -1867,7 +1867,7 @@ inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b64d852c960)
 #line 75
     default:
 #line 75
-      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b64d852c960);
+      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b8e1df68960);
 #line 75
       break;
 #line 75
@@ -1875,7 +1875,7 @@ inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b64d852c960)
 #line 75
 }
 #line 75
-# 74 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 74 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static __inline uint8_t SchedulerBasicP$popTask(void )
 {
   if (SchedulerBasicP$m_head != SchedulerBasicP$NO_TASK) 
@@ -1936,15 +1936,15 @@ static inline void SkynetTosC$MilliTimer$fired(void )
 {
 }
 
-# 204 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+# 204 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(uint8_t num)
 {
 }
 
-# 83 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
-inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b64d865d7f8){
+# 83 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$fired(uint8_t arg_0x2b8e1e0997f8){
 #line 83
-  switch (arg_0x2b64d865d7f8) {
+  switch (arg_0x2b8e1e0997f8) {
 #line 83
     case 0U:
 #line 83
@@ -1954,7 +1954,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$f
 #line 83
     default:
 #line 83
-      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b64d865d7f8);
+      /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$default$fired(arg_0x2b8e1e0997f8);
 #line 83
       break;
 #line 83
@@ -1962,7 +1962,7 @@ inline static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$f
 #line 83
 }
 #line 83
-# 93 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 93 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static inline bool SchedulerBasicP$isWaiting(uint8_t id)
 {
   return SchedulerBasicP$m_next[id] != SchedulerBasicP$NO_TASK || SchedulerBasicP$m_tail == id;
@@ -2002,14 +2002,14 @@ static inline void SchedulerBasicP$Scheduler$init(void )
   }
 }
 
-# 57 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
+# 57 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 inline static void SimMainP$Scheduler$init(void ){
 #line 57
   SchedulerBasicP$Scheduler$init();
 #line 57
 }
 #line 57
-# 133 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 133 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 static inline error_t NsTimerP$Init$init(void )
 #line 133
 {
@@ -2019,7 +2019,7 @@ static inline error_t NsTimerP$Init$init(void )
   return 0;
 }
 
-# 62 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Init.nc"
 inline static error_t PlatformP$TimerInit$init(void ){
 #line 62
   unsigned char __nesc_result;
@@ -2034,7 +2034,7 @@ inline static error_t PlatformP$TimerInit$init(void ){
 #line 62
 }
 #line 62
-# 68 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/system/LedsP.nc"
+# 68 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/system/LedsP.nc"
 static inline error_t LedsP$Init$init(void )
 #line 68
 {
@@ -2042,7 +2042,7 @@ static inline error_t LedsP$Init$init(void )
   return SUCCESS;
 }
 
-# 62 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Init.nc"
 inline static error_t PlatformP$SubInit$init(void ){
 #line 62
   unsigned char __nesc_result;
@@ -2057,7 +2057,7 @@ inline static error_t PlatformP$SubInit$init(void ){
 #line 62
 }
 #line 62
-# 69 "/home/onir/dev/symphony/tinyos-2.1.1/tos/types/TinyError.h"
+# 69 "/home/onir/dev/skynet/tinyos-2.1.1/tos/types/TinyError.h"
 static inline  error_t ecombine(error_t r1, error_t r2)
 
 
@@ -2067,7 +2067,7 @@ static inline  error_t ecombine(error_t r1, error_t r2)
   return r1 == r2 ? r1 : FAIL;
 }
 
-# 56 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/PlatformP.nc"
+# 56 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/PlatformP.nc"
 static inline error_t PlatformP$Init$init(void )
 {
   error_t ok = SUCCESS;
@@ -2077,7 +2077,7 @@ static inline error_t PlatformP$Init$init(void )
   return SUCCESS;
 }
 
-# 62 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Init.nc"
+# 62 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Init.nc"
 inline static error_t SimMainP$PlatformInit$init(void ){
 #line 62
   unsigned char __nesc_result;
@@ -2106,22 +2106,22 @@ inline static error_t SimMainP$SoftwareInit$init(void ){
 #line 62
 }
 #line 62
-# 17 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/MagnetomiterP.nc"
-static inline error_t MagnetomiterP$SplitControl$start(void )
-#line 17
+# 16 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/TemperatureSensorP.nc"
+static inline error_t TemperatureSensorP$SplitControl$start(void )
+#line 16
 {
 
   return gatewaySensor(proxy, SENSOR_ON);
 }
 
-# 104 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+# 104 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 inline static error_t SkynetTosC$SensorControl$start(void ){
 #line 104
   unsigned char __nesc_result;
 #line 104
 
 #line 104
-  __nesc_result = MagnetomiterP$SplitControl$start();
+  __nesc_result = TemperatureSensorP$SplitControl$start();
 #line 104
 
 #line 104
@@ -2129,7 +2129,7 @@ inline static error_t SkynetTosC$SensorControl$start(void ){
 #line 104
 }
 #line 104
-# 17 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3ApplicationP.nc"
+# 17 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3ApplicationP.nc"
 static inline error_t Ns3ApplicationP$SplitControl$start(void )
 #line 17
 {
@@ -2137,7 +2137,7 @@ static inline error_t Ns3ApplicationP$SplitControl$start(void )
   return 0;
 }
 
-# 104 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+# 104 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 inline static error_t SkynetTosC$AppControl$start(void ){
 #line 104
   unsigned char __nesc_result;
@@ -2156,19 +2156,19 @@ inline static error_t SkynetTosC$AppControl$start(void ){
 static inline void SkynetTosC$Boot$booted(void )
 #line 35
 {
-  printf("[%d] App: booted\n", TOS_NODE_ID);
+  printf("[%d] App(sensor): booted\n", TOS_NODE_ID);
   SkynetTosC$AppControl$start();
   SkynetTosC$SensorControl$start();
 }
 
-# 60 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/Boot.nc"
+# 60 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Boot.nc"
 inline static void SimMainP$Boot$booted(void ){
 #line 60
   SkynetTosC$Boot$booted();
 #line 60
 }
 #line 60
-# 16 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
+# 16 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
 static inline void SimMoteP$SimMote$setEuid(long long int e)
 #line 16
 {
@@ -2191,7 +2191,7 @@ static inline void SimMoteP$SimMote$turnOn(void )
   SimMoteP$isOn = TRUE;
 }
 
-# 67 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 67 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 inline static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask(void ){
 #line 67
   unsigned char __nesc_result;
@@ -2206,7 +2206,7 @@ inline static error_t /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$upda
 #line 67
 }
 #line 67
-# 143 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+# 143 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
 static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTimer(uint8_t num, uint32_t t0, uint32_t dt, bool isoneshot)
 {
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer_t *timer = &/*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$m_timers[num];
@@ -2225,7 +2225,7 @@ static inline void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$s
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$startTimer(num, /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$TimerFrom$getNow(), dt, FALSE);
 }
 
-# 64 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/Timer.nc"
+# 64 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.nc"
 inline static void SkynetTosC$MilliTimer$startPeriodic(uint32_t dt){
 #line 64
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$Timer$startPeriodic(0U, dt);
@@ -2236,7 +2236,7 @@ inline static void SkynetTosC$MilliTimer$startPeriodic(uint32_t dt){
 static inline void SkynetTosC$AppControl$startDone(error_t err)
 #line 41
 {
-  printf("[%d] App: started\n", TOS_NODE_ID);
+  printf("[%d] App(sensor): started\n", TOS_NODE_ID);
   if (err == SUCCESS) {
       if (TOS_NODE_ID == 0) {
           SkynetTosC$MilliTimer$startPeriodic(1000);
@@ -2249,7 +2249,7 @@ static inline void SkynetTosC$AppControl$startDone(error_t err)
     }
 }
 
-# 113 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+# 113 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 inline static void Ns3ApplicationP$SplitControl$startDone(error_t error){
 #line 113
   SkynetTosC$AppControl$startDone(error);
@@ -2262,7 +2262,7 @@ static inline void SkynetTosC$AppControl$stopDone(error_t err)
 {
 }
 
-# 138 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+# 138 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 inline static void Ns3ApplicationP$SplitControl$stopDone(error_t error){
 #line 138
   SkynetTosC$AppControl$stopDone(error);
@@ -2280,8 +2280,8 @@ static inline void SkynetTosC$SensorControl$startDone(error_t err)
     }
 }
 
-# 113 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
-inline static void MagnetomiterP$SplitControl$startDone(error_t error){
+# 113 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+inline static void TemperatureSensorP$SplitControl$startDone(error_t error){
 #line 113
   SkynetTosC$SensorControl$startDone(error);
 #line 113
@@ -2293,14 +2293,14 @@ static inline void SkynetTosC$SensorControl$stopDone(error_t err)
 {
 }
 
-# 138 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
-inline static void MagnetomiterP$SplitControl$stopDone(error_t error){
+# 138 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
+inline static void TemperatureSensorP$SplitControl$stopDone(error_t error){
 #line 138
   SkynetTosC$SensorControl$stopDone(error);
 #line 138
 }
 #line 138
-# 67 "/home/onir/dev/symphony/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
+# 67 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 inline static error_t SkynetTosC$send$postTask(void ){
 #line 67
   unsigned char __nesc_result;
@@ -2331,14 +2331,14 @@ static inline void SkynetTosC$DataIn$interruptWithData(error_t result, uint16_t 
   SkynetTosC$send$postTask();
 }
 
-# 22 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/InterruptWithData.nc"
-inline static void MagnetomiterP$data$interruptWithData(error_t result, uint16_t length, void *buffer){
+# 22 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/InterruptWithData.nc"
+inline static void TemperatureSensorP$Data$interruptWithData(error_t result, uint16_t length, void *buffer){
 #line 22
   SkynetTosC$DataIn$interruptWithData(result, length, buffer);
 #line 22
 }
 #line 22
-# 4 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
+# 4 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/hardware.h"
 static __inline void __nesc_enable_interrupt()
 #line 4
 {
@@ -2350,7 +2350,7 @@ static __inline void __nesc_disable_interrupt()
 {
 }
 
-# 14 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
+# 14 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/sim_main.h"
   int setUniqueID(int i)
 #line 14
 {
@@ -2373,7 +2373,7 @@ static __inline void __nesc_disable_interrupt()
   return id_this_lib;
 }
 
-# 52 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 52 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 extern   int runNextEventExternal(uint32_t a)
 #line 52
 {
@@ -2382,7 +2382,7 @@ extern   int runNextEventExternal(uint32_t a)
   return 0;
 }
 
-# 73 "/home/onir/dev/symphony/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
+# 73 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/VirtualizeTimerC.nc"
 static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(uint32_t now)
 {
   uint8_t num;
@@ -2413,7 +2413,7 @@ static void /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$fireTimers(uin
   /*HilTimerMilliC.VirtualizeTimerC*/VirtualizeTimerC$0$updateFromTimer$postTask();
 }
 
-# 170 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
+# 170 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id)
 {
   { __nesc_atomic_t __nesc_atomic = __nesc_atomic_start();
@@ -2437,7 +2437,7 @@ static error_t SchedulerBasicP$TaskBasic$postTask(uint8_t id)
     __nesc_atomic_end(__nesc_atomic); }
 }
 
-# 42 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
+# 42 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/timers/NsTimerP.nc"
 extern   int tickFired(uint32_t a)
 #line 42
 {
@@ -2454,7 +2454,7 @@ extern   int tickFired(uint32_t a)
   return 0;
 }
 
-# 17 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
+# 17 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SimMainP.nc"
   int sim_main_start_mote(int id)
 #line 17
 {
@@ -2509,7 +2509,7 @@ extern   int tickFired(uint32_t a)
   return 0;
 }
 
-# 50 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
+# 50 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SimMoteP.nc"
   long long int sim_mote_euid(int mote)
 #line 50
 {
@@ -2596,7 +2596,7 @@ extern   int tickFired(uint32_t a)
 {
 }
 
-# 22 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3ApplicationP.nc"
+# 22 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3ApplicationP.nc"
 extern   int ApplicationStartDone(error_t error)
 #line 22
 {
@@ -2617,11 +2617,11 @@ extern   int AplicationStopDone(error_t error)
   return 0;
 }
 
-# 22 "/home/onir/dev/symphony/tinyos-2.1.1/tos/platforms/ns3/sensors/MagnetomiterP.nc"
+# 21 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/TemperatureSensorP.nc"
 extern   int sensorStartDone(error_t error)
-#line 22
+#line 21
 {
-  MagnetomiterP$SplitControl$startDone(error);
+  TemperatureSensorP$SplitControl$startDone(error);
   return 0;
 }
 
@@ -2630,15 +2630,15 @@ extern   int sensorStartDone(error_t error)
 
 
 extern   int sensorStopDone(error_t error)
-#line 31
+#line 30
 {
-  MagnetomiterP$SplitControl$stopDone(error);
+  TemperatureSensorP$SplitControl$stopDone(error);
   return 0;
 }
 
 extern   void interruptData(error_t result, uint16_t lenght, void *buffer)
-#line 36
+#line 35
 {
-  MagnetomiterP$data$interruptWithData(result, lenght, buffer);
+  TemperatureSensorP$Data$interruptWithData(result, lenght, buffer);
 }
 

@@ -33,13 +33,13 @@ implementation {
  
   
 	event void Boot.booted() {
-		printf("[%d] App: booted\n", TOS_NODE_ID);
+		printf("[%d] App(sensor): booted\n", TOS_NODE_ID);
 		call AppControl.start();
 		call SensorControl.start();
 	}
 
 	event void AppControl.startDone(error_t err) {
-		printf("[%d] App: started\n", TOS_NODE_ID);
+		printf("[%d] App(sensor): started\n", TOS_NODE_ID);
 		if (err == SUCCESS) {
 		  if  (TOS_NODE_ID == 0){
             call MilliTimer.startPeriodic(1000);	

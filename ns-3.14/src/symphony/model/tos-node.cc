@@ -282,7 +282,7 @@ void
   }
 
   uint32_t
-  TosNode::AddSensor(Ptr<RawSensor> sensor)
+  TosNode::AddSensor(Ptr<TosDevice> sensor)
   {
     uint32_t index = m_sensors.size();
     sensor->SetAttribute("RsId",UintegerValue(tos_id));
@@ -291,7 +291,7 @@ void
     return index;
   }
 
-  Ptr<RawSensor>
+  Ptr<TosDevice>
   TosNode::GetSensor(uint32_t index) const
   {
     NS_ASSERT_MSG(index < m_sensors.size(),

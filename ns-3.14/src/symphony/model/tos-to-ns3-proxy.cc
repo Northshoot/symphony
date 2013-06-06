@@ -16,7 +16,7 @@
 #include "gateway.h"
 #include "calls-to-ns3.h"
 #include "tos-net-device.h"
-#include "raw-sensor.h"
+#include "tos-device.h"
 
 
 TosToNs3Proxy::TosToNs3Proxy() { }
@@ -43,7 +43,7 @@ TosToNs3Proxy::setDevice(ns3::Ptr<ns3::TosNetDevice> device){
 }
 
 void
-TosToNs3Proxy::SetSensor(ns3::Ptr<ns3::RawSensor> sens)
+TosToNs3Proxy::SetSensor(ns3::Ptr<ns3::TosDevice> sens)
 {
   m_sensor=sens;
 }
@@ -166,7 +166,7 @@ TosToNs3Proxy::ApplicationCommand(ApplicationCall call,uint16_t length, void *da
           break;
 
   case APP_RX:
-    m_application->SendData(length,data);
+          m_application->SendData(length,data);
           break;
 
 

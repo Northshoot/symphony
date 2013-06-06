@@ -20,7 +20,7 @@
 #include "ns3-to-tos-proxy_auto.h"
 #include "tos-to-ns3-proxy.h"
 #include "tos-net-device.h"
-#include "raw-sensor.h"
+#include "tos-device.h"
 
 namespace ns3
 {
@@ -86,8 +86,8 @@ namespace ns3
     GetNDevices(void) const;
 
     uint32_t
-    AddSensor(Ptr<RawSensor> sensor);
-    Ptr<RawSensor>
+    AddSensor(Ptr<TosDevice> sensor);
+    Ptr<TosDevice>
     GetSensor(uint32_t index) const;
     uint32_t
     GetNSensors(void) const;
@@ -150,7 +150,7 @@ namespace ns3
     EventId m_shutdown_event; //shut down event
     //reference to the
     std::vector<Ptr<TosNetDevice> > m_devices;
-    std::vector<Ptr<RawSensor> > m_sensors;
+    std::vector<Ptr<TosDevice> > m_sensors;
     const char * m_libname;
 
     std::vector<std::string> m_tos_functions;

@@ -36,6 +36,7 @@ implementation
     }
     
      command void Ns3Application.SendDataToApplication(uint16_t length, void * buffer){
+     		printf("[%d] App(sensor): SendDataToApplication\n", TOS_NODE_ID);
         gatewayApplication( proxy ,APP_RX, length, buffer);
         }
 }

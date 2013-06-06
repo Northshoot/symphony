@@ -16,15 +16,15 @@ implementation {
   components MainC, SkynetTosC as App;
   components new TimerMilliC();
   components Ns3ApplicationC as Ns3;
-  components MagnetomiterC;
+  components TemperatureSensorC;
   
   App.Boot -> MainC.Boot;
   App.AppControl -> Ns3;
   App.MilliTimer -> TimerMilliC;
   App.Ns3Application -> Ns3;
   
-  App.SensorControl -> MagnetomiterC.SplitControl;
-  App.DataIn -> MagnetomiterC.InterruptWithData;
+  App.SensorControl -> TemperatureSensorC.SplitControl;
+  App.DataIn -> TemperatureSensorC.InterruptWithData;
   
 }
 

@@ -9,6 +9,7 @@
 #include "ns3/log.h"
 #include "symphony-application.h"
 
+
 namespace ns3
 {
   NS_LOG_COMPONENT_DEFINE ("SymphonyApplication");
@@ -62,6 +63,7 @@ namespace ns3
   SymphonyApplication::SendData(uint16_t length,void* buff)
   {
     NS_ASSERT(m_started);
+
     //TODO: Do something with data
     //example when you know what is sent;
     //otherview use lenght to create a buffer copy with appropriate lenght
@@ -76,6 +78,7 @@ namespace ns3
     NS_LOG_UNCOND("Node sent counter " <<npkt->counter<<" at time "<<npkt->nodeTime);
     delete npkt;
     } else {
+
         m_sendDataUp(length, buff);
     }
     return 0;

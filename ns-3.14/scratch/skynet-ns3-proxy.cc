@@ -23,6 +23,8 @@ using namespace ns3;
 NS_LOG_COMPONENT_DEFINE ("SkynetNs3ProxyScript");
 
 void Log(uint8_t size, void * buffer){
+
+
     typedef struct {
       uint32_t nodeId;
       int32_t counter;
@@ -45,6 +47,7 @@ main (int argc, char *argv[])
   
   LogComponentEnable("SkynetNs3ProxyScript", LOG_INFO);
   LogComponentEnable("IOProxyServer", LOG_INFO);
+  LogComponentEnable("SymphonyApplication", LOG_INFO);
   
   // Default network parameters
   std::string deviceName("eth0");
@@ -58,8 +61,8 @@ main (int argc, char *argv[])
 
   
   // Default Symphony parameters
-  std::string nodeModel("/home/onir/dev/symphony/ns-3.14/build/symphony.xml");
-  std::string nodeImage("/home/onir/dev/symphony/ns-3.14/build/libSkynetTos.so");
+  std::string nodeModel("/home/onir/dev/skynet/ns-3.14/build/symphony.xml");
+  std::string nodeImage("/home/onir/dev/skynet/ns-3.14/build/libSkynetTos.so");
 
   // Default simulation time
   std::string simulationTime("60");
@@ -149,7 +152,7 @@ main (int argc, char *argv[])
   app->SetAttribute("LocalIp", StringValue(localIp));
   node->AddApplication (app);
 
-  Names::Add("IOProxyServer", app);
+  Names::Add("IOServer", app);
 
 
   // Configure the TinyOS node

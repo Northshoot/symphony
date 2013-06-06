@@ -10,6 +10,7 @@
 #include "ns3/log.h"
 #include "ns3/assert.h"
 #include "ns3/type-id.h"
+#include "ns3/uinteger.h"
 
 #include "tos-device.h"
 
@@ -27,6 +28,11 @@ namespace ns3
     	TypeId("ns3::TosDevice")
     	.SetParent<Object>()
     	.AddConstructor<TosDevice>()
+    	//TODO Change RsId for Id because is not RawSensor Now
+        .AddAttribute("RsId", "The id (unique integer) of this tos-device.",
+        		TypeId::ATTR_SET,
+        		UintegerValue(0), MakeUintegerAccessor(&TosDevice::m_id),
+        		MakeUintegerChecker<uint32_t>())
     	.AddAttribute("DeviceStartDone","Callback for device start done event.",
     			CallbackValue(),
     			MakeCallbackAccessor(&TosDevice::m_StartDone),

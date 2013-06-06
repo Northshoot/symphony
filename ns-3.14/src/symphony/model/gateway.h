@@ -75,7 +75,8 @@ extern int gatewaySensor(void *obj, SensorCall call){
 }
 
 void gatewayApplication(void *obj, ApplicationCall call, uint16_t length, void * data){
-  return ((TosToNs3Proxy *)obj)->ApplicationCommand(call, length, data);
+
+	return ((TosToNs3Proxy *)obj)->ApplicationCommand(call, length, data);
 }
 
 

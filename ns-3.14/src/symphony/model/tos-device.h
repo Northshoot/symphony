@@ -38,6 +38,11 @@ public:
 protected:
 
 	/**
+	 * Unique identifier of the device
+	 */
+	uint32_t m_id;
+
+	/**
 	 * Notifies the device inside TinyOS that
 	 * it has been properly initialized in the simulator.
 	 */

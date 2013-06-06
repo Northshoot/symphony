@@ -15,7 +15,7 @@
 #include "ns3/packet.h"
 #include "ns3/trace-source-accessor.h"
 #include "ns3/config.h"
-#include "ns3/skynet-sensor.h"
+#include "ns3/tos-device.h"
 #include "ns3/names.h"
 #include "ns3/string.h"
 #include "ns3/object.h"
@@ -162,9 +162,10 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
           uint8_t *value = (uint8_t *) malloc(sizeof(uint8_t) * packet->GetSize());
           packet->CopyData(value, packet->GetSize());
 
-          Ptr<SkynetSensor> sens = Names::Find<SkynetSensor>("/Names/TemperatureSensor");
-          sens->SetTemperatureValue(atoi((char*)value));
+          Ptr<TosDevice> sens = Names::Find<TosDevice>("/Names/TemperatureSensor");
 
+          int temp = atoi((char*)value);
+          sens->SendRawData((uint16_t)sizeof(temp), &temp);
           //socket->SendTo (packet, 0, from);
          }
 
