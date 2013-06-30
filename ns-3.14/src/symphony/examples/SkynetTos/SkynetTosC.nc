@@ -84,11 +84,12 @@ implementation {
    counter = *i;
    // memcpy ((void *) i, buffer, sizeof(i));
     
-    printf("[%d] New measurement ready in the node (%d bytes length) -> Value: %d \n",TOS_NODE_ID, length, counter);
+    printf("[%d] Termometer - New measurement ready in the node (%d bytes length) -> Value: %d \n",TOS_NODE_ID, length, counter);
     
     post send();
     
     }
+  
   
 }
 

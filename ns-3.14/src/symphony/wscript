@@ -46,6 +46,7 @@ def build(bld):
                       'model/raw-sensor.cc',
                       'model/skynet-sensor.cc',
                       'model/io-proxy-server-application.cc',
+                      'model/hv-base-station-application.cc',
                       'model/skynet-bs-application.cc',
         ]
 
@@ -89,6 +90,7 @@ def build(bld):
                     'model/symphony-application.h',
                     'model/skynet-sensor.h',
                     'model/io-proxy-server-application.h',
+                    'model/hv-base-station-application.h',
                     'model/skynet-bs-application.h',
         ]
 

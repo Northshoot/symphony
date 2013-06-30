@@ -47,6 +47,7 @@ TosToNs3Proxy::SetSensor(ns3::Ptr<ns3::TosDevice> sens)
 {
   m_sensor=sens;
 }
+
 int
 TosToNs3Proxy::deviceCommand(DeviceCall call, int val1, int val2, void * obj1, void * obj2){
         NS_ASSERT_MSG(m_tosnetdevice != NULL, "Device is NULL");

@@ -15,6 +15,7 @@
 #include "ns3/ipv4-static-routing-helper.h"
 #include "ns3/ipv4-list-routing-helper.h"
 #include "ns3/io-proxy-server-application.h"
+#include "ns3/hv-base-station-application.h"
 
 #include "ns3/symphony-module.h"
 
@@ -143,17 +144,24 @@ main (int argc, char *argv[])
   // Configure the application running on the node
   NS_LOG_INFO("- Adding IO Proxy Server");
   
-  Ptr<IOProxyServer> app = CreateObject<IOProxyServer> ();
-  app->SetStartTime(Seconds (1.0));
-  app->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
-  app->SetAttribute("RemotePortNumber", IntegerValue(remotePortNumber));
-  app->SetAttribute("RemoteIp", StringValue(remoteIp));
-  app->SetAttribute("LocalPortNumber", IntegerValue(localPortNumber));
-  app->SetAttribute("LocalIp", StringValue(localIp));
-  node->AddApplication (app);
+  Ptr<IOProxyServer> ioApp = CreateObject<IOProxyServer> ();
+  ioApp->SetStartTime(Seconds (1.0));
+  ioApp->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
+  ioApp->SetAttribute("RemotePortNumber", IntegerValue(remotePortNumber));
+  ioApp->SetAttribute("RemoteIp", StringValue(remoteIp));
+  ioApp->SetAttribute("LocalPortNumber", IntegerValue(localPortNumber));
+  ioApp->SetAttribute("LocalIp", StringValue(localIp));
+  node->AddApplication (ioApp);
 
-  Names::Add("IOServer", app);
+  Names::Add("IOServer", ioApp);
 
+  NS_LOG_INFO("- Adding HV Base Station");
+  Ptr<HvBaseStation> bsApp = CreateObject<HvBaseStation> ();
+  bsApp->SetStartTime(Seconds (1.0));
+  bsApp->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
+  node->AddApplication (bsApp);
+
+  Names::Add("BaseStation", bsApp);
 
   // Configure the TinyOS node
   NS_LOG_INFO("- Creating TinyOS node");
@@ -167,7 +175,6 @@ main (int argc, char *argv[])
 
   Ptr<SymphonyApplication> symphonyApp = CreateObject<SymphonyApplication>();
   symphonyApp->SetNode(tosNode.Get(0));
-  symphonyApp->SetAttribute("ReceiveDataFromApplication", CallbackValue(MakeCallback(&Log)));
   symphonyApp->SetStartTime (Seconds (0.0));
   symphonyApp->SetStopTime (Seconds (20.0));
   symphonyApp->StartApplication();

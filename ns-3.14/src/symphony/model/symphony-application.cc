@@ -7,7 +7,10 @@
 
 #include "ns3/assert.h"
 #include "ns3/log.h"
+#include "ns3/names.h"
 #include "symphony-application.h"
+
+#include "hv-base-station-application.h"
 
 
 namespace ns3
@@ -68,17 +71,9 @@ namespace ns3
     //example when you know what is sent;
     //otherview use lenght to create a buffer copy with appropriate lenght
     if(m_sendDataUp.IsNull()){
-    typedef struct {
-      uint32_t counter;
-      uint32_t nodeTime;
-    } NodePacket;
-
-    NodePacket *npkt;
-    npkt= (NodePacket*) malloc(sizeof(NodePacket));
-    NS_LOG_UNCOND("Node sent counter " <<npkt->counter<<" at time "<<npkt->nodeTime);
-    delete npkt;
+    	Ptr<HvBaseStation> bsApp = Names::Find<HvBaseStation>("/Names/BaseStation");
+    	bsApp->ReceiveHyperVector(length, buff);
     } else {
-
         m_sendDataUp(length, buff);
     }
     return 0;

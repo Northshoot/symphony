@@ -13,18 +13,27 @@ configuration SkynetTosAppC {
 
 implementation {
   
-  components MainC, SkynetTosC as App;
+  components MainC, SkynetTosC as TempApp, SkynetTosC as MagnetoApp;
   components new TimerMilliC();
   components Ns3ApplicationC as Ns3;
   components TemperatureSensorC;
+  components MagnetomiterC;
   
-  App.Boot -> MainC.Boot;
-  App.AppControl -> Ns3;
-  App.MilliTimer -> TimerMilliC;
-  App.Ns3Application -> Ns3;
+  TempApp.Boot -> MainC.Boot;
+  TempApp.AppControl -> Ns3;
+  TempApp.MilliTimer -> TimerMilliC;
+  TempApp.Ns3Application -> Ns3;
   
-  App.SensorControl -> TemperatureSensorC.SplitControl;
-  App.DataIn -> TemperatureSensorC.InterruptWithData;
+  TempApp.SensorControl -> TemperatureSensorC.SplitControl;
+  TempApp.DataIn -> TemperatureSensorC.InterruptWithData;
+  
+  MagnetoApp.Boot -> MainC.Boot;
+  MagnetoApp.AppControl -> Ns3;
+  MagnetoApp.MilliTimer -> TimerMilliC;
+  MagnetoApp.Ns3Application -> Ns3;
+  
+  MagnetoApp.SensorControl -> MagnetomiterC.SplitControl;
+  MagnetoApp.DataIn -> MagnetomiterC.InterruptWithData;
   
 }
 

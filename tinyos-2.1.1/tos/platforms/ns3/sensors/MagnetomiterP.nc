@@ -19,7 +19,7 @@ implementation
 		return gatewaySensor( proxy ,SENSOR_ON);
 		}
 		
-	extern int sensorStartDone(error_t error)@C() @spontaneous(){
+	  extern int sensorStartDone(error_t error)@C() @spontaneous(){
         signal SplitControl.startDone( error );        
         return 0;
     }
