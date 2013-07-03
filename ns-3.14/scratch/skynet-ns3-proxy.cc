@@ -189,6 +189,10 @@ main (int argc, char *argv[])
   // Set the names to access a path
   Names::Add("TemperatureSensor", sc.Get(0));
 
+  // Distribute initialization hypervectors to the nodes
+  NS_LOG_INFO("- Distribute initialization hypervectors");
+  bsApp->InitializeNodes(tosNode);
+
   // Send a fake temperature to test the system
   // Config::Set("/Names/TemperatureSensor/TemperatureValue", IntegerValue(40));
 

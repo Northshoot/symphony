@@ -17,6 +17,7 @@ module SkynetTosC @safe() {
     
     interface SplitControl as SensorControl;
     interface InterruptWithData as DataIn;
+    interface InterruptWithData as HvInit;
   }
 }
 
@@ -87,6 +88,12 @@ implementation {
     printf("[%d] Termometer - New measurement ready in the node (%d bytes length) -> Value: %d \n",TOS_NODE_ID, length, counter);
     
     post send();
+    
+    }
+    
+    async event void HvInit.interruptWithData(error_t result, uint16_t length, void * buffer) {
+        
+    printf("[%d] Hypervector Init \n",TOS_NODE_ID);
     
     }
   

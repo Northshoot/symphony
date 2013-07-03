@@ -16,7 +16,7 @@
  {
  	components MagnetomiterP as sens;
  	
- 	SplitControl=sens.SplitControl;
- 	InterruptWithData=sens.data;
+ 	SplitControl = sens.SplitControl;
+ 	InterruptWithData = sens.data;
  	
  }
