@@ -13,6 +13,23 @@
 
 namespace ns3 {
 
+static const int a = 1000; //dimensionality of hypervectors
+
+// Initialize structure init1 for initialization memory that consists of role hypervectors and id of devices
+struct init1{
+    int id, role_hv[a]; // a - dimensionality of hypervector
+};
+// Initialize structure init2 for item memory that consists of current shift, previous shift, current role vector id,
+//previous vector id and two hypervectors one for sensor and one for actuator
+struct init2{
+    int cur_role, cur_shift, prev_role, prev_shift, hp_sen[a], hp_act[a];// a - dimensionality of hypervector
+};
+// Initialize structure init3 for sensors state table that consists of current shift, and current sensor id (current role vector id)
+struct init3{
+    int sen_id, cur_shift;
+};
+
+
 /**
  *
  */
@@ -24,7 +41,7 @@ public:
 	/**
 	 *
 	 */
-	HvBaseStation ();
+	HvBaseStation (TosNodeContainer nodes);
 	virtual ~HvBaseStation ();
 
 	void ReceiveHyperVector(uint16_t length, void* buffer);
@@ -38,11 +55,17 @@ private:
   virtual void DoDispose (void);
   uint32_t GetApplicationId (void) const;
 
+  int m_dimension;
+  TosNodeContainer m_nodes;
+  int m_P [a];
+
+  init1 *init_mem;
   /**
    * Sends data to the device as an interruption from
    * the simulator
    */
-  Callback<int, uint8_t, uint16_t ,void * > m_InitializationInterrupt;
+  Callback<int, uint8_t, uint16_t ,void * > m_InitializationVectorInterrupt;
+  Callback<int, uint8_t, uint16_t, void * > m_RandomVectorInterrupt;
 };
 
 } // namespace ns3

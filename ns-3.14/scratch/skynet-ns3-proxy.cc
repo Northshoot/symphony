@@ -155,14 +155,6 @@ main (int argc, char *argv[])
 
   Names::Add("IOServer", ioApp);
 
-  NS_LOG_INFO("- Adding HV Base Station");
-  Ptr<HvBaseStation> bsApp = CreateObject<HvBaseStation> ();
-  bsApp->SetStartTime(Seconds (1.0));
-  bsApp->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
-  node->AddApplication (bsApp);
-
-  Names::Add("BaseStation", bsApp);
-
   // Configure the TinyOS node
   NS_LOG_INFO("- Creating TinyOS node");
 
@@ -189,10 +181,12 @@ main (int argc, char *argv[])
   // Set the names to access a path
   Names::Add("TemperatureSensor", sc.Get(0));
 
-  // Distribute initialization hypervectors to the nodes
-  NS_LOG_INFO("- Distribute initialization hypervectors");
-  bsApp->InitializeNodes(tosNode);
-
+  NS_LOG_INFO("- Adding HV Base Station");
+  Ptr<HvBaseStation> bsApp = CreateObject<HvBaseStation> (tosNode);
+  bsApp->SetStartTime(Seconds (1.0));
+  bsApp->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
+  node->AddApplication (bsApp);
+  Names::Add("BaseStation", bsApp);
   // Send a fake temperature to test the system
   // Config::Set("/Names/TemperatureSensor/TemperatureValue", IntegerValue(40));
 
