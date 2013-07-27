@@ -63,9 +63,9 @@ void HvBaseStation::StartApplication (void)
 
   for (int j = 0; j < a;j++) { // cycle for filling hypervector
   	        m_P[j] = floor((double)rand() / RAND_MAX + 0.5);
-  	        std::cout << m_P[j];
+  	      //  std::cout << m_P[j];
   }
-  std::cout << " -- \n";
+  //std::cout << " -- \n";
   InitializeNodes(m_nodes);
 }
 
@@ -101,10 +101,10 @@ void HvBaseStation::InitializeNodes(TosNodeContainer container)
 	    initial.id = node->GetId(); // id is serial number ?change for sensor and actuator?
 	    for (int j = 0; j < a;j++) { // cycle for filling hypervector
 	        initial.role_hv[j] = floor((double)rand() / RAND_MAX + 0.5);
-	        //std::cout << initial.role_hv[j];
+	        std::cout << initial.role_hv[j];
 	    }
 	    init_mem[initial.id] = initial; // i'th record equal to initial
-	    //std::cout << "\n";
+	    std::cout << "\n";
 	    m_InitializationVectorInterrupt(0, sizeof(initial), &initial);
 	    m_RandomVectorInterrupt(0, sizeof(m_P), &m_P);
 	}
