@@ -29,6 +29,11 @@ struct init3{
     int sen_id, cur_shift;
 };
 
+typedef struct {
+	  uint32_t nodeId;
+      int vector[a];
+} NodePacket;
+
 
 /**
  *
@@ -60,6 +65,27 @@ private:
   int m_P [a];
 
   init1 *init_mem;
+  init2 *item_mem;
+  init2 *item_pending;
+  init3 *sen_state;
+
+  int item_len, k_shift, n;
+  int check_vec1[a], check_vec2[a],
+      shift_vec1[a], pres_sum, count_adr, count_shift ,
+      subs_vec[a], input_id , input_shift, cur_state_num ;
+  double check_sum, sum_adres, sum_shift;
+  int* item_pres;
+  double* item_check;
+
+  int buff_int[a], buff_bin[a], input_vector[a], output_vec[a];
+
+  void Xor(int *arr0, int *arr1, int *arr2, int n);
+  void Or(int *arr0, int *arr1, int *arr2, int n);
+  double Sum(int *arr0, int n);
+  void Shift(int *arr1, int *arr2, int n, int k);
+  void Buff_int_to_bin(int *buff_int, int *buff_bin, int n);
+
+
   /**
    * Sends data to the device as an interruption from
    * the simulator

@@ -25,15 +25,6 @@ module SkynetTosC @safe() {
 implementation {
   
   void task send();	
-  void Xor(int *arr0, int *arr1, int *arr2, int n);
-  void Or(int *arr0, int *arr1, int *arr2, int n);
-  void Shift(int *arr1, int *arr2, int n, int k);
-  void printFiller();
-	typedef struct {
-			uint32_t nodeId;
-      int vector[DIMENSION];
-    } NodePacket;
-  
   uint32_t counter = 0;
   
   //Initialization hypervectors send by the BaseStationn
@@ -108,6 +99,7 @@ implementation {
   		//Shift the initialization hypervector to get the filler 
   		Shift( filler, init_Hv.role_hv, DIMENSION, last_Temp);
   		//printFiller();
+  		
   		// Random XOR ( Initialization OR Filler)	
   		Or( filler, filler,  init_Hv.role_hv, DIMENSION);
   		//printFiller();

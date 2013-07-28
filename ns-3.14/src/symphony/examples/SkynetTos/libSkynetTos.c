@@ -750,7 +750,7 @@ struct drand48_data {
 #line 471
 extern void *malloc(size_t __size) __attribute((__leaf__)) __attribute((__nothrow__)) __attribute((__malloc__)) ;
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b661c5d11f0, const void *arg_0x2b661c5d14c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2b76cbba21f0, const void *arg_0x2b76cbba24c8);
 #line 776
 __extension__ 
 #line 793
@@ -1153,8 +1153,22 @@ enum __nesc_unnamed4277 {
 typedef struct init1 {
   int id, role_hv[DIMENSION];
 } init1;
+
+
+void Xor(int *arr0, int *arr1, int *arr2, int n);
+void Or(int *arr0, int *arr1, int *arr2, int n);
+void Shift(int *arr1, int *arr2, int n, int k);
+
+
+
+
+#line 18
+typedef struct __nesc_unnamed4278 {
+  uint32_t nodeId;
+  int vector[DIMENSION];
+} NodePacket;
 # 43 "/home/onir/dev/skynet/tinyos-2.1.1/tos/types/Leds.h"
-enum __nesc_unnamed4278 {
+enum __nesc_unnamed4279 {
   LEDS_LED0 = 1 << 0, 
   LEDS_LED1 = 1 << 1, 
   LEDS_LED2 = 1 << 2, 
@@ -1195,19 +1209,19 @@ typedef enum LogLevel {
   LOG_PREFIX_NODE = 0x20000000
 } LogLevel;
 # 40 "/home/onir/dev/skynet/tinyos-2.1.1/tos/lib/timer/Timer.h"
-typedef struct __nesc_unnamed4279 {
+typedef struct __nesc_unnamed4280 {
 #line 40
   int notUsed;
 } 
 #line 40
 TMilli;
-typedef struct __nesc_unnamed4280 {
+typedef struct __nesc_unnamed4281 {
 #line 41
   int notUsed;
 } 
 #line 41
 T32khz;
-typedef struct __nesc_unnamed4281 {
+typedef struct __nesc_unnamed4282 {
 #line 42
   int notUsed;
 } 
@@ -1227,11 +1241,11 @@ static error_t SimMainP$SoftwareInit$default$init(void );
 # 67 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(
 # 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b661c8af960);
+uint8_t arg_0x2b76cbe80960);
 # 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b661c8af960);
+uint8_t arg_0x2b76cbe80960);
 # 57 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1293,7 +1307,7 @@ uint32_t NsTimerP$time_now = 0;
 
 
 #line 21
-typedef struct NsTimerP$__nesc_unnamed4282 {
+typedef struct NsTimerP$__nesc_unnamed4283 {
 
   uint32_t t0;
   uint32_t dt;
@@ -1337,7 +1351,7 @@ static inline error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b661c8af960);
+uint8_t arg_0x2b76cbe80960);
 
 
 
@@ -1347,7 +1361,7 @@ extern int runNextEventExternal(uint32_t a)   ;
 
 
 
-enum SchedulerBasicP$__nesc_unnamed4283 {
+enum SchedulerBasicP$__nesc_unnamed4284 {
 
   SchedulerBasicP$NUM_TASKS = 1U, 
   SchedulerBasicP$NO_TASK = 255
@@ -1469,25 +1483,12 @@ static error_t SkynetTosC$send$postTask(void );
 # 20 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/ns3application/Ns3Application.nc"
 static void SkynetTosC$Ns3Application$SendDataToApplication(uint16_t length, void *buffer);
 # 27 "SkynetTosC.nc"
-enum SkynetTosC$__nesc_unnamed4284 {
+enum SkynetTosC$__nesc_unnamed4285 {
 #line 27
   SkynetTosC$send = 0U
 };
 #line 27
 typedef int SkynetTosC$__nesc_sillytask_send[SkynetTosC$send];
-static inline void SkynetTosC$Xor(int *arr0, int *arr1, int *arr2, int n);
-static inline void SkynetTosC$Or(int *arr0, int *arr1, int *arr2, int n);
-static inline void SkynetTosC$Shift(int *arr1, int *arr2, int n, int k);
-
-
-
-
-#line 32
-typedef struct SkynetTosC$__nesc_unnamed4285 {
-  uint32_t nodeId;
-  int vector[DIMENSION];
-} SkynetTosC$NodePacket;
-
 
 
 
@@ -1524,7 +1525,7 @@ static inline void SkynetTosC$AppControl$stopDone(error_t err);
 
 
 static inline void SkynetTosC$send$runTask(void );
-#line 85
+#line 76
 static inline void SkynetTosC$SensorControl$startDone(error_t err);
 
 
@@ -1541,7 +1542,7 @@ static inline void SkynetTosC$SensorControl$stopDone(error_t err);
 
 
 static inline void SkynetTosC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer);
-#line 126
+#line 118
 static inline void SkynetTosC$InitVector$interruptWithData(error_t result, uint16_t length, void *buffer);
 
 
@@ -1552,32 +1553,6 @@ static inline void SkynetTosC$InitVector$interruptWithData(error_t result, uint1
 
 
 static inline void SkynetTosC$RandomVector$interruptWithData(error_t result, uint16_t length, void *buffer);
-
-
-
-
-
-
-
-static inline void SkynetTosC$Xor(int *arr0, int *arr1, int *arr2, int n);
-
-
-
-
-
-
-
-
-static inline void SkynetTosC$Or(int *arr0, int *arr1, int *arr2, int n);
-
-
-
-
-
-
-
-
-static inline void SkynetTosC$Shift(int *arr1, int *arr2, int n, int k);
 # 113 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/SplitControl.nc"
 static void Ns3ApplicationP$SplitControl$startDone(error_t error);
 #line 138
@@ -1669,20 +1644,20 @@ inline static void SkynetTosC$Ns3Application$SendDataToApplication(uint16_t leng
 #line 20
 }
 #line 20
-# 72 "SkynetTosC.nc"
+# 63 "SkynetTosC.nc"
 static inline void SkynetTosC$send$runTask(void )
-#line 72
+#line 63
 {
-  SkynetTosC$NodePacket *npkt;
+  NodePacket *npkt;
 
-#line 74
-  npkt = (SkynetTosC$NodePacket *)malloc(sizeof(SkynetTosC$NodePacket ));
+#line 65
+  npkt = (NodePacket *)malloc(sizeof(NodePacket ));
 
   memcpy(npkt->vector, SkynetTosC$filler, sizeof SkynetTosC$filler);
   npkt->nodeId = TOS_NODE_ID;
 
   printf("[%d] Send hypervector to base station \n", TOS_NODE_ID);
-  SkynetTosC$Ns3Application$SendDataToApplication(sizeof(SkynetTosC$NodePacket ), npkt);
+  SkynetTosC$Ns3Application$SendDataToApplication(sizeof(NodePacket ), npkt);
 
   SkynetTosC$sending = 0;
 }
@@ -1693,9 +1668,9 @@ static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b661c8af960){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b76cbe80960){
 #line 75
-  switch (arg_0x2b661c8af960) {
+  switch (arg_0x2b76cbe80960) {
 #line 75
     case SkynetTosC$send:
 #line 75
@@ -1705,7 +1680,7 @@ inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b661c8af960)
 #line 75
     default:
 #line 75
-      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b661c8af960);
+      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b76cbe80960);
 #line 75
       break;
 #line 75
@@ -1964,9 +1939,9 @@ inline static error_t SkynetTosC$AppControl$start(void ){
 #line 104
 }
 #line 104
-# 54 "SkynetTosC.nc"
+# 45 "SkynetTosC.nc"
 static inline void SkynetTosC$Boot$booted(void )
-#line 54
+#line 45
 {
   printf("[%d] App: booted\n", TOS_NODE_ID);
   SkynetTosC$AppControl$start();
@@ -2003,9 +1978,9 @@ static inline void SimMoteP$SimMote$turnOn(void )
   SimMoteP$isOn = true;
 }
 
-# 60 "SkynetTosC.nc"
+# 51 "SkynetTosC.nc"
 static inline void SkynetTosC$AppControl$startDone(error_t err)
-#line 60
+#line 51
 {
   printf("[%d] App: started\n", TOS_NODE_ID);
 
@@ -2021,9 +1996,9 @@ inline static void Ns3ApplicationP$SplitControl$startDone(error_t error){
 #line 113
 }
 #line 113
-# 68 "SkynetTosC.nc"
+# 59 "SkynetTosC.nc"
 static inline void SkynetTosC$AppControl$stopDone(error_t err)
-#line 68
+#line 59
 {
 }
 
@@ -2034,9 +2009,9 @@ inline static void Ns3ApplicationP$SplitControl$stopDone(error_t error){
 #line 138
 }
 #line 138
-# 85 "SkynetTosC.nc"
+# 76 "SkynetTosC.nc"
 static inline void SkynetTosC$SensorControl$startDone(error_t err)
-#line 85
+#line 76
 {
   if (err != SUCCESS) {
       SkynetTosC$SensorControl$start();
@@ -2050,9 +2025,9 @@ inline static void TemperatureSensorP$SplitControl$startDone(error_t error){
 #line 113
 }
 #line 113
-# 91 "SkynetTosC.nc"
+# 82 "SkynetTosC.nc"
 static inline void SkynetTosC$SensorControl$stopDone(error_t err)
-#line 91
+#line 82
 {
 }
 
@@ -2130,46 +2105,7 @@ inline static error_t SkynetTosC$send$postTask(void ){
 #line 67
 }
 #line 67
-# 143 "SkynetTosC.nc"
-static inline void SkynetTosC$Xor(int *arr0, int *arr1, int *arr2, int n)
-{
-  int i;
-
-#line 146
-  for (i = 0; i < n; i++) {
-      arr0[i] = arr1[i] ^ arr2[i];
-    }
-}
-
-
-static inline void SkynetTosC$Or(int *arr0, int *arr1, int *arr2, int n)
-{
-  int i;
-
-#line 155
-  for (i = 0; i < n; i++) {
-      arr0[i] = arr1[i] | arr2[i];
-    }
-}
-
-
-static inline void SkynetTosC$Shift(int *arr1, int *arr2, int n, int k)
-{
-  int i;
-
-#line 164
-  for (i = 0; i < n; i++) {
-      if (i + k < n) {
-          arr1[i + k] = arr2[i];
-        }
-      else {
-#line 167
-        arr1[i + k - n] = arr2[i];
-        }
-    }
-}
-
-#line 100
+# 91 "SkynetTosC.nc"
 static inline void SkynetTosC$DataIn$interruptWithData(error_t result, uint16_t length, void *buffer)
 {
   if (!SkynetTosC$sending) {
@@ -2179,12 +2115,13 @@ static inline void SkynetTosC$DataIn$interruptWithData(error_t result, uint16_t 
       printf("[%d] Termometer - New measurement ready in the node (%d bytes length) -> Value: %d \n", TOS_NODE_ID, length, SkynetTosC$last_Temp);
 
 
-      SkynetTosC$Shift(SkynetTosC$filler, SkynetTosC$init_Hv.role_hv, DIMENSION, SkynetTosC$last_Temp);
+      Shift(SkynetTosC$filler, SkynetTosC$init_Hv.role_hv, DIMENSION, SkynetTosC$last_Temp);
 
 
-      SkynetTosC$Or(SkynetTosC$filler, SkynetTosC$filler, SkynetTosC$init_Hv.role_hv, DIMENSION);
 
-      SkynetTosC$Xor(SkynetTosC$filler, SkynetTosC$filler, SkynetTosC$init_Random.role_hv, DIMENSION);
+      Or(SkynetTosC$filler, SkynetTosC$filler, SkynetTosC$init_Hv.role_hv, DIMENSION);
+
+      Xor(SkynetTosC$filler, SkynetTosC$filler, SkynetTosC$init_Random.role_hv, DIMENSION);
 
 
 
@@ -2200,7 +2137,7 @@ inline static void TemperatureSensorP$Data$interruptWithData(error_t result, uin
 #line 22
 }
 #line 22
-# 126 "SkynetTosC.nc"
+# 118 "SkynetTosC.nc"
 static inline void SkynetTosC$InitVector$interruptWithData(error_t result, uint16_t length, void *buffer)
 {
   memcpy(&SkynetTosC$init_Hv, buffer, length);
@@ -2214,7 +2151,7 @@ inline static void HypervectorInitP$initVector$interruptWithData(error_t result,
 #line 22
 }
 #line 22
-# 135 "SkynetTosC.nc"
+# 127 "SkynetTosC.nc"
 static inline void SkynetTosC$RandomVector$interruptWithData(error_t result, uint16_t length, void *buffer)
 {
   memcpy(&SkynetTosC$init_Random, buffer, length);
