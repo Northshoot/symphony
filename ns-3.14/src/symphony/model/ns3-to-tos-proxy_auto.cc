@@ -92,6 +92,16 @@ Ns3ToTosProxy::RandomVectorInterrupt(uint8_t b , uint16_t c , void * d)
 {
  	return ((tosRandomVectorInterrupt)m_tos_functions["RandomVectorInterrupt"])(b , c , d);
 }
+int
+Ns3ToTosProxy::actuatorInterrupt(uint8_t b , uint16_t c , void * d)
+{
+ 	return ((tosactuatorInterrupt)m_tos_functions["actuatorInterrupt"])(b , c , d);
+}
+int
+Ns3ToTosProxy::actuatorHvInterrupt(uint8_t b , uint16_t c , void * d)
+{
+ 	return ((tosactuatorHvInterrupt)m_tos_functions["actuatorHvInterrupt"])(b , c , d);
+}
 void
 Ns3ToTosProxy::ApplicationStartDone(uint8_t b)
 {

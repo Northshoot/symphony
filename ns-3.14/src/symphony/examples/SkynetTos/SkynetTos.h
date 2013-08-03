@@ -11,10 +11,7 @@ typedef struct init1{
 } init1;
 
   
-void Xor(int *arr0, int *arr1, int *arr2, int n);
-void Or(int *arr0, int *arr1, int *arr2, int n);
-void Shift(int *arr1, int *arr2, int n, int k);
-void printFiller();
+
 
 typedef struct {
 			uint32_t nodeId;

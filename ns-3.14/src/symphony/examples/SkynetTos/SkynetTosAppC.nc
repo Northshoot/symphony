@@ -16,6 +16,7 @@ implementation {
   components MainC, SkynetTosC as app;
   components Ns3ApplicationC as Ns3;
   components TemperatureSensorC;
+  components ActuatorC;
   components HypervectorInitC;
   
   app.Boot -> MainC.Boot;
@@ -27,6 +28,9 @@ implementation {
   
   app.InitVector -> HypervectorInitC.initVector;
   app.RandomVector -> HypervectorInitC.randomVector;
+  
+  app.ActuatorInput -> ActuatorC.actuatorInputInterrupt;
+  app.ActuatorHvInput -> ActuatorC.actuatorHvInputInterrupt;
 }
 
 

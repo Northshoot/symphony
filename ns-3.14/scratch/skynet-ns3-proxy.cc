@@ -1,8 +1,6 @@
 /*
- * Generates a real time simulation on ns-3 with a TCP Socket 
- * listening on port 9999 by default. It creates an echo of the 
- * data received.
  * 
+ *
  * @author Jose Angel Fernandez Rodrigues
  */ 
 
@@ -23,23 +21,6 @@ using namespace ns3;
 
 NS_LOG_COMPONENT_DEFINE ("SkynetNs3ProxyScript");
 
-void Log(uint8_t size, void * buffer){
-
-
-    typedef struct {
-      uint32_t nodeId;
-      int32_t counter;
-
-    } NodePacket;
-
-    NodePacket *npkt = (NodePacket*) buffer;
-
-    Ptr<IOProxyServer> serv = Names::Find<IOProxyServer>("/Names/IOServer");
-    serv->SendData(npkt->counter);
-
-    NS_LOG_UNCOND("[NS3] Node [" << npkt->nodeId << "] sent value " << npkt->counter );
-}
-
 int 
 main (int argc, char *argv[])
 {
@@ -50,17 +31,17 @@ main (int argc, char *argv[])
   LogComponentEnable("IOProxyServer", LOG_INFO);
   LogComponentEnable("SymphonyApplication", LOG_INFO);
   
-  // Default network parameters
+  // IO Proxy default network parameters
   std::string deviceName("eth0");
   std::string localIp("172.16.107.142");
   std::string localMask("255.255.255.0");
   std::string localGateway("172.16.107.2");
   int localPortNumber(3333);
 
+  // Backend Server default network parameters
   std::string remoteIp("172.16.107.1");
   int remotePortNumber(9999);
 
-  
   // Default Symphony parameters
   std::string nodeModel("/home/onir/dev/skynet/ns-3.14/build/symphony.xml");
   std::string nodeImage("/home/onir/dev/skynet/ns-3.14/build/libSkynetTos.so");
@@ -92,7 +73,6 @@ main (int argc, char *argv[])
   GlobalValue::Bind ("SimulatorImplementationType", StringValue ("ns3::RealtimeSimulatorImpl"));
   GlobalValue::Bind ("ChecksumEnabled", BooleanValue (true));
 
-
   // Configuration of the Skynet proxy node
   NS_LOG_INFO ("- Create IO Server Node");
   
@@ -113,7 +93,6 @@ main (int argc, char *argv[])
 
   node->AddDevice (device);
 
-  
   // Add a default internet stack to the node.
   NS_LOG_INFO ("- Add Internet Stack ");
   
@@ -159,8 +138,11 @@ main (int argc, char *argv[])
   NS_LOG_INFO("- Creating TinyOS node");
 
   TosNodeContainer tosNode;
-  tosNode.Create(1, nodeImage.c_str());
+  tosNode.Create(4, nodeImage.c_str());
   tosNode.Get(0)->SetAttribute("TosId", UintegerValue(0));
+  tosNode.Get(1)->SetAttribute("TosId", UintegerValue(1));
+  tosNode.Get(2)->SetAttribute("TosId", UintegerValue(2));
+  tosNode.Get(3)->SetAttribute("TosId", UintegerValue(3));
 
   // Configure the Symphony Application
   NS_LOG_INFO("- Adding bridge between TinyOs and NS3");
@@ -171,6 +153,9 @@ main (int argc, char *argv[])
   symphonyApp->SetStopTime (Seconds (20.0));
   symphonyApp->StartApplication();
   tosNode.Get(0)->AddApplication(symphonyApp);
+  tosNode.Get(1)->AddApplication(symphonyApp);
+  tosNode.Get(2)->AddApplication(symphonyApp);
+  tosNode.Get(3)->AddApplication(symphonyApp);
 
   // Configuring the sensors available in the node
   NS_LOG_INFO("- Adding sensors");
@@ -179,7 +164,22 @@ main (int argc, char *argv[])
   SymphonySensorContainer sc = sens.InstallSensors(1, tosNode,"/home/onir/dev/symphony/ns-3.14/bin_pkt/");
 
   // Set the names to access a path
-  Names::Add("TemperatureSensor", sc.Get(0));
+  for (unsigned int i = 0; i < sc.GetN()-1; i++)
+  {
+	  char numstr[21]; // enough to hold all numbers up to 64-bits
+	  sprintf(numstr, "%d", i);
+	  std::string name = "TemperatureSensor";
+	  std::string result = name + numstr;
+	  std::cout << "Added " << result << "\n";
+	  Names::Add(result, sc.Get(i));
+  }
+
+  char numstr[21]; // enough to hold all numbers up to 64-bits
+  sprintf(numstr, "%d", 0);
+  std::string name = "Actuator";
+  std::string result = name + numstr;
+  std::cout << "Added " << result << "\n";
+  Names::Add(result, sc.Get(3));
 
   NS_LOG_INFO("- Adding HV Base Station");
   Ptr<HvBaseStation> bsApp = CreateObject<HvBaseStation> (tosNode);
@@ -187,9 +187,6 @@ main (int argc, char *argv[])
   bsApp->SetStopTime(Seconds (atoi(simulationTime.c_str())-1));
   node->AddApplication (bsApp);
   Names::Add("BaseStation", bsApp);
-  // Send a fake temperature to test the system
-  // Config::Set("/Names/TemperatureSensor/TemperatureValue", IntegerValue(40));
-
 
   // Start the simulation
   NS_LOG_INFO ("- Emulation starting");

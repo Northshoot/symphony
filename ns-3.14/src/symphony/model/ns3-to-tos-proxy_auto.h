@@ -28,6 +28,8 @@ typedef int(*tossensorStopDone)(uint8_t); //typedef for tos function sensorStopD
 typedef int(*tosinterruptData)(uint8_t,uint16_t,void *); //typedef for tos function interruptData(uint8_t b , uint16_t c , void * d) 
 typedef int(*tosInitializationVectorInterrupt)(uint8_t,uint16_t,void *); //typedef for tos function InitializationVectorInterrupt(uint8_t b , uint16_t c , void * d) 
 typedef int(*tosRandomVectorInterrupt)(uint8_t,uint16_t,void *); //typedef for tos function RandomVectorInterrupt(uint8_t b , uint16_t c , void * d) 
+typedef int(*tosactuatorInterrupt)(uint8_t,uint16_t,void *); //typedef for tos function actuatorInterrupt(uint8_t b , uint16_t c , void * d) 
+typedef int(*tosactuatorHvInterrupt)(uint8_t,uint16_t,void *); //typedef for tos function actuatorHvInterrupt(uint8_t b , uint16_t c , void * d) 
 typedef void(*tosApplicationStartDone)(uint8_t); //typedef for tos function ApplicationStartDone(uint8_t b) 
 typedef void(*tosAplicationStopDone)(uint8_t); //typedef for tos function AplicationStopDone(uint8_t b) 
 
@@ -52,6 +54,8 @@ class Ns3ToTosProxy {
 		int interruptData(uint8_t b , uint16_t c , void * d);
 		int InitializationVectorInterrupt(uint8_t b , uint16_t c , void * d);
 		int RandomVectorInterrupt(uint8_t b , uint16_t c , void * d);
+		int actuatorInterrupt(uint8_t b , uint16_t c , void * d);
+		int actuatorHvInterrupt(uint8_t b , uint16_t c , void * d);
 		void ApplicationStartDone(uint8_t b);
 		void AplicationStopDone(uint8_t b);
 

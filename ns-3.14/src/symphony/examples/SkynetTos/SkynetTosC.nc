@@ -18,6 +18,8 @@ module SkynetTosC @safe() {
     interface InterruptWithData as DataIn;
     interface InterruptWithData as InitVector;
  		interface InterruptWithData as RandomVector;
+    interface InterruptWithData as ActuatorInput;
+ 		interface InterruptWithData as ActuatorHvInput;
   }
  
 }
@@ -32,7 +34,7 @@ implementation {
   init1 init_Random;
   
   //Last temperature received by the node. Default value = 0
-  int last_Temp = 0;
+  int32_t last_Temp = 0;
   
   //Filler prepared to send to base station.
   int filler[DIMENSION];
@@ -40,6 +42,55 @@ implementation {
   
   //Sending packet
   bool sending = 0;
+  
+  // Function for Xor operation. Input parameters are two interacting vectors (arr1, arr2), result vector (arr0) and dimensionality (n)
+void Xor(int *arr0, int *arr1, int *arr2, int n)
+{
+
+		int i;
+		  printf("XOR");
+    for(i = 0;i<n;i++) {
+        arr0[i] = arr1[i] ^ arr2[i];
+    }
+}
+
+// Function for Or operation. Input parameters are two interacting vectors (arr1, arr2), result vector (arr0) and dimensionality (n)
+void Or(int *arr0, int *arr1, int *arr2, int n)
+{
+
+
+	int i;
+	  printf("OR");
+    for(i = 0;i<n;i++) {
+        arr0[i] = arr1[i] | arr2[i];
+    }
+}
+
+//Function for obtaining new vector from old one by shifting its. Input parameters are input vector (arr2), dimensionality (n), shifting vector arr1 and shift value in bits (k)
+void Shift(int *arr1, int *arr2, int n, int k)
+{
+    
+	int i;
+	
+	printf("Shift");
+    for(i=0;i<n;i++) {
+        if (i+k < n) {
+        arr1[i+k] = (arr2[i]);
+        } else arr1[i + k - n] = arr2[i];
+    }
+}
+
+void printFiller(){
+	int i = 0;
+	printf("\n");
+	for (i = 0 ; i < DIMENSION; i++){
+		printf("%d", filler[i] );
+	}
+	printf("\n");
+	
+}
+
+
  
   
 	event void Boot.booted() {
@@ -92,19 +143,19 @@ implementation {
 	 {
 	  if (!sending){
 	  	//Receives an integer with the value of the temperature
-   		last_Temp = *(int32_t*) buffer;
+	  	memcpy(&last_Temp, buffer, length);
     
-   		printf("[%d] Termometer - New measurement ready in the node (%d bytes length) -> Value: %d \n",TOS_NODE_ID, length, last_Temp);
+   		printf("[%d] New data ready in the node (%d bytes length) -> Value: %d \n",TOS_NODE_ID, length, last_Temp);
   	
   		//Shift the initialization hypervector to get the filler 
   		Shift( filler, init_Hv.role_hv, DIMENSION, last_Temp);
-  		//printFiller();
+  		printFiller();
   		
   		// Random XOR ( Initialization OR Filler)	
   		Or( filler, filler,  init_Hv.role_hv, DIMENSION);
-  		//printFiller();
+  		printFiller();
   		Xor( filler, filler, init_Random.role_hv, DIMENSION);
-  		//printFiller();
+  		printFiller();
 
   		//TODO Check with negative values
   		sending = 1;  	  
@@ -129,46 +180,19 @@ implementation {
   			memcpy( &(init_Random), buffer, length);
   			printf("[%d] Received Random HV \n", TOS_NODE_ID);
     }
-
-
-// Function for Xor operation. Input parameters are two interacting vectors (arr1, arr2), result vector (arr0) and dimensionality (n)
-void Xor(int *arr0, int *arr1, int *arr2, int n)
-{
-		int i;
-    for(i = 0;i<n;i++) {
-        arr0[i] = arr1[i] ^ arr2[i];
+    
+    async event void ActuatorInput.interruptWithData(error_t result, uint16_t length, void * buffer)
+    {
+  			//memcpy( &(init_Random), buffer, length);
+  			printf("[%d] Received Actuator Input \n", TOS_NODE_ID);
     }
-}
-
-// Function for Or operation. Input parameters are two interacting vectors (arr1, arr2), result vector (arr0) and dimensionality (n)
-void Or(int *arr0, int *arr1, int *arr2, int n)
-{
-	int i;
-    for(i = 0;i<n;i++) {
-        arr0[i] = arr1[i] | arr2[i];
+    
+    async event void ActuatorHvInput.interruptWithData(error_t result, uint16_t length, void * buffer)
+    {
+  			//memcpy( &(init_Random), buffer, length);
+  			printf("[%d] Received Actuator HV Input \n", TOS_NODE_ID);
     }
-}
-
-//Function for obtaining new vector from old one by shifting its. Input parameters are input vector (arr2), dimensionality (n), shifting vector arr1 and shift value in bits (k)
-void Shift(int *arr1, int *arr2, int n, int k)
-{
-	int i;
-    for(i=0;i<n;i++) {
-        if (i+k < n) {
-        arr1[i+k] = (arr2[i]);
-        } else arr1[i + k - n] = arr2[i];
-    }
-}
-
-void printFiller(){
-	int i = 0;
-	printf("\n");
-	for (i = 0 ; i < DIMENSION; i++){
-		printf("%d", filler[i] );
-	}
-	printf("\n");
-	
-}
+    
 
 
 }

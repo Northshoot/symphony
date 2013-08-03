@@ -156,17 +156,50 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
                        <<":"<< InetSocketAddress::ConvertFrom (from).GetPort ();
           std::cout << "--> "); 
           
-          //std::ostream* os(&std::cout);
-          //packet->CopyData(os, packet->GetSize() );
-          
-          uint8_t *value = (uint8_t *) malloc(sizeof(uint8_t) * packet->GetSize());
+          //Extract the string from the packet
+          unsigned char *value = (unsigned char *) malloc(sizeof(uint8_t)*packet->GetSize());
           packet->CopyData(value, packet->GetSize());
+          std::string data ((char *)value);
 
-          Ptr<TosDevice> sens = Names::Find<TosDevice>("/Names/TemperatureSensor");
 
-          int temp = atoi((char*)value);
-          sens->SendRawData((uint16_t)sizeof(temp), &temp);
-          //socket->SendTo (packet, 0, from);
+          //Select if its sensor or actuator
+          if (data.find("Sensor") != std::string::npos)
+          {
+        	  int sensorId = atoi( data.substr(data.find("-") + 1, data.find(":")).c_str());
+        	  std::cout << "Sensor Id: " << sensorId;
+
+        	  int sensorValue = atoi(data.substr(data.find(":")+1).c_str());
+        	  std::cout << " - Value: " << sensorValue << "\n";
+
+        	  std::string name = "/Names/TemperatureSensor";
+          	  //Identify the number of the sensors
+        	  char numstr[21]; // enough to hold all numbers up to 64-bits
+        	  sprintf(numstr, "%d", sensorId);
+        	  std::string result = name + numstr;
+        	  Ptr<TosDevice> sens = Names::Find<TosDevice>(result);
+
+        	  //Send the measurement
+        	  sens->SendRawData(sizeof(sensorValue), &sensorValue);
+              socket->SendTo (packet, 0, from);
+
+          }
+          else if (data.find("actuator") != std::string::npos)
+          {
+        	  //TODO: We are considering only one actuator by now
+        	  int val = atoi(data.substr(data.find(":")+1).c_str());
+        	  std::cout << "Actuator - value: " << val << "\n";
+
+        	  std::string name = "/Names/Actuator";
+        	  //Identify the number of the sensors
+           	  char numstr[21]; // enough to hold all numbers up to 64-bits
+           	  sprintf(numstr, "%d", 0);
+           	  std::string result = name + numstr;
+           	  Ptr<TosDevice> sens = Names::Find<TosDevice>(result);
+
+           	  //Send the measurement
+           	  sens->SendRawData(sizeof(val), &val);
+              socket->SendTo (packet, 0, from);
+          }
          }
 
     }

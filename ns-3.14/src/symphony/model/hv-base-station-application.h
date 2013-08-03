@@ -85,6 +85,8 @@ private:
   void Shift(int *arr1, int *arr2, int n, int k);
   void Buff_int_to_bin(int *buff_int, int *buff_bin, int n);
 
+  void SendOutputVector(int *output_vector);
+
 
   /**
    * Sends data to the device as an interruption from
@@ -92,6 +94,8 @@ private:
    */
   Callback<int, uint8_t, uint16_t ,void * > m_InitializationVectorInterrupt;
   Callback<int, uint8_t, uint16_t, void * > m_RandomVectorInterrupt;
+  Callback<int, uint8_t, uint16_t ,void * > m_ActuatorInterrupt;
+  Callback<int, uint8_t, uint16_t, void * > m_ActuatorHvVectorInterrupt;
 };
 
 } // namespace ns3

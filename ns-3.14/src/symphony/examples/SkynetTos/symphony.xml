@@ -27,9 +27,14 @@
    <call name="SplitControlStop"/>
   </model>
   
-   <model name="hypervectorInitDevice">
-   <callback return="int" params="3" param1="uint8_t" param2="uint16_t" param3="void *" time="20" units="ms" name="InitializationVectorInterrupt"/>
+  <model name="hypervectorInitDevice">
+    <callback return="int" params="3" param1="uint8_t" param2="uint16_t" param3="void *" time="20" units="ms" name="InitializationVectorInterrupt"/>
     <callback return="int" params="3" param1="uint8_t" param2="uint16_t" param3="void *" time="20" units="ms" name="RandomVectorInterrupt"/>
+  </model>
+  
+  <model name="actuatorDevice">
+    <callback return="int" params="3" param1="uint8_t" param2="uint16_t" param3="void *" time="20" units="ms" name="actuatorInterrupt"/>
+    <callback return="int" params="3" param1="uint8_t" param2="uint16_t" param3="void *" time="20" units="ms" name="actuatorHvInterrupt"/>
   </model>
   
   <model name="ns3application">

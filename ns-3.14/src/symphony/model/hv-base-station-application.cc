@@ -64,6 +64,14 @@ TypeId HvBaseStation::GetTypeId (void)
            CallbackValue(),
            MakeCallbackAccessor(&HvBaseStation::m_RandomVectorInterrupt),
            MakeCallbackChecker ())
+    .AddAttribute("ActuatorVectorInterrupt","Callback for device interrupt with data event.",
+           CallbackValue(),
+           MakeCallbackAccessor(&HvBaseStation::m_ActuatorHvVectorInterrupt),
+           MakeCallbackChecker ())
+    .AddAttribute("ActuatorInterrupt","Callback for device interrupt with data event.",
+    	   CallbackValue(),
+           MakeCallbackAccessor(&HvBaseStation::m_ActuatorInterrupt),
+           MakeCallbackChecker ())
     .AddAttribute("Dimension", "Dimension of the hypervectors used",
     	   IntegerValue(10000),
     	   MakeIntegerAccessor(&HvBaseStation::m_dimension),
@@ -125,7 +133,7 @@ void HvBaseStation::ReceiveHyperVector(uint16_t size, void * buffer)
                     if (item_mem[i].prev_shift == sen_state[item_mem[i].prev_role].cur_shift) {
                         for (int j=0;j<a;j++) {
                             output_vec[j] = item_mem[i].hp_act[j]; // send corresponding hypervector to actuator
-                            //?? äîáàâèòü â áóôåð, ïîìåíÿòü ñîñòîÿíèå, âû÷åñòü èç áóôåðà
+                            SendOutputVector(output_vec);
                         }
                     }
                 }
@@ -153,7 +161,10 @@ void HvBaseStation::ReceiveHyperVector(uint16_t size, void * buffer)
             }
         }
         //If it is sensor
-        if (input_id < 100) { //  sensors id less than 100 , actuators id > 100
+        /////
+        ///// TODO:VALUE FOUR ONLY VALID FOR THIS SPECIFIC SCENARIO!
+        /////
+        if (input_id < 4) { //  sensors id less than 100 , actuators id > 100
             // find sensor in sensors state table
             for (int j=0; j<n;j++) {
                 if (sen_state[j].sen_id == input_id) {
@@ -215,6 +226,14 @@ void HvBaseStation::InitializeNodes(TosNodeContainer container)
 	              MakeCallback(&Ns3ToTosProxy::RandomVectorInterrupt,(node->GetNs3ToTosProxy()));
 	    this->SetAttribute("RandomVectorInterrupt", CallbackValue(tmp2));
 
+	    Callback<int, uint8_t,uint16_t,void *> tmp3=
+	              MakeCallback(&Ns3ToTosProxy::actuatorInterrupt,(node->GetNs3ToTosProxy()));
+	    this->SetAttribute("ActuatorVectorInterrupt", CallbackValue(tmp3));
+
+	    Callback<int, uint8_t,uint16_t,void *> tmp4=
+	              MakeCallback(&Ns3ToTosProxy::actuatorHvInterrupt,(node->GetNs3ToTosProxy()));
+	    this->SetAttribute("ActuatorInterrupt", CallbackValue(tmp4));
+
 	    // Prepare the initialization vector for each node
 	    init1 initial;
 	    srand((unsigned)time(NULL));
@@ -244,6 +263,18 @@ void HvBaseStation::DoDispose (void)
   delete[] item_pres;
   delete[] item_check;
   Application::DoDispose ();
+}
+
+void HvBaseStation::SendOutputVector(int *output_vector)
+{
+	 init1* initial;
+
+     initial->id = 3;
+
+     memcpy(initial->role_hv, output_vector, a);
+
+	 m_ActuatorHvVectorInterrupt(0, sizeof(initial), &initial);
+
 }
 
 // Function for Xor operation. Input parameters are two interacting vectors (arr1, arr2), result vector (arr0) and dimensionality (n)
