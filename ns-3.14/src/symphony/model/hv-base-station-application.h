@@ -62,7 +62,7 @@ private:
 
   int m_dimension;
   TosNodeContainer m_nodes;
-  int m_P [a];
+  init1 m_P;
 
   init1 *init_mem;
   init2 *item_mem;

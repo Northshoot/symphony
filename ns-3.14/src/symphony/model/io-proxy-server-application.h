@@ -15,7 +15,8 @@ namespace ns3 {
 class Socket;
 
 /**
- *
+ * Ns-3 proxy that receives data from the I/O clients, processes it and
+ * sends it to the correct node.
  */
 class IOProxyServer : public Application
 {
@@ -39,13 +40,14 @@ private:
   virtual void DoDispose (void);
   uint32_t GetApplicationId (void) const;
  
-  // management of the callbacks
+  // management of the Socket callbacks
   void HandleRead (Ptr<Socket>);
   void HandleAccept (Ptr<Socket>, const Address& from);
   void HandlePeerClose (Ptr<Socket>);
   void HandlePeerError (Ptr<Socket>);
   void HandleSend (Ptr<Socket>, uint32_t);
 
+  // TCP Socket to connect ns-3 to the I/O Clients
   Ptr<Socket> m_socket;
 
   // Information of remote end point

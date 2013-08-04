@@ -150,7 +150,7 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
         
       if (InetSocketAddress::IsMatchingType (from))
         {
-          NS_LOG_INFO ("[" << Simulator::Now ().GetSeconds ()
+          NS_LOG_INFO ("\n[" << Simulator::Now ().GetSeconds ()
                        << "s] - Rx: "<< packet->GetSize () << " bytes from "
                        << InetSocketAddress::ConvertFrom(from).GetIpv4 ()
                        <<":"<< InetSocketAddress::ConvertFrom (from).GetPort ();
@@ -169,7 +169,7 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
         	  std::cout << "Sensor Id: " << sensorId;
 
         	  int sensorValue = atoi(data.substr(data.find(":")+1).c_str());
-        	  std::cout << " - Value: " << sensorValue << "\n";
+        	  std::cout << " - Value: " << sensorValue << "\n\n";
 
         	  std::string name = "/Names/TemperatureSensor";
           	  //Identify the number of the sensors
@@ -178,8 +178,9 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
         	  std::string result = name + numstr;
         	  Ptr<TosDevice> sens = Names::Find<TosDevice>(result);
 
-        	  //Send the measurement
+        	  //Send the measurement to the correct sensor
         	  sens->SendRawData(sizeof(sensorValue), &sensorValue);
+        	  //Creates an echo of the message received
               socket->SendTo (packet, 0, from);
 
           }
@@ -187,7 +188,7 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
           {
         	  //TODO: We are considering only one actuator by now
         	  int val = atoi(data.substr(data.find(":")+1).c_str());
-        	  std::cout << "Actuator - value: " << val << "\n";
+        	  std::cout << "Actuator - value: " << val << "\n\n";
 
         	  std::string name = "/Names/Actuator";
         	  //Identify the number of the sensors
@@ -198,7 +199,8 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
 
            	  //Send the measurement
            	  sens->SendRawData(sizeof(val), &val);
-              socket->SendTo (packet, 0, from);
+              //Creates and echo of the message
+           	  socket->SendTo (packet, 0, from);
           }
          }
 

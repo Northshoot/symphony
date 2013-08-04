@@ -47,7 +47,7 @@ main (int argc, char *argv[])
   std::string nodeImage("/home/onir/dev/skynet/ns-3.14/build/libSkynetTos.so");
 
   // Default simulation time
-  std::string simulationTime("60");
+  std::string simulationTime("300");
 
   // Allow modification of default network parameters
   CommandLine cmd;
@@ -170,7 +170,7 @@ main (int argc, char *argv[])
 	  sprintf(numstr, "%d", i);
 	  std::string name = "TemperatureSensor";
 	  std::string result = name + numstr;
-	  std::cout << "Added " << result << "\n";
+	  //std::cout << "Added " << result << "\n";
 	  Names::Add(result, sc.Get(i));
   }
 

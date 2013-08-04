@@ -48,7 +48,7 @@ void Xor(int *arr0, int *arr1, int *arr2, int n)
 {
 
 		int i;
-		  printf("XOR");
+		 // printf("XOR");
     for(i = 0;i<n;i++) {
         arr0[i] = arr1[i] ^ arr2[i];
     }
@@ -60,7 +60,7 @@ void Or(int *arr0, int *arr1, int *arr2, int n)
 
 
 	int i;
-	  printf("OR");
+	  //printf("OR");
     for(i = 0;i<n;i++) {
         arr0[i] = arr1[i] | arr2[i];
     }
@@ -72,7 +72,7 @@ void Shift(int *arr1, int *arr2, int n, int k)
     
 	int i;
 	
-	printf("Shift");
+	//printf("Shift");
     for(i=0;i<n;i++) {
         if (i+k < n) {
         arr1[i+k] = (arr2[i]);
@@ -83,8 +83,8 @@ void Shift(int *arr1, int *arr2, int n, int k)
 void printFiller(){
 	int i = 0;
 	printf("\n");
-	for (i = 0 ; i < DIMENSION; i++){
-		printf("%d", filler[i] );
+	for (i = 0 ; i < 20; i++){
+		printf("[%d] ->  %d \t %d \t %d \n", i, filler[i], init_Hv.role_hv[i], init_Random.role_hv[i] );
 	}
 	printf("\n");
 	
@@ -118,7 +118,7 @@ void printFiller(){
  	  memcpy( npkt->vector, filler, sizeof(filler) );
  	  npkt->nodeId = TOS_NODE_ID;
 		
-		printf("[%d] Send hypervector to base station \n", TOS_NODE_ID);
+		printf("\t[%d] Send hypervector to base station \n", TOS_NODE_ID);
 		call Ns3Application.SendDataToApplication(sizeof(NodePacket), npkt);
 		
 		sending = 0;
@@ -145,17 +145,18 @@ void printFiller(){
 	  	//Receives an integer with the value of the temperature
 	  	memcpy(&last_Temp, buffer, length);
     
-   		printf("[%d] New data ready in the node (%d bytes length) -> Value: %d \n",TOS_NODE_ID, length, last_Temp);
-  	
+   		printf("\t[%d] New data ready in the node (%d bytes length) -> Value: %d \n",TOS_NODE_ID, length, last_Temp);
+  	  
+  	  //printFiller();
   		//Shift the initialization hypervector to get the filler 
   		Shift( filler, init_Hv.role_hv, DIMENSION, last_Temp);
-  		printFiller();
+  	  //printFiller();
   		
   		// Random XOR ( Initialization OR Filler)	
   		Or( filler, filler,  init_Hv.role_hv, DIMENSION);
-  		printFiller();
+  		//printFiller();
   		Xor( filler, filler, init_Random.role_hv, DIMENSION);
-  		printFiller();
+  		//printFiller();
 
   		//TODO Check with negative values
   		sending = 1;  	  
