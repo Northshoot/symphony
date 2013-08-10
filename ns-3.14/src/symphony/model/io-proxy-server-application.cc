@@ -21,7 +21,6 @@
 #include "ns3/object.h"
 
 #include "io-proxy-server-application.h"
-
 #include <stdio.h>
 
 namespace ns3 {
@@ -140,7 +139,7 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
 {
   NS_LOG_FUNCTION (this << socket);
   Ptr<Packet> packet;
-  Address from;
+
   while ((packet = socket->RecvFrom (from)))
     {
       if (packet->GetSize () == 0)
@@ -186,14 +185,17 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
           }
           else if (data.find("actuator") != std::string::npos)
           {
-        	  //TODO: We are considering only one actuator by now
-        	  int val = atoi(data.substr(data.find(":")+1).c_str());
-        	  std::cout << "Actuator - value: " << val << "\n\n";
+
+           	  int actuatorId = atoi( data.substr(data.find("-") + 1, data.find(":")).c_str());
+              std::cout << "Actuator Id: " << actuatorId;
+
+              int val = atoi(data.substr(data.find(":")+1).c_str());
+        	  std::cout << " - Value: " << val << "\n\n";
 
         	  std::string name = "/Names/Actuator";
         	  //Identify the number of the sensors
            	  char numstr[21]; // enough to hold all numbers up to 64-bits
-           	  sprintf(numstr, "%d", 0);
+           	  sprintf(numstr, "%d", actuatorId +2 );
            	  std::string result = name + numstr;
            	  Ptr<TosDevice> sens = Names::Find<TosDevice>(result);
 
@@ -207,14 +209,15 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
     }
 }
 
-void IOProxyServer::SendData(int32_t value)
+void IOProxyServer::SendData(std::string str)
 {
-	char* string;
+	char * cstr = new char [str.length()+1];
+	strcpy(cstr, str.c_str());
 
-	asprintf(&string, "%d", value);
+	Ptr<Packet> packet = Create<Packet>((uint8_t*)cstr, str.length()+1);
+	m_socket->Send(packet, 0);
 
-	Ptr<Packet> packet = Create<Packet>((uint8_t*) string, sizeof(string));
-	m_socket->Send(packet);
+	delete []cstr;
 }
 
 IOProxyServer::~IOProxyServer ()

@@ -47,7 +47,7 @@ main (int argc, char *argv[])
   std::string nodeImage("/home/onir/dev/skynet/ns-3.14/build/libSkynetTos.so");
 
   // Default simulation time
-  std::string simulationTime("300");
+  std::string simulationTime("60");
 
   // Allow modification of default network parameters
   CommandLine cmd;
@@ -138,11 +138,13 @@ main (int argc, char *argv[])
   NS_LOG_INFO("- Creating TinyOS node");
 
   TosNodeContainer tosNode;
-  tosNode.Create(4, nodeImage.c_str());
+  tosNode.Create(, nodeImage.c_str());
   tosNode.Get(0)->SetAttribute("TosId", UintegerValue(0));
   tosNode.Get(1)->SetAttribute("TosId", UintegerValue(1));
   tosNode.Get(2)->SetAttribute("TosId", UintegerValue(2));
   tosNode.Get(3)->SetAttribute("TosId", UintegerValue(3));
+  tosNode.Get(4)->SetAttribute("TosId", UintegerValue(4));
+  tosNode.Get(5)->SetAttribute("TosId", UintegerValue(5));
 
   // Configure the Symphony Application
   NS_LOG_INFO("- Adding bridge between TinyOs and NS3");
@@ -156,6 +158,8 @@ main (int argc, char *argv[])
   tosNode.Get(1)->AddApplication(symphonyApp);
   tosNode.Get(2)->AddApplication(symphonyApp);
   tosNode.Get(3)->AddApplication(symphonyApp);
+  tosNode.Get(4)->AddApplication(symphonyApp);
+  tosNode.Get(5)->AddApplication(symphonyApp);
 
   // Configuring the sensors available in the node
   NS_LOG_INFO("- Adding sensors");
@@ -164,7 +168,7 @@ main (int argc, char *argv[])
   SymphonySensorContainer sc = sens.InstallSensors(1, tosNode,"/home/onir/dev/symphony/ns-3.14/bin_pkt/");
 
   // Set the names to access a path
-  for (unsigned int i = 0; i < sc.GetN()-1; i++)
+  for (unsigned int i = 0; i < sc.GetN()-3; i++)
   {
 	  char numstr[21]; // enough to hold all numbers up to 64-bits
 	  sprintf(numstr, "%d", i);
@@ -172,14 +176,16 @@ main (int argc, char *argv[])
 	  std::string result = name + numstr;
 	  //std::cout << "Added " << result << "\n";
 	  Names::Add(result, sc.Get(i));
+
+	  char numstr2[21]; // enough to hold all numbers up to 64-bits
+	  sprintf(numstr2, "%d", 0);
+	  std::string name2 = "Actuator";
+	  std::string result2 = name2 + numstr2;
+	  std::cout << "Added " << result << "\n";
+	  Names::Add(result, sc.Get(3));
   }
 
-  char numstr[21]; // enough to hold all numbers up to 64-bits
-  sprintf(numstr, "%d", 0);
-  std::string name = "Actuator";
-  std::string result = name + numstr;
-  std::cout << "Added " << result << "\n";
-  Names::Add(result, sc.Get(3));
+
 
   NS_LOG_INFO("- Adding HV Base Station");
   Ptr<HvBaseStation> bsApp = CreateObject<HvBaseStation> (tosNode);

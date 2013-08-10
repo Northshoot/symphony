@@ -149,7 +149,7 @@ void printFiller(){
   	  
   	  //printFiller();
   		//Shift the initialization hypervector to get the filler 
-  		Shift( filler, init_Hv.role_hv, DIMENSION, last_Temp);
+  		Shift( filler, init_Hv.role_hv, DIMENSION, last_Temp + 1);
   	  //printFiller();
   		
   		// Random XOR ( Initialization OR Filler)	
@@ -191,7 +191,7 @@ void printFiller(){
     async event void ActuatorHvInput.interruptWithData(error_t result, uint16_t length, void * buffer)
     {
   			//memcpy( &(init_Random), buffer, length);
-  			printf("[%d] Received Actuator HV Input \n", TOS_NODE_ID);
+  			printf("\t[%d] Received Actuator HV Input \n", TOS_NODE_ID);
     }
     
 

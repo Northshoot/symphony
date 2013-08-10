@@ -30,7 +30,7 @@ public:
 	IOProxyServer ();
 	virtual ~IOProxyServer ();
 
-	void SendData(int32_t);
+	void SendData(std::string);
 
 private:
 
@@ -49,6 +49,8 @@ private:
 
   // TCP Socket to connect ns-3 to the I/O Clients
   Ptr<Socket> m_socket;
+
+  Address from;
 
   // Information of remote end point
   int m_remotePortNumber;

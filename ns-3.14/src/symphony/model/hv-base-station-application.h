@@ -26,7 +26,7 @@ struct init2{
 };
 // Initialize structure init3 for sensors state table that consists of current shift, and current sensor id (current role vector id)
 struct init3{
-    int sen_id, cur_shift;
+    int sen_id, cur_shift, init_flag;
 };
 
 typedef struct {
@@ -71,11 +71,12 @@ private:
 
   int item_len, k_shift, n;
   int check_vec1[a], check_vec2[a],
-      shift_vec1[a], pres_sum, count_adr, count_shift ,
+      shift_vec1[a], count_adr, count_shift ,
       subs_vec[a], input_id , input_shift, cur_state_num ;
   double check_sum, sum_adres, sum_shift;
   int* item_pres;
   double* item_check;
+  double pres_sum;
 
   int buff_int[a], buff_bin[a], input_vector[a], output_vec[a];
 
