@@ -45,6 +45,7 @@ main (int argc, char *argv[])
   // Default Symphony parameters
   std::string nodeModel("/home/onir/dev/skynet/ns-3.14/build/symphony.xml");
   std::string nodeImage("/home/onir/dev/skynet/ns-3.14/build/libSkynetTos.so");
+  int nodePairsNumber(2);
 
   // Default simulation time
   std::string simulationTime("60");
@@ -65,6 +66,7 @@ main (int argc, char *argv[])
 
   cmd.AddValue ("nodeModel", "Full path to XML description of the node (s) (e.g. /home/user/symphony.xml)", simulationTime);
   cmd.AddValue ("nodeImage", "Full path to .so image of TinyOS code (e.g /home/user/libTos.so)", nodeImage);
+  cmd.AddValue ("nodePairsNumber", "Number of sensor&actuator pairs to configure the simulation. (e.g. 1 = one sensors & one actuator", nodePairsNumber);
 
   cmd.Parse (argc, argv);
   
@@ -130,6 +132,7 @@ main (int argc, char *argv[])
   ioApp->SetAttribute("RemoteIp", StringValue(remoteIp));
   ioApp->SetAttribute("LocalPortNumber", IntegerValue(localPortNumber));
   ioApp->SetAttribute("LocalIp", StringValue(localIp));
+  ioApp->SetAttribute("NodePairsNumber", IntegerValue(nodePairsNumber));
   node->AddApplication (ioApp);
 
   Names::Add("IOServer", ioApp);
@@ -138,13 +141,7 @@ main (int argc, char *argv[])
   NS_LOG_INFO("- Creating TinyOS node");
 
   TosNodeContainer tosNode;
-  tosNode.Create(, nodeImage.c_str());
-  tosNode.Get(0)->SetAttribute("TosId", UintegerValue(0));
-  tosNode.Get(1)->SetAttribute("TosId", UintegerValue(1));
-  tosNode.Get(2)->SetAttribute("TosId", UintegerValue(2));
-  tosNode.Get(3)->SetAttribute("TosId", UintegerValue(3));
-  tosNode.Get(4)->SetAttribute("TosId", UintegerValue(4));
-  tosNode.Get(5)->SetAttribute("TosId", UintegerValue(5));
+  tosNode.Create(nodePairsNumber * 2, nodeImage.c_str());
 
   // Configure the Symphony Application
   NS_LOG_INFO("- Adding bridge between TinyOs and NS3");
@@ -154,12 +151,6 @@ main (int argc, char *argv[])
   symphonyApp->SetStartTime (Seconds (0.0));
   symphonyApp->SetStopTime (Seconds (20.0));
   symphonyApp->StartApplication();
-  tosNode.Get(0)->AddApplication(symphonyApp);
-  tosNode.Get(1)->AddApplication(symphonyApp);
-  tosNode.Get(2)->AddApplication(symphonyApp);
-  tosNode.Get(3)->AddApplication(symphonyApp);
-  tosNode.Get(4)->AddApplication(symphonyApp);
-  tosNode.Get(5)->AddApplication(symphonyApp);
 
   // Configuring the sensors available in the node
   NS_LOG_INFO("- Adding sensors");
@@ -167,25 +158,32 @@ main (int argc, char *argv[])
   sens.SetNodeModel(nodeModel);
   SymphonySensorContainer sc = sens.InstallSensors(1, tosNode,"/home/onir/dev/symphony/ns-3.14/bin_pkt/");
 
-  // Set the names to access a path
-  for (unsigned int i = 0; i < sc.GetN()-3; i++)
+  // Set properties of the nodes
+
+  for (int i = 0; i < nodePairsNumber; i++ )
   {
 	  char numstr[21]; // enough to hold all numbers up to 64-bits
+
+	  //Set sensor properties
+	  tosNode.Get(i)->SetAttribute("TosId", UintegerValue(i));
+	  tosNode.Get(i)->AddApplication(symphonyApp);
+
+	  //Set sensor identification string
 	  sprintf(numstr, "%d", i);
 	  std::string name = "TemperatureSensor";
 	  std::string result = name + numstr;
-	  //std::cout << "Added " << result << "\n";
 	  Names::Add(result, sc.Get(i));
 
-	  char numstr2[21]; // enough to hold all numbers up to 64-bits
-	  sprintf(numstr2, "%d", 0);
-	  std::string name2 = "Actuator";
-	  std::string result2 = name2 + numstr2;
-	  std::cout << "Added " << result << "\n";
-	  Names::Add(result, sc.Get(3));
+	  //Set actuator properties
+	  tosNode.Get(i + nodePairsNumber)->SetAttribute("TosId", UintegerValue(i + nodePairsNumber));
+	  tosNode.Get(i + nodePairsNumber)->AddApplication(symphonyApp);
+
+	  //Set actuator identification string
+	  sprintf(numstr, "%d", i);
+	  name = "Actuator";
+	  result = name + numstr;
+	  Names::Add(result, sc.Get(i + nodePairsNumber));
   }
-
-
 
   NS_LOG_INFO("- Adding HV Base Station");
   Ptr<HvBaseStation> bsApp = CreateObject<HvBaseStation> (tosNode);

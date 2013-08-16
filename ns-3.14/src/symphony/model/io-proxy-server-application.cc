@@ -1,6 +1,6 @@
-/*
- * Create a NS-3 Application that opens a TCP Socket and 
- * waits for incoming connections
+/**
+ * Ns-3 proxy that receives data from the I/O clients, processes it and
+ * sends it to the correct node.
  *
  * @author Jose Angel Fernandez
  */
@@ -58,10 +58,14 @@ TypeId IOProxyServer::GetTypeId (void)
     					"Local IP for incoming connections",
     					StringValue("127.0.0.1"),
     					MakeStringAccessor(&IOProxyServer::m_localIp),
-    					MakeStringChecker());
+    					MakeStringChecker())
+    .AddAttribute("NodePairsNumber",
+    					"Number of node pairs used on the simulation (e.g 1 = one sensors & one actuator)",
+    					IntegerValue(2),
+    					MakeIntegerAccessor(&IOProxyServer::m_nodePairsNumber),
+    					MakeIntegerChecker<int64_t>());
   return tid;
 }
-
 
 void IOProxyServer::StartApplication (void)
 {
@@ -69,7 +73,6 @@ void IOProxyServer::StartApplication (void)
   
   m_socket = Socket::CreateSocket (GetNode (), TypeId::LookupByName ("ns3::TcpSocketFactory"));
   NS_ASSERT_MSG (m_socket != 0, "An error has happened when trying to create the socket");
-  
   
   InetSocketAddress src = InetSocketAddress (Ipv4Address::GetAny(), m_localPortNumber );
   InetSocketAddress dest = InetSocketAddress(Ipv4Address(m_remoteIp.c_str()), m_remotePortNumber);
@@ -84,7 +87,6 @@ void IOProxyServer::StartApplication (void)
   // Configures the callbacks for the different events related with the connection
 
   //m_socket->SetConnectCallback
-
 
   m_socket->SetAcceptCallback (
     MakeNullCallback<bool, Ptr<Socket>, const Address &> (),
@@ -114,21 +116,6 @@ void IOProxyServer::StopApplication (void)
   m_socket->Close();
 }
 
-void IOProxyServer::HandlePeerClose (Ptr<Socket> socket)
-{
-  NS_LOG_FUNCTION (this << socket);
-}
- 
-void IOProxyServer::HandlePeerError (Ptr<Socket> socket)
-{
-  NS_LOG_FUNCTION (this << socket);
-}
-
-void IOProxyServer::HandleSend (Ptr<Socket> socket, uint32_t dataSent)
-{
-  NS_LOG_FUNCTION (this << socket);
-}
- 
 void IOProxyServer::HandleAccept (Ptr<Socket> s, const Address& from)
 {
   NS_LOG_FUNCTION (this << s << from);
@@ -160,10 +147,10 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
           packet->CopyData(value, packet->GetSize());
           std::string data ((char *)value);
 
-
-          //Select if its sensor or actuator
+          //Select if its sensor or actuator checking the received string
           if (data.find("Sensor") != std::string::npos)
           {
+        	  // Received pattern matches: *Sensor-sensorId:sensorValue
         	  int sensorId = atoi( data.substr(data.find("-") + 1, data.find(":")).c_str());
         	  std::cout << "Sensor Id: " << sensorId;
 
@@ -185,27 +172,26 @@ void IOProxyServer::HandleRead (Ptr<Socket> socket)
           }
           else if (data.find("actuator") != std::string::npos)
           {
-
+        	  // Received pattern matches: *Actuator-actuatorId:actuatorValue
            	  int actuatorId = atoi( data.substr(data.find("-") + 1, data.find(":")).c_str());
               std::cout << "Actuator Id: " << actuatorId;
 
-              int val = atoi(data.substr(data.find(":")+1).c_str());
-        	  std::cout << " - Value: " << val << "\n\n";
+              int actuatorValue = atoi(data.substr(data.find(":")+1).c_str());
+        	  std::cout << " - Value: " << actuatorValue << "\n\n";
 
         	  std::string name = "/Names/Actuator";
         	  //Identify the number of the sensors
            	  char numstr[21]; // enough to hold all numbers up to 64-bits
-           	  sprintf(numstr, "%d", actuatorId +2 );
+           	  sprintf(numstr, "%d", actuatorId);
            	  std::string result = name + numstr;
-           	  Ptr<TosDevice> sens = Names::Find<TosDevice>(result);
+           	  Ptr<TosDevice> act = Names::Find<TosDevice>(result);
 
-           	  //Send the measurement
-           	  sens->SendRawData(sizeof(val), &val);
+        	  //Send the measurement
+           	  act->SendRawData(sizeof(actuatorValue), &actuatorValue);
               //Creates and echo of the message
            	  socket->SendTo (packet, 0, from);
           }
          }
-
     }
 }
 
@@ -218,6 +204,21 @@ void IOProxyServer::SendData(std::string str)
 	m_socket->Send(packet, 0);
 
 	delete []cstr;
+}
+
+void IOProxyServer::HandlePeerClose (Ptr<Socket> socket)
+{
+  NS_LOG_FUNCTION (this << socket);
+}
+
+void IOProxyServer::HandlePeerError (Ptr<Socket> socket)
+{
+  NS_LOG_FUNCTION (this << socket);
+}
+
+void IOProxyServer::HandleSend (Ptr<Socket> socket, uint32_t dataSent)
+{
+  NS_LOG_FUNCTION (this << socket);
 }
 
 IOProxyServer::~IOProxyServer ()

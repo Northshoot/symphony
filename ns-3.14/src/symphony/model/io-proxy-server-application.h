@@ -24,12 +24,16 @@ public:
 	static TypeId GetTypeId (void);
 
 	/**
-	 * Create a new IO Server to communicate between the outside and NS3
+	 * Creates a new IO Server to communicate between the outside and NS3
 	 * through a TCP Socket.
 	 */
 	IOProxyServer ();
 	virtual ~IOProxyServer ();
 
+	/**
+	 * Sends a string of data to the I/O client using the existing TCP
+	 * socket connection
+	 */
 	void SendData(std::string);
 
 private:
@@ -50,6 +54,7 @@ private:
   // TCP Socket to connect ns-3 to the I/O Clients
   Ptr<Socket> m_socket;
 
+  // I/0 Client address
   Address from;
 
   // Information of remote end point
@@ -60,6 +65,8 @@ private:
   int m_localPortNumber;
   std::string m_localIp;
 
+  // Number of pair of nodes the simulation is running ( x = x sensors & x actuators)
+  int m_nodePairsNumber;
 };
 
 } // namespace ns3
