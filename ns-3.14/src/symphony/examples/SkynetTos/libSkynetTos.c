@@ -750,7 +750,7 @@ struct drand48_data {
 #line 471
 extern void *malloc(size_t __size) __attribute((__leaf__)) __attribute((__nothrow__)) __attribute((__malloc__)) ;
 #line 742
-typedef int (*__compar_fn_t)(const void *arg_0x2b74e42e21f0, const void *arg_0x2b74e42e24c8);
+typedef int (*__compar_fn_t)(const void *arg_0x2b684586a1f0, const void *arg_0x2b684586a4c8);
 #line 776
 __extension__ 
 #line 793
@@ -1239,11 +1239,11 @@ static error_t SimMainP$SoftwareInit$default$init(void );
 # 67 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static error_t SchedulerBasicP$TaskBasic$postTask(
 # 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b74e45c0960);
+uint8_t arg_0x2b6845b48960);
 # 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$default$runTask(
 # 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b74e45c0960);
+uint8_t arg_0x2b6845b48960);
 # 57 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/Scheduler.nc"
 static void SchedulerBasicP$Scheduler$init(void );
 
@@ -1353,7 +1353,7 @@ static inline error_t SimMainP$SoftwareInit$default$init(void );
 # 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
 static void SchedulerBasicP$TaskBasic$runTask(
 # 47 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sim/SchedulerBasicP.nc"
-uint8_t arg_0x2b74e45c0960);
+uint8_t arg_0x2b6845b48960);
 
 
 
@@ -1640,7 +1640,7 @@ extern void interruptData(error_t result, uint16_t lenght, void *buffer)   ;
 static void ActuatorP$actuatorHvInputInterrupt$interruptWithData(error_t result, uint16_t length, void *buffer);
 #line 22
 static void ActuatorP$actuatorInputInterrupt$interruptWithData(error_t result, uint16_t length, void *buffer);
-# 16 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/ActuatorP.nc"
+# 24 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/ActuatorP.nc"
 extern void actuatorInterrupt(error_t result, uint16_t lenght, void *buffer)   ;
 
 
@@ -1706,9 +1706,9 @@ static inline void SchedulerBasicP$TaskBasic$default$runTask(uint8_t id)
 }
 
 # 75 "/home/onir/dev/skynet/tinyos-2.1.1/tos/interfaces/TaskBasic.nc"
-inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b74e45c0960){
+inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b6845b48960){
 #line 75
-  switch (arg_0x2b74e45c0960) {
+  switch (arg_0x2b6845b48960) {
 #line 75
     case SkynetTosC$send:
 #line 75
@@ -1718,7 +1718,7 @@ inline static void SchedulerBasicP$TaskBasic$runTask(uint8_t arg_0x2b74e45c0960)
 #line 75
     default:
 #line 75
-      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b74e45c0960);
+      SchedulerBasicP$TaskBasic$default$runTask(arg_0x2b6845b48960);
 #line 75
       break;
 #line 75
@@ -2522,15 +2522,15 @@ extern   void interruptData(error_t result, uint16_t lenght, void *buffer)
   TemperatureSensorP$Data$interruptWithData(result, lenght, buffer);
 }
 
-# 16 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/ActuatorP.nc"
+# 24 "/home/onir/dev/skynet/tinyos-2.1.1/tos/platforms/ns3/sensors/ActuatorP.nc"
 extern   void actuatorInterrupt(error_t result, uint16_t lenght, void *buffer)
-#line 16
+#line 24
 {
   ActuatorP$actuatorInputInterrupt$interruptWithData(result, lenght, buffer);
 }
 
 extern   void actuatorHvInterrupt(error_t result, uint16_t lenght, void *buffer)
-#line 20
+#line 28
 {
   ActuatorP$actuatorHvInputInterrupt$interruptWithData(result, lenght, buffer);
 }
