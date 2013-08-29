@@ -169,6 +169,17 @@ void HvBaseStation::ReceiveHyperVector(uint16_t size, void * buffer)
                             output_vec[j] = item_mem[i].hp_act[j]; // send corresponding hypervector to actuator
                         }
 
+                		Shift(subs_vec, init_mem[item_mem[i].prev_role].role_hv, a, sen_state[item_mem[i].prev_role].cur_shift);
+                		Or(subs_vec, subs_vec, init_mem[item_mem[i].prev_role].role_hv, a);
+                        Xor(subs_vec, subs_vec, m_P.role_hv, a);
+
+      		            for (int h=0; h<a;h++) {
+       		                buff_int[h] = buff_int[h] + input_vector[h]; //add new vector to the integer buffer
+       		                buff_int[h] = buff_int[h] - subs_vec[h]; //substitute old vector from the integer buffer
+       		            }
+       		            Buff_int_to_bin(buff_int, buff_bin, a); //update binary buffer
+       		            sen_state[item_mem[i].prev_role].cur_shift = item_mem[i].cur_shift; // change sensor state in the table
+
                         std::cout << "\t\t\t\t\t---> Update actuator status \n";
                         SendOutputVector(output_vec);
                         return;
@@ -177,7 +188,7 @@ void HvBaseStation::ReceiveHyperVector(uint16_t size, void * buffer)
             }
         }
         // If there is no item memory yet or input vector does not present in it, we decode input vector
-        if ((pres_sum == 0) || (item_len == 0)) {
+        if (true) { //(pres_sum == 0) || (item_len == 0)) {
             std::cout << "\t\tLooking for input vector... \n";
 
             //release input vector from randomization vector (init_mem[0].role_hv)  by xoring
@@ -341,18 +352,19 @@ void HvBaseStation::SendOutputVector(int *output_vector)
 	// Check for value of the actuator
 	double sum_shift = 0.5;
 	int output_shift = -1;
-	int k_shift = 0;
+	int k_shift = 1;
 
 	while (sum_shift > 0.3 && k_shift < a) {
 		Shift(shift_vec1, init_mem[i-1].role_hv, a, k_shift);
 	    Xor(check_vec2, check_vec1, shift_vec1, a);
 	    sum_shift = Sum(check_vec2, a);
-	    output_shift = k_shift+1;
+	    output_shift = k_shift-1;
 	    k_shift++;
 	}
 
 	char numstr[21]; // enough to hold all numbers up to 64-bits
 	sprintf(numstr, "%d:%d", act_id, output_shift);
+	std::cout << " Output Shift : " << output_shift << " \n";
 	std::string name = "actuatorChange-";
 	std::string result = name + numstr;
 
