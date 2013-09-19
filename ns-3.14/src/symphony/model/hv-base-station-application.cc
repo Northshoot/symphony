@@ -364,7 +364,6 @@ void HvBaseStation::SendOutputVector(int *output_vector)
 
 	char numstr[21]; // enough to hold all numbers up to 64-bits
 	sprintf(numstr, "%d:%d", act_id, output_shift);
-	std::cout << " Output Shift : " << output_shift << " \n";
 	std::string name = "actuatorChange-";
 	std::string result = name + numstr;
 
